@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconify/react": "^5.0.2",
     "@nextui-org/react": "^2.4.6",
     "framer-motion": "^11.3.17",
     "next": "14.2.5",
@@ -16,6 +17,9 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@iconify/tailwind": "^1.1.1",
+    "@types/node": "20.14.12",
+    "@types/react": "18.3.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
