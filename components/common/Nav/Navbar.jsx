@@ -1,7 +1,8 @@
-
+"use client"
 import React from "react";
-import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
-import DropDown from "./DropDown";
+import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem, Button} from "@nextui-org/react";
+import DropDown from "./DropDown"
+import Link from "next/link";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
 export default function NavBar() {
@@ -25,16 +26,19 @@ export default function NavBar() {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand>
+        <NavbarBrand as={Link} href={'/'}>
           {/* <AcmeLogo /> */}
-          <p className="font-bold text-inherit">ACME</p>
+
+          <p className="font-bold text-inherit">HomePortfolio</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
           {/* <AcmeLogo /> */}
+          <Link href={'/'}>
           <p className="font-bold text-inherit">HomePortfolio</p>
+          </Link>
         </NavbarBrand>
         <DropDown>
 <NavbarItem key="item">
@@ -43,12 +47,12 @@ export default function NavBar() {
 </DropDown>
         <NavbarItem>
           <Link color="foreground" href="#" >
-            Developers
+            Best Places
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            House Prices
+           Home valuation
           </Link>
         </NavbarItem>
         <NavbarItem>
@@ -65,13 +69,13 @@ export default function NavBar() {
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link href="/login">Login</Link>
         </NavbarItem>
 
 
 
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={Link} color="secondary" className="font-semibold text-white" href="/register">
             Sign Up
           </Button>
         </NavbarItem>
