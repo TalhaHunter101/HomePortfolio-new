@@ -56,7 +56,7 @@ export default function Component() {
               Forgot password?
             </Link>
           </div>
-          <Button color="primary" type="submit">
+          <Button color="primary" type="submit" className="font-semibold text-white">
             Log In
           </Button>
         </form>

@@ -83,7 +83,7 @@ export default function Component() {
               Privacy Policy
             </Link>
           </Checkbox>
-          <Button color="primary" type="submit">
+          <Button color="primary" type="submit" className="font-semibold text-white">
             Sign Up
           </Button>
         </form>

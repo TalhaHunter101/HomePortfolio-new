@@ -11,9 +11,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Default light mode colors
-        primary: "#4bbdc3", // Light mode primary color
-        secondary: "#FF6347", // Tomato for both modes
+  // primary: "#4bbdc3", // Light mode primary color
+  primary: "#FF6347", // Tomato for both modes
+  secondary: "#FF6347", // Tomato
         background: "#FFFFFF", // White background for light mode
         text: "#000000", // Black text for light mode
       },
@@ -40,6 +40,7 @@ module.exports = {
         "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
         "scrolling-banner-vertical": "scrolling-banner-vertical var(--duration) linear infinite",
       },
+      
     },
   },
             darkMode: "class", // Enable dark mode
@@ -50,7 +51,8 @@ module.exports = {
         
         light: {
           colors: {
-            primary: "#4bbdc3", // Light mode primary color
+            // primary: "#4bbdc3", // Light mode primary color
+            primary: "#FF6347", // Tomato for both modes
             secondary: "#FF6347", // Tomato
             background: "#FFFFFF", // White background for light mode
             text: "#000000", // Black text for light mode

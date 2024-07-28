@@ -673,7 +673,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col  md:p-24 bg-gray-100 w-full">
+        <div className="flex flex-col  md:p-24  w-full">
           <div className="w-full grid ">
             <h1 className="font-serif text-3xl font-bold pb-5">Data you can trust, all in one place for free, instantly</h1>
           </div>
@@ -681,14 +681,14 @@ export default function Home() {
             <p>HomePortfolio provides a comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free.</p>
             <p>We put together all the residential property data and mix in demographics, macro-economic, school quality, planning applications, crime rate, energy efficiency, environmental, census, local information data, and much more, enabling you to quickly streamline your research and diligence, make informed decisions with confidence - save time and effort.</p>
           </div>
-          <Card className="flex flex-col md:flex-row justify-between items-center mt-10 shadow-cardShadow py-2 px-5 rounded-md bg-white">
+          <Card className="flex flex-col md:flex-row justify-between items-center mt-10 shadow-cardShadow py-2 px-5 rounded-md ">
             <div className="flex flex-col p-10 justify-start">
               <p className="my-4 font-serif  font-bold text-3xl">250+ comparison data points</p>
               <div className="w-full md:w-1/2 grid justify-start">
                 <p>Narrow down your new dream home search with over 250 comparison datapoints! With the most in-depth analysis available anywhere else, find homes that fits your needs, wants, budget, and more.</p>
               </div>
               <div className="w-full md:w-1/2 grid pt-5 justify-start">
-                <Button className="w-[300px] flex items-center flex-col p-2 rounded-lg bg-secondary text-white">
+                <Button className="w-[300px] flex text-start flex-col p-2 rounded-lg font-semibold bg-secondary text-white">
                   Browse
                 </Button>
               </div>
@@ -697,6 +697,7 @@ export default function Home() {
               <Image
                 width={400}
                 height={400}
+                loading="lazy"
                 alt="250+ data points"
                 src="/datapoint-image.svg"
               />
