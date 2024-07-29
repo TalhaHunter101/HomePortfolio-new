@@ -5,9 +5,10 @@ import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image } from "@n
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import PropertyCard from "@/components/carousel/small-card-carousel";
+import PropertyCard from "@/components/cards/PropertyCard";
 import PartnersScroll from "@/components/partners/partners";
 import AutocompleteSearch from "./autocompleteSearchBar";
+import PlaceCard from "@/components/cards/PlaceCard";
 
 
 let features = [
@@ -647,29 +648,8 @@ export default function Home() {
           </div>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {places.map((place, index) => (
-              <Card
-                isHoverable={true}
-                key={place.id}
-                className={`border-none transition-transform transform hover:scale-105 cursor-pointer`}
-                isFooterBlurred
-                radius="lg"
-              >
-                <Image
-                  alt={`Image of ${place.location}`}
-                  className="object-cover"
-                  height={200}
-                  src={place.imageUrl}
-                  width="100%"
-                />
-                <CardFooter className="justify-between bg-white/10 border-white/20 border-1 py-1 absolute rounded-lg bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10" >
-                  {/* <p className="text-tiny text-white/80"></p> */}
-                  <Button className="text-tiny  text-white bg-black/20" variant="flat" color="default" radius="lg" size="sm"  endContent={
-                    <Icon icon="mdi:chevron-right" width="24" height="24" />
-                  }  >
-                    {place.location}
-                  </Button>
-                </CardFooter>
-              </Card>
+              <PlaceCard key={place.id} place={place} />
+
             ))}
           </div>
         </div>
