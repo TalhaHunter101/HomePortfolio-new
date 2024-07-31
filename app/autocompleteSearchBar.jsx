@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Autocomplete,
   AutocompleteItem,
@@ -9,6 +9,7 @@ import {
   Input,
   Select,
   SelectItem,
+  Spinner,
 } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
@@ -21,46 +22,50 @@ export default function AutocompleteSearch({ properties }) {
   const [propertyType, setPropertyType] = useState("all");
   const [bedrooms, setBedrooms] = useState("all");
   const [bathrooms, setBathrooms] = useState("all");
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
 
-  const handleSearch = async () => {
-    const response = await fetch("/api/get-listing", {
-      method: "POST",
+  const handleSearch = useCallback(async () => {
+    const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
+    const options = {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+        "x-rapidapi-host": "zoopla.p.rapidapi.com",
       },
-      body: JSON.stringify({
-        searchValue: searchTerm,
-      }),
-    });
+    };
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
+    try {
+      setIsDataLoading(true);
+      setResults([]);
+      
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setResults(result?.data?.geoSuggestion);
+      setIsDataLoading(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsDataLoading(false);
     }
-
-    const properties = await response.json();
-
-    setResults(properties);
-
-    // let results = properties.filter((property) => {
-    //   return property.description
-    //     .toLowerCase()
-    //     .includes(searchTerm.toLowerCase());
-    // });
-
-    // setResults(results);
-  };
+  }, [searchTerm]);
 
   useEffect(() => {
     if (searchTerm === "") {
       setResults(null);
       return;
-    } else if (searchTerm.length >= 3) {
-      handleSearch();
+    } else if (searchTerm.length >= 1) {
+      setIsDataLoading(true);
+      const delayDebounceFn = setTimeout(() => {
+        handleSearch();
+      }, 2000);
+
+      return () => clearTimeout(delayDebounceFn);
     }
-  }, [searchTerm]);
+    
+  }, [searchTerm, handleSearch]);
 
   return (
     <div className="">
@@ -84,7 +89,21 @@ export default function AutocompleteSearch({ properties }) {
         </Button>
       </Card>
 
-      {!areAllArraysEmpty(results) && <SearchDropdown results={results} />}
+      {/* {!areAllArraysEmpty(results) && <SearchDropdown results={results} />} */}
+      {isDataLoading && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="mt-2"
+        >
+          <Card className="max-h-[50vh] overflow-y-auto py-2">
+            <Spinner label="Loading..." color="warning" />
+          </Card>
+        </motion.div>
+      )}
+      {results && results?.length !== 0 && <SearchDropdown results={results} />}
 
       {isAdvancedSearch && (
         <motion.div

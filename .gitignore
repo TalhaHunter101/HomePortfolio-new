@@ -20,6 +20,8 @@
 .DS_Store
 *.pem
 
+oldfun.jsx
+
 # debug
 npm-debug.log*
 yarn-debug.log*
