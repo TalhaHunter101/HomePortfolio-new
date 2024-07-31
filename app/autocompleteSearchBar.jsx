@@ -68,12 +68,13 @@ export default function AutocompleteSearch({ properties }) {
         <Input
           placeholder="Search"
           variant="bordered"
-          className="flex-grow"
+          className="flex-grow radius-lg"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <Button
           color="secondary"
+          radius="lg"
           className="w-full lg:w-auto text-white font-semibold"
           onClick={() => setIsAdvancedSearch(!isAdvancedSearch)}
         >

@@ -9,6 +9,8 @@ import PropertyCard from "@/components/cards/PropertyCard";
 import PartnersScroll from "@/components/partners/partners";
 import AutocompleteSearch from "./autocompleteSearchBar";
 import PlaceCard from "@/components/cards/PlaceCard";
+import SearchInput from "@/components/Homepage/SearchInput";
+import Footer from "@/components/common/Footer/Footer";
 
 
 let features = [
@@ -456,49 +458,30 @@ export default function Home() {
   return (
     <>
       <main>
-        <div className="relative min-h-screen">
-          <div
-            style={{
-              backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
-              backgroundColor: "#e6e6e6",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              minHeight: "100vh",
+      <div className="relative justify-center min-h-screen">
+  <div
+    style={{
+      backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
+      backgroundColor: "#e6e6e6",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      minHeight: "100vh",
+    }}
+    className="flex items-center justify-start bg-background"
+  >
+    <div className="w-11/12 lg:w-1/2 z-10 flex flex-col gap-y-8 h-full text-left pl-10">
+      <p className="font-sans-serif text-white font-bold text-3xl lg:text-6xl md:text-5xl">
+        Find a new home you love
+      </p>
+      <div className="w-full ">
+   
+        <AutocompleteSearch properties={properties} />
+      </div>
+    </div>
+  </div>
+</div>
 
-            }}
-            className="flex items-center justify-center bg-background"
-          >
-            <div className="w-11/12 lg:w-1/2 z-10 relative flex flex-col gap-y-8 items-center justify-center h-full text-center">
-              <p className="font-serif text-white font-bold text-3xl lg:text-6xl md:text-5xl">
-              Find a new home you love
-              </p>
-              {/* <div className="w-full">
-                <Input
-                  bordered
-                  clearable
-                  fullWidth
-                  color="primary"
-                  className="w-full border-2 border-primary"
-                  size="lg"
-                  placeholder="Search for homes"
-                  endContent={<Icon icon="mynaui:search-square" width="3rem" height="3rem" />}
-                />
-              </div> */}
-              <div className="w-full">
-              <AutocompleteSearch properties={properties} />
-              </div>
-
-              {/* <div className="w-full grid grid-cols-1 gap-6 mt-4 md:grid-cols-2 lg:grid-cols-2">
-                {features.map((feature, index) => (
-                  <Button key={index} className="w-full h-12 text-start p-2 text-white rounded-lg bg-black hover:bg-primary">
-                    {feature.description}
-                  </Button>
-                ))}
-              </div> */}
-            </div>
-          </div>
-        </div>
         {/* <div className="flex flex-col p-8 md:p-24 w-full justify-center ">
           <h1 className="text-black font-serif lg:text-6xl md:5xl sm:text-3xl">Don’t buy a home without HomePortfolio AI.</h1>
           <p className="mt-2">Find your exact match with powerful market insights.</p>
@@ -743,7 +726,7 @@ export default function Home() {
               <p>map to be integrated</p>
             </div>
           </div> */}
-          
+          <Footer/>
       </main>
     </>
   );
