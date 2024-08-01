@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 function SearchDropdown({ results }) {
-  console.log("results", results);
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}

@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Card, CardBody, CardHeader, Button, CardFooter } from "@nextui-org/react"
 import { Icon } from "@iconify/react"
 
-export default function PropertyCard({ property }) {
+export default function SmallCard({ property }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const handlePrevious = () => {
@@ -33,7 +33,7 @@ export default function PropertyCard({ property }) {
 
 
               {
- JSON.parse(property.original_image.replace(/'/g, '"')).map((image, index) => (
+               JSON.parse(property.original_image.replace(/'/g, '"')).map((image, index) => (
                   <Image
                     key={index}
                     src={image}

@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
 
           <NavBar />
         {children}
-        <Footer />
+        {/* <Footer /> */}
         </NextThemesProvider>
         </Providers>
         
