@@ -1,3 +1,4 @@
+'use client'
 import {
   Button,
   Card,
@@ -6,11 +7,20 @@ import {
   CardBody,
   Image,
   ButtonGroup,
+  Tabs,
+  Tab
+ 
 } from "@nextui-org/react";
 import React from "react";
 import { Icon } from "@iconify/react";
 import Footer from "@/components/common/Footer/Footer";
 import { SearchMap } from "@/components/Maps/index";
+import Beds from "@/components/SearchPage/beds";
+import Baths from "@/components/SearchPage/baths";
+import Price from "@/components/SearchPage/price";
+import HomeTypes from "@/components/SearchPage/homeTypes";
+import Filter from "@/components/SearchPage/filter";
+import ToggleTab from "@/components/SearchPage/ToggleTab";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -80,43 +90,11 @@ export default function SearchPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Beds
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Baths
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Price
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Home Types
-          </Button>
-          <Button
+         <Beds/>
+          <Baths/>
+         <Price/>
+         <HomeTypes/>
+          {/* <Button
             endContent={<Icon icon="ph:caret-down-fill" />}
             radius="sm"
             size="lg"
@@ -124,10 +102,8 @@ export default function SearchPage() {
             auto
           >
             Open House
-          </Button>
-          <Button radius="sm" size="lg" className="w-full max-w-xs" auto>
-            Filters
-          </Button>
+          </Button> */}
+         <Filter/>
           <Button
             color="primary"
             radius="sm"
@@ -162,6 +138,7 @@ export default function SearchPage() {
           </div>
 
           <div className="flex justify-between items-center p-4 w-full">
+            {/* <ToggleTab/> */}
             <ButtonGroup
               radius="sm"
               size="lg"
@@ -170,6 +147,7 @@ export default function SearchPage() {
               <Button className="flex-1">Homes</Button>
               <Button className="flex-1">Neighborhood</Button>
             </ButtonGroup>
+           
           </div>
 
           <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
