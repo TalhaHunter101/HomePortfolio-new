@@ -22,13 +22,13 @@ function SearchDropdown({ results }) {
             {results?.map((item, i) => (
               <Link
                 key={i}
-                href={`/location/postcode-${item?._source?.post_code.replace(
+                href={`/search/${item?.geoLabel.replace(
                   /\s+/g,
                   "-"
                 )}`}
               >
                 <div
-                  onClick={() => setSearchInput(false)}
+                  // onClick={() => setSearchInput(false)}
                   className="flex my-3 cursor-pointer "
                 >
                   <Image
