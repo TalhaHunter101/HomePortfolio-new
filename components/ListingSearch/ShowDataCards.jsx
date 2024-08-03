@@ -2,6 +2,7 @@ import { Button, ButtonGroup, Card, CardBody, CardHeader, Image } from '@nextui-
 import React from 'react'
 import { SearchMap } from '../Maps/index'
 import Footer from '../common/Footer/Footer';
+import SearchCard from '../SearchPage/SearchCrd';
 
 const defaultProps = {
     lat: Number(23.079727),
@@ -47,23 +48,24 @@ function ShowDataCards({cardData}) {
 
           <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
             {cardData.map((card, index) => (
-              <Card key={index} className="py-4">
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold">
-                    {card.description}
-                  </p>
-                  <small className="text-default-500">{card.address}</small>
-                  <h4 className="font-bold text-large">{card.title}</h4>
-                </CardHeader>
-                <CardBody className="overflow-visible py-2">
-                  <Image
-                    alt={`Card background for ${card.title}`}
-                    className="object-cover rounded-xl"
-                    src={card.imageUris[0]}
-                    width={270}
-                  />
-                </CardBody>
-              </Card>
+              // <Card key={index} className="py-4">
+              //   <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              //     <p className="text-tiny uppercase font-bold">
+              //       {card.description}
+              //     </p>
+              //     <small className="text-default-500">{card.address}</small>
+              //     <h4 className="font-bold text-large">{card.title}</h4>
+              //   </CardHeader>
+              //   <CardBody className="overflow-visible py-2">
+              //     <Image
+              //       alt={`Card background for ${card.title}`}
+              //       className="object-cover rounded-xl"
+              //       src={card.imageUris[0]}
+              //       width={270}
+              //     />
+              //   </CardBody>
+              // </Card>
+              <SearchCard key={index} property={card} />
             ))}
           </div>
           <Footer />
