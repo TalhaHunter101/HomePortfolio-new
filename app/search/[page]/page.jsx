@@ -66,7 +66,6 @@ export default function SearchPage({ params }) {
   const encodedPage = params.page;
   const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
   const locationValue = page.split(/[\s,]+/)[0];
-
   const [listingData, setListingData] = useState(lisitngData)
 
   useEffect(() => {
