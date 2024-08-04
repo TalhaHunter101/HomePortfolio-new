@@ -14,6 +14,12 @@ import Footer from "@/components/common/Footer/Footer";
 import { SearchMap } from "@/components/Maps/index";
 import { lisitngData } from "@/public/dummydata/listingData";
 import ShowDataCards from "@/components/ListingSearch/ShowDataCards";
+import Beds from "@/components/SearchPage/beds";
+import Baths from "@/components/SearchPage/baths";
+import Price from "@/components/SearchPage/price";
+import HomeTypes from "@/components/SearchPage/homeTypes";
+import Filter from "@/components/SearchPage/filter";
+
 
 // Data for the cards
 const cardData = [
@@ -114,43 +120,11 @@ export default function SearchPage({ params }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Beds
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Baths
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Price
-          </Button>
-          <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Home Types
-          </Button>
-          <Button
+         <Beds/>
+          <Baths/>
+         <Price/>
+         <HomeTypes/>
+          {/* <Button
             endContent={<Icon icon="ph:caret-down-fill" />}
             radius="sm"
             size="lg"
@@ -158,10 +132,8 @@ export default function SearchPage({ params }) {
             auto
           >
             Open House
-          </Button>
-          <Button radius="sm" size="lg" className="w-full max-w-xs" auto>
-            Filters
-          </Button>
+          </Button> */}
+         <Filter/>
           <Button
             color="primary"
             radius="sm"
