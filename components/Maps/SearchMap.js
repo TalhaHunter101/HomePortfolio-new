@@ -84,7 +84,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
             >
               <div className="w-full relative cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-105">
                 <img
-                  src={center?.images}
+                  src={center?.images[0]}
                   className="h-52 w-full"
                   alt={center?.development_name}
                 />

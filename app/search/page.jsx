@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Button,
   Card,
@@ -8,8 +8,7 @@ import {
   Image,
   ButtonGroup,
   Tabs,
-  Tab
- 
+  Tab,
 } from "@nextui-org/react";
 import React from "react";
 import { Icon } from "@iconify/react";
@@ -21,10 +20,11 @@ import Price from "@/components/SearchPage/price";
 import HomeTypes from "@/components/SearchPage/homeTypes";
 import Filter from "@/components/SearchPage/filter";
 import ToggleTab from "@/components/SearchPage/ToggleTab";
+import SearchCard from "@/components/SearchPage/SearchCrd";
 
 const defaultProps = {
   lat: Number(23.079727),
-  lng: Number(77.378550),
+  lng: Number(77.37855),
 
   zoom: 13,
 };
@@ -68,8 +68,6 @@ const cardData = [
   },
 ];
 
-
-
 export default function SearchPage() {
   return (
     <main className="flex flex-col h-screen">
@@ -90,10 +88,10 @@ export default function SearchPage() {
         </div>
 
         <div className="flex items-center gap-2">
-         <Beds/>
-          <Baths/>
-         <Price/>
-         <HomeTypes/>
+          <Beds />
+          <Baths />
+          <Price />
+          <HomeTypes />
           {/* <Button
             endContent={<Icon icon="ph:caret-down-fill" />}
             radius="sm"
@@ -103,7 +101,7 @@ export default function SearchPage() {
           >
             Open House
           </Button> */}
-         <Filter/>
+          <Filter />
           <Button
             color="primary"
             radius="sm"
@@ -147,28 +145,11 @@ export default function SearchPage() {
               <Button className="flex-1">Homes</Button>
               <Button className="flex-1">Neighborhood</Button>
             </ButtonGroup>
-           
           </div>
 
           <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
             {cardData.map((card, index) => (
-              <Card key={index} className="py-4">
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold">
-                    {card.description}
-                  </p>
-                  <small className="text-default-500">{card.subtitle}</small>
-                  <h4 className="font-bold text-large">{card.title}</h4>
-                </CardHeader>
-                <CardBody className="overflow-visible py-2">
-                  <Image
-                    alt={`Card background for ${card.title}`}
-                    className="object-cover rounded-xl"
-                    src={card.imageUrl}
-                    width={270}
-                  />
-                </CardBody>
-              </Card>
+              <SearchCard key={index} property={card} />
             ))}
           </div>
           <Footer />
