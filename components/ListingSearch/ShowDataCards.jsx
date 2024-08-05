@@ -55,6 +55,10 @@ function ShowDataCards({ cardData }) {
     setfilter(uniqueDevelopmentData);
   };
 
+  
+  console.log("filter", filter);
+  
+
   useEffect(() => {
     getPropsData();
   }, []);
@@ -98,7 +102,7 @@ function ShowDataCards({ cardData }) {
         </div>
 
         <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
-          {cardData.map((card, index) => (
+          {filter && filter.map((card, index) => (
             <Card
               key={index}
               className="py-4"
@@ -116,7 +120,7 @@ function ShowDataCards({ cardData }) {
                 <Image
                   alt={`Card background for ${card.title}`}
                   className="object-cover rounded-xl"
-                  src={card.imageUris[0]}
+                  src={card?.images}
                   width={270}
                 />
               </CardBody>

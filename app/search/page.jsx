@@ -118,9 +118,9 @@ export default function SearchPage() {
       <div className="w-screen flex flex-grow pt-20">
         {/* static */}
         <div className="w-1/2 flex flex-col gap-4 p-4 mb-10 fixed ">
-          <Card className="h-[70vh] ">
+          {/* <Card className="h-[70vh] ">
             <SearchMap center={defaultProps} />
-          </Card>
+          </Card> */}
         </div>
         {/* scrollable */}
 

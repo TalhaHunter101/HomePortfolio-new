@@ -33,10 +33,13 @@ const MapEventsHandler = ({ setVisibleCenters, centers }) => {
   return null;
 };
 
-const Maps = ({ height, center, hovercard }) => {
+const Maps = ({ height, center, hovercard,setfilter }) => {
   const [likedItems, setLikedItems] = useState({});
   const [visibleCenters, setVisibleCenters] = useState(center);
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
+  if (setfilter) {
+    setfilter(visibleCenters);
+  }
 
   const zoom = 13;
 
@@ -44,6 +47,7 @@ const Maps = ({ height, center, hovercard }) => {
     iconUrl: "/icons/mapmarker.svg",
     iconSize: [32, 32],
   });
+  
 
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
