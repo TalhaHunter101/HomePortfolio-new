@@ -124,15 +124,7 @@ export default function SearchPage({ params }) {
           <Baths/>
          <Price/>
          <HomeTypes/>
-          {/* <Button
-            endContent={<Icon icon="ph:caret-down-fill" />}
-            radius="sm"
-            size="lg"
-            className="w-full justify-between max-w-xs"
-            auto
-          >
-            Open House
-          </Button> */}
+        
          <Filter/>
           <Button
             color="primary"
