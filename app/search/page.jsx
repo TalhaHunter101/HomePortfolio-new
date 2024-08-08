@@ -9,8 +9,9 @@ import {
   ButtonGroup,
   Tabs,
   Tab,
+  Spinner,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Footer from "@/components/common/Footer/Footer";
 import { SearchMap } from "@/components/Maps/index";
@@ -21,6 +22,8 @@ import HomeTypes from "@/components/SearchPage/homeTypes";
 import Filter from "@/components/SearchPage/filter";
 import ToggleTab from "@/components/SearchPage/ToggleTab";
 import SearchCard from "@/components/SearchPage/SearchCrd";
+import { motion } from "framer-motion";
+import SearchDropdown from "@/components/Homepage/SearchDropdown";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -69,8 +72,52 @@ const cardData = [
 ];
 
 export default function SearchPage() {
+  const [isDataLoading, setIsDataLoading] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState([]);
+
+  const handleSearch = useCallback(async () => {
+    const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+        "x-rapidapi-host": "zoopla.p.rapidapi.com",
+      },
+    };
+
+    try {
+      setIsDataLoading(true);
+      setResults([]);
+
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setResults(result?.data?.geoSuggestion);
+      setIsDataLoading(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsDataLoading(false);
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setResults(null);
+      return;
+    } else if (searchTerm.length >= 1) {
+      setIsDataLoading(true);
+      const delayDebounceFn = setTimeout(() => {
+        handleSearch();
+      }, 2000);
+
+      return () => clearTimeout(delayDebounceFn);
+    }
+  }, [searchTerm, handleSearch]);
+
   return (
-    <main className="flex flex-col h-screen">
+    <main className="flex flex-col h-screen relative">
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center px-10">
         <div className="flex items-center p-2 w-full gap-2">
           <Input
@@ -84,6 +131,8 @@ export default function SearchPage() {
             size="lg"
             className="w-full max-w-xs"
             endContent={<Icon icon="fluent-emoji-high-contrast:cross-mark" />}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
@@ -113,6 +162,28 @@ export default function SearchPage() {
           </Button>
         </div>
       </div>
+      <div className="w-[40vw] mx-3 pt-20 absolute top-2">
+        {isDataLoading ? (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mt-2"
+          >
+            <Card className="max-h-[50vh] overflow-y-auto py-2">
+              <Spinner label="Loading..." color="warning" />
+            </Card>
+          </motion.div>
+        ) : (
+          <>
+            {results && results?.length !== 0 && (
+              <SearchDropdown results={results} />
+            )}
+          </>
+        )}
+      </div>
+
       <div className="w-screen flex flex-grow pt-20">
         {/* static */}
         <div className="w-1/2 flex flex-col gap-4 p-4 mb-10 fixed ">
