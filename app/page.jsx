@@ -457,8 +457,8 @@ export default function Home() {
 
   return (
     <>
-      <main>
-      <div className="relative justify-center min-h-screen">
+      <main className="max-w-[87rem] mx-auto flex flex-col items-center justify-center ">
+      <div className="relative w-full justify-center min-h-screen">
   <div
     style={{
       backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
@@ -467,8 +467,9 @@ export default function Home() {
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       minHeight: "100vh",
+      width: "100%",
     }}
-    className="flex items-center justify-start bg-background"
+    className="flex items-center justify-start  bg-background"
   >
     <div className="w-11/12 lg:w-1/2 z-10 flex flex-col gap-y-8 h-full text-left pl-10">
       <p className="font-sans-serif text-white font-bold text-3xl lg:text-6xl md:text-5xl">
@@ -482,141 +483,8 @@ export default function Home() {
   </div>
 </div>
 
-        {/* <div className="flex flex-col p-8 md:p-24 w-full justify-center ">
-          <h1 className="text-black font-serif lg:text-6xl md:5xl sm:text-3xl">Don’t buy a home without HomePortfolio AI.</h1>
-          <p className="mt-2">Find your exact match with powerful market insights.</p>
-          <div className="w-full grid grid-cols-1 gap-6 mt-4 md:grid-cols-2 lg:grid-cols-2">
-            <div className="flex flex-col mt-5 justify-start">
-              <div className="w-full">
-                <div className="font-serif text-5xl pb-5">
-                  <h1>Ask about Home</h1>
-                </div>
-
-                {questions.map((question, index) => (
-                  <div key={index} className="pb-5">
-                    <button
-                      onMouseOver={() => {
-                        console.log(question.value);
-                        setSelectedQuestionKey(question.value);
-                      }}
-                      className="w-full flex text-left p-2 rounded-lg hover:bg-black hover:text-white"
-                    >
-                      {question.description}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col ml-0 md:ml-20 mt-5 items-center w-full md:w-[300px] h-[280px] justify-end">
-              {SelectedQuestionKey &&
-                questions.map((question, index) => {
-                  if (question.value === SelectedQuestionKey) {
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{
-                          x: 0,
-                          y: 0,
-                          scale: 0.8,
-                        }}
-                        animate={{
-                          x: -5,
-                          y: 1,
-                          scale: 1,
-                          duration: 2,
-                        }}
-                      >
-                        <Card
-                          color="primary"
-                          variant="bordered"
-                          className="animate-fade-in"
-                        >
-                          <CardHeader>
-                            <h4>{question.cardDetails.title}</h4>
-                          </CardHeader>
-                          <CardBody>
-                            <p>{question.cardDetails.description}</p>
-                            <Image src={question.cardDetails.image} alt="image" />
-                          </CardBody>
-                        </Card>
-                      </motion.div>
-                    );
-                  }
-                })}
-            </div>
-          </div>
-        </div> */}
-        {/* <div className="flex flex-col p-8 md:p-24 w-full justify-center ">
-          <div className="w-full grid grid-cols-1 gap-6 mt-4 md:grid-cols-2 lg:grid-cols-2">
-            <div className="flex flex-col mt-5 justify-start">
-              <div className="w-full">
-                <div className="font-serif text-5xl pb-5">
-                  <h1>Look for a Home.</h1>
-                </div>
-
-                {questions2.map((question, index) => (
-                  <div key={index} className="pb-5">
-                    <button
-                      onMouseOver={() => {
-                        console.log(question.value);
-                        setSelectedQuestionKey(question.value);
-                      }}
-                      className="w-full flex text-left p-2 rounded-lg hover:bg-black hover:text-white"
-                    >
-                      {question.description}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col ml-0 md:ml-20 mt-5 items-center w-full md:w-[300px] h-[280px] justify-end">
-              {SelectedQuestionKey &&
-                questions2.map((question, index) => {
-                  if (question.value === SelectedQuestionKey) {
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{
-                          x: 0,
-                          y: 0,
-                          scale: 0.8,
-                        }}
-                        animate={{
-                          x: -5,
-                          y: 1,
-                          scale: 1,
-                          duration: 2,
-                        }}
-                      >
-                        <Card
-                          color="primary"
-                          variant="bordered"
-                          className="animate-fade-in"
-                        >
-                          <CardHeader>
-                            <h4>{question.cardDetails.title}</h4>
-                          </CardHeader>
-                          <CardBody>
-                            <p>{question.cardDetails.description}</p>
-                            <Image src={question.cardDetails.image} alt="image" />
-                          </CardBody>
-                        </Card>
-                      </motion.div>
-                    );
-                  }
-                })}
-            </div>
-          </div>
-          <div className="flex flex-col p-8 md:p-24 w-full items-center ">
-            <div className="font-serif pb-4">
-              <p>Ready to see what AI can do for you?</p>
-            </div>
-            <Button className="w-[300px] flex items-center flex-col p-2 rounded-lg hover:bg-black hover:text-white">
-              Start your AI powered search
-            </Button>
-          </div>
-        </div> */}
-        <div className="flex flex-col p-8 md:p-24 w-full justify-starts ">
+       
+        <div className="flex flex-col  md:p-10 w-full justify-starts ">
           <div className="w-full grid items-center justify-start">
             <p className="font-serif font-bold text-3xl pb-5">Your dream home is out there, let us find it</p>
           </div>
@@ -636,7 +504,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col  md:p-24  w-full">
+        <div className="flex flex-col  md:p-8  w-full">
           <div className="w-full grid ">
             <h1 className="font-serif text-3xl font-bold pb-5">Data you can trust, all in one place for free, instantly</h1>
           </div>
@@ -690,42 +558,7 @@ export default function Home() {
 
           
 
-          {/* <div className="flex flex-col  md:p-24 w-full justify-center">
-            <div className="w-full grid items-center justify-start">
-              <h4 className="text-3xl font-serif font-bold pb-4">Explore by regions</h4>
-              <p >HomePortfolio provides a comprehensive database and in-depth analysis for every new UK residential property, neighbourhood, town, city and school - in one platform - for free. Explore the best new homes developments across the UK, by clicking on the region to get the right information about the area you will love to live</p>
-              <div className="w-full grid items-center justify-start">
-                <div className="grid pt-10 grid-cols-1 sm:grid-cols-2 gap-4">
-                  {places1.map((place) => (
-                    <Card
-                      key={place.id}
-                      isHoverable
-                      className="border-none flex flex-row items-center cursor-pointer"
-                      radius="lg"
-                    >
-                      <div className="relative">
-                        <Image
-                          alt={`Image of ${place.location}`}
-                          height={100}
-                          shadow="md"
-                          src={place.imageUrl}
-                          width={100}
-                        />
-                      </div>
-
-                      <div className="flex-grow p-4">
-                        <p className="text-md font-semibold">{place.location}</p>
-                      </div>
-                      <Icon icon="mdi:chevron-right" width="40" height="40" />
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="w-full grid items-center justify-end">
-              <p>map to be integrated</p>
-            </div>
-          </div> */}
+      
           <Footer/>
       </main>
     </>
