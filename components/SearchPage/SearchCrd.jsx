@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, CardBody, Image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-const SearchCard = ({ property }) => {
-  console.log("property", property);
-  
+const SearchCard = ({ property }) => {  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = () => {

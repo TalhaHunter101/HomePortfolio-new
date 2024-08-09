@@ -24,6 +24,8 @@ import ToggleTab from "@/components/SearchPage/ToggleTab";
 import SearchCard from "@/components/SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
+import useStore from "@/store/useStore";
+import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -72,49 +74,20 @@ const cardData = [
 ];
 
 export default function SearchPage() {
-  const [isDataLoading, setIsDataLoading] = useState(false);
+  const { searchTerm, setSearchTerm, results, setResults, isDataLoading, setIsDataLoading } = useStore();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-
-  const handleSearch = useCallback(async () => {
-    const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
-    const options = {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
-        "x-rapidapi-host": "zoopla.p.rapidapi.com",
-      },
-    };
-
-    try {
-      setIsDataLoading(true);
-      setResults([]);
-
-      const response = await fetch(url, options);
-      const result = await response.json();
-      setResults(result?.data?.geoSuggestion);
-      setIsDataLoading(false);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [searchTerm]);
+  const { isDataLoading: loading, results: searchResults } = useFetchZooplaData(searchTerm);
 
   useEffect(() => {
-    if (searchTerm === "") {
-      setResults(null);
-      return;
-    } else if (searchTerm.length >= 1) {
-      setIsDataLoading(true);
-      const delayDebounceFn = setTimeout(() => {
-        handleSearch();
-      }, 2000);
+    setIsDataLoading(loading);
+    setResults(searchResults);
+  }, [loading, searchResults, setIsDataLoading, setResults]);
 
-      return () => clearTimeout(delayDebounceFn);
-    }
-  }, [searchTerm, handleSearch]);
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+
 
   return (
     <main className="flex flex-col h-screen relative">
@@ -132,7 +105,7 @@ export default function SearchPage() {
             className="w-full max-w-xs"
             endContent={<Icon icon="fluent-emoji-high-contrast:cross-mark" />}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleChange}
           />
         </div>
 

@@ -2,13 +2,27 @@
 import React, { useState } from "react";
 import { Popover, PopoverTrigger, PopoverContent, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import useStore from "@/store/useStore";
 
 export default function Price() {
+  const { setMinPrice, setMaxPrice } = useStore();
+
   const [selectedKeys1, setSelectedKeys1] = useState(new Set(["Min Price"]));
   const [selectedKeys2, setSelectedKeys2] = useState(new Set(["Max Price"]));
 
   const selectedValue1 = Array.from(selectedKeys1).join(", ").replaceAll("_", " ");
   const selectedValue2 = Array.from(selectedKeys2).join(", ").replaceAll("_", " ");
+  
+  const handleMinPriceChange = (keys) => {
+    setSelectedKeys1(keys);
+    setMinPrice(Array.from(keys).join(", "));
+  };
+
+  const handleMaxPriceChange = (keys) => {
+    setSelectedKeys2(keys);
+    setMaxPrice(Array.from(keys).join(", "));
+  };
+
 
   return (
     <Popover placement="bottom" showArrow={true}>
@@ -41,13 +55,13 @@ export default function Price() {
               disallowEmptySelection
               selectionMode="single"
               selectedKeys={selectedKeys1}
-              onSelectionChange={setSelectedKeys1}
+              onSelectionChange={handleMinPriceChange}
             >
-              <DropdownItem key="50K">50K</DropdownItem>
-              <DropdownItem key="100K">100K</DropdownItem>
-              <DropdownItem key="200K">200K</DropdownItem>
-              <DropdownItem key="150K">150K</DropdownItem>
-              <DropdownItem key="250K">250K</DropdownItem>
+              <DropdownItem key="50000">50K</DropdownItem>
+              <DropdownItem key="100000">100K</DropdownItem>
+              <DropdownItem key="150000">150K</DropdownItem>
+              <DropdownItem key="200000">200K</DropdownItem>
+              <DropdownItem key="250000">250K</DropdownItem>
             </DropdownMenu>
           </Dropdown>
                <div className=" pt-3 "><Icon icon="ic:round-minus" /></div>
@@ -68,13 +82,13 @@ export default function Price() {
               disallowEmptySelection
               selectionMode="single"
               selectedKeys={selectedKeys2}
-              onSelectionChange={setSelectedKeys2}
+              onSelectionChange={handleMaxPriceChange}
             >
-              <DropdownItem key="50K">50K</DropdownItem>
-              <DropdownItem key="100K">100K</DropdownItem>
-              <DropdownItem key="200K">200K</DropdownItem>
-              <DropdownItem key="150K">150K</DropdownItem>
-              <DropdownItem key="250K">250K</DropdownItem>
+              <DropdownItem key="50000">50K</DropdownItem>
+              <DropdownItem key="100000">100K</DropdownItem>
+              <DropdownItem key="150000">150K</DropdownItem>
+              <DropdownItem key="200000">200K</DropdownItem>
+              <DropdownItem key="250000">250K</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </div>

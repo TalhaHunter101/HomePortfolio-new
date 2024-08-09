@@ -26,7 +26,6 @@ function ShowDataCards({ cardData }) {
   const getPropsData = () => {
     const groupedData = [];
     cardData.forEach((property) => {
-
       const { bedrooms, bathrooms, livingRooms } = property?.attributes;
       const price = parseInt(property?.pricing?.value);
       const images = property?.imageUris;
@@ -56,25 +55,25 @@ function ShowDataCards({ cardData }) {
     setfilter(uniqueDevelopmentData);
   };
 
-  
-  console.log("filter", filter);
-  
-
   useEffect(() => {
     getPropsData();
-  }, []);
+  }, [cardData]);
+
+  console.log(filter, "filter");
 
   return (
     <div className="w-screen flex flex-grow pt-20">
       {/* static */}
       <div className="w-1/2 flex flex-col gap-4 p-4 mb-10 fixed ">
-        <Card className="h-[70vh] ">
-          <SearchMap
-            center={toLocation}
-            hovercard={cardHover}
-            setfilter={setfilter}
-          />
-        </Card>
+        {toLocation.length > 0 && (
+          <Card className="h-[70vh] ">
+            <SearchMap
+              center={toLocation}
+              hovercard={cardHover}
+              setfilter={setfilter}
+            />
+          </Card>
+        )}
       </div>
       {/* scrollable */}
 
@@ -103,9 +102,10 @@ function ShowDataCards({ cardData }) {
         </div>
 
         <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
-          {filter && filter.map((card, index) => (
-            <SearchCard key={index} property={card} />
-          ))}
+          {filter &&
+            filter.map((card, index) => (
+              <SearchCard key={index} property={card} />
+            ))}
         </div>
         <Footer />
       </div>
