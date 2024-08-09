@@ -458,7 +458,7 @@ export default function Home() {
   return (
     <>
       <main className="max-w-[87rem] mx-auto flex flex-col items-center justify-center ">
-      <div className="relative w-full justify-center min-h-screen">
+      <div className="relative w-screen justify-center min-h-screen">
   <div
     style={{
       backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,

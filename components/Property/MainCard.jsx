@@ -67,7 +67,7 @@ const MainCard = ({ images }) => {
         variant="flat"
         radius="sm"
           auto
-          className="absolute  right-5 howver:bg-default  bottom-1 transform -translate-y-1/2"
+          className="absolute  right-5 hover:bg-default  bottom-1 transform -translate-y-1/2"
           startContent={<Icon width={24} height={24} icon="material-symbols:imagesmode-outline" />}
           >
             <p className="text-lg">See all 50 photos</p>
