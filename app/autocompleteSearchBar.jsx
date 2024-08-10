@@ -10,50 +10,54 @@ import {
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
-import { areAllArraysEmpty } from "@/utils/Helper";
 
 export default function AutocompleteSearch({ properties }) {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(null); // Initialize as null
 
-  const handleSearch = useCallback(async () => {
+  const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
       setResults([]);
 
-      // First, call your internal API to search by postcode
-      const postcodeResponse = await fetch(`/api/get-postcode`, {
+      const response = await fetch(`/api/get-postcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ postcode: searchTerm }),
       });
-      const postcodeResult = await postcodeResponse.json();
-      console.log("postcodeResult", postcodeResult);
-      setResults(postcodeResult);
-      
+      const postcodeResult = await response.json();
 
       if (postcodeResult.length > 0) {
         setResults(postcodeResult);
       } else {
-        const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
-        const options = {
-          method: "GET",
-          headers: {
-            "x-rapidapi-key":
-              "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
-            "x-rapidapi-host": "zoopla.p.rapidapi.com",
-          },
-        };
-
-        const zooplaResponse = await fetch(url, options);
-        const zooplaResult = await zooplaResponse.json();
-        setResults(zooplaResult?.data?.geoSuggestion || []);
+        setResults([]); // Clear results if no postcode matches
       }
-
+    } catch (error) {
+      console.error(error);
+    } finally {
       setIsDataLoading(false);
+    }
+  }, [searchTerm]);
+
+  const searchThirdPartyAPI = useCallback(async () => {
+    try {
+      setIsDataLoading(true);
+
+      const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+          "x-rapidapi-host": "zoopla.p.rapidapi.com",
+        },
+      };
+
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setResults(result?.data?.geoSuggestion || []);
     } catch (error) {
       console.error(error);
     } finally {
@@ -64,37 +68,37 @@ export default function AutocompleteSearch({ properties }) {
   useEffect(() => {
     if (searchTerm === "") {
       setResults(null);
-      return;
     } else if (searchTerm.length >= 1) {
-      setIsDataLoading(true);
-      const delayDebounceFn = setTimeout(() => {
-        handleSearch();
-      }, 2000);
-
-      return () => clearTimeout(delayDebounceFn);
+      searchPostcode(); // Immediate search for pincode
     }
-  }, [searchTerm, handleSearch]);
+  }, [searchTerm, searchPostcode]);
+
+  useEffect(() => {
+    if (searchTerm === "" || (results && results.length > 0)) {
+      return;
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      searchThirdPartyAPI(); // Debounced search for third-party API
+    }, 1000); // Adjust debounce timing as needed
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, searchThirdPartyAPI, results?.length]); // Use optional chaining
 
   return (
     <div className="mt-4">
-      {/* <Card className="w-full  p-4 flex flex-col items-center lg:flex-row gap-4"> */}
-        <Input
-          placeholder="Search"
-          variant="bordered"
-          className="flex-grow radius-lg "
-          value={searchTerm}
-          color="primary"
-          size="lg"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          endContent={
-            <
-            >
-              <Icon icon="akar-icons:search" />
-            </>
-          }
-        />
-
-      {/* </Card> */}
+      <Input
+        placeholder="Search"
+        variant="bordered"
+        className="flex-grow radius-lg"
+        value={searchTerm}
+        color="primary"
+        size="lg"
+        onChange={(e) => setSearchTerm(e.target.value)}
+        endContent={
+          <Icon icon="akar-icons:search" />
+        }
+      />
 
       {isDataLoading && (
         <motion.div
@@ -109,7 +113,7 @@ export default function AutocompleteSearch({ properties }) {
           </Card>
         </motion.div>
       )}
-      {results && results?.length !== 0 && <SearchDropdown results={results} />}
+      {results && results.length > 0 && <SearchDropdown results={results} />}
     </div>
   );
 }
