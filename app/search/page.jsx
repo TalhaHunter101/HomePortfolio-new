@@ -11,7 +11,7 @@ import {
   Tab,
   Spinner,
 } from "@nextui-org/react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Footer from "@/components/common/Footer/Footer";
 import { SearchMap } from "@/components/Maps/index";
@@ -74,9 +74,19 @@ const cardData = [
 ];
 
 export default function SearchPage() {
-  const { searchTerm, setSearchTerm, results, setResults, isDataLoading, setIsDataLoading } = useStore();
+  const {
+    searchTerm,
+    setSearchTerm,
+    results,
+    setResults,
+    isDataLoading,
+    setIsDataLoading,
+  } = useStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const { isDataLoading: loading, results: searchResults } = useFetchZooplaData(searchTerm);
+  const { isDataLoading: loading, results: searchResults } =
+    useFetchZooplaData(searchTerm);
 
   useEffect(() => {
     setIsDataLoading(loading);
@@ -87,7 +97,18 @@ export default function SearchPage() {
     setSearchTerm(e.target.value);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <main className="flex flex-col h-screen relative">
@@ -97,7 +118,7 @@ export default function SearchPage() {
             bordered
             clearable
             type="text"
-            label="Enter any location.."
+            
             contentLeft={<Icon icon="search" fill="currentColor" />}
             contentLeftStyling={false}
             placeholder="Location"
@@ -150,8 +171,10 @@ export default function SearchPage() {
           </motion.div>
         ) : (
           <>
-            {results && results?.length !== 0 && (
-              <SearchDropdown results={results} />
+            {isDropdownOpen && results && results?.length !== 0 && (
+              <div ref={dropdownRef}>
+                <SearchDropdown results={results} />
+              </div>
             )}
           </>
         )}

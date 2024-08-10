@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-
   Button,
   Card,
   Input,
@@ -14,33 +13,46 @@ import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import { areAllArraysEmpty } from "@/utils/Helper";
 
 export default function AutocompleteSearch({ properties }) {
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-  const [priceRange, setPriceRange] = useState("all");
-  const [propertyType, setPropertyType] = useState("all");
-  const [bedrooms, setBedrooms] = useState("all");
-  const [bathrooms, setBathrooms] = useState("all");
   const [isDataLoading, setIsDataLoading] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
 
   const handleSearch = useCallback(async () => {
-    const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
-    const options = {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
-        "x-rapidapi-host": "zoopla.p.rapidapi.com",
-      },
-    };
-
     try {
       setIsDataLoading(true);
       setResults([]);
+
+      // First, call your internal API to search by postcode
+      const postcodeResponse = await fetch(`/api/get-postcode`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postcode: searchTerm }),
+      });
+      const postcodeResult = await postcodeResponse.json();
+      console.log("postcodeResult", postcodeResult);
+      setResults(postcodeResult);
       
-      const response = await fetch(url, options);
-      const result = await response.json();
-      setResults(result?.data?.geoSuggestion);
+
+      if (postcodeResult.length > 0) {
+        setResults(postcodeResult);
+      } else {
+        const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
+        const options = {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key":
+              "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+            "x-rapidapi-host": "zoopla.p.rapidapi.com",
+          },
+        };
+
+        const zooplaResponse = await fetch(url, options);
+        const zooplaResult = await zooplaResponse.json();
+        setResults(zooplaResult?.data?.geoSuggestion || []);
+      }
+
       setIsDataLoading(false);
     } catch (error) {
       console.error(error);
@@ -61,7 +73,6 @@ export default function AutocompleteSearch({ properties }) {
 
       return () => clearTimeout(delayDebounceFn);
     }
-    
   }, [searchTerm, handleSearch]);
 
   return (
@@ -79,13 +90,10 @@ export default function AutocompleteSearch({ properties }) {
           radius="lg"
           className="w-full lg:w-auto text-white font-semibold"
         >
-          <p className="p-1 flex items-start">
-            Search{" "}
-          </p>
+          <p className="p-1 flex items-start">Search </p>
         </Button>
       </Card>
 
-      {/* {!areAllArraysEmpty(results) && <SearchDropdown results={results} />} */}
       {isDataLoading && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -100,7 +108,6 @@ export default function AutocompleteSearch({ properties }) {
         </motion.div>
       )}
       {results && results?.length !== 0 && <SearchDropdown results={results} />}
-
     </div>
   );
 }

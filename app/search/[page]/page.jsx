@@ -1,6 +1,6 @@
 "use client";
 import { Button, Card, Input, Spinner } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { lisitngData } from "@/public/dummydata/listingData";
 import ShowDataCards from "@/components/ListingSearch/ShowDataCards";
@@ -13,13 +13,19 @@ import useStore from "@/store/useStore";
 import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
+import withClickOutside from "@/components/DropdownHOC";
+
+const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
 export default function SearchPage({ params }) {
   const encodedPage = params.page;
   const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
   const locationValue = page.split(/[\s,]+/)[0];
-  const [listingData, setListingData] = useState(lisitngData);
+  const [listingData, setListingData] = useState([]);
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+
   const {
     searchTerm,
     setSearchTerm,
@@ -37,6 +43,7 @@ export default function SearchPage({ params }) {
   useEffect(() => {
     setIsDataLoading(loading);
     setResults(searchResults);
+    setIsDropdownOpen(true);
   }, [loading, searchResults, setIsDataLoading, setResults]);
 
   const handleChange = (e) => {
@@ -68,10 +75,10 @@ export default function SearchPage({ params }) {
       setisnewDataLoading(true);
       const response = await fetch(url, options);
       const result = await response.json();
-      console.log(result?.data?.listings?.regular);
-
       setListingData(result?.data?.listings?.regular);
+      setTotalCount(result?.data?.analyticsTaxonomy?.searchResultsCount);
       setisnewDataLoading(false);
+      setIsDropdownOpen(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -80,20 +87,18 @@ export default function SearchPage({ params }) {
   };
 
   useEffect(() => {
-    // fetchProperties();
+    fetchProperties();
   }, [page]);
 
   return (
-    
     <main className="flex flex-col h-screen">
-      
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center px-10">
         <div className="flex items-center p-2 w-full gap-2">
           <Input
             bordered
-            clearable
+            
             type="text"
-            label="Enter any location.."
+           
             value={searchTerm}
             contentLeft={
               <Icon
@@ -145,8 +150,11 @@ export default function SearchPage({ params }) {
             </motion.div>
           ) : (
             <>
-              {results && results?.length !== 0 && (
-                <SearchDropdown results={results} />
+              {isDropdownOpen && results && results?.length !== 0 && (
+                <SearchDropdownWithClickOutside
+                  results={results}
+                  onClose={() => setIsDropdownOpen(false)} // Handle closing of dropdown
+                />
               )}
             </>
           )}
@@ -166,7 +174,7 @@ export default function SearchPage({ params }) {
           </Card>
         </motion.div>
       ) : (
-        <ShowDataCards cardData={listingData} />
+        <ShowDataCards totalcount={totalCount} cardData={listingData} />
       )}
     </main>
   );

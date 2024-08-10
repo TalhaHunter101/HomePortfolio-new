@@ -62,7 +62,7 @@ const SearchCard = ({ property }) => {
           <h3 className="text-bold text-2xl">
             {property?.maxPrice}
             <span className="ml-4 text-xl text-bold">
-              | {property?.bedrooms} Beds |
+              | {property?.minBedrooms} Beds |
             </span>
             <span className="ml-4 text-xl text-bold">
               | {property?.bathrooms} Baths |

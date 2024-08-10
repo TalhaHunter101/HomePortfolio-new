@@ -22,10 +22,11 @@ function SearchDropdown({ results }) {
             {results?.map((item, i) => (
               <Link
                 key={i}
-                href={`/search/${item?.geoLabel.replace(
-                  /\s+/g,
-                  "-"
-                )}`}
+                href={`/search/${
+                  item?.geoLabel
+                    ? item?.geoLabel.replace(/\s+/g, "-")
+                    : item?.Postcode.replace(/\s+/g, "-")
+                }`}
               >
                 <div
                   // onClick={() => setSearchInput(false)}
@@ -40,7 +41,7 @@ function SearchDropdown({ results }) {
                   />
                   <div>
                     <p className="text-sm text-primaryfonts">
-                      {item?.geoLabel}
+                      {item?.geoLabel ? item?.geoLabel : item?.Postcode}
                     </p>
                   </div>
                 </div>
