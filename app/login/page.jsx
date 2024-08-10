@@ -1,22 +1,51 @@
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
 import {Button, Input, Checkbox, Link, Divider} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
+import { login } from "./action";
+import toast, { Toaster } from "react-hot-toast";
 
 // import {AcmeIcon} from "./acme";
 
+
+
+async function handleLogin(formData) {
+  const response = await login(formData);
+  if (!response.success) {
+    toast.error(response.message);
+  } else {
+    toast.success(response.message);
+    window.location.href = '/dashboard';
+  }
+}
+
+
 export default function Component() {
   const [isVisible, setIsVisible] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+
+
+
+
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setLoading(true);
+  const formData = new FormData(event.currentTarget);
+  await handleLogin(formData);
+  setLoading(false);
+};
 
   return (
     <div className="flex h-full  w-full flex-col items-center justify-center">
         <p className="text-2xl mt-4 font-bold text-center">Log In</p>
 
       <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">
-        <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <Input
             label="Email Address"
             name="email"

@@ -1,40 +1,40 @@
 "use client";
 
 import React from "react";
-import {Divider, Link} from "@nextui-org/react";
-import {Icon} from "@iconify/react";
+import { Divider, Link } from "@nextui-org/react";
+import { Icon } from "@iconify/react";
 
-import {AcmeIcon} from "./acme";
+import { AcmeIcon } from "./acme";
 import ThemeSwitch from "./theme-switch";
 
 const footerNavigation = {
   services: [
-    {name: "Branding", href: "#"},
-    {name: "Data Analysis", href: "#"},
-    {name: "E-commerce Solutions", href: "#"},
-    {name: "Market Research", href: "#"},
+    { name: "Branding", href: "#" },
+    { name: "Data Analysis", href: "#" },
+    { name: "E-commerce Solutions", href: "#" },
+    { name: "Market Research", href: "#" },
   ],
 
   supportOptions: [
-    {name: "Pricing Plans", href: "#"},
-    {name: "User Guides", href: "#"},
-    {name: "Tutorials", href: "#"},
-    {name: "Service Status", href: "#"},
+    { name: "Pricing Plans", href: "#" },
+    { name: "User Guides", href: "#" },
+    { name: "Tutorials", href: "#" },
+    { name: "Service Status", href: "#" },
   ],
 
   aboutUs: [
-    {name: "Our Story", href: "#"},
-    {name: "Latest News", href: "#"},
-    {name: "Career Opportunities", href: "#"},
-    {name: "Media Enquiries", href: "#"},
-    {name: "Collaborations", href: "#"},
+    { name: "Our Story", href: "#" },
+    { name: "Latest News", href: "#" },
+    { name: "Career Opportunities", href: "#" },
+    { name: "Media Enquiries", href: "#" },
+    { name: "Collaborations", href: "#" },
   ],
 
   legal: [
-    {name: "Claim", href: "#"},
-    {name: "Privacy", href: "#"},
-    {name: "Terms", href: "#"},
-    {name: "User Agreement", href: "#"},
+    { name: "Claim", href: "#" },
+    { name: "Privacy", href: "#" },
+    { name: "Terms", href: "#" },
+    { name: "User Agreement", href: "#" },
   ],
 
   social: [
@@ -63,7 +63,7 @@ const footerNavigation = {
 
 export default function Footer() {
   const renderList = React.useCallback(
-    ({title, items}) => (
+    ({ title, items }) => (
       <div>
         <h3 className="text-small font-semibold text-default-600">{title}</h3>
         <ul className="mt-6 space-y-4">
@@ -77,13 +77,12 @@ export default function Footer() {
         </ul>
       </div>
     ),
-
-    [],
+    []
   );
 
   return (
-    <footer className="flex w-full flex-col">
-      <div className="max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+    <footer className="flex w-screen flex-col">
+      <div className="px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 md:pr-8">
             <div className="flex items-center justify-start">
@@ -105,16 +104,14 @@ export default function Footer() {
           </div>
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>{renderList({title: "Services", items: footerNavigation.services})}</div>
+              <div>{renderList({ title: "Services", items: footerNavigation.services })}</div>
               <div className="mt-10 md:mt-0">
-                {renderList({title: "Support", items: footerNavigation.supportOptions})}
-              </div>
+                {renderList({ title: "Support", items: footerNavigation.supportOptions })}</div>
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>{renderList({title: "About Us", items: footerNavigation.aboutUs})}</div>
+              <div>{renderList({ title: "About Us", items: footerNavigation.aboutUs })}</div>
               <div className="mt-10 md:mt-0">
-                {renderList({title: "Legal", items: footerNavigation.legal})}
-              </div>
+                {renderList({ title: "Legal", items: footerNavigation.legal })}</div>
             </div>
           </div>
         </div>

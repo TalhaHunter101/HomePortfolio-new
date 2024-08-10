@@ -4,6 +4,7 @@ import Providers from "@/Providers";
 import NavBar from "@/components/common/Nav/Navbar";
 import Footer from "@/components/common/Footer/Footer";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,8 @@ export default function RootLayout({ children }) {
         <NextThemesProvider attribute="class" defaultTheme="light">
 
           <NavBar />
+          <Toaster position="bottom-center" />
+
         {children}
         {/* <Footer /> */}
         </NextThemesProvider>

@@ -13,6 +13,7 @@
     "@iconify/react": "^5.0.2",
     "@maptiler/leaflet-maptilersdk": "^2.0.0",
     "@nextui-org/react": "^2.4.6",
+    "@supabase/ssr": "^0.4.0",
     "embla-carousel-react": "^8.1.7",
     "framer-motion": "^11.3.17",
     "leaflet": "^1.9.4",
@@ -21,7 +22,10 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "react-leaflet": "^4.2.1",
+    "supabase": "^1.187.10",
+    "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

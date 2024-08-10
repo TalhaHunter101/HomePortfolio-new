@@ -40,12 +40,19 @@ const SearchCard = ({ property }) => {
             </div>
           </div>
           <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
-            <Button size="sm" variant="light" onClick={handlePrevious}>
-              <Icon icon="bx:bx-chevron-left" width={24} height={24} />
+            <Button
+            isIconOnly
+            variant="ghost"
+            radius="full"
+            size="sm"  onClick={handlePrevious}>
+              <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
               <span className="sr-only">Previous</span>
             </Button>
-            <Button size="sm" variant="light" onClick={handleNext}>
-              <Icon icon="bx:bx-chevron-right" width={24} height={24} />
+            <Button
+            isIconOnly
+            variant="ghost"
+            radius="full" size="sm"  onClick={handleNext}>
+              <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
               <span className="sr-only">Next</span>
             </Button>
           </div>

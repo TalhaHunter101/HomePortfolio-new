@@ -84,7 +84,9 @@ export default function SearchPage({ params }) {
   }, [page]);
 
   return (
+    
     <main className="flex flex-col h-screen">
+      
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center px-10">
         <div className="flex items-center p-2 w-full gap-2">
           <Input

@@ -62,6 +62,7 @@ function ShowDataCards({ cardData }) {
   console.log(filter, "filter");
 
   return (
+    
     <div className="w-screen flex flex-grow pt-20">
       {/* static */}
       <div className="w-1/2 flex flex-col gap-4 p-4 mb-10 fixed ">
@@ -78,7 +79,7 @@ function ShowDataCards({ cardData }) {
 
       <div className="w-1/2 flex flex-col p-6 overflow-y-auto ml-auto height-full">
         <div className="flex justify-between items-center p-4">
-          <h3 className="text-3xl uppercase font-bold">35000+ Properties</h3>
+          <h3 className="hidden md:flex text-3xl uppercase font-bold">35000+ Properties</h3>
           <div className="flex space-x-2">
             <Button radius="sm" size="lg" className="w-full max-w-xs" auto>
               hide map
