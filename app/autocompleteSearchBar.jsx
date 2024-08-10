@@ -65,25 +65,25 @@ export default function AutocompleteSearch({ properties }) {
   }, [searchTerm, handleSearch]);
 
   return (
-    <div className="">
-      <Card className="w-full  p-4 flex flex-col items-center lg:flex-row gap-4">
+    <div className="mt-4">
+      {/* <Card className="w-full  p-4 flex flex-col items-center lg:flex-row gap-4"> */}
         <Input
           placeholder="Search"
           variant="bordered"
-          className="flex-grow radius-lg"
+          className="flex-grow radius-lg "
           value={searchTerm}
+          color="primary"
+          size="lg"
           onChange={(e) => setSearchTerm(e.target.value)}
+          endContent={
+            <
+            >
+              <Icon icon="akar-icons:search" />
+            </>
+          }
         />
-        <Button
-          color="secondary"
-          radius="lg"
-          className="w-full lg:w-auto text-white font-semibold"
-        >
-          <p className="p-1 flex items-start">
-            Search{" "}
-          </p>
-        </Button>
-      </Card>
+
+      {/* </Card> */}
 
       {/* {!areAllArraysEmpty(results) && <SearchDropdown results={results} />} */}
       {isDataLoading && (

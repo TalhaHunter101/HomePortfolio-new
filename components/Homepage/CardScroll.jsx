@@ -13,8 +13,8 @@ const cards = Array.from({ length: 10 }, (_, index) => ({
 export default function CardsScroll() {
   return (
     <section className="relative bg-transparent w-full m-2 px-6 py-2 sm:py-2 lg:px-8 lg:py-6">
-      <div className="w-screen">
-        <ScrollingBanner shouldPauseOnHover duration={50} className="w-screen bg-transparent" gap="40px">
+      <div className="max-w-full">
+        <ScrollingBanner shouldPauseOnHover duration={50} className="w-full bg-transparent" gap="40px">
           {cards.map(({ key, title, subtitle, imageSrc }) => (
             <Card
               shadow="md" // Medium shadow for visible effect
