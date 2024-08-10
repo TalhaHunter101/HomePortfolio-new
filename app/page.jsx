@@ -1,7 +1,7 @@
 'use client';
 
 import React from "react";
-import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image, Chip } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import AutocompleteSearch from "./autocompleteSearchBar";
 import PlaceCard from "@/components/cards/PlaceCard";
 import SearchInput from "@/components/Homepage/SearchInput";
 import Footer from "@/components/common/Footer/Footer";
+import CardsScroll from "@/components/Homepage/CardScroll";
 
 
 let features = [
@@ -371,7 +372,7 @@ let properties = [
     "document": "",
     "audio_tour": ""
   }
-  ,{
+  , {
     "last_sale_price": "",
     "rental_prices": "{'shared_occupancy': 'N', 'per_week': 219, 'accurate': 'per_month', 'per_month': 950}",
     "country_code": "gb",
@@ -458,108 +459,281 @@ export default function Home() {
   return (
     <>
       <main className="max-w-[87rem] mx-auto flex flex-col items-center justify-center ">
-      <div className="relative w-screen justify-center min-h-screen">
-  <div
-    style={{
-      backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
-      backgroundColor: "#e6e6e6",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      minHeight: "100vh",
-      width: "100%",
-    }}
-    className="flex items-center justify-start  bg-background"
-  >
-    <div className="w-11/12 lg:w-1/2 z-10 flex flex-col gap-y-8 h-full text-left pl-10">
-      <p className="font-sans-serif text-white font-bold text-3xl lg:text-6xl md:text-5xl">
-        Find a new home you love
-      </p>
-      <div className="w-full ">
-   
-        <AutocompleteSearch properties={properties} />
-      </div>
-    </div>
-  </div>
-</div>
+        <div className="relative w-screen justify-center min-h-screen">
+          <div
+            style={{
+              backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
+              backgroundColor: "#e6e6e6",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+            className="flex items-center justify-start  bg-background"
+          >
+            <div
 
-       
-        <div className="flex flex-col  md:p-10 w-full justify-starts ">
-          <div className="w-full grid items-center justify-start">
-            <p className="font-serif font-bold text-3xl pb-5">Your dream home is out there, let us find it</p>
-          </div>
-          <div className="w-full items-start justify-start">
-            <p>So you’re looking for your dream home but you have some pretty specific requirements? HomePortfolio’s here to help you.</p>
-            <p>We love picky home buyers! With more home data and search filters than anyone else, there’s no better place for your home search.</p>
-          </div>
-          <div className="flex flex-col mt-4 mb-4 w-full items-start ">
-            <Button className="w-[300px] flex items-center flex-col p-2 rounded-lg bg-secondary text-white">
-              Browse new builds for sale
-            </Button>
-          </div>
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {places.map((place, index) => (
-              <PlaceCard key={place.id} place={place} />
+              className="w-11/12 lg:w-1/2 z-10 flex flex-col gap-y-8 h-full text-left pl-10">
+              <p className="font-sans-serif text-white font-bold text-3xl lg:text-6xl md:text-5xl">
+                Find a new home you love
+              </p>
+              <div className="w-full ">
 
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-col  md:p-8  w-full">
-          <div className="w-full grid ">
-            <h1 className="font-serif text-3xl font-bold pb-5">Data you can trust, all in one place for free, instantly</h1>
-          </div>
-          <div className="w-full">
-            <p>HomePortfolio provides a comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free.</p>
-            <p>We put together all the residential property data and mix in demographics, macro-economic, school quality, planning applications, crime rate, energy efficiency, environmental, census, local information data, and much more, enabling you to quickly streamline your research and diligence, make informed decisions with confidence - save time and effort.</p>
-          </div>
-          <Card className="flex flex-col md:flex-row justify-between items-center mt-10 shadow-cardShadow py-2 px-5 rounded-md ">
-            <div className="flex flex-col p-10 justify-start">
-              <p className="my-4 font-serif  font-bold text-3xl">250+ comparison data points</p>
-              <div className="w-full md:w-1/2 grid justify-start">
-                <p>Narrow down your new dream home search with over 250 comparison datapoints! With the most in-depth analysis available anywhere else, find homes that fits your needs, wants, budget, and more.</p>
-              </div>
-              <div className="w-full md:w-1/2 grid pt-5 justify-start">
-                <Button className="w-[300px] flex text-start flex-col p-2 rounded-lg font-semibold bg-secondary text-white">
-                  Browse
-                </Button>
+                <AutocompleteSearch properties={properties} />
               </div>
             </div>
-            <div className="w-full grid items-center justify-end">
+          </div>
+        </div>
+
+
+        <div className="flex flex-col md:p-10 w-full justify-center">
+          <div className="w-full flex items-center justify-center">
+            <p className="font-serif text-xl text-default-700 pb-5">
+              Trusted by popular startups you know
+            </p>
+          </div>
+          <div className="w-full pl-20   flex flex-row justify-center space-x-4">
+            <div className="flex flex-col   md:p-8  w-full text-gray-500 my-2 h-7 md:h-9">
+              <img src="MainPageImg/mainpage.svg" alt="logo" />
+            </div>
+            <div className="flex flex-col  md:p-8  w-full text-gray-500 my-2 h-7 md:h-9">
+              <img src="MainPageImg/intercom.svg" alt="logo" />
+            </div>
+            <div className="flex flex-col  md:p-8  w-full text-gray-500 my-2 h-7 md:h-9">
+              <img src="MainPageImg/hubspot.svg" alt="logo" />
+            </div>
+            <div className="flex flex-col  md:p-8  w-full text-gray-500 my-2 h-7 md:h-9">
+              <img src="MainPageImg/stripe.svg" alt="logo" />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col  justify-center md:p-8  w-full">
+          <div className="w-full md:w-1/2 flex items-center justify-center p-5">
+            <Chip variant="flat" color="secondary">
+              Two-Col Features
+            </Chip>
+          </div>
+          <div className="w-full justify-center">
+            <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">Supercharge Your Workflows</h2>
+            <p className="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.</p>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center mt-10  py-2 px-5 rounded-md ">
+            <div className="w-full  grid items-center justify-start">
               <Image
                 width={400}
                 height={400}
                 loading="lazy"
                 alt="250+ data points"
-                src="/datapoint-image.svg"
+                src="https://astroship-pro.web3templates.com/_astro/6.Ep0jo6kx_jbH81.avif"
               />
             </div>
-          </Card>
+            <div className="flex flex-col   justify-end">
+              <div className="w-full  md:w-1/2 grid p-5  justify-center">
+                <Chip variant="flat" className="" color="secondary" >simplified qorkflows</Chip>
+              </div>
+              <div className="w-full md:w-1/2 grid justify-end">
+                <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">Experience the Ultimate Boost in Productivity with Our Intuitive Platform</h3>
+                <p className="mt-4 text-slate-600 [text-wrap:balance]">Streamline your tasks and collaborate seamlessly with our cutting-edge SaaS startup platform. Unlock the potential of your team and take productivity to new heights.</p>
+                <ul className="mt-4">
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Intelligent Task Management</li>
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Real-time Collaboration</li>
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Data Security & Privacy</li>
+
+                </ul>
+              </div>
+              <div className="w-full md:w-1/2 flex flex-row pt-5 justify-end space-x-4">
+                <Button
+                  radius="full"
+                  color="primary"
+                  size="lg"
+                  variant="bordered"
+                  className=" w-[150px] text-sm  ">
+                  start 14 day trial
+                </Button>
+                <Button
+                  variant="flat" className="w-[150px] p-2 mt-2 rounded-lg font-semibold bg-transparent text-primary">
+                  Contact Sales
+                </Button>
+              </div>
+            </div>
+
+
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center mt-10  py-2 px-5 rounded-md ">
+            <div className="flex flex-col   justify-end">
+              <div className="w-full md:w-1/2 grid p-5  justify-center">
+                <Chip variant="flat" className="" color="secondary" >AI-Powered Insights</Chip>
+              </div>
+              <div className="w-full md:w-1/2 grid justify-end">
+                <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">Supercharge Your Marketing Strategy with Advanced Analytics</h3>
+                <p className="mt-4 text-slate-600 [text-wrap:balance]">Harness the potential of AI-driven marketing analytics to optimize your campaigns, understand your audience better, and achieve unprecedented growth.</p>
+                <ul className="mt-4">
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Smart Audience Segmentation</li>
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Predictive Campaign Performance</li>
+                  <li className="text-slate-600 text-sm"><Icon className="inline m-2" icon="teenyicons:tick-circle-solid" />Real-time Data Visualization</li>
+
+                </ul>
+              </div>
+              <div className="w-full md:w-1/2 flex flex-row pt-5 justify-end space-x-4">
+                <Button
+                  radius="full"
+                  color="primary"
+                  size="lg"
+                  variant="bordered"
+                  className=" w-[150px] text-sm  ">
+                  start 14 day trial
+                </Button>
+                <Button
+                  variant="flat" className="w-[150px] p-2 mt-2 rounded-lg font-semibold bg-transparent text-primary">
+                  Contact Sales
+                </Button>
+              </div>
+            </div>
+            <div className="w-full  grid items-center justify-start">
+              <Image
+                width={600}
+                height={400}
+                loading="lazy"
+                alt="250+ data points"
+                src="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
+              />
+            </div>
+
+
+
+          </div>
         </div>
         <div className="flex flex-col  md:p-24 w-full justify-center">
-          <div className="w-full  grid  items-center justify-start">
-            <p className="font-serif text-3xl font-bold pb-5">Popular Nearby Developments</p>
+          <div className="w-full  grid  items-center ">
+            <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">Client <span class="text-primary">Testimonials</span></h2>
+            <p className="text-lg mt-4 text-slate-600 text-center">Astroship is trusted by the world's leading companies and brands.</p>
           </div>
 
 
-<div className="w-full grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-  {
-    properties.map((property, index) => (
-      <PropertyCard key={index} property={property} options={{ loop: true }} />
-    ))
-  }
-</div>
+          <div className="w-full p-5">
+            {/* {
+              properties.map((property, index) => (
+                <PropertyCard key={index} property={property} options={{ loop: true }} />
+              ))
+            } */}
+            <CardsScroll />
+          </div>
 
-</div>
-<div className="flex flex-col  md:p-24 w-full justify-center">
-  <p className="font-serif text-3xl font-bold">Our Partners</p>
+        </div>
+        <div className="flex flex-col  md:p-24 w-full justify-center">
+          <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">Everything you need to <span class="text-primary">start a website</span></h2>
+          <p class="text-lg mt-4 text-slate-600">
+            Astro comes batteries included. It takes the best parts of state-of-the-art
+            tools and adds its own innovations.
+          </p>
+          <div className="container mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {/* Top Row */}
+              <div className="col-span-2 lg:col-span-2">
+                <Card className="w-full h-full">
+                  <Image
+                    src="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </Card>
+              </div>
+              <div className="col-span-1 lg:col-span-1">
+                <Card className="w-full h-full">
+                  <Image
+                    src="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </Card>
+              </div>
 
-<PartnersScroll />
-</div>
+              {/* Bottom Row */}
+              <div className="col-span-1 lg:col-span-1">
+                <Card className="w-full h-full">
+                  <Image
+                    src="https://astroship-pro.web3templates.com/_astro/3.XiLsQFjx_Z1JuNDf.avif"
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </Card>
+              </div>
+              <div className="col-span-1 lg:col-span-1">
+                <Card className="w-full h-full">
+                  <Image
+                    src="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </Card>
+              </div>
+              <div className="col-span-1 lg:col-span-1">
+                <Card className="w-full h-full">
+                  <Image
+                    src="https://astroship-pro.web3templates.com/_astro/integrations.HhfHOMQB.svg"
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </Card>
+              </div>
+            </div>
+          </div>
+          <div className="mt-24 max-w-3xl mx-auto flex flex-col items-center justify-center"> <span class="bg-purple-100 border-purple-200 border text-purple-600 rounded-full text-xs font-medium px-3 py-1 "> MORE FEATURES </span> <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+            We've got you covered
+          </h2> <p className="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">
+              Our template covers all things SAAS. If you don't find what you're looking
+              for, contact us and we'll either help you or steer you in the right
+              direction.
+            </p> </div>
 
-          
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-8 md:gap-16">
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
 
-      
-          <Footer/>
+            </div>
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
+
+            </div>
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
+
+            </div>
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
+
+            </div>
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
+
+            </div>
+            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
+              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">svg</div>
+              <div> <h3 className="font-semibold text-lg">Bring Your Own Framework</h3> <p className="text-slate-500 mt-2 leading-relaxed">Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.</p> </div>
+
+            </div>
+
+
+
+          </div>
+          <div class="bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center"> <h2 class="text-white text-4xl md:text-6xl tracking-tight">
+            Build faster websites.
+          </h2> <p class="text-white/70 mt-4 text-lg md:text-xl">
+              Pull content from anywhere and serve it fast with Astro's next-gen island
+              architecture.
+            </p> <div class="flex mt-5"> <a href="#" className="rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 focus-visible:outline-none focus-visible:shadow-outline-indigo px-7 py-2.5 bg-white text-indigo-800 border-2 border-transparent">Sign up for a 14-day Trial </a> </div> </div>
+        </div>
+
+
+
+
+        <Footer />
       </main>
     </>
   );
