@@ -6,11 +6,14 @@ import {
   Marker,
   Popup,
   useMapEvent,
+  useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { Chip, Image } from "@nextui-org/react";
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+
 
 const MapEventsHandler = ({ setVisibleCenters, centers }) => {
   const map = useMapEvent({
@@ -29,6 +32,24 @@ const MapEventsHandler = ({ setVisibleCenters, centers }) => {
     );
     setVisibleCenters(visibleCenters);
   };
+
+  return null;
+};
+
+
+
+const MapTilerLayerComponent = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const mtLayer = new MaptilerLayer({
+      apiKey: "685vx5hNgMMOFvoFvLAX",
+    }).addTo(map);
+
+    return () => {
+      map.removeLayer(mtLayer);
+    };
+  }, [map]);
 
   return null;
 };
@@ -127,15 +148,21 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
       <MapContainer
         center={[initialCenter.lat, initialCenter.lng]}
         zoom={zoom}
+        maxZoom={28}
+        minZoom={1}
+        
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
         }}
+        
       >
-        <TileLayer
+        {/* <TileLayer
           url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-        />
+        /> */}
+
+        <MapTilerLayerComponent />
         <MapEventsHandler
           setVisibleCenters={setVisibleCenters}
           centers={center}

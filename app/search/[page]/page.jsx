@@ -18,7 +18,7 @@ export default function SearchPage({ params }) {
   const encodedPage = params.page;
   const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
   const locationValue = page.split(/[\s,]+/)[0];
-  const [listingData, setListingData] = useState([]);
+  const [listingData, setListingData] = useState(lisitngData);
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
   const {
     searchTerm,
@@ -80,7 +80,7 @@ export default function SearchPage({ params }) {
   };
 
   useEffect(() => {
-    fetchProperties();
+    // fetchProperties();
   }, [page]);
 
   return (

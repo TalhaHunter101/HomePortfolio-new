@@ -65,7 +65,6 @@ function ShowDataCards({ cardData }) {
     <div className="w-screen flex flex-grow pt-20">
       {/* static */}
       <div className="w-1/2 flex flex-col gap-4 p-4 mb-10 fixed ">
-        {toLocation.length > 0 && (
           <Card className="h-[70vh] ">
             <SearchMap
               center={toLocation}
@@ -73,7 +72,7 @@ function ShowDataCards({ cardData }) {
               setfilter={setfilter}
             />
           </Card>
-        )}
+        
       </div>
       {/* scrollable */}
 
