@@ -85,11 +85,7 @@ export default function PropertyPage({ params }) {
     
     ]
     
-    const images = [
-        "https://nextui.org/images/hero-card-complete.jpeg",
-        "https://nextui.org/images/card-example-2.jpeg",
-        "https://nextui.org/images/card-example-3.jpeg"
-      ];
+   
       const mainImages = lisitngData[0].imageUris;  // All images for MainCard
       const thumbnailImages = lisitngData[0].imageUris.slice(0, 4); //first 4 images for thumbnails
       const { bedrooms, bathrooms } = lisitngData[0].attributes;
