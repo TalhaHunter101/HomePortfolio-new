@@ -18,7 +18,7 @@ const SearchCard = ({ property }) => {
   };
 
   return (
-    <Card className="py-4">
+    <Card className="">
       <CardBody className="overflow-hidden py-2">
         <div className="relative">
           <div className="w-full overflow-hidden rounded-lg">
@@ -58,51 +58,51 @@ const SearchCard = ({ property }) => {
           </div>
         </div>
 
-        <div className="p-4">
+        <div className="p-1">
           <h3 className="text-bold text-2xl">
-            {property?.maxPrice}
-            <span className="ml-4 text-xl text-bold">
-              | {property?.minBedrooms} Beds |
-            </span>
-            <span className="ml-4 text-xl text-bold">
-              | {property?.bathrooms} Baths |
-            </span>
-            <span className="ml-4 text-xl text-bold">
-              {property?.squareFeet} Sqft
-            </span>
+          £{property?.maxPrice}
+         
           </h3>
-          <p className="pt-4 text-default-500">{property?.address}</p>
+          <div className="text-sm uppercase font-bold">
+            <span className="ml-0  text-bold">
+               {property?.minBedrooms} Beds 
+            </span>
+            <span className="ml-2 text-bold">
+              | {property?.bathrooms} Baths 
+            </span>
+            <span className="ml-2 text-bold">
+             | {property?.squareFeet} Sqft
+            </span>
+            </div>
+          <p className="pt-2 text-default-500">{property?.address}</p>
           <p className="text-tiny uppercase font-bold">
             {property?.description}
           </p>
 
-          <div className="pt-4 grid grid-cols-2 gap-4">
-            <div className="flex items-center p-2 rounded-lg">
-              <div className="w-1 h-full bg-gray-500 mr-2"></div>
+          <div className="pt-1 grid grid-cols-2 gap-4 text-xsm">
+            <div className="flex items-center p-1  border-l-2 border-l-gray-400">
+              {/* <div className="w-1 h-full bg-gray-500 mr-2"></div> */}
               <div>
-                <span className=" text-gray-400 font-bold">Gross Yields:</span>
-                <span className="block">{property?.grossYields}%</span>
+                <span className=" text-gray-400 text-sm">Gross Yields:</span>
+                <span className="block">{property?.grossYields || "NA" }%</span>
               </div>
             </div>
-            <div className="flex items-center p-2 rounded-lg">
-              <div className="w-1 h-full bg-gray-500 mr-2"></div>
+            <div className="flex items-center p-1 border-l-2 border-l-gray-400">
               <div>
-                <span className=" text-gray-400 font-bold">Rent Estimate:</span>
-                <span className="block">£{property?.rentEstimate}</span>
+                <span className=" text-gray-400 text-sm">Rent Estimate:</span>
+                <span className="block">£{property?.rentEstimate || "NA"}</span>
               </div>
             </div>
-            <div className="flex items-center p-2 rounded-lg">
-              <div className="w-1 h-full bg-gray-500 mr-2"></div>
+            <div className="flex items-center p-1 border-l-2 border-l-gray-400">
               <div>
-                <span className="text-gray-400 font-bold">ROI:</span>
-                <span className="block">{property?.roi}%</span>
+                <span className="text-gray-400 text-sm">ROI:</span>
+                <span className="block">{property?.roi || "NA"}%</span>
               </div>
             </div>
-            <div className="flex items-center p-2 rounded-lg">
-              <div className="w-1 h-full bg-gray-500 mr-2"></div>
+            <div className="flex items-center p-1 border-l-2 border-l-gray-400">
               <div>
-                <span className="text-gray-400 font-bold">Cash on Cash:</span>
-                <span className="block">{property?.cashOnCash}%</span>
+                <span className="text-gray-400 text-sm">Cash on Cash:</span>
+                <span className="block">{property?.cashOnCash || "NA"}%</span>
               </div>
             </div>
           </div>
