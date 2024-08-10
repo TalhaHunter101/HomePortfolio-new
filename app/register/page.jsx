@@ -1,23 +1,51 @@
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
 import {Button, Input, Checkbox, Link, Divider} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
-
+import toast, { Renderable, Toast, Toaster, ValueFunction } from "react-hot-toast";
+import { signup } from "../login/action";
+import { useRouter } from "next/navigation";
 
 export default function Component() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter(); 
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
+
+  async function handleSignup(formData, setLoading, router) {
+    setLoading(true);
+    const response = await signup(formData);
+    setLoading(false);
+    
+    if (!response.success) {
+      if (response.errors) {
+        response.errors.forEach((error) => toast.error(error));
+      } else if (response.message) {
+        toast.error(response.message);
+      }
+    } else {
+      toast.success('Registration successful!');
+      router.push('/'); // Redirect on successful signup
+    }
+  }
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    await handleSignup(formData, setLoading, router); 
+  };
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
 <p className="text-2xl mt-4 font-bold text-center">Sign Up</p>
 
       <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">
-        <form className="flex flex-col gap-3" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
 
           <Input
             isRequired
