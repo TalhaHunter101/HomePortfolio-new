@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, CardBody, Image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 const SearchCard = ({ property }) => {  
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,6 +20,10 @@ const SearchCard = ({ property }) => {
 
   return (
     <Card className="">
+
+
+
+
       <CardBody className="overflow-hidden py-2">
         <div className="relative">
           <div className="w-full overflow-hidden rounded-lg">
@@ -57,7 +62,7 @@ const SearchCard = ({ property }) => {
             </Button>
           </div>
         </div>
-
+   <Link href={`/property/${property.id}`}>
         <div className="p-1">
           <h3 className="text-bold text-2xl">
           £{property?.maxPrice}
@@ -107,6 +112,7 @@ const SearchCard = ({ property }) => {
             </div>
           </div>
         </div>
+        </Link>
       </CardBody>
     </Card>
   );

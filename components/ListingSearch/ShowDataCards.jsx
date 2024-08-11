@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { SearchMap } from "../Maps/index";
 import Footer from "../common/Footer/Footer";
 import SearchCard from "../SearchPage/SearchCrd";
+import Link from "next/link";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -93,7 +94,7 @@ function ShowDataCards({ cardData, totalcount }) {
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-4 w-full">
+        {/* <div className="flex justify-between items-center p-4 w-full">
           <ButtonGroup
             radius="sm"
             size="lg"
@@ -102,12 +103,14 @@ function ShowDataCards({ cardData, totalcount }) {
             <Button className="flex-1">Homes</Button>
             <Button className="flex-1">Neighborhood</Button>
           </ButtonGroup>
-        </div>
+        </div> */}
 
         <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
           {filter &&
             filter.map((card, index) => (
+              // <Link key={index} href={`/property/${card.id}`}>
               <SearchCard key={index} property={card} />
+              // </Link>
             ))}
         </div>
         <Footer />

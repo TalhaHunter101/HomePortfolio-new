@@ -19,7 +19,7 @@ export default function AutocompleteSearch({ properties }) {
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
-      setResults([]);
+      // setResults([]);
 
       const response = await fetch(`/api/get-postcode`, {
         method: "POST",
@@ -73,17 +73,17 @@ export default function AutocompleteSearch({ properties }) {
     }
   }, [searchTerm, searchPostcode]);
 
-  useEffect(() => {
-    if (searchTerm === "" || (results && results.length > 0)) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (searchTerm === "" || (results && results.length > 0)) {
+  //     return;
+  //   }
 
-    const delayDebounceFn = setTimeout(() => {
-      searchThirdPartyAPI(); // Debounced search for third-party API
-    }, 1000); // Adjust debounce timing as needed
+  //   const delayDebounceFn = setTimeout(() => {
+  //     searchThirdPartyAPI(); // Debounced search for third-party API
+  //   }, 1000); // Adjust debounce timing as needed
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, searchThirdPartyAPI, results?.length]); // Use optional chaining
+  //   return () => clearTimeout(delayDebounceFn);
+  // }, [searchTerm, searchThirdPartyAPI, results?.length]); // Use optional chaining
 
   return (
     <div className="mt-4">
@@ -100,7 +100,7 @@ export default function AutocompleteSearch({ properties }) {
         }
       />
 
-      {isDataLoading && (
+      {/* {isDataLoading && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ export default function AutocompleteSearch({ properties }) {
             <Spinner label="Loading..." color="warning" />
           </Card>
         </motion.div>
-      )}
+      )} */}
       {results && results.length > 0 && <SearchDropdown results={results} />}
     </div>
   );
