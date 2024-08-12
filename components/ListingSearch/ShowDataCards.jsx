@@ -26,7 +26,7 @@ function ShowDataCards({ cardData, totalcount }) {
 
   const getPropsData = () => {
     const groupedData = [];
-    cardData.forEach((property) => {
+    cardData?.forEach((property) => {
       const { bedrooms, bathrooms, livingRooms } = property?.attributes;
       const price = parseInt(property?.pricing?.value);
       const images = property?.imageUris;
