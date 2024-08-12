@@ -84,7 +84,10 @@ function ShowDataCards({ cardData, totalcount }) {
         )}
       </div>
       {/* scrollable */}
-
+      <motion.div className="w-full"         
+            initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay:  0.6 }}>
 <div className="h-[100vh] overflow-y-scroll" >
 <div className="w-2/5 flex flex-col p-6  ml-auto">
           <h3 className="text-md uppercase font-bold ">
@@ -128,6 +131,7 @@ function ShowDataCards({ cardData, totalcount }) {
       </div>
 </div>
     
+    </motion.div>
     </div>
   );
 }
