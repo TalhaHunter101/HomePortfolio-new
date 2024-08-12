@@ -144,7 +144,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
   }, [visibleCenters, hovercard]);
 
   return (
-    <div className="rounded-md">
+    <div className="">
       <MapContainer
         center={[initialCenter.lat, initialCenter.lng]}
         zoom={zoom}

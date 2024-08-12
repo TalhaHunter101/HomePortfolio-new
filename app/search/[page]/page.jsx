@@ -100,38 +100,43 @@ export default function SearchPage({ params }) {
             type="text"
            
             value={searchTerm}
-            contentLeft={
-              <Icon
-                icon="search"
-                fill="currentColor"
-                onClick={() => setSearchTerm("")}
-              />
-            }
+            // contentLeft={
+            //   <Icon
+            //     icon="search"
+            //     fill="currentColor"
+            //     onClick={() => setSearchTerm("")}
+            //   />
+            // }
             contentLeftStyling={false}
             placeholder={page}
             size="lg"
-            className="w-full max-w-xs"
-            endContent={<Icon icon="fluent-emoji-high-contrast:cross-mark" />}
+            // label="Search"
+            className="w-full max-w-md z-40"
+            // label="Search"
+            // labelPlacement="top"
+            endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
             onChange={handleChange}
           />
+
+
         </div>
 
         <div className="flex items-center gap-2">
           <Beds />
           <Baths />
           <Price />
-          <HomeTypes />
+          {/* <HomeTypes /> */}
 
           <Filter />
           <Button
             color="primary"
             radius="sm"
             size="lg"
-            className="w-full max-w-xs m-2"
+            className="w-full max-w-xs m-2 text-white font-semibold"
             auto
             onPress={() => fetchProperties()}
           >
-            Save my Search
+            Search
           </Button>
         </div>
 
@@ -162,17 +167,9 @@ export default function SearchPage({ params }) {
       </div>
 
       {isnewDataLoading ? (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="mt-2"
-        >
-          <Card className="max-h-[50vh] overflow-y-auto py-2">
-            <Spinner label="Loading..." color="warning" />
-          </Card>
-        </motion.div>
+        <div className="w-screen flex justify-center items-center h-[85vh]">
+          <Spinner  color="primary" size="lg" />
+        </div>
       ) : (
         <ShowDataCards totalcount={totalCount} cardData={listingData} />
       )}
