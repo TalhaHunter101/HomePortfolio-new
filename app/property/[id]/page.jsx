@@ -6,6 +6,8 @@ import MainCard from "@/components/Property/MainCard";
 import ThumbnailCard from "@/components/Property/ThumbnailCard";
 import Footer from "@/components/common/Footer/Footer";
 import { motion, AnimatePresence } from 'framer-motion';
+import { Waypoint } from 'react-waypoint';
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export default function PropertyPage({ params }) {
   const listingData = [
@@ -86,61 +88,51 @@ export default function PropertyPage({ params }) {
   const thumbnailImages = listingData[0].imageUris.slice(0, 4); // First 4 images for thumbnails
   const { bedrooms, bathrooms } = listingData[0].attributes;
 
-  const [openSection, setOpenSection] = useState(null);
-  const sectionsRef = useRef({});
-  const [hoveredSubElement, setHoveredSubElement] = useState(null);
-  const [hoveredSection, setHoveredSection] = useState(null);
-  const handleCardHover = (subElementId) => {
-    setHoveredSection(subElementId);
-    setOpenSection(subElementId);
-    setHoveredSubElement(subElementId);
-  };
+let pathname = usePathname();
+  let searchParams = useSearchParams();
 
-  const handleCardLeave = () => {
-    setHoveredSection(null);
-    setHoveredSubElement(null);
-  };
+  let hashId = pathname.split("#")[1];
 
-  const toggleSection2 = (sectionName) => {
-    setOpenSection(openSection === sectionName ? null : sectionName);
-  };
 
-  const handleMouseEnter = (subElementId) => {
-    setHoveredSubElement(subElementId);
-  };
-  
-  const handleMouseLeave = () => {
-    setHoveredSubElement(null);
-  };
-  
+  const [openSection, setOpenSection] = useState(hashId);
+
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setOpenSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
+    window.location.hash = openSection;
 
-    Object.values(sectionsRef.current).forEach((section) => {
-      if (section) observer.observe(section);
-    });
+    
 
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  }, [openSection]);
+  
 
-  const toggleSection = (sectionName) => {
-    setOpenSection((prevSection) => (prevSection === sectionName ? null : sectionName));
-  };
+  // useEffect(() => {
+  //   const observerOptions = {
+  //     root: null,
+  //     rootMargin: '0px',
+  //     threshold: 0.5,
+  //   };
+
+  //   const observer = new IntersectionObserver((entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         setOpenSection(entry.target.id);
+  //       }
+  //     });
+  //   }, observerOptions);
+
+  //   Object.values(sectionsRef.current).forEach((section) => {
+  //     if (section) observer.observe(section);
+  //   });
+
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, []);
+
+  // const toggleSection = (sectionName) => {
+  //   setOpenSection((prevSection) => (prevSection === sectionName ? null : sectionName));
+  // };
 
   const navElements = [
     {
@@ -162,7 +154,7 @@ export default function PropertyPage({ params }) {
           name: "Reach Out to us",
           icon: "mdi:email",
           bgColor: "bg-peach-400",
-          id: "reach-out",
+          id: "reachout",
         },
       ],
     },
@@ -173,25 +165,25 @@ export default function PropertyPage({ params }) {
           name: "Price history",
           icon: "mdi:history",
           bgColor: "bg-green-200",
-          id: "price-history",
+          id: "pricehistory",
         },
         {
           name: "Is this a good time to buy?",
           icon: "mdi:chart-line",
           bgColor: "bg-green-300",
-          id: "good-time-to-buy",
+          id: "goodtimetobuy",
         },
         {
           name: "Price tracker",
           icon: "mdi:currency-usd",
           bgColor: "bg-green-400",
-          id: "price-tracker",
+          id: "pricetracker",
         },
         {
           name: "Market Comparison",
           icon: "mdi:scale-balance",
           bgColor: "bg-green-500",
-          id: "market-comparison",
+          id: "marketcomparison",
         },
       ],
     },
@@ -220,13 +212,13 @@ export default function PropertyPage({ params }) {
           name: "Public Transport",
           icon: "mdi:bus",
           bgColor: "bg-purple-500",
-          id: "public-transport",
+          id: "publictransport",
         },
         {
           name: "Recently Sold homes",
           icon: "mdi:home-group",
           bgColor: "bg-purple-600",
-          id: "recently-sold",
+          id: "recentlysold",
         },
       ],
     },
@@ -237,19 +229,19 @@ export default function PropertyPage({ params }) {
           name: "Crime Rate",
           icon: "mdi:shield-alert",
           bgColor: "bg-red-200",
-          id: "crime-rate",
+          id: "crimerate",
         },
         {
           name: "Is the air quality good?",
           icon: "mdi:weather-windy",
           bgColor: "bg-red-300",
-          id: "air-quality",
+          id: "airquality",
         },
         {
           name: "How are the noise levels?",
           icon: "mdi:volume-high",
           bgColor: "bg-red-400",
-          id: "noise-levels",
+          id: "noiselevels",
         },
         {
           name: "Will I like my neighbors?",
@@ -363,94 +355,138 @@ export default function PropertyPage({ params }) {
         {navElements.map((element, index) => (
           <div key={index}>
             {element.subElements.map((subElement, subIndex) => (
+                                <div key={subIndex}>
+                                <Waypoint
+                                  onEnter={() => setOpenSection(subElement.id)}
+                                  topOffset="20%" // Triggers earlier
+                                  bottomOffset="20%" // Triggers earlier
+                                />
               <Card
-                isHoverable={true}
+                // isHoverable={true}
                 key={subIndex}
                 className="m-4"
                 id={subElement.id}
-                ref={(el) => (sectionsRef.current[subElement.id] = el)}
-                onMouseEnter={() => handleCardHover(element.name)}
-                onMouseLeave={handleCardLeave}
+                // ref={(el) => (sectionsRef.current[subElement.id] = el)}
+                style={{ minHeight: '150px' }}
+                // onMouseEnter={() => handleCardHover(element.name)}
+                // onMouseLeave={handleCardLeave}
               >
                 <CardHeader>
                   <h2 className="text-xl font-bold">{subElement.name}</h2>
                 </CardHeader>
                 <CardBody>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.  facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+                  repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
+                  debitis modi eum aut cum minima eaque pariatur aperiam explicabo.Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
                   repellendus, itaque cumque enim earum facere dicta odio est. Id sunt
                   debitis modi eum aut cum minima eaque pariatur aperiam explicabo.
                 </CardBody>
               </Card>
+              </div>
             ))}
           </div>
         ))}
       </div>
-      <div className="w-84 h-full">
-        <nav className="sticky top-2 p-4 bg-white w-full h-fit">
-          <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
-            <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-              {navElements.map((element, index) => (
-                <motion.div
-                  key={index}
-                  className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-                    <div className="w-full">
-                      <button
-                        className="w-full text-left"
-                        aria-label=""
-                        onClick={() => toggleSection2(element.name)}
-                      >
-                        <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
-                          {element.name}
-                        </h2>
-                      </button>
-                      <AnimatePresence>
-                        {(openSection === element.name || hoveredSection === element.name) && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <motion.ul className="mt-1">
-                              {element.subElements.map((subElement, subIndex) => (
-                                <motion.li
-                                  key={subIndex}
-                                  className="hover:bg-gray-250 hover:text-gray-800 rounded-lg flex items-center mb-1 text-foreground py-2 px-2"
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: subIndex * 0.1 }}
+      {/* <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 border-b border-divider backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70"> */}
+         <nav className="sticky top-2 p-4 bg-white w-45 h-fit">
+        <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
+          <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
+            {navElements.map((element, index) => (
+              <motion.div
+                key={index}
+                className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
+                  <div className="w-full">
+                    <button
+                      className="w-full text-left"
+                      aria-label=""
+                      onClick={() => setOpenSection(element.subElements[0].id)}
+                    >
+                      <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
+                        {element.name}
+                      </h2>
+                    </button>
+                    <AnimatePresence>
+                      {openSection && element.subElements.some(subElement => subElement.id === openSection) && (
+                        <motion.div
+                          key={openSection}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <motion.ul className="mt-1">
+                            {element.subElements.map((subElement, subIndex) => (
+                              <motion.li
+                                key={subElement.id}
+                                className={`hover:bg-gray-250 hover:text-gray-800 rounded-lg flex items-center mb-1 text-foreground py-2 px-2 ${
+                                  openSection === subElement.id ? "bg-slate-500" : ""
+                                }`}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: subIndex * 0.1 }}
+                              >
+                                <a
+                                  href={"#" + subElement.id}
+                                  className="flex items-center space-x-4 w-full text-md font-semibold"
                                 >
-                                  <a
-                                    href={"#" + subElement.id}
-                                    className="flex items-center space-x-4 w-full text-md font-semibold"
+                                  <div
+                                    className={`rounded-full h-6 w-6 flex items-center justify-center text-black ${subElement.bgColor}`}
                                   >
-                                    <div
-                                      className={`rounded-full h-6 w-6 flex items-center justify-center text-black ${subElement.bgColor}`}
-                                    >
-                                      <Icon icon={subElement.icon} />
-                                    </div>
-                                    <span className="text-base">{subElement.name}</span>
-                                  </a>
-                                </motion.li>
-                              ))}
-                            </motion.ul>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                                    <Icon icon={subElement.icon} />
+                                  </div>
+                                  <span className="text-base">{subElement.name}</span>
+                                </a>
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
+      {/* </div> */}
     </div>
   </div>
   <Footer />
