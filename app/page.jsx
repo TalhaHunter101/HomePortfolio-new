@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React from "react";
@@ -645,6 +646,7 @@ export default function Home() {
           </div>
           <div className="w-full justify-center">
             <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">Supercharge Your Workflows</h2>
+             {/* eslint-disable-next-line react/no-unescaped-entities */}
             <p className="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.</p>
           </div>
           <div className="grid md:grid-cols-2 py-10">
