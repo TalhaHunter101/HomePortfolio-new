@@ -29,7 +29,10 @@ export default function AutocompleteSearch({ properties }) {
       });
       const postcodeResult = await response.json();
 
-      setResults(postcodeResult);
+      if (postcodeResult.postcode.length > 0 || postcodeResult.address.length > 0) {
+        setResults(postcodeResult);
+      }
+
 
      
     } catch (error) {
