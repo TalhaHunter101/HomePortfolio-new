@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
+import { areAllArraysEmpty } from "@/utils/Helper";
 
 export default function AutocompleteSearch({ properties }) {
   const [isDataLoading, setIsDataLoading] = useState(false);
@@ -19,22 +20,18 @@ export default function AutocompleteSearch({ properties }) {
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
-      // setResults([]);
-
       const response = await fetch(`/api/get-postcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postcode: searchTerm }),
+        body: JSON.stringify({ query: searchTerm }),
       });
       const postcodeResult = await response.json();
 
-      if (postcodeResult.length > 0) {
-        setResults(postcodeResult);
-      } else {
-        setResults([]); // Clear results if no postcode matches
-      }
+      setResults(postcodeResult);
+
+     
     } catch (error) {
       console.error(error);
     } finally {
@@ -50,7 +47,8 @@ export default function AutocompleteSearch({ properties }) {
       const options = {
         method: "GET",
         headers: {
-          "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+          "x-rapidapi-key":
+            "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
           "x-rapidapi-host": "zoopla.p.rapidapi.com",
         },
       };
@@ -68,7 +66,7 @@ export default function AutocompleteSearch({ properties }) {
   useEffect(() => {
     if (searchTerm === "") {
       setResults(null);
-    } else if (searchTerm.length >= 1) {
+    } else if (searchTerm.length >= 2) {
       searchPostcode(); // Immediate search for pincode
     }
   }, [searchTerm, searchPostcode]);
@@ -85,6 +83,8 @@ export default function AutocompleteSearch({ properties }) {
   //   return () => clearTimeout(delayDebounceFn);
   // }, [searchTerm, searchThirdPartyAPI, results?.length]); // Use optional chaining
 
+
+  
   return (
     <div className="mt-4">
       <Input
@@ -95,9 +95,7 @@ export default function AutocompleteSearch({ properties }) {
         color="primary"
         size="lg"
         onChange={(e) => setSearchTerm(e.target.value)}
-        endContent={
-          <Icon icon="akar-icons:search" />
-        }
+        endContent={<Icon icon="akar-icons:search" />}
       />
 
       {/* {isDataLoading && (
@@ -113,7 +111,9 @@ export default function AutocompleteSearch({ properties }) {
           </Card>
         </motion.div>
       )} */}
-      {results && results.length > 0 && <SearchDropdown results={results} />}
+      {results && (
+        <SearchDropdown results={results} isDataLoading={isDataLoading} />
+      )}
     </div>
   );
 }
