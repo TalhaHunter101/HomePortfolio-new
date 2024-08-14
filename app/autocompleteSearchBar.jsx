@@ -31,7 +31,7 @@ export default function AutocompleteSearch({ properties }) {
 
       if (postcodeResult.postcode.length > 0 || postcodeResult.address.length > 0) {
         setResults(postcodeResult);
-      }
+      }
 
 
      
