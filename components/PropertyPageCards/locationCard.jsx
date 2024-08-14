@@ -9,7 +9,7 @@ export function LocationCard ({title })  {
         <h2 className="text-xl font-bold">{title}</h2>
       </CardHeader>
       <CardBody>
-      <div className="px-16 py-5 bg-gray-100 border border-gray-200 rounded-md">
+      <div className="px-16 py-5 bg-default-white border border-gray-200 rounded-md">
         <p className="text-[12px] font-bold text-base mb-3">Location</p>
         <p className="text-[12px] font-medium">
           1906 Brentwood ST, San Francisco, CA 94107
