@@ -10,7 +10,7 @@ export function BasicInfoCard({ title, content }) {
             </CardHeader>
             <CardBody>
                 <p>{content}</p>
-                <div class="px-16 py-5 bg-gray-100 border border-gray-200 rounded-md ">
+                <div class="px-16 py-5 bg-default-white border border-gray-200 rounded-md ">
                     <h3 class="text-xl font-semibold text-black ">Home Highlights</h3>
                     <div class="flex flex-wrap gap-4 my-5">
 

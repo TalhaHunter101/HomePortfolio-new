@@ -13,6 +13,15 @@ import { FinancialInfoCard } from "@/components/PropertyPageCards/financeCard";
 import { ReachOutCard } from "@/components/PropertyPageCards/ReachOutCard";
 import { LocationCard } from "@/components/PropertyPageCards/locationCard";
 import { PriceHistory } from "@/components/PropertyPageCards/PriceHistory";
+import { GoodTimeToBuy } from "@/components/PropertyPageCards/TimeCard";
+import { PriceTrackerCard } from "@/components/PropertyPageCards/priceTracker";
+import { MarketComparisonCard } from "@/components/PropertyPageCards/MarketComparison";
+import { SchoolsCard } from "@/components/PropertyPageCards/SchoolCard";
+import { FamilyCard } from "@/components/PropertyPageCards/FamilyCard";
+import { NearbyCard } from "@/components/PropertyPageCards/NearbyCard";
+import { PublicTransportCard } from "@/components/PropertyPageCards/PublicTransport";
+import { RecentlySoldCard } from "@/components/PropertyPageCards/RecentlySoldCard";
+import { CrimeCard } from "@/components/PropertyPageCards/CrimeCard";
 
 
 export default function PropertyPage({ params }) {
@@ -259,7 +268,12 @@ export default function PropertyPage({ params }) {
     },
   ];
 
-
+  const mcards = [
+    { title: "PieGraph here", price: "$500,000", roi: "5%" },
+    { title: "dotGraph here", price: "$600,000", roi: "6%" },
+    { title: "Market 3", price: "$700,000", roi: "7%" },
+    { title: "Market 4", price: "$800,000", roi: "8%" }
+];
 
   return (
     <>
@@ -388,7 +402,68 @@ export default function PropertyPage({ params }) {
                           title={subElement.name}
                           content="Custom content for this section."
                         />
-                      ): null}
+                      )
+                      : subElement.id === 'goodtimetobuy' ? (
+                        <GoodTimeToBuy
+                          title={subElement.name}
+                          content="Custom content for this section."
+                        />
+                        ):
+                         subElement.id === 'pricetracker' ? (
+                          <PriceTrackerCard
+                            title={subElement.name}
+                            content="Custom content for this section."
+                          />
+                          ):
+                          subElement.id === 'marketcomparison' ? (
+                            <MarketComparisonCard
+                              title={subElement.name}
+                              cards={mcards}
+                              content="Custom content for this section."
+                            />
+                            ):
+                            subElement.id === 'schools' ? (
+                              <SchoolsCard
+                                title={subElement.name}
+                                cards={mcards}
+                                content="Custom content for this section."
+                              />
+                              ):
+                              subElement.id === 'family' ? (
+                                <FamilyCard
+                                  title={subElement.name}
+                                  cards={mcards}
+                                  content="Custom content for this section."
+                                />
+                                ):
+                                subElement.id === 'nearby' ? (
+                                  <NearbyCard
+                                    title={subElement.name}
+                                    cards={mcards}
+                                    content="Custom content for this section."
+                                  />
+                                  ):
+                                  subElement.id === 'publictransport' ? (
+                                    <PublicTransportCard
+                                      title={subElement.name}
+                                      cards={mcards}
+                                      content="Custom content for this section."
+                                    />
+                                    ):
+                                    subElement.id === 'recentlysold' ? (
+                                      <RecentlySoldCard
+                                        title={subElement.name}
+                                        cards={mcards}
+                                        content="Custom content for this section."
+                                      />
+                                      ):
+                                      subElement.id === 'crimerate' ? (
+                                        <CrimeCard
+                                          title={subElement.name}
+                                          cards={mcards}
+                                          content="Custom content for this section."
+                                        />
+                                        ): null}
                     </div>
                   </div>
                 ))}
