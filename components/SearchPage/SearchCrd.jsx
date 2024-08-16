@@ -38,7 +38,7 @@ const SearchCard = ({ property, setCardHover }) => {
                   <Image
                     src={image}
                     alt={`Property ${index + 1}`}
-                    width="100%" // Full width
+                    width={200} // Full width
                     height={200}
                     className="object-cover w-full h-full"
                   />
