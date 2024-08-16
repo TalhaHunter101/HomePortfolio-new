@@ -21,6 +21,9 @@ import { NearbyCard } from "../PropertyPageCards/NearbyCard";
 import { PublicTransportCard } from "../PropertyPageCards/PublicTransport";
 import { RecentlySoldCard } from "../PropertyPageCards/RecentlySoldCard";
 import { CrimeCard } from "../PropertyPageCards/CrimeCard";
+import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
+import { NoiseLevelCard } from "../PropertyPageCards/NoiseLevelCard";
+import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCard";
 
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData[0]?.imageUris;
@@ -225,6 +228,27 @@ function PropertyDisplay({ listingData, params }) {
                         />
                       ) : subElement.id === "crimerate" ? (
                         <CrimeCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      ) :
+                       subElement.id === "airquality" ? (
+                        <AirQualityCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      ) :
+                      subElement.id === "noiselevels" ? (
+                        <NoiseLevelCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      ) :
+                      subElement.id === "neighbors" ? (
+                        <NeighbourCard
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
