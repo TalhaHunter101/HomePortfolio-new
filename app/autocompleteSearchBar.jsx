@@ -29,38 +29,14 @@ export default function AutocompleteSearch({ properties }) {
       });
       const postcodeResult = await response.json();
 
-      if (postcodeResult.postcode.length > 0 || postcodeResult.address.length > 0) {
+      if (postcodeResult && !areAllArraysEmpty(postcodeResult)) {
         setResults(postcodeResult);
-      }
-
-
-     
+      } else {
+        setResults(null); // Set results to null if no data
+      }
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [searchTerm]);
-
-  const searchThirdPartyAPI = useCallback(async () => {
-    try {
-      setIsDataLoading(true);
-
-      const url = `https://zoopla.p.rapidapi.com/v2/auto-complete?locationPrefix=${searchTerm}`;
-      const options = {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
-          "x-rapidapi-host": "zoopla.p.rapidapi.com",
-        },
-      };
-
-      const response = await fetch(url, options);
-      const result = await response.json();
-      setResults(result?.data?.geoSuggestion || []);
-    } catch (error) {
-      console.error(error);
+      setResults(null); // Set results to null on error
     } finally {
       setIsDataLoading(false);
     }
@@ -74,20 +50,6 @@ export default function AutocompleteSearch({ properties }) {
     }
   }, [searchTerm, searchPostcode]);
 
-  // useEffect(() => {
-  //   if (searchTerm === "" || (results && results.length > 0)) {
-  //     return;
-  //   }
-
-  //   const delayDebounceFn = setTimeout(() => {
-  //     searchThirdPartyAPI(); // Debounced search for third-party API
-  //   }, 1000); // Adjust debounce timing as needed
-
-  //   return () => clearTimeout(delayDebounceFn);
-  // }, [searchTerm, searchThirdPartyAPI, results?.length]); // Use optional chaining
-
-
-  
   return (
     <div className="mt-4">
       <Input
@@ -101,21 +63,11 @@ export default function AutocompleteSearch({ properties }) {
         endContent={<Icon icon="akar-icons:search" />}
       />
 
-      {/* {isDataLoading && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="mt-2"
-        >
-          <Card className="max-h-[50vh] overflow-y-auto py-2">
-            <Spinner label="Loading..." color="warning" />
-          </Card>
-        </motion.div>
-      )} */}
-      {results && (
-        <SearchDropdown results={results} isDataLoading={isDataLoading} />
+
+         {results && (
+       <div>
+         <SearchDropdown results={results} isDataLoading={isDataLoading} />
+       </div>
       )}
     </div>
   );
