@@ -18,6 +18,10 @@ import { PriceTrackerCard } from "@/components/PropertyPageCards/priceTracker";
 import { MarketComparisonCard } from "@/components/PropertyPageCards/MarketComparison";
 import { SchoolsCard } from "@/components/PropertyPageCards/SchoolCard";
 import { FamilyCard } from "@/components/PropertyPageCards/FamilyCard";
+import { NearbyCard } from "@/components/PropertyPageCards/NearbyCard";
+import { PublicTransportCard } from "@/components/PropertyPageCards/PublicTransport";
+import { RecentlySoldCard } from "@/components/PropertyPageCards/RecentlySoldCard";
+import { CrimeCard } from "@/components/PropertyPageCards/CrimeCard";
 
 
 export default function PropertyPage({ params }) {
@@ -431,7 +435,35 @@ export default function PropertyPage({ params }) {
                                   cards={mcards}
                                   content="Custom content for this section."
                                 />
-                                ): null}
+                                ):
+                                subElement.id === 'nearby' ? (
+                                  <NearbyCard
+                                    title={subElement.name}
+                                    cards={mcards}
+                                    content="Custom content for this section."
+                                  />
+                                  ):
+                                  subElement.id === 'publictransport' ? (
+                                    <PublicTransportCard
+                                      title={subElement.name}
+                                      cards={mcards}
+                                      content="Custom content for this section."
+                                    />
+                                    ):
+                                    subElement.id === 'recentlysold' ? (
+                                      <RecentlySoldCard
+                                        title={subElement.name}
+                                        cards={mcards}
+                                        content="Custom content for this section."
+                                      />
+                                      ):
+                                      subElement.id === 'crimerate' ? (
+                                        <CrimeCard
+                                          title={subElement.name}
+                                          cards={mcards}
+                                          content="Custom content for this section."
+                                        />
+                                        ): null}
                     </div>
                   </div>
                 ))}
