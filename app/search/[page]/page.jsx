@@ -1,13 +1,11 @@
 "use client";
 import { Button, Card, Input, Spinner } from "@nextui-org/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { lisitngData } from "@/public/dummydata/listingData";
 import ShowDataCards from "@/components/ListingSearch/ShowDataCards";
 import Beds from "@/components/SearchPage/beds";
 import Baths from "@/components/SearchPage/baths";
 import Price from "@/components/SearchPage/price";
-import HomeTypes from "@/components/SearchPage/homeTypes";
 import Filter from "@/components/SearchPage/filter";
 import useStore from "@/store/useStore";
 import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
@@ -25,6 +23,8 @@ export default function SearchPage({ params }) {
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   const {
     searchTerm,
@@ -36,6 +36,7 @@ export default function SearchPage({ params }) {
     selectedBeds,
     minPrice,
     maxPrice,
+    homeType,
   } = useStore();
   const { isDataLoading: loading, results: searchResults } =
     useFetchZooplaData(searchTerm);
@@ -51,7 +52,7 @@ export default function SearchPage({ params }) {
   };
 
   const fetchProperties = async () => {
-    let url = `https://zoopla.p.rapidapi.com/properties/v2/list?locationValue=${locationValue}&locationIdentifier=${locationValue}&furnishedState=Any&sortOrder=newest_listings&page=1`;
+    let url = `https://zoopla.p.rapidapi.com/properties/v2/list?locationValue=${locationValue}&locationIdentifier=${locationValue}&furnishedState=Any&sortOrder=newest_listings&page=${currentPage}`;
 
     if (selectedBeds !== "any") {
       url += `&bedsMax=${selectedBeds}`;
@@ -90,30 +91,36 @@ export default function SearchPage({ params }) {
     fetchProperties();
   }, [page]);
 
+  console.log("homeType", homeType);
+  
+
+  
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 50) {
+  //       setCurrentPage((prevPage) => prevPage + 1);
+  //     }
+  //   };
+  
+  //   window.addEventListener("scroll", handleScroll);
+  
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+
+  
   return (
     <main className="flex flex-col h-screen">
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center ">
         <div className="flex items-center p-2 w-full gap-2">
           <Input
-            bordered
-            
-            type="text"
-           
-            value={searchTerm}
-            // contentLeft={
-            //   <Icon
-            //     icon="search"
-            //     fill="currentColor"
-            //     onClick={() => setSearchTerm("")}
-            //   />
-            // }
+            bordered            
+            type="text"           
+            value={searchTerm}          
             contentLeftStyling={false}
             placeholder={page}
             size="lg"
-            // label="Search"
             className="w-full max-w-md z-40"
-            // label="Search"
-            // labelPlacement="top"
             endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
             onChange={handleChange}
           />
@@ -125,8 +132,6 @@ export default function SearchPage({ params }) {
           <Beds />
           <Baths />
           <Price />
-          {/* <HomeTypes /> */}
-
           <Filter />
           <Button
             color="primary"

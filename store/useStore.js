@@ -15,6 +15,8 @@ const useStore = create((set) => ({
   setMinPrice: (price) => set({ minPrice: price }),
   maxPrice: "any",
   setMaxPrice: (price) => set({ maxPrice: price }),
+  homeType: [],
+  setHomeType: (types) => set({ homeType: types }),
 }));
 
 export default useStore;

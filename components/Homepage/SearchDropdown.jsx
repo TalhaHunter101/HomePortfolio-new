@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Card, Spinner } from "@nextui-org/react";
 import Link from "next/link";
 import Image from "next/image";
+import { Icon } from "@iconify/react";
 
 function SearchDropdown({ results, isDataLoading }) {
   return (
@@ -100,13 +101,7 @@ function SearchDropdown({ results, isDataLoading }) {
                     {results?.thoroughfare.map((item, i) => (
                       <Link key={i} href={`/property/${item?.UPRN}`}>
                         <div className="flex my-3 cursor-pointer">
-                          <Image
-                            src="/icons/location.svg"
-                            height={20}
-                            width={20}
-                            alt="dev"
-                            className="mx-2"
-                          />
+                        <Icon icon="entypo:address" height={20} width={20} color="black" className="mx-2"  />
                           <div>
                             <p className="text-sm text-primaryfonts">
                               {item?.THOROUGHFARE_NAME ? `${item?.THOROUGHFARE_NAME}, ` : ""}

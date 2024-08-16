@@ -13,6 +13,7 @@ import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { Chip, Image } from "@nextui-org/react";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import { formatPrice } from "@/utils/Helper";
 
 
 const MapEventsHandler = ({ setVisibleCenters, centers }) => {
@@ -82,10 +83,10 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
       const priceIcon = L.divIcon({
         className: "custom-div-icon",
         html: `<div class="min-w-max translate-x-2/4 -translate-y-full flex flex-col items-center relative drop-shadow-xl ">
-          <button class="shadow rounded-full h-auto px-2 py-1 text-1.5xs  bg-white hover:bg-white-100 text-black font-semibold ${
+          <button class="shadow rounded-full h-auto px-2 text-1.5xs py-2  bg-white hover:bg-white-100 text-black font-semibold ${
             hovercard === center.id && "border-4 border-primary"
           }">
-          ${center.minPrice}</button>
+          £${formatPrice(center.minPrice)}</button>
           <div class="w-0 h-0 border-l-[7px] border-r-[7px] border-t-[8px] border-l-transparent border-r-transparent border-t-white m-auto bg-transparent border-white"></div></div>`,
         iconSize: [32, 32],
         iconAnchor: [16, 32],
@@ -154,7 +155,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }}
+        }} 
         
       >
         {/* <TileLayer

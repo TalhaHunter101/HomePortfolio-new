@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Popover, PopoverTrigger, PopoverContent, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import useStore from "@/store/useStore";
-
+ 
 export default function Price() {
   const { setMinPrice, setMaxPrice } = useStore();
 

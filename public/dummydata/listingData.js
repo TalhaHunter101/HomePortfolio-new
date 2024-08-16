@@ -1347,3 +1347,124 @@ export const lisitngData = [
     title: "1 bed flat for sale",
   },
 ];
+
+
+export const navElements = [
+  {
+    name: "All about the Home",
+    subElements: [
+      {
+        name: "The Basics",
+        icon: "mdi:home",
+        bgColor: "bg-peach-200",
+        id: "basics",
+      },
+      {
+        name: "Location",
+        icon: "mdi:map-marker",
+        bgColor: "bg-peach-300",
+        id: "location",
+      },
+      {
+        name: "Reach Out to us",
+        icon: "mdi:email",
+        bgColor: "bg-peach-400",
+        id: "reachout",
+      },
+    ],
+  },
+  {
+    name: "Financials",
+    subElements: [
+      {
+        name: "Price history",
+        icon: "mdi:history",
+        bgColor: "bg-green-200",
+        id: "pricehistory",
+      },
+      {
+        name: "Is this a good time to buy?",
+        icon: "mdi:chart-line",
+        bgColor: "bg-green-300",
+        id: "goodtimetobuy",
+      },
+      {
+        name: "Price tracker",
+        icon: "mdi:currency-usd",
+        bgColor: "bg-green-400",
+        id: "pricetracker",
+      },
+      {
+        name: "Market Comparison",
+        icon: "mdi:scale-balance",
+        bgColor: "bg-green-500",
+        id: "marketcomparison",
+      },
+    ],
+  },
+  {
+    name: "Around the Neighborhood",
+    subElements: [
+      {
+        name: "How are the Schools?",
+        icon: "mdi:school",
+        bgColor: "bg-purple-200",
+        id: "schools",
+      },
+      {
+        name: "Can I raise a family here?",
+        icon: "mdi:human-child",
+        bgColor: "bg-purple-300",
+        id: "family",
+      },
+      {
+        name: "What's nearby?",
+        icon: "mdi:map",
+        bgColor: "bg-purple-400",
+        id: "nearby",
+      },
+      {
+        name: "Public Transport",
+        icon: "mdi:bus",
+        bgColor: "bg-purple-500",
+        id: "publictransport",
+      },
+      {
+        name: "Recently Sold homes",
+        icon: "mdi:home-group",
+        bgColor: "bg-purple-600",
+        id: "recentlysold",
+      },
+    ],
+  },
+  {
+    name: "Quality of Life",
+    subElements: [
+      {
+        name: "Crime Rate",
+        icon: "mdi:shield-alert",
+        bgColor: "bg-red-200",
+        id: "crimerate",
+      },
+      {
+        name: "Is the air quality good?",
+        icon: "mdi:weather-windy",
+        bgColor: "bg-red-300",
+        id: "airquality",
+      },
+      {
+        name: "How are the noise levels?",
+        icon: "mdi:volume-high",
+        bgColor: "bg-red-400",
+        id: "noiselevels",
+      },
+      {
+        name: "Will I like my neighbors?",
+        icon: "mdi:account-group",
+        bgColor: "bg-red-500",
+        id: "neighbors",
+      },
+    ],
+  },
+];
+
