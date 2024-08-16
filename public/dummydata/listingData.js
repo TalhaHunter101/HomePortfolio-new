@@ -1349,26 +1349,26 @@ export const lisitngData = [
 ];
 
 
-export const navElements = [
+export  const navElements = [
   {
     name: "All about the Home",
     subElements: [
       {
         name: "The Basics",
         icon: "mdi:home",
-        bgColor: "bg-peach-200",
+        bgColor: "bg-pink-200",
         id: "basics",
       },
       {
         name: "Location",
         icon: "mdi:map-marker",
-        bgColor: "bg-peach-300",
+        bgColor: "bg-pink-300",
         id: "location",
       },
       {
         name: "Reach Out to us",
         icon: "mdi:email",
-        bgColor: "bg-peach-400",
+        bgColor: "bg-pink-400",
         id: "reachout",
       },
     ],
@@ -1468,3 +1468,9 @@ export const navElements = [
   },
 ];
 
+export const mcards = [
+  { title: "PieGraph here", price: "$500,000", roi: "5%" },
+  { title: "dotGraph here", price: "$600,000", roi: "6%" },
+  { title: "Market 3", price: "$700,000", roi: "7%" },
+  { title: "Market 4", price: "$800,000", roi: "8%" }
+];
