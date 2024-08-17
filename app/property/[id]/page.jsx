@@ -120,14 +120,13 @@ export default function PropertyPage({ params }) {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Data", data);
 
           if (data.length === 0) {
             const zooplaData = await fetchDataZooplaHouse();
             console.log("Zoopla data", zooplaData);
           }
 
-          setlistingData(data);
+          setlistingData(data[0]._source);
           setIsDataLoading(false);
         }
       } catch (error) {
@@ -142,13 +141,13 @@ export default function PropertyPage({ params }) {
 
   return (
     <>
-      {/* {isDataLoading ? (
+      {isDataLoading ? (
         <Spinner />
       ) : (
-        <PropertyDisplay listingData={listingDatasa} params={params} />
-      )} */}
+        <PropertyDisplay listingData={listingData} params={params} />
+      )}
 
-      <PropertyDisplay listingData={listingDatasa} params={params} />
+      {/* <PropertyDisplay listingData={listingDatasa} params={params} /> */}
       <Footer />
     </>
   );
