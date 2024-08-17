@@ -23,9 +23,10 @@ import { RecentlySoldCard } from "../PropertyPageCards/RecentlySoldCard";
 import { CrimeCard } from "../PropertyPageCards/CrimeCard";
 
 function PropertyDisplay({ listingData, params }) {
-  const mainImages = listingData[0]?.imageUris;
-  const thumbnailImages = listingData[0]?.imageUris.slice(0, 4);
-  const { bedrooms, bathrooms } = listingData[0]?.attributes;
+  const mainImages = listingData?.imageUris || [];
+  const thumbnailImages = listingData?.imageUris.slice(0, 4);
+  const bedrooms = listingData?.attributes?.bedrooms || null;
+  const bathrooms = listingData?.attributes?.bathrooms || null;
 
   let pathname = usePathname();
 
@@ -60,10 +61,13 @@ function PropertyDisplay({ listingData, params }) {
         {/* {/ main div /} */}
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
           <div className="lg:col-span-7 max-w-screen">
+          {mainImages && (
+
             <MainCard images={mainImages} />
+          )}
           </div>
           <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
-            {thumbnailImages.map((imageUrl, index) => (
+            {thumbnailImages && thumbnailImages?.map((imageUrl, index) => (
               <ThumbnailCard key={index} imageUrl={imageUrl} />
             ))}
           </div>
@@ -81,42 +85,42 @@ function PropertyDisplay({ listingData, params }) {
                     className="inline mx-1"
                     icon="fluent-emoji-flat:green-circle"
                   />
-                  {listingData[0].tags[0].label}
+                  {listingData?.tags[0].label}
                 </span>
                 <span className="px-1 text-primary">
                   <Icon
                     className="inline mx-1"
                     icon="gravity-ui:thunderbolt-fill"
                   />
-                  {listingData[0].flag}
+                  {listingData?.flag}
                 </span>
                 <span className="px-1 text-primary">
                   <Icon className="inline mx-1" icon="fa-solid:walking" />
-                  {listingData[0].availability.label}:
+                  {listingData?.availability?.label}:
                 </span>
                 <span className="px-1 text-primary">
-                  {listingData[0].availability.day}
+                  {listingData?.availability?.day}
                 </span>
                 <span className="px-1 text-primary">
-                  {listingData[0].availability.date},
+                  {listingData?.availability?.date},
                 </span>
                 <span className="px-1 text-primary">
-                  {listingData[0].availability.time[0].from}-
-                  {listingData[0].availability.time[0].to}
+                  {listingData?.availability?.time[0]?.from}-
+                  {listingData?.availability?.time[0]?.to}
                 </span>
               </p>
             </div>
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {listingData[0].pricing.label}
+                  {listingData?.pricing.label}
                 </h3>
                 <span className="font-bold text-sm">
-                  {listingData[0].address},
+                  {listingData?.address},
                 </span>
                 <span className="font-bold text-gray-400 text-sm">
                   {" "}
-                  {listingData[0].area}{" "}
+                  {listingData?.area}{" "}
                 </span>
               </div>
               <div className="flex flex-row ml-[auto] mr-8 space-x-8">
@@ -130,7 +134,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData[0].dimensions.sqft}
+                    {listingData?.dimensions?.sqft}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
@@ -138,7 +142,7 @@ function PropertyDisplay({ listingData, params }) {
             </div>
             <div>
               <p className="text-sm font-bold">
-                {listingData[0].title} | on [{listingData[0].agent.branchName}]
+                {listingData?.title} | on [{listingData?.agent?.branchName}]
               </p>
               <div className="pr-4 pt-4">
                 <Button
