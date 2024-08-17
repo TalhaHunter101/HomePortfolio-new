@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Icon } from '@iconify/react';
 
 const getItemsData = () => [
     { name: "Rocky Pointe Natural Park", category: "Parks • Kuehner Dr", distance: "0.2 miles away" },
@@ -23,10 +24,8 @@ export function NearbyCard({ title }) {
       <CardBody>
         <div className="bg-gray-250 border border-subtle-border p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-300">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1em" height="1em" fill="currentColor" stroke="currentColor" strokeWidth="0" className="inline-block text-sm md:text-md w-6 lg:w-8 text-foreground">
-                <path d="M531.6 103.8L474.3 13.1C469.2 5 460.1 0 450.4 0H93.6C83.9 0 74.8 5 69.7 13.1L12.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM483.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H112V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H432c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z"></path>
-              </svg>
+            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-400">
+             <Icon icon="mdi:map" />
             </div>
             <span>What’s nearby 6677 Charing Street?</span>
           </h2>
@@ -39,9 +38,7 @@ export function NearbyCard({ title }) {
               </div>
             </div>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" stroke="currentColor" strokeWidth="0" className="inline-block absolute right-4 top-4 sm:top-6 w-6 h-6 transition-transform text-foreground">
-            <path d="M169.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L192 205.3 54.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z"></path>
-          </svg>
+      
         </div>
         <div className="border border-gray-200 rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
           <section id="whats-nearby" className="mb-5 sm:mb-6">

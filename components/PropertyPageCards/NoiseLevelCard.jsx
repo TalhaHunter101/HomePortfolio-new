@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Icon } from '@iconify/react';
 
 export function NoiseLevelCard  ({title, price, roi })  {
   return (
@@ -9,12 +10,11 @@ export function NoiseLevelCard  ({title, price, roi })  {
         <h2 className="text-xl font-bold">{title}</h2>
       </CardHeader>
       <CardBody>
-        <div className="bg-gray-250 border border-subtle-border p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
+        <div className=' bg-default-white  border border-subtle-border rounded-md '>
+        <div className="   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-yellow-300">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="1em" height="1em" fill="currentColor" className="inline-block text-sm md:text-md w-6 lg:w-8 text-foreground">
-                <path d="M352 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V480c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM544 96c0-17.7-14.3-32-32-32s-32 14.3-32 32V416c0 17.7 14.3 32 32 32s32-14.3 32-32V96zM256 128c0-17.7-14.3-32-32-32s-32 14.3-32 32V384c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm192 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V352c0 17.7 14.3 32 32 32s32-14.3 32-32V160zM160 224c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7 14.3 32 32 32s32-14.3 32-32V224zM0 256a32 32 0 1 0 64 0A32 32 0 1 0 0 256zm576 0a32 32 0 1 0 64 0 32 32 0 1 0 -64 0z"></path>
-              </svg>
+            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-400">
+             <Icon icon="mdi:volume-high" />
             </div>
             <span>How are the noise levels in East Simi Valley?</span>
           </h2>
@@ -27,9 +27,7 @@ export function NoiseLevelCard  ({title, price, roi })  {
               <div className="text-lg text-muted-foreground font-medium">&lt; 40 <lg>dBA</lg></div>
             </div>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" className="inline-block absolute right-4 top-4 sm:top-6 w-6 h-6 transition-transform text-foreground">
-            <path d="M169.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L192 205.3 54.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z"></path>
-          </svg>
+          
         </div>
         <div className="border border-gray-200 rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
           <canvas className="hidden" width="512" height="512"></canvas>
@@ -84,6 +82,7 @@ export function NoiseLevelCard  ({title, price, roi })  {
               </div>
             </div>
           </section>
+        </div>
         </div>
       </CardBody>
     </Card>

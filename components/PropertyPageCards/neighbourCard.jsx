@@ -30,12 +30,11 @@ export function NeighbourCard({ title }) {
         <h2 className="text-xl font-bold">{title}</h2>
       </CardHeader>
       <CardBody>
-        <div className="bg-default-white border border-gray-300 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden text-gray-800 rounded-t-lg">
+        <div className='  border border-subtle-border rounded-md'>
+        <div className="bg-default-white  p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden text-gray-800 rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-blue-300">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
-                {/* Add your SVG icon content here */}
-              </svg>
+            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-500">
+              <Icon icon="mdi:account-group" />
             </div>
             <span>Will I Like My Neighbors in East Simi Valley?</span>
           </h2>
@@ -61,7 +60,7 @@ export function NeighbourCard({ title }) {
               >
                 {dummyData?.map((card, index) => (
                   <div key={index} className="flex-shrink-0 w-full">
-                    <div className="mx-2 p-4 bg-white rounded-lg shadow-md" style={{ minHeight: '150px' }}>
+                    <div className="mx-2 p-4 bg-white rounded-lg " style={{ minHeight: '150px' }}>
                       <div className='flex w-full h-full flex-row'>
                         <div className='w-3/5 justify-start bg-gray-200'>
                           {card.leftContent}
@@ -98,6 +97,7 @@ export function NeighbourCard({ title }) {
               </Button>
             </div>
           </div>
+        </div>
         </div>
       </CardBody>
     </Card>

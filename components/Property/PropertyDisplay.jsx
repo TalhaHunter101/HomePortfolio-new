@@ -25,9 +25,10 @@ import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
 import { NoiseLevelCard } from "../PropertyPageCards/NoiseLevelCard";
 import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCard";
 
+
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || [];
-  const thumbnailImages = listingData?.imageUris.slice(0, 4);
+  const thumbnailImages = listingData?.imageUris(0, 4);
   const bedrooms = listingData?.attributes?.bedrooms || null;
   const bathrooms = listingData?.attributes?.bathrooms || null;
 

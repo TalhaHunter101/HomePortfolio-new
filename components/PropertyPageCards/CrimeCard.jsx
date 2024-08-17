@@ -9,7 +9,9 @@ export function CrimeCard ({title, price, roi })  {
         <h2 className="text-xl font-bold">{title}</h2>
       </CardHeader>
       <CardBody>
+        <div className='  border border-subtle-border rounded-md'>
         <h1 className='text-xxxl'>some heinous crimes</h1>
+        </div>
       </CardBody>
     </Card>
   );

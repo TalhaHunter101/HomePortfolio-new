@@ -9,9 +9,10 @@ export function FamilyCard({ title }) {
                 <h2 className="text-xl font-bold">{title}</h2>
             </CardHeader>
             <CardBody>
-                <div className="bg-default-white border border-subtle-border p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden rounded-lg">
+                <div className='rounded-md border border-subtle-border'>
+                <div className="bg-default-white  p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden rounded-lg">
                     <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
-                        <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-blue-300">
+                        <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-300">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" stroke="currentColor" strokeWidth="0" className="inline-block text-sm md:text-md w-6 lg:w-8 text-foreground">
                                 <path d="M120 88a72 72 0 1 1 144 0A72 72 0 1 1 120 88zM7.7 144.5c13-17.9 38-21.8 55.9-8.8L99.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25V288H96V251.7c-15.2-6.7-29.7-15.1-43.3-25L16.5 200.3c-17.9-13-21.8-38-8.8-55.9zM97.5 329.3l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C38 438.6 36.1 417 47.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L252 419.4l-26-37.2z"></path>
                             </svg>
@@ -28,9 +29,7 @@ export function FamilyCard({ title }) {
                             <div className="text-xl text-muted-foreground font-medium">68%</div>
                         </div>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" stroke="currentColor" strokeWidth="0" className="absolute right-4 top-4 sm:top-6 w-6 h-6 transition-transform text-foreground">
-                        <path d="M169.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L192 205.3 54.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z"></path>
-                    </svg>
+                    
                 </div>
                 <div className="py-4 sm:py-6 text-foreground px-4 relative h-full w-full overflow-hidden flex-1">
                     <div className="mb-6 bg-default-white border border-subtle-border shadow-sm text-xs sm:text-sm p-4 rounded-lg text-default-800">
@@ -225,7 +224,7 @@ export function FamilyCard({ title }) {
                         </div>
                     </div>
                 </div>
-
+                </div>
             </CardBody>
         </Card>
     );
