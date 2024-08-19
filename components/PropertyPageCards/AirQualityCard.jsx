@@ -50,8 +50,8 @@ export function AirQualityCard({ title, cards, id }) {
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {cards?.map((card, index) => (
-                <div key={index} className="flex-shrink-0 w-full">
-                  <div className="mx-2 p-4 bg-white rounded-lg shadow-md" style={{ minHeight: '150px' }}>
+                <div key={index} className="flex-shrink-0  w-full">
+                  <div className="mx-2 p-4 bg-white  shadow-none rounded-lg shadow-md" style={{ minHeight: '150px' }}>
                     <div className='flex w-full h-full flex-row'>
                       <div className='w-3/5 justify-start bg-gray-200'>
                        left content

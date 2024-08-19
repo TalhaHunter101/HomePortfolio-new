@@ -48,7 +48,7 @@ export function ReachOutCard({ title }) {
             </div>
           </div>
           <div>
-            <p className="text-[12px] text-secondary font-medium">
+            <p className="text-[12px] text-secondary text-xs">
               {/* // eslint-disable-next-line react/no-unescaped-entities */}
               By pressing Send Message, you agree that HomePortfolio and real estate professionals Real Estate Professionals includes the real estate agents and brokers, mortgage loan lenders and officers, property managers, and other professionals you interact with through HomePortfolio may contact you via email or phone/text about your inquiry. This may involve the use of automated means. You do not need to consent as a condition of buying any property, goods or services. Message/data rates may apply. You also agree to our <a href="" className="text-blue-600 visited:text-purple-600">Terms of Use</a> and <a href="" className="text-blue-600 visited:text-purple-600">Privacy Policy</a>. We may share your recent and future site activity with your agent to help them better understand what you are looking for in a home.
             </p>

@@ -97,12 +97,12 @@ export function SchoolsCard({ title, }) {
                                     </Button>
                                 </div>
                             </div>
-                            <div className="flex-1 w-1/2 overflow-x-scroll  scrollbar-none snap-mandatory space-x-2 pr-6 ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
+                            <div className="flex-1 w-1/2 overflow-y-scroll  scrollbar    snap-mandatory space-x-2 pr-6 ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
                                 <div className="flex flex-row sm:flex-col">
                                     <div className="flex-shrink-0 snap-start map-list-item mb-0 w-auto">
                                         <button className="w-full h-auto text-left pt-2 pr-2">
                                             <div className="relative flex flex-col h-full bg-white p-2 pl-6 border rounded-md sm:mr-2 sm:rounded-lg border-purple-150 bg-purple-100">
-                                                <div className="flex flex-row items-center h-full space-x-4 truncate flex-1 w-full relative overflow-hidden text-foreground">
+                                                <div className="flex flex-row items-center h-full space-x-4  truncate flex-1 w-full relative overflow-hidden text-foreground">
                                                     <div className="flex flex-row sm:flex-col">
                                                         <div className="text-4xl font-bold text-blue-600" style={{ minWidth: '45px' }}>5</div>
                                                         <div className="flex flex-col text-sm">

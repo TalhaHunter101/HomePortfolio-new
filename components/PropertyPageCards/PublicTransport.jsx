@@ -14,7 +14,7 @@ export function PublicTransportCard({ title, price, roi }) {
         <div className='  border border-subtle-border rounded-md '>
         <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-green-500">
+            <div className="h-6 w-6 lg:w-8 lg:h-8 px-2 flex justify-center items-center mr-1 rounded-full bg-purple-400">
               <Icon icon="mdi:bus"  />
             </div>
             <span>What are my public transportation options in East Simi Valley?</span>
