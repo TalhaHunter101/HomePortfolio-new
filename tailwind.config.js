@@ -12,8 +12,8 @@ module.exports = {
     extend: {
       colors: {
   // primary: "#4bbdc3", // Light mode primary color
-  primary: "#FF6347", // Tomato for both modes
-  secondary: "#FF6347", // Tomato
+    primary: "#6e23e7", // Tomato for both modes
+    secondary: "#6e23e7", // Tomato
         background: "#FFFFFF", // White background for light mode
         text: "#000000", // Black text for light mode
       },
@@ -46,40 +46,7 @@ module.exports = {
             darkMode: "class", // Enable dark mode
   plugins: [
     nextui({
-      themes: {
 
-        
-        light: {
-          colors: {
-            // primary: "#4bbdc3", // Light mode primary color
-            primary: "#FF6347", // Tomato for both modes
-            secondary: "#FF6347", // Tomato
-            background: "#FFFFFF", // White background for light mode
-            text: "#000000", // Black text for light mode
-          },
-          fontFamily: {
-            body: ["Arial, sans-serif"],
-            heading: ["Georgia, serif"],
-            "text-lg": {
-              fontSize: "1.125rem",
-              lineHeight: "1.75rem",
-              fontFamily: "Georgia, sans-serif",
-            },
-          },
-        },
-        dark: {
-          colors: {
-            primary: "#800080", // Dark mode primary color (purple)
-            secondary: "#FF6347", // Tomato
-            background: "#121212", // Dark background for dark mode
-            text: "#FFFFFF", // White text for dark mode
-          },
-          fontFamily: {
-            body: ["Arial, sans-serif"],
-            heading: ["Georgia, serif"],
-          },
-        },
-      },
     }),
   ],
 };
