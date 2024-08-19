@@ -51,7 +51,7 @@ export default function NavBar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/home-valuation">
            Home valuation
           </Link>
         </NavbarItem>
