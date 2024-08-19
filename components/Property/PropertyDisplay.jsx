@@ -28,7 +28,7 @@ import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCar
 
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || [];
-  const thumbnailImages = listingData?.imageUris(0, 4);
+  const thumbnailImages = listingData?.imageUris.slice(0, 4);
   const bedrooms = listingData?.attributes?.bedrooms || null;
   const bathrooms = listingData?.attributes?.bathrooms || null;
 
