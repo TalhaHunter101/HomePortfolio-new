@@ -3,12 +3,13 @@
  * @see https://v0.dev/t/Ew0ptVYKtfv
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+import { Icon } from "@iconify/react"
 import { Input, Button, Card } from "@nextui-org/react"
 
 
 export default function Component() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#b792f6b5] to-[#ffffff]">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#ffffff] to-[#b792f6b5]">
       <div className="text-center">
         <h1 className="text-4xl font-bold">
           Get an instant{" "}
@@ -24,7 +25,7 @@ export default function Component() {
           <Input
             fullWidth
             placeholder="Enter address"
-            contentLeft={<HomeIcon className="text-muted-foreground" />}
+            startContent={<Icon icon="bi:house-fill" fontSize={28} />}
             className="mr-4"
           />
           <Button auto flat className="font-bold" color="secondary">
