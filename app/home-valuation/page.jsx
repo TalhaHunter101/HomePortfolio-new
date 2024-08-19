@@ -16,7 +16,7 @@ export default function Component() {
             <span className="relative z-10">home evaluation</span>
             <span className="absolute inset-0 bg-[#874debb5] z-0 transform -skew-x-6" />
           </span>
-          , powered by Valery AI
+          , powered by HomeportFolio AI
         </h1>
       </div>
       <div className="mt-8">
