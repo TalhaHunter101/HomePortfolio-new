@@ -110,7 +110,7 @@ export default function SearchPage({ params }) {
 
   
   return (
-    <main className="flex flex-col h-screen">
+    <main className="flex mt-16  flex-col h-screen">
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center ">
         <div className="flex items-center p-2 w-full gap-2">
           <Input
@@ -132,7 +132,7 @@ export default function SearchPage({ params }) {
           <Beds />
           <Baths />
           <Price />
-          <Filter />
+          
           <Button
             color="primary"
             radius="sm"
@@ -172,7 +172,7 @@ export default function SearchPage({ params }) {
       </div>
 
       {isnewDataLoading ? (
-        <div className="w-screen flex justify-center items-center h-[85vh]">
+        <div className="w-screen  flex justify-center items-center h-[85vh]">
           <Spinner  color="primary" size="lg" />
         </div>
       ) : (

@@ -41,7 +41,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="flex h-full mt-16 w-full flex-col items-center justify-center">
 <p className="text-2xl mt-4 font-bold text-center">Sign Up</p>
 
       <div className="mt-2 flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 py-6 shadow-small">

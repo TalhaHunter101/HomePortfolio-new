@@ -13,13 +13,18 @@ import useStore from "@/store/useStore";
 
 export default function Baths() {
   const { selectedBaths, setSelectedBaths } = useStore();
-
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Popover placement="bottom" showArrow={true}>
+    <Popover placement="bottom" 
+    showArrow={true}
+    isOpen={isOpen}
+      onOpenChange={(open) => setIsOpen(open)}>
       <PopoverTrigger>
         <Button
-          endContent={<Icon icon="ph:caret-down-fill" />}
+           endContent={
+            <Icon  icon={isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"} />
+          }
           radius="sm"
           size="lg"
           className="w-full justify-between max-w-xs"

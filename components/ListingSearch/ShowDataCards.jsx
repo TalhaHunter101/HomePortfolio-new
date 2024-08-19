@@ -60,21 +60,22 @@ function ShowDataCards({ cardData, totalcount }) {
   
 
   return (
-    <div className="w-screen flex flex-grow pt-12">
+    <div className="w-screen    flex flex-grow pt-12">
       {/* static */}
-      <div className="w-3/5 flex flex-col gap-4 p-4  fixed ">
+      <div className="w-3/5 flex flex-col gap-4 p-4  h-full fixed ">
         {toLocation && (
           <motion.div
-            className="w-full"
+            className="w-full h-full "
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <Card className="h-[100vh] rounded-none ">
+            <Card className=" h-full rounded-none ">
               <SearchMap
                 center={toLocation}
                 hovercard={cardHover}
                 setfilter={setfilter}
+                height={"100vh"}
               />
             </Card>
           </motion.div>
@@ -86,7 +87,7 @@ function ShowDataCards({ cardData, totalcount }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.6 }}
       >
-        <div className="h-[100vh] overflow-y-scroll">
+        <div className="h-[100vh]  ">
           <div className="w-2/5 flex flex-col p-6  ml-auto">
             <h3 className="text-md uppercase font-bold ">
               {totalcount} Properties

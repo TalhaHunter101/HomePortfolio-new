@@ -12,6 +12,9 @@ export default function Price() {
 
   const selectedValue1 = Array.from(selectedKeys1).join(", ").replaceAll("_", " ");
   const selectedValue2 = Array.from(selectedKeys2).join(", ").replaceAll("_", " ");
+
+  const [isOpen, setIsOpen] = useState(false);
+
   
   const handleMinPriceChange = (keys) => {
     setSelectedKeys1(keys);
@@ -25,10 +28,16 @@ export default function Price() {
 
 
   return (
-    <Popover placement="bottom" showArrow={true}>
+    <Popover placement="bottom" 
+    showArrow={true}
+    isOpen={isOpen}
+    onOpenChange={(open) => setIsOpen(open)}
+   >
       <PopoverTrigger>
         <Button
-          endContent={<Icon icon="ph:caret-down-fill" />}
+           endContent={
+            <Icon icon={isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"} />
+          }
           radius="sm"
           size="lg"
           className="w-full justify-between max-w-xs"

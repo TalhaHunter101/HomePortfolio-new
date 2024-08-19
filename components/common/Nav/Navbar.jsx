@@ -20,7 +20,7 @@ export default function NavBar() {
   ];
 
   return (
-    <Navbar disableAnimation isBordered>
+    <Navbar className="fixed z-50 " disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle />
       </NavbarContent>

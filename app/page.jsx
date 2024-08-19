@@ -459,7 +459,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="max-w-[100vw] mx-auto flex flex-col items-center justify-center ">
+      <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center ">
         <div className="relative w-screen justify-center min-h-screen">
           <div
             style={{

@@ -44,7 +44,7 @@ function PropertyDisplay({ listingData, params }) {
 
   return (
     <>
-      <div className="max-w-[87rem] mx-auto flex flex-col items-center justify-center">
+      <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
         <div className="p-4 flex items-center justify-between w-full">
           <Button size="lg" variant="flat" className="bg-transparent">
             <Icon icon="mdi:keyboard-arrow-left" />
