@@ -142,7 +142,7 @@ export default function PropertyPage({ params }) {
   return (
     <>
       {isDataLoading ? (
-        <Spinner />
+        <Spinner className="mt-20" />
       ) : (
         <PropertyDisplay listingData={listingData} params={params} />
       )}

@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardBody, CardHeader, Progress } from "@nextui-org/react";
+import { PricetrackerChart } from './Charts/pricetrckerChart';
 
 export function PriceTrackerCard({ title, }) {
     return (
@@ -22,16 +23,11 @@ export function PriceTrackerCard({ title, }) {
                             <div className="w-full mt-6 sm:mt-5 text-foreground" style={{ minHeight: '215px' }}>
                                 <div style={{ minHeight: '215px' }}>
                                     {/* ApexChart placeholder */}
-                                    <div className="apexcharts-canvas" style={{ width: '320px', height: '200px' }}>
-                                        <Card>
-                                            <CardBody>
-                                                <p className="text-[12px] font-bold text-base mb-3">Price</p>
-                                                <p className="text-[12px] font-medium">
-                                                    graph card should be here
-                                                </p>
+                                    <div className="apexcharts-canvas">
+                                        
+                                               <PricetrackerChart/>
 
-                                            </CardBody>
-                                        </Card>
+                                        
                                     </div>
                                 </div>
                             </div>
