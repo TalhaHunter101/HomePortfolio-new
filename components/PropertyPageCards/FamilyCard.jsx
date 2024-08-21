@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { FamilyCustomPieChart } from './Charts/FamilyPieChart';
 
 export function FamilyCard({ title }) {
     return (
@@ -55,11 +56,11 @@ export function FamilyCard({ title }) {
                                 <div>Single female family (463)</div>
                             </div>
                         </div>
-                        <div className="w-1/2 ml-2">
-                            <div style={{ minHeight: '218.7px' }}>
-                                <div className="apexcharts-canvas" style={{ width: '240px', height: '218.7px' }}>
+                        <div className="w-1/2 h-64  ml-2">
+                            <div >
+                                <div className="" >
                                     {/* ApexCharts component should be inserted here */}
-                                    <p>apex chart to be integrated...</p>
+                                    <FamilyCustomPieChart />
                                 </div>
                             </div>
                         </div>

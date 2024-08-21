@@ -1,10 +1,12 @@
 'use client';
 import React, { useState } from "react";
-import { Card, Image, Button } from "@nextui-org/react";
+import { Card, Image, Button, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import ImageModal from "./ImagesModal";
 
 const MainCard = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -67,11 +69,13 @@ const MainCard = ({ images }) => {
         variant="flat"
         radius="sm"
           auto
+          onClick={onOpen}
           className="absolute  right-5 hover:bg-default  bottom-1 transform -translate-y-1/2"
           startContent={<Icon width={24} height={24} icon="material-symbols:imagesmode-outline" />}
           >
-            <p className="text-lg">See all 50 photos</p>
+            <p className="text-lg">See all  photos</p>
         </Button>
+        <ImageModal isOpen={isOpen} onOpenChange={onOpenChange} images={images} />
       </div>
     </Card>
   );

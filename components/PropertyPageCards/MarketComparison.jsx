@@ -1,25 +1,39 @@
 'use client';
 import React, { useState } from 'react';
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
+import { ScatterChartComponent } from './Charts/MarketScatterChart';
+import ComparisonChart from './Charts/ComparisonChart';
+
+
+
+
+const getItemsData = () => [
+    { name: "Rocky Pointe Natural Park", category: "Parks • Kuehner Dr", distance: "0.2 miles away" },
+    { name: "Sunset Valley Trail", category: "Trails • Oak St", distance: "0.5 miles away" },
+    { name: "Lakeview Park", category: "Parks • Lakeview Rd", distance: "1.0 miles away" },
+    { name: "Hickory Creek Park", category: "Parks • Hickory Creek Rd", distance: "2.0 miles away" },
+    // Add more items as needed
+];
 export function MarketComparisonCard({ title, price, roi, cards }) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    
+    const items = getItemsData();
 
-    const handlePrevious = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? cards.length - 1 : prevIndex - 1
-        );
+    const nextSlide = () => {
+        if (currentIndex < items.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
     };
 
-    const handleNext = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === cards.length - 1 ? 0 : prevIndex + 1
-        );
+    const prevSlide = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
     };
-
     return (
-        <Card className="m-4" style={{ minHeight: '150px' }}>
+        <Card className="m-4" style={{ minHeight: '150px', maxWidth: '1050px' }}>
             <CardHeader>
                 <h2 className="text-xl font-bold">{title}</h2>
             </CardHeader>
@@ -41,49 +55,60 @@ export function MarketComparisonCard({ title, price, roi, cards }) {
                 </div>
 
                 {/* Carousel Section */}
-                <div className="mt-4 relative">
-                    <div className="w-full overflow-hidden rounded-lg">
-                        <div
-                            className="flex transition-transform duration-500 ease-in-out"
-                            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-                        >
-                            {cards?.map((card, index) => (
-                                <div key={index} className="flex-shrink-0 w-full">
-                                    <Card
-                                    shadow='sm' className="mx-2" style={{ minHeight: '150px' }}>
-                                        <CardHeader>
-                                            <h3 className="text-lg font-bold">{card.title}</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <p>Price: {card.price}</p>
-                                            <p>ROI: {card.roi}</p>
-                                        </CardBody>
-                                    </Card>
+                <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
+                    <div className="hidden xl:flex h-96">
+                        <div className="flex relative overflow-hidden sm:mx-4  ">
+                            {/* Map section on the left */}
+                            <div className="flex-1 z-40 h-full">
+                                <div className="h-full ">
+                                    <div className=" h-full bg-white ">
+                                        <div>
+                                        <ComparisonChart />
+                                        </div>
+                                    </div>
                                 </div>
-                            ))}
+                            </div>
+
+                            {/* Carousel section on the right */}
+                            <div className="flex-1 w-1/2  flex flex-col justify-center h-full">
+                                <div className="relative w-full h-full flex items-center">
+                                    <button
+                                        onClick={prevSlide}
+                                        disabled={currentIndex === 0}
+                                        className="absolute left-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                                    >
+                                        &#10094;
+                                    </button>
+                                    <div
+                                        className="flex transition-transform duration-500 ease-in-out w-full"
+                                        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                                    >
+                                        {items.map((item, index) => (
+                                            <div key={index} className="flex-shrink-0 w-[100%] h-full p-2">
+                                                <Card className="w-full h-full"
+                                                shadow='sm'>
+                                                    
+                                                   
+                                                    <CardBody className="p-4 flex flex-col justify-between">
+                                                     <ScatterChartComponent />
+                                                    </CardBody>
+                                                </Card>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button
+                                        onClick={nextSlide}
+                                        disabled={currentIndex === items.length - 1}
+                                        className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                                    >
+                                        &#10095;
+                                    </button>
+                                </div>
+
+
+                            </div>
+                            {/* End of carousel integration */}
                         </div>
-                    </div>
-                    <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            radius="full"
-                            size="sm"
-                            onClick={handlePrevious}
-                        >
-                            <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
-                            <span className="sr-only">Previous</span>
-                        </Button>
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            radius="full"
-                            size="sm"
-                            onClick={handleNext}
-                        >
-                            <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
-                            <span className="sr-only">Next</span>
-                        </Button>
                     </div>
                 </div>
                 </div>
