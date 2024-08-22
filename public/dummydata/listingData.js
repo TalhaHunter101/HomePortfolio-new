@@ -1400,6 +1400,18 @@ export  const navElements = [
         bgColor: "bg-green-500",
         id: "marketcomparison",
       },
+      {
+        name: "Know your Home Options",
+        icon: "mdi:scale-balance",
+        bgColor: "bg-green-500",
+        id: "knowyourhometypes",
+      },
+      {
+        name: "Is it the right time to buy your dream home",
+        icon: "mdi:scale-balance",
+        bgColor: "bg-green-500",
+        id: "dreamhouse",
+      },
     ],
   },
   {

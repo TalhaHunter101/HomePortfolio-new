@@ -24,6 +24,8 @@ import { CrimeCard } from "../PropertyPageCards/CrimeCard";
 import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
 import { NoiseLevelCard } from "../PropertyPageCards/NoiseLevelCard";
 import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCard";
+import { HomeTypesCard } from "../PropertyPageCards/HomeTypesCard";
+import { DreamHouseCard } from "../PropertyPageCards/DreamHouseCard";
 
 
 function PropertyDisplay({ listingData, params }) {
@@ -201,13 +203,30 @@ function PropertyDisplay({ listingData, params }) {
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) : subElement.id === "schools" ? (
+                      ) :
+                       subElement.id === "knowyourhometypes" ? (
+                        <HomeTypesCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      ) 
+                      :
+                       subElement.id === "dreamhouse" ? (
+                        <DreamHouseCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      )
+                      :
+                       subElement.id === "schools" ? (
                         <SchoolsCard
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) : subElement.id === "family" ? (
+                      ): subElement.id === "family" ? (
                         <FamilyCard
                           title={subElement.name}
                           cards={mcards}
