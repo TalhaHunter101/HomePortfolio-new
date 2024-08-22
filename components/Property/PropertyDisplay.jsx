@@ -179,7 +179,7 @@ function PropertyDisplay({ listingData, params }) {
                           content="reachout content"
                         />
                       ) : subElement.id === "pricehistory" ? (
-                        <PriceHistory title={subElement.name} />
+                        <PriceHistory title={subElement.name} data={listingData?.priceHistory} />
                       ) : subElement.id === "location" ? (
                         <LocationCard
                           title={subElement.name}
