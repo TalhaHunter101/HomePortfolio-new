@@ -27,10 +27,10 @@ import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCar
 
 
 function PropertyDisplay({ listingData, params }) {
-  const mainImages = listingData?.imageUris || [];
-  const thumbnailImages = listingData?.imageUris.slice(0, 4);
-  const bedrooms = listingData?.attributes?.bedrooms || null;
-  const bathrooms = listingData?.attributes?.bathrooms || null;
+  const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
+  const thumbnailImages = listingData?.imageUris?.slice(0, 4) || listingData?.propertyImage.slice(0, 4);
+  const bedrooms = listingData?.attributes?.bedrooms || listingData?.counts?.numBedrooms || null;
+  const bathrooms = listingData?.attributes?.bathrooms || listingData?.counts?.numBathrooms || null;
 
   let pathname = usePathname();
 
@@ -138,7 +138,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.dimensions?.sqft}
+                    {listingData?.dimensions?.sqft || listingData?.floorArea}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
@@ -146,7 +146,7 @@ function PropertyDisplay({ listingData, params }) {
             </div>
             <div>
               <p className="text-sm font-bold">
-                {listingData?.title} | on [{listingData?.agent?.branchName}]
+                {listingData?.title} | on [{listingData?.adTargeting?.branchName}]
               </p>
               <div className="pr-4 pt-4">
                 <Button
@@ -171,6 +171,7 @@ function PropertyDisplay({ listingData, params }) {
                       {subElement.id === "basics" ? (
                         <BasicInfoCard
                           title={subElement.name}
+                          data={listingData}
                           content="This is the basic information about the property."
                         />
                       ) : subElement.id === "reachout" ? (
