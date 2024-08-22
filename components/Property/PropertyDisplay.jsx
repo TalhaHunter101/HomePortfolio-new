@@ -89,7 +89,7 @@ function PropertyDisplay({ listingData, params }) {
                     className="inline mx-1"
                     icon="fluent-emoji-flat:green-circle"
                   />
-                  {listingData?.tags[0].label}
+                  {listingData?.tags[0]?.label}
                 </span>
                 <span className="px-1 text-primary">
                   <Icon
@@ -117,7 +117,7 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {listingData?.pricing.label}
+                  {listingData?.pricing?.label}
                 </h3>
                 <span className="font-bold text-sm">
                   {listingData?.address},
@@ -138,7 +138,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.dimensions?.sqft || listingData?.floorArea}
+                    {listingData?.dimensions?.sqft || listingData?.floorArea?.label}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
