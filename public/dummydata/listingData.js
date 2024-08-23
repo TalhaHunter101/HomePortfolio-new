@@ -1407,7 +1407,7 @@ export  const navElements = [
         id: "knowyourhometypes",
       },
       {
-        name: "Is it the right time to buy your dream home",
+        name: "Is it the right time to buy your dream home?",
         icon: "mdi:scale-balance",
         bgColor: "bg-green-500",
         id: "dreamhouse",
