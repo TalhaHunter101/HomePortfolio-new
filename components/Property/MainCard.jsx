@@ -4,9 +4,7 @@ import { Card, Image, Button, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import ImageModal from "./ImagesModal";
 
-const MainCard = ({ images }) => {
-  console.log("images", images);
-  
+const MainCard = ({ images }) => {  
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

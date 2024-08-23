@@ -23,14 +23,24 @@ import { RecentlySoldCard } from "../PropertyPageCards/RecentlySoldCard";
 import { CrimeCard } from "../PropertyPageCards/CrimeCard";
 import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
 import { NoiseLevelCard } from "../PropertyPageCards/NoiseLevelCard";
-import { NeighbourCard, NeighbrourCard } from "../PropertyPageCards/neighbourCard";
-
+import {
+  NeighbourCard,
+  NeighbrourCard,
+} from "../PropertyPageCards/neighbourCard";
 
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
-  const thumbnailImages = listingData?.imageUris?.slice(0, 4) || listingData?.propertyImage.slice(0, 4);
-  const bedrooms = listingData?.attributes?.bedrooms || listingData?.counts?.numBedrooms || null;
-  const bathrooms = listingData?.attributes?.bathrooms || listingData?.counts?.numBathrooms || null;
+  const thumbnailImages =
+    listingData?.imageUris?.slice(0, 4) ||
+    listingData?.propertyImage.slice(0, 4);
+  const bedrooms =
+    listingData?.attributes?.bedrooms ||
+    listingData?.counts?.numBedrooms ||
+    null;
+  const bathrooms =
+    listingData?.attributes?.bathrooms ||
+    listingData?.counts?.numBathrooms ||
+    null;
 
   let pathname = usePathname();
 
@@ -65,15 +75,13 @@ function PropertyDisplay({ listingData, params }) {
         {/* {/ main div /} */}
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
           <div className="lg:col-span-7 max-w-screen">
-          {mainImages && (
-
-            <MainCard images={mainImages} />
-          )}
+            {mainImages && <MainCard images={mainImages} />}
           </div>
           <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
-            {thumbnailImages && thumbnailImages?.map((imageUrl, index) => (
-              <ThumbnailCard key={index} imageUrl={imageUrl} />
-            ))}
+            {thumbnailImages &&
+              thumbnailImages?.map((imageUrl, index) => (
+                <ThumbnailCard key={index} imageUrl={imageUrl} />
+              ))}
           </div>
         </div>
 
@@ -120,7 +128,7 @@ function PropertyDisplay({ listingData, params }) {
                   {listingData?.pricing?.label}
                 </h3>
                 <span className="font-bold text-sm">
-                  {listingData?.address},
+                  {listingData?.address || listingData?.branch?.address},
                 </span>
                 <span className="font-bold text-gray-400 text-sm">
                   {" "}
@@ -138,7 +146,8 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.dimensions?.sqft || listingData?.floorArea?.label}
+                    {listingData?.dimensions?.sqft ||
+                      listingData?.floorArea?.label}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
@@ -146,7 +155,8 @@ function PropertyDisplay({ listingData, params }) {
             </div>
             <div>
               <p className="text-sm font-bold">
-                {listingData?.title} | on [{listingData?.adTargeting?.branchName}]
+                {listingData?.title} | on [
+                {listingData?.adTargeting?.branchName}]
               </p>
               <div className="pr-4 pt-4">
                 <Button
@@ -180,7 +190,10 @@ function PropertyDisplay({ listingData, params }) {
                           content="reachout content"
                         />
                       ) : subElement.id === "pricehistory" ? (
-                        <PriceHistory title={subElement.name} data={listingData?.priceHistory} />
+                        <PriceHistory
+                          title={subElement.name}
+                          data={listingData?.priceHistory}
+                        />
                       ) : subElement.id === "location" ? (
                         <LocationCard
                           title={subElement.name}
@@ -198,6 +211,7 @@ function PropertyDisplay({ listingData, params }) {
                         />
                       ) : subElement.id === "marketcomparison" ? (
                         <MarketComparisonCard
+                          data={listingData}
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
@@ -238,22 +252,19 @@ function PropertyDisplay({ listingData, params }) {
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) :
-                       subElement.id === "airquality" ? (
+                      ) : subElement.id === "airquality" ? (
                         <AirQualityCard
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) :
-                      subElement.id === "noiselevels" ? (
+                      ) : subElement.id === "noiselevels" ? (
                         <NoiseLevelCard
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) :
-                      subElement.id === "neighbors" ? (
+                      ) : subElement.id === "neighbors" ? (
                         <NeighbourCard
                           title={subElement.name}
                           cards={mcards}
