@@ -4,7 +4,7 @@ import { Card, Image, Button, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import ImageModal from "./ImagesModal";
 
-const MainCard = ({ images }) => {
+const MainCard = ({ images }) => {  
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -30,7 +30,7 @@ const MainCard = ({ images }) => {
           {images && images?.map((image, index) => (
             <div key={index} className="flex-shrink-0 w-full">
               <Image
-                src={image}
+                src={image|| image?.original}
                 alt={`Image ${index + 1}`}
                 width="100%"
                 height={415}
