@@ -1,3 +1,5 @@
+import { BasicInfoCard } from "@/components/PropertyPageCards/basic";
+
 export const lisitngData = [
   {
     address: "Empire Reach, 4 Dowells Street, London SE10",

@@ -1,21 +1,78 @@
 'use client';
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, defs, linearGradient, stop } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CardBody } from '@nextui-org/react';
 
-const data = [
-  { priceRange: '$249K', homes: 200 },
-  { priceRange: '$720K', homes: 750 },
-  { priceRange: '$1.15M', homes: 500 },
-  { priceRange: '$1.51M to $1.66M', homes: 66 },
-  { priceRange: '$1.58M', homes: 400 },
-  { priceRange: '$2.02M', homes: 280 },
-  { priceRange: '$2.45M', homes: 100 },
-  { priceRange: '$2.88M', homes: 50 },
-  { priceRange: '$14.37M', homes: 200 },
-];
+export const DistributionBarChart= ({ main_data, barchart })=> {
+  const [data, setData] = useState([]);
 
-export const DistributionBarChart = () => {
+  const filterMainData = (barchartValue) => {
+    if (!barchartValue) return [];
+  
+    const parts = barchartValue.name.split('~');
+    const propertyType = parts[0];
+    const bedsInfo = parts.length > 1 ? parts[1] : null;
+  
+    return main_data.filter(item => {
+      const itemPropertyType = item._source.analyticsTaxonomy?.propertyType;
+      const itemBedrooms = item._source.analyticsTaxonomy?.bedsMax;
+  
+      const typeMatches = itemPropertyType === propertyType;
+  
+      if (!bedsInfo) {
+        return typeMatches;
+      }
+  
+      if (bedsInfo.startsWith('beds-')) {
+        const requiredBeds = bedsInfo.split('-')[1];
+        return typeMatches && itemBedrooms === requiredBeds;
+      }
+  
+      return typeMatches;
+    });
+  };
+
+  const getPriceRanges = (data) => {
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    const prices = data.map(item => Number(item._source?.pricing?.internalValue)).filter(price => !isNaN(price));
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const range = maxPrice - minPrice;
+    const step = range / 10;
+
+    const ranges = Array.from({ length: 10 }, (_, i) => ({
+      min: minPrice + i * step,
+      max: minPrice + (i + 1) * step,
+      count: 0,
+    }));
+
+    data.forEach(item => {
+      const price = Number(item._source?.pricing?.internalValue);
+      if (!isNaN(price)) {
+        const rangeIndex = ranges.findIndex(r => price >= r.min && price < r.max);
+        if (rangeIndex !== -1) {
+          ranges[rangeIndex].count++;
+        }
+      }
+    });
+
+    return ranges.map(range => ({
+      priceRange: `£${Math.round(range.min / 1000)}k - £${Math.round(range.max / 1000)}k`,
+      homes: range.count,
+    }));
+  };
+
+  useEffect(() => {
+    if (barchart && main_data) {
+      const filteredData = filterMainData(barchart);
+      const priceRanges = getPriceRanges(filteredData);
+      setData(priceRanges);
+    }
+  }, [barchart, main_data]);
+
   return (
     <CardBody className="w-full flex flex-col justify-between bg-white rounded-lg">
       <div className="w-full h-64">
@@ -28,7 +85,7 @@ export const DistributionBarChart = () => {
               bottom: 20,
               left: 20,
             }}
-            barCategoryGap={0} 
+            barCategoryGap={0}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
             <XAxis
@@ -81,7 +138,7 @@ export const DistributionBarChart = () => {
                   `${props.payload.priceRange}`,
                 ];
               }}
-              labelFormatter={() => ``} 
+              labelFormatter={() => ``}
             />
             <Bar dataKey="homes" fill="rgba(156, 39, 176, 0.5)" barSize={30} />
           </BarChart>
@@ -89,4 +146,5 @@ export const DistributionBarChart = () => {
       </div>
     </CardBody>
   );
-};
+}
+

@@ -11,7 +11,7 @@ const ThumbnailCard = ({ imageUrl }) => {
         className="object-cover rounded-md"
         height={200}
         width={200}
-        src={imageUrl || imageUrl?.original}
+        src={ imageUrl?.original ? imageUrl?.original : imageUrl}
       />
     </Card>
   );

@@ -775,7 +775,7 @@ export default function PropertyPage({ params }) {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+            "8e3b4cbd35msh9e9011603c72e7cp164593jsnf1385e91714e",
           "x-rapidapi-host": "zoopla.p.rapidapi.com",
         },
       };
@@ -798,7 +798,7 @@ export default function PropertyPage({ params }) {
         method: "GET",
         headers: {
           "x-rapidapi-key":
-            "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
+            "8e3b4cbd35msh9e9011603c72e7cp164593jsnf1385e91714e",
           "x-rapidapi-host": "zoopla.p.rapidapi.com",
         },
       };
@@ -855,7 +855,12 @@ export default function PropertyPage({ params }) {
   return (
     <>
       {isDataLoading ? (
-        <Spinner className="mt-20" />
+       <div className="w-full h-screen flex justify-center items-center">
+
+<Spinner className="mt-20" size="lg" />
+
+       </div>
+
       ) : (
         <PropertyDisplay listingData={listingData} params={params} />
       )}

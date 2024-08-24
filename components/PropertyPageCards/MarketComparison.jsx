@@ -34,6 +34,8 @@ export function MarketComparisonCard({ title, price, roi, cards, data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
 
+  
+
   const items = getItemsData();
 
   const nextSlide = () => {

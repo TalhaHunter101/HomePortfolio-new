@@ -1,11 +1,77 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardBody, CardHeader,  } from "@nextui-org/react";
 import { DistributionPieChart } from './Charts/DistributionPieChart';
 import { ScatterChartComponent } from './Charts/MarketScatterChart';
 import { DistributionBarChart } from './Charts/DistributionBarChart';
+import { formatPrice } from '@/utils/Helper';
+import { useState } from 'react';
 
-export function HomeTypesCard  ({title, })  {
+export function HomeTypesCard  ({title,city })  {
+const [minMaxData, setMinMaxData] = useState({})
+const [data, setData] = useState([]);
+const [barchart, setbarchart] = useState({
+  type: "",
+  name: "detached",
+  value: "",
+});
+
+  function analyzePrices(data) {
+    const prices = data
+      .map((item) => parseFloat(item._source?.pricing?.internalValue))
+      .filter((price) => !isNaN(price));
+
+    prices.sort((a, b) => a - b);
+
+    const min = prices[0];
+    const max = prices[prices.length - 1];
+
+    
+
+    let median;
+    const mid = Math.floor(prices.length / 2);
+    if (prices.length % 2 === 0) {
+      median = (prices[mid - 1] + prices[mid]) / 2;
+    } else {
+      median = prices[mid];
+    }
+
+    return { 
+        min: formatPrice(min),
+        max: formatPrice(max),
+        median: formatPrice(median)
+      };
+  }
+
+
+  useEffect(() => {
+    
+    const getHouseTypeData = async (city) => {
+      try {
+        const response = await fetch(`/api/indevisual/get-listing-data-by-city`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ city: city }),
+        })
+
+        if (response.ok) {
+          const result = await response.json();
+          setData(result);
+          const data = analyzePrices(result);
+          setMinMaxData(data);
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    getHouseTypeData(city)
+  }, [city])
+  
+    
+   
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader className='flex flex-col items-start '>
@@ -31,7 +97,7 @@ export function HomeTypesCard  ({title, })  {
               
               <div className="grid relative md:pt-12/16 pt-15/16">
                 
-                <DistributionPieChart />
+                <DistributionPieChart main_data={data} setbarchart={setbarchart} />
               </div>
             </div>
           </div>
@@ -44,14 +110,14 @@ export function HomeTypesCard  ({title, })  {
               <div className="flex flex-col items-start">
                 <div className="  lg:mb-1">Min</div>
                 <div className="text-lime-500">
-                  <span className="text-4xl text-2xl lg:text-3xl">$138K</span>
+                  <span className="text-4xl text-2xl lg:text-3xl">£{minMaxData.min}</span>
                 </div>
               </div>
               <div className="justify-self-end">
                 <div className="flex flex-col items-start">
                   <div className="  lg:mb-1">Median</div>
                   <div className="text-amber-500">
-                    <span className="text-4xl text-2xl lg:text-3xl">$655K</span>
+                    <span className="text-4xl text-2xl lg:text-3xl">£{minMaxData.median}</span>
                   </div>
                 </div>
               </div>
@@ -59,7 +125,7 @@ export function HomeTypesCard  ({title, })  {
                 <div className="flex flex-col items-start">
                   <div className="text-zdsecondary-600 dark:text-zdsecondary-300 lg:mb-1">Max</div>
                   <div className="text-red-500">
-                    <span className="text-4xl text-2xl lg:text-3xl">$25.5M</span>
+                    <span className="text-4xl text-2xl lg:text-3xl">£{minMaxData.max}</span>
                   </div>
                 </div>
               </div>
@@ -68,7 +134,7 @@ export function HomeTypesCard  ({title, })  {
             <div className="relative flex-1 font-mono pt-9/16" style={{ width: '100%' }}>
               
               <div className="absolute inset-0 flex items-center justify-center">
-                <DistributionBarChart/>
+                <DistributionBarChart main_data={data} barchart={barchart} />
               </div>
             </div>
           </div>
