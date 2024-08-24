@@ -34,11 +34,11 @@ export function formatDate(dateString) {
 
 
 export  const calculateMedian = (arr) => {
-  const mid = Math.floor(arr.length / 2);
-  if (arr.length % 2 === 0) {
-    return (arr[mid - 1] + arr[mid]) / 2;
+  const mid = Math?.floor(arr?.length / 2);
+  if (arr?.length % 2 === 0) {
+    return (arr?.[mid - 1] + arr?.[mid]) / 2;
   } else {
-    return arr[mid];
+    return arr?.[mid];
   }
 };
 
