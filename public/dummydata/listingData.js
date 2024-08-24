@@ -1453,6 +1453,12 @@ export  const navElements = [
     name: "Quality of Life",
     subElements: [
       {
+        name: "Planning Applications",
+        icon: "mdi:shield-alert",
+        bgColor: "bg-red-200",
+        id: "Planning",
+      },
+      {
         name: "Crime Rate",
         icon: "mdi:shield-alert",
         bgColor: "bg-red-200",

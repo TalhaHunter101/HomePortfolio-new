@@ -29,6 +29,7 @@ import {
 } from "../PropertyPageCards/neighbourCard";
 import { HomeTypesCard } from "../PropertyPageCards/HomeTypesCard";
 import { DreamHouseCard } from "../PropertyPageCards/DreamHouseCard";
+import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
@@ -296,13 +297,20 @@ function PropertyDisplay({ listingData, params }) {
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) : subElement.id === "crimerate" ? (
+                      ) : subElement.id === "Planning" ? (
+                        <PlanningCard
+                          title={subElement.name}
+                          cards={mcards}
+                          content="Custom content for this section."
+                        />
+                      ) 
+                      :subElement.id === "crimerate" ? (
                         <CrimeCard
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
                         />
-                      ) : subElement.id === "airquality" ? (
+                      ): subElement.id === "airquality" ? (
                         <AirQualityCard
                           title={subElement.name}
                           cards={mcards}
