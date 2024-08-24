@@ -247,6 +247,7 @@ function PropertyDisplay({ listingData, params }) {
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
+                          data={listingData}
                         />
                       ) :
                        subElement.id === "knowyourhometypes" ? (
@@ -254,6 +255,7 @@ function PropertyDisplay({ listingData, params }) {
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
+                          city={listingData?.location?.townOrCity}
                         />
                       ) 
                       :
