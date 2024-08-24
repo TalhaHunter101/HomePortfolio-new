@@ -47,9 +47,40 @@ function PropertyDisplay({ listingData, params }) {
   let hashId = pathname.split("#")[1];
 
   const [openSection, setOpenSection] = useState(hashId);
+  const [schoolData, setSchoolData] = useState([])
+
+
+  useEffect(() => {
+  
+    const getSchoolData = async()=>{
+      try {
+        const response = await fetch(`/api/indevisual/get-schools-by-postcode`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({postcode: listingData?.branch?.postcode}),
+        });
+  
+        if (response.ok) {  
+          const result = await response.json();
+          setSchoolData(result);
+        }
+        
+      } catch (error) {
+        console.log("error is", error);
+        
+        
+      }
+    }
+
+    getSchoolData();
+  }, [listingData?.branch?.postcode])
+  
 
   useEffect(() => {
     window.location.hash = openSection;
+    
   }, [openSection]);
 
   return (
@@ -221,6 +252,7 @@ function PropertyDisplay({ listingData, params }) {
                           title={subElement.name}
                           cards={mcards}
                           content="Custom content for this section."
+                          schoolData={schoolData}
                         />
                       ) : subElement.id === "family" ? (
                         <FamilyCard
