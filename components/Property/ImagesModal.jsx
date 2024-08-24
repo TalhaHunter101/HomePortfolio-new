@@ -28,11 +28,11 @@ const ImageModal = ({ isOpen, onOpenChange, images }) => {
             <ModalHeader className="flex flex-col gap-1">All Photos</ModalHeader>
             <ModalBody>
               <div className="grid grid-cols-3 gap-4">
-                {images && images.map((image, index) => (
+                {     images && images.map((image, index) => (
                   <div key={index} className="w-full">
                     <Image
-                      src={image}
-                      alt={`Image ${index + 1}`}
+                      src={image?.original ? image?.original : image}
+                      alt={`image?.original ? image?.original ${index + 1} : image ${index + 1}`}
                       className="object-cover w-full h-full"
                     />
                   </div>
