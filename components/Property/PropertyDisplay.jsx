@@ -224,6 +224,13 @@ function PropertyDisplay({ listingData, params }) {
       id: "quality-life",
       subElements: [
         {
+          name: "Planning Applications",
+          icon: "mdi:shield-alert",
+          bgColor: "bg-red-200",
+          id: "Planning",
+          Component: PlanningCard
+        },
+        {
           name: "Crime Rate",
           icon: "mdi:shield-alert",
           bgColor: "bg-red-200",
