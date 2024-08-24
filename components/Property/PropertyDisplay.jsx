@@ -52,6 +52,7 @@ function PropertyDisplay({ listingData, params }) {
   const [openSection, setOpenSection] = useState(hashId);
   const [hoveredSubElement, setHoveredSubElement] = useState(null);
   const [schoolData, setSchoolData] = useState([]);
+  const [pricePaidData, setPricePaidData] = useState([])
 
   useEffect(() => {
     const getSchoolData = async () => {
@@ -88,7 +89,7 @@ function PropertyDisplay({ listingData, params }) {
 
         if (result.ok) {
           const resultData = await result.json();
-          console.log("getPricePaidData is", resultData);
+          setPricePaidData(resultData);
           
         }
       } catch (error) {
@@ -402,6 +403,7 @@ function PropertyDisplay({ listingData, params }) {
                       city={listingData?.location?.townOrCity}
                       cards={mcards}
                       data={listingData}
+                      pricePaidData={pricePaidData}
                     />
                   </div>
                 ))}
