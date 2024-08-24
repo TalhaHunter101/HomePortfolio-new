@@ -280,7 +280,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
 };
 
 const CustomLegend = ({ payload }) => (
-  <ul className="p-0 m-0 text-center list-none" style={{ marginTop: "-20px" }}>
+  <ul className="p-0 m-0 text-center list-none" style={{ marginTop: "-20px"  }}>
     {payload.map((entry, index) => (
       <li key={`item-${index}`} className="inline-block mr-2.5">
         <Icon

@@ -76,8 +76,29 @@ function PropertyDisplay({ listingData, params }) {
       }
     };
 
+    const getPricePaidData = async ()=>{
+      try {
+        const result = await fetch("/api/indevisual/get-price-paid", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ city: listingData?.adTargeting?.postTownName }),
+        })
+
+        if (result.ok) {
+          const resultData = await result.json();
+          console.log("getPricePaidData is", resultData);
+          
+        }
+      } catch (error) {
+        
+      }
+    }
+
     getSchoolData();
-  }, [listingData?.branch?.postcode]);
+    getPricePaidData();
+  }, [listingData]);
 
   const navElements = [
     {
@@ -338,7 +359,7 @@ function PropertyDisplay({ listingData, params }) {
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
                     {listingData?.dimensions?.sqft ||
-                      listingData?.floorArea?.label}
+                      listingData?.floorArea?.value}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
