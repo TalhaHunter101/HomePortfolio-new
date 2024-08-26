@@ -65,10 +65,11 @@ export function SchoolsCard({ title, schoolData }) {
               </div>
 
               {/* Buttons and other content on the right */}
-              <div className="flex-1  flex flex-col justify-end h-full">
+              <div className="flex-1 w-1/2 flex flex-col justify-end h-full">
                 <div className="ml-2 shadow-md z-50 p-2 mb-2">
-                  <div className="flex space-x-2  pb-2 " slot="tabs">
+                  <div className="flex gap-2 flex-wrap   pb-2 " slot="tabs">
                     <Button
+                    size="sm"
                       className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "All grades" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
                       onPress={() => setSelectedType("All grades")}
                     >
@@ -88,6 +89,7 @@ export function SchoolsCard({ title, schoolData }) {
                     </Button>
 
                     <Button
+                    size="sm"
                       className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Primary" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
                       onPress={() => setSelectedType("Primary")}
                     >
@@ -106,6 +108,7 @@ export function SchoolsCard({ title, schoolData }) {
                       <span>Primary</span>
                     </Button>
                     <Button
+                    size="sm"
                       className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Secondary" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
                       onPress={() => setSelectedType("Secondary")}
                     >
@@ -125,7 +128,8 @@ export function SchoolsCard({ title, schoolData }) {
                     </Button>
 
                     <Button
-                       className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Independent" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
+                    size="sm"
+                      className={`flex-shrink-0 flex space-x-2  items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Independent" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
                       onPress={() => setSelectedType("Independent")}
                     >
                       <svg
@@ -144,83 +148,82 @@ export function SchoolsCard({ title, schoolData }) {
                     </Button>
                   </div>
                 </div>
-                <div className="flex-1 w-1/2 overflow-y-scroll  scrollbar    snap-mandatory space-x-2 pr-6 ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
-                <div className="flex flex-row sm:flex-col">
-  {schoolData &&
-    schoolData.filter((item) =>
-      selectedType === "All grades"
-        ? true
-        : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
-    ).length > 0 ? (
-      schoolData
-        .filter((item) =>
-          selectedType === "All grades"
-            ? true
-            : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
-        )
-        .map((item, index) => (
-          <div
-            className="flex-shrink-0 snap-start map-list-item mb-0 w-auto"
-            key={index}
-          >
-            <button className="w-full h-auto text-left pt-2 pr-2">
-              <div className="relative flex flex-col h-full p-2 pl-6 border rounded-md sm:mr-2 sm:rounded-lg border-purple-150 bg-purple-100">
-                <div className="flex flex-row items-center h-full space-x-4 truncate flex-1 w-full relative overflow-hidden text-foreground">
+                <div className="flex-1 w-1/2 overflow-y-scroll  scrollbar    snap-mandatory space-x-2  ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
                   <div className="flex flex-row sm:flex-col">
-                    <div
-                      className={`text-4xl font-bold text-blue-600 ${
-                        item?._source?.["OfstedRating (name)"] ===
-                        "Outstanding"
-                          ? " text-green-900"
-                          : item?._source?.["OfstedRating (name)"] === "Good"
-                          ? " text-yellow-800"
-                          : " text-red-800"
-                      }`}
-                      style={{ minWidth: "45px" }}
-                    >
-                      {item?._source?.["OfstedRating (name)"] === "" ||
-                      item?._source?.["OfstedRating (name)"].trim() === ""
-                        ? "Don't know"
-                        : item?._source?.["OfstedRating (name)"]}
-                    </div>
-                    <div className="flex flex-col text-sm">
-                      <p
-                        className="truncate text-base font-bold text-purple-800 pr-4"
-                        style={{
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 1,
-                          display: "-webkit-box",
-                        }}
-                        title={item?._source?.EstablishmentName}
-                      >
-                        {smallString(
-                          item?._source?.EstablishmentName,
-                          24
-                        )}
-                      </p>
-                      <span>
-                        {parseInt(item?._source?.StatutoryLowAge)}-
-                        {parseInt(item?._source?.StatutoryHighAge)},{" "}
-                        {item?._source?.["Gender (name)"]},
-                        {item?._source?.NumberOfPupils},{" "}
-                        {item?._source?.["PhaseOfEducation (name)"]}
-                      </span>
-                      <div>
-                        {item?._source?.Street}, {item?._source?.Postcode}
+                    {schoolData &&
+                      schoolData.filter((item) =>
+                        selectedType === "All grades"
+                          ? true
+                          : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
+                      ).length > 0 ? (
+                      schoolData
+                        .filter((item) =>
+                          selectedType === "All grades"
+                            ? true
+                            : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
+                        )
+                        .map((item, index) => (
+                          <div
+                            className="flex-shrink-0 snap-start map-list-item mb-0 w-auto"
+                            key={index}
+                          >
+                            <button className="w-full h-auto text-left pt-2 pr-2">
+                              <div className="relative flex flex-col h-full p-2 pl-6 border rounded-md sm:mr-2 sm:rounded-lg border-purple-150 bg-purple-100">
+                                <div className="flex flex-row items-center h-full space-x-4 truncate flex-1  relative overflow-hidden text-foreground">
+                                  <div className="flex flex-row sm:flex-col">
+                                    <div
+                                      className={`text-4xl font-bold text-blue-600 ${item?._source?.["OfstedRating (name)"] ===
+                                          "Outstanding"
+                                          ? " text-green-900"
+                                          : item?._source?.["OfstedRating (name)"] === "Good"
+                                            ? " text-yellow-800"
+                                            : " text-red-800"
+                                        }`}
+                                      style={{ minWidth: "45px" }}
+                                    >
+                                      {item?._source?.["OfstedRating (name)"] === "" ||
+                                        item?._source?.["OfstedRating (name)"].trim() === ""
+                                        ? "Don't know"
+                                        : item?._source?.["OfstedRating (name)"]}
+                                    </div>
+                                    <div className="flex flex-col text-sm">
+                                      <p
+                                        className="truncate text-base font-bold text-purple-800 pr-4"
+                                        style={{
+                                          WebkitBoxOrient: "vertical",
+                                          WebkitLineClamp: 1,
+                                          display: "-webkit-box",
+                                        }}
+                                        title={item?._source?.EstablishmentName}
+                                      >
+                                        {smallString(
+                                          item?._source?.EstablishmentName,
+                                          24
+                                        )}
+                                      </p>
+                                      <span>
+                                        {parseInt(item?._source?.StatutoryLowAge)}-
+                                        {parseInt(item?._source?.StatutoryHighAge)},{" "}
+                                        {item?._source?.["Gender (name)"]},
+                                        {item?._source?.NumberOfPupils},{" "}
+                                        {item?._source?.["PhaseOfEducation (name)"]}
+                                      </span>
+                                      <div>
+                                        {item?._source?.Street}, {item?._source?.Postcode}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        ))
+                    ) : (
+                      <div className="flex justify-center items-center text-xl w-full h-full p-4 text-center text-gray-500">
+                        No data found
                       </div>
-                    </div>
+                    )}
                   </div>
-                </div>
-              </div>
-            </button>
-          </div>
-        ))
-    ) : (
-      <div className="flex justify-center items-center text-xl w-full h-full p-4 text-center text-gray-500">
-        No data found
-      </div>
-    )}
-</div>
 
                 </div>
               </div>

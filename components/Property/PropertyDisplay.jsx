@@ -31,6 +31,7 @@ import { HomeTypesCard } from "../PropertyPageCards/HomeTypesCard";
 import { DreamHouseCard } from "../PropertyPageCards/DreamHouseCard";
 import Component from "@/app/home-valuation/page";
 import { PlanningCard } from "../PropertyPageCards/PlanningCard";
+import { EPCCard } from "../PropertyPageCards/EPCcard";
 
 function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
@@ -257,6 +258,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-red-500",
           id: "neighbors",
           Component: NeighbourCard,
+        },
+        {
+          name: "Energy Performance Certificate",
+          icon: "mdi:account-group",
+          bgColor: "bg-red-500",
+          id: "EPC",
+          Component: EPCCard,
         },
       ],
     },

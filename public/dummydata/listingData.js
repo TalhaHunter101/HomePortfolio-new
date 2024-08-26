@@ -1484,6 +1484,12 @@ export  const navElements = [
         bgColor: "bg-red-500",
         id: "neighbors",
       },
+      {
+        name: "Energy Performance Certificate",
+        icon: "mdi:account-group",
+        bgColor: "bg-red-500",
+        id: "EPC",
+      },
     ],
   },
 ];

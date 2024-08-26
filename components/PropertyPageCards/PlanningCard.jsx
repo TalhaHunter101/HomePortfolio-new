@@ -8,12 +8,12 @@ import { ConstraintsList } from './PlanningComponents/ConstraintList';
 
 
 const statusData = [
-    { label: 'Approved', count: 27, iconColor: 'bg-green-500' },
-    { label: 'In progress', count: 27, iconColor: 'bg-blue-500' },
-    { label: 'Pending', count: 27, iconColor: 'bg-orange-500' },
-    { label: 'Rejected', count: 27, iconColor: 'bg-red-500' },
-    { label: 'Withdrawn', count: 27, iconColor: 'bg-gray-500' },
-];
+    { label: 'Approved', count: 27, iconColor: 'text-green-500', icon: 'mdi:check-circle' },
+    { label: 'In progress', count: 27, iconColor: 'text-blue-500', icon: 'mdi:progress-clock' },
+    { label: 'Pending', count: 27, iconColor: 'text-orange-500', icon: 'mdi:clock-outline' },
+    { label: 'Rejected', count: 27, iconColor: 'text-red-500', icon: 'mdi:close-circle' },
+    { label: 'Withdrawn', count: 27, iconColor: 'text-gray-500', icon: 'mdi:minus-circle' },
+  ];
 const dummyData = [
     { leftContent: "Left Content 1", rightContent: "Right Content 1" },
     { leftContent: "Left Content 2", rightContent: "Right Content 2" },
@@ -35,6 +35,7 @@ export function PlanningCard({ title }) {
                                 label={status.label}
                                 count={status.count}
                                 iconColor={status.iconColor}
+                                icon={status.icon}
                             />
                         ))}
                     </div>
