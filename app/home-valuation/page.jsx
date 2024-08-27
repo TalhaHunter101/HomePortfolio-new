@@ -1,8 +1,16 @@
+'use client'
+import { useState } from "react"
+import { ReportModal } from "@/components/QuestionFlow/QfModal"
 import { Icon } from "@iconify/react"
-import { Input, Button, Card } from "@nextui-org/react"
+import { Input, Button, Card, useDisclosure } from "@nextui-org/react"
 
 
 export default function Component() {
+  
+  const [isModalOpen, setModalOpen] = useState(false); // Use useState to manage modal state
+
+  const handleOpenModal = () => setModalOpen(true); // Function to open the modal
+  const handleCloseModal = () => setModalOpen(false); 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#ffffff] to-[#b792f6b5]">
       <div className="text-center">
@@ -23,11 +31,13 @@ export default function Component() {
             startContent={<Icon icon="bi:house-fill" fontSize={28} />}
             className="mr-4"
           />
-          <Button auto flat className="font-bold" color="secondary">
+         <Button auto flat className="font-bold" color="secondary" onPress={handleOpenModal}>
             Get My Report
           </Button>
+         
         </Card>
       </div>
+      <ReportModal isOpen={isModalOpen} onOpenChange={handleCloseModal} /> 
       <div className="mt-8 flex flex-row justify-center space-x-4 text-muted-foreground">
         {/* <span>As seen on:</span>
         <img src="/placeholder.svg" alt="CP24" className="h-6" />

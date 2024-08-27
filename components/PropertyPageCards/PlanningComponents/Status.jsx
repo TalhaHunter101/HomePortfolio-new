@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
   
   export function StatusCard({ label, count, iconColor, icon }) {
     return (
-      <div className="flex flex-col items-center justify-center w-40 h-24 p-4 border border-gray-200 rounded-md">
+      <div className="flex flex-col items-center justify-center w-40 h-24 p-4 border border-gray-200 rounded-md shadow-md">
           <div className="mb-2">
         {/* Render the icon here */}
         
