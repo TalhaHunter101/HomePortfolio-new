@@ -31,6 +31,7 @@ import { HomeTypesCard } from "../PropertyPageCards/HomeTypesCard";
 import { DreamHouseCard } from "../PropertyPageCards/DreamHouseCard";
 import Component from "@/app/home-valuation/page";
 import { PlanningCard } from "../PropertyPageCards/PlanningCard";
+import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 
 function PropertyDisplay({ listingData, params }) {
@@ -176,6 +177,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-500",
           id: "dreamhouse",
           Component: DreamHouseCard,
+        },
+        {
+          name: "Calculate potential returns",
+          icon: "mdi:scale-balance",
+          bgColor: "bg-green-500",
+          id: "calculateyourdreamhouse",
+          Component: Calculation,
         },
       ],
     },
@@ -420,6 +428,7 @@ function PropertyDisplay({ listingData, params }) {
                       cards={mcards}
                       data={listingData}
                       pricePaidData={pricePaidData}
+                      propertyPrice={listingData?.analyticsTaxonomy?.price}
                     />
                   </div>
                 ))}
