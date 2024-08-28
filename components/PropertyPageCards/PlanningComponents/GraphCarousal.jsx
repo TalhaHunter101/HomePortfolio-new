@@ -6,6 +6,7 @@ import { DecisionDaysChart } from './Charts/DecisionDaysChart';
 import { DevelopmentChart } from './Charts/DevelopmentChart';
 import { EthnicGroupChart } from './Charts/EthnicGroupChart';
 import { TimelineChart } from './Charts/TimelineChart';
+import { ConstraintsList } from './ConstraintList';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,6 +17,7 @@ const Carousel = () => {
     <DevelopmentChart key={1} />,
     <EthnicGroupChart key={2} />,
     <TimelineChart key={3} />,
+    <ConstraintsList key={4} />,
   ];
 
 

@@ -5,6 +5,7 @@ import { StatusCard } from './PlanningComponents/Status';
 import Carousel from './PlanningComponents/GraphCarousal';
 
 import { ConstraintsList } from './PlanningComponents/ConstraintList';
+import FloatingCard from './PlanningComponents/FloatingCard';
 
 
 const statusData = [
@@ -45,7 +46,7 @@ export function PlanningCard({ title }) {
 
                         <Carousel data={dummyData} />
                     </div>
-                    <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
+                    <div className="z-10 w-full  overflow-hidden rounded-br-lg rounded-bl-lg">
                         <div className="hidden xl:flex h-96">
                             <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
                                 {/* Map section on the left */}
@@ -55,20 +56,15 @@ export function PlanningCard({ title }) {
                                             <div>
                                                 map here
                                             </div>
+                                            <div className='absolute top-4 gap-2 right-4'>
+                                          <FloatingCard/>
+                                          </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div className="flex-1  flex flex-col justify-center h-full">
-                                    <div className="relative w-full h-full flex items-center">
-
-
-                                        <ConstraintsList />
-                                    </div>
-
-
-                                </div>
+                               
 
                             </div>
                         </div>

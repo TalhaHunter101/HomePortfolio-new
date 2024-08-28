@@ -2,27 +2,18 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 
-const bathroomCounts = ["1", "2", "3", "4", "5", "6", "7+"];
-
-const Step4 = ({ onBathroomSelect }) => (
+const Step4 = ({ onBasementSelect }) => (
   <div className="flex flex-col items-center">
-    <p className="text-center text-lg text-default-700  mb-4">
-      How many <strong>bathrooms</strong> are in your home?
+    <p className="text-center text-lg text-default-700 mb-4">
+      Does your home have a <strong>finished basement</strong>?
     </p>
-    <div className="flex gap-4">
-      {bathroomCounts.map((count) => (
-        <Button
-          radius="md"
-          variant="ghost"
-          color="secondary"
-          key={count}
-          bordered
-          className="w-full"
-          onClick={() => onBathroomSelect(count)}
-        >
-          {count}
-        </Button>
-      ))}
+    <div className="flex space-x-4">
+      <Button radius="md" variant="ghost" color="secondary"  className="w-24" onClick={() => onBasementSelect("Yes")}>
+        Yes
+      </Button>
+      <Button radius="md" variant="ghost" color="secondary" className="w-24" onClick={() => onBasementSelect("No")}>
+        No
+      </Button>
     </div>
   </div>
 );

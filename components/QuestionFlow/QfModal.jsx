@@ -16,7 +16,7 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
 import Step6 from "./Step6";
-import Step7 from "./Step7";
+
 
 export const ReportModal = ({ isOpen, onOpenChange }) => {
     const [step, setStep] = useState(1);
@@ -74,21 +74,24 @@ export const ReportModal = ({ isOpen, onOpenChange }) => {
     const renderStep = () => {
         switch (step) {
             case 1:
-                return <Step1 onContinue={handleNextStep} />;
+      return <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />;
+
             case 2:
-                return <Step2 onPropertyTypeSelect={handlePropertyTypeSelect} />;
+                return <Step2 onBedroomSelect={handleBedroomSelect} />;
+
             case 3:
-                return <Step3 onBedroomSelect={handleBedroomSelect} />;
+                return <Step3 onBathroomSelect={handleBathroomSelect} />;
+
             case 4:
-                return <Step4 onBathroomSelect={handleBathroomSelect} />;
+                return <Step4 onBasementSelect={handleBasementSelect} />;
+
             case 5:
-                return <Step5 onBasementSelect={handleBasementSelect} />;
-            case 6:
-                return <Step6 onSquareFootageSelect={handleSquareFootageSelect} />;
-            case 7:
-                return <Step7 onSubmit={handleSubmit} onBack={handlePreviousStep} />;
+                return <Step5 onSquareFootageSelect={handleSquareFootageSelect} />;
+            case 6 :
+                return <Step6 onSubmit={handleSubmit} onBack={handlePreviousStep} />
+
             default:
-                return <Step1 onContinue={handleNextStep} />;
+                <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />
         }
     };
 

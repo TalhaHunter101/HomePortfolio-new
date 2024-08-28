@@ -1,37 +1,39 @@
 
 import React from "react";
-import { Input, Button } from "@nextui-org/react";
-import { Icon } from "@iconify/react";
+import { Button } from "@nextui-org/react";
 
-const Step1 = ({ onContinue }) => (
-    <div className="flex flex-col justify-center items-center">
-        <p className="text-center text-xl text-default-700 mb-4">
-            Get started with a free estimate - simply enter your <strong>home address</strong> below:
-        </p>
-        <div className="flex justify-center  w-full space-x-4">
-            <Input
-                color="secondary"
-                label="Home Address"
+const propertyTypes = [
+  "Detached",
+  "Semi Detached",
+  "Freehold Townhouse",
+  "Condo Townhouse",
+  "Condominium",
+  "Multiplex",
+  "Vacant Land",
+  "Other",
+];
 
-                className="max-w-lg"
-                placeholder="123 Example Street..."
-                contentLeft={<Icon icon="bi:house-fill" />}
-            />
-            <Input
-                color="secondary"
-                label="Unit # (optional)"
-
-                placeholder="1203"
-                contentLeft={<Icon icon="clarity:building-line" />}
-                className="max-w-xs"
-            />
-        </div>
-        <div className="flex justify-end mt-8 pr-14 w-full">
-            <Button size="lg" endContent={<Icon icon="bi:arrow-right" />} radius="full" color="secondary" onClick={onContinue}>
-                Continue
-            </Button>
-        </div>
+const Step1 = ({ onPropertyTypeSelect }) => (
+  <div className="flex flex-col items-center">
+    <p className="text-center text-lg text-default-700  mb-4">
+      I&#39;ll need to know some more details about your home to make an accurate prediction. Please select a <strong>property type</strong> from the options below:
+    </p>
+    <div className="grid grid-cols-3 gap-4">
+      {propertyTypes.map((type) => (
+        <Button
+          radius="md"
+          variant="ghost"
+          color="secondary"
+          key={type}
+          bordered
+          className="w-full"
+          onClick={() => onPropertyTypeSelect(type)}
+        >
+          {type}
+        </Button>
+      ))}
     </div>
+  </div>
 );
 
 export default Step1;

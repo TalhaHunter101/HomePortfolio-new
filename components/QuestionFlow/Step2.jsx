@@ -2,34 +2,25 @@
 import React from "react";
 import { Button } from "@nextui-org/react";
 
-const propertyTypes = [
-  "Detached",
-  "Semi Detached",
-  "Freehold Townhouse",
-  "Condo Townhouse",
-  "Condominium",
-  "Multiplex",
-  "Vacant Land",
-  "Other",
-];
+const bedroomCounts = ["1", "2", "3", "4", "5", "6", "7+"];
 
-const Step2 = ({ onPropertyTypeSelect }) => (
+const Step2 = ({ onBedroomSelect }) => (
   <div className="flex flex-col items-center">
     <p className="text-center text-lg text-default-700  mb-4">
-      I&#39;ll need to know some more details about your home to make an accurate prediction. Please select a <strong>property type</strong> from the options below:
+      How many <strong>bedrooms</strong> are in your home?
     </p>
-    <div className="grid grid-cols-3 gap-4">
-      {propertyTypes.map((type) => (
+    <div className="flex     gap-4">
+      {bedroomCounts.map((count) => (
         <Button
           radius="md"
           variant="ghost"
           color="secondary"
-          key={type}
+          key={count}
           bordered
           className="w-full"
-          onClick={() => onPropertyTypeSelect(type)}
+          onClick={() => onBedroomSelect(count)}
         >
-          {type}
+          {count}
         </Button>
       ))}
     </div>

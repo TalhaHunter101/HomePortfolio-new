@@ -19,8 +19,9 @@ const constraintsData = [
   const rightConstraints = constraintsData.slice(5);
 
   return (
-    <div className="w-full bg-white p-4 rounded-md ">
-      <h3 className="font-bold text-lg mb-4">Planning Constraints</h3>
+    <div className="w-full h-350 bg-white p-4 shadow rounded-md ">
+      <div className='py-10'>
+      <h3 className="font-bold pb-10  text-lg mb-4">Planning Constraints</h3>
       <div className="flex justify-between">
         {/* Left Column */}
         <div className="flex-1 space-y-2">
@@ -42,6 +43,7 @@ const constraintsData = [
             </div>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );

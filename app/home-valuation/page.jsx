@@ -3,11 +3,14 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Input, Button, Card, Spinner } from "@nextui-org/react";
 import Link from "next/link";
+import { ReportModal } from "@/components/QuestionFlow/QfModal";
 
 export default function Component() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -65,6 +68,7 @@ export default function Component() {
          
         </Card>
       </div>
+      <ReportModal isOpen={isModalOpen} onClose={setIsModalOpen} />
       <div className="mt-2 flex flex-col items-center space-y-4">
         {isLoading && <Spinner />}
         {results.length > 0 && (
