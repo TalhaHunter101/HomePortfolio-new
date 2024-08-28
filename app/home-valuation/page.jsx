@@ -11,6 +11,7 @@ export default function Component() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false); 
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -68,7 +69,7 @@ export default function Component() {
          
         </Card>
       </div>
-      <ReportModal isOpen={isModalOpen} onClose={setIsModalOpen} />
+      <ReportModal isOpen={isModalOpen} onOpenChange={handleCloseModal} /> 
       <div className="mt-2 flex flex-col items-center space-y-4">
         {isLoading && <Spinner />}
         {results.length > 0 && (
