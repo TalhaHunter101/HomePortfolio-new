@@ -25,22 +25,19 @@ export async function POST(request) {
 
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2' });
-      // Wait for the container to be rendered
-  await page.waitForSelector('#printThis'); // Replace with your container's selector
+      
+
+
+    // wait for 5 seconds
+
+    // await page.waitForTimeout(5000);
+    
 
   // Get the bounding box of the container
-  const container = await page.$('#printThis'); // Replace with your container's selector
-  const boundingBox = await container.boundingBox();
 
   // Generate PDF of the container
   const pdfBuffer = await page.pdf({
     format: 'A4',
-    clip: {
-      x: boundingBox.x,
-      y: boundingBox.y,
-      width: boundingBox.width,
-      height: boundingBox.height,
-    },
   });
     // const pdfBuffer = await page.pdf({ format: 'A4' });
     await browser.close();

@@ -10,7 +10,7 @@ import SaleEstimatesChart from "@/components/HomeValuation/SaleEstimatesChart";
 import { Card } from "@nextui-org/react";
 
 const getHomeDetails = async (uprn_id) => {
-  let data = await fetch("http://localhost:3000/api/house_data", {
+  let data = await fetch("https://home-portfolio-weld.vercel.app/api/house_data", {
     method: "POST",
     body: JSON.stringify({ uprn: uprn_id }),
     headers: {

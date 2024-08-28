@@ -13,7 +13,7 @@ const RentalReportFooter = () => {
       
       <p className="mb-6 text-sm">
         Start growing your rental portfolio and maximizing your cash flow with Homeprotfolio. Try it free at{' '}
-        <a href="https://Homeprotfolio.io" className="text-blue-600 hover:underline">https://Homeprotfolio.io</a>.
+        <a href="https://Homeprotfolio.com" className="text-blue-600 hover:underline">https://Homeprotfolio.com</a>.
       </p>
       
       <div className="flex justify-center mb-8">
