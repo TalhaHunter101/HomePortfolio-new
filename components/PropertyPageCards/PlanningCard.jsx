@@ -20,11 +20,11 @@ const dummyData = [
     { leftContent: "Left Content 2", rightContent: "Right Content 2" },
     { leftContent: "Left Content 3", rightContent: "Right Content 3" }
 ];
-export function PlanningCard({ title }) {
+export function PlanningCard({ }) {
     return (
         <Card className="m-4" style={{ minHeight: '200px' }}>
             <CardHeader>
-                <h2 className="text-xl font-bold">{title}</h2>
+                
             </CardHeader>
             <CardBody>
                 <div className='flex flex-col border border-subtle-border rounded-md'>

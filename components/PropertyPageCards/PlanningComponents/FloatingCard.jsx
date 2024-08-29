@@ -3,7 +3,7 @@ import { Card, CardBody, Chip, } from "@nextui-org/react";
 
 export default function FloatingCard() {
     return (
-        <Card className='w-80 h-80  '>
+        <Card  className='w-80  h-80  '>
             <CardBody>
             
                 <h3 className="font-semibold text-xs mb-2">Planning Applications</h3>

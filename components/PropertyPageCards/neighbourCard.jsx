@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { Icon } from '@iconify/react';
 
-export function NeighbourCard({ title }) {
+export function NeighbourCard({  }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const dummyData = [
@@ -27,7 +27,7 @@ export function NeighbourCard({ title }) {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className='  border border-subtle-border rounded-md'>

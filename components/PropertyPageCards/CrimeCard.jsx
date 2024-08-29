@@ -24,7 +24,7 @@ export function CrimeCard({ title }) {
     return (
         <Card className="m-4" style={{ minHeight: '200px' }}>
             <CardHeader>
-                <h2 className="text-xl font-bold">{title}</h2>
+                
             </CardHeader>
             <CardBody>
                 <div className='flex flex-col border border-subtle-border rounded-md'>

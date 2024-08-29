@@ -2,11 +2,11 @@
 import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
-export function LocationCard ({title })  {
+export function LocationCard ({ })  {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
       <div className="px-16 py-5 bg-default-white border border-gray-200 rounded-md">

@@ -3,11 +3,11 @@ import React from 'react';
 import { Card, CardBody, CardHeader, Progress } from "@nextui-org/react";
 import { PricetrackerChart } from './Charts/pricetrckerChart';
 
-export function PriceTrackerCard({ title, }) {
+export function PriceTrackerCard({  }) {
     return (
         <Card className="m-4" style={{ minHeight: '150px' }}>
             <CardHeader>
-                <h2 className="text-xl font-bold">{title}</h2>
+               
             </CardHeader>
 
             <CardBody>

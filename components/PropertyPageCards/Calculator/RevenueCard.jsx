@@ -9,7 +9,7 @@ export default function RevenueCard() {
     <div className="mt-2">
       <CardBody className="p-0">
         <button
-          className="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 transition-colors"
+          className="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-100 rounded-xl transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-xl font-bold text-purple-900">Revenue</span>
