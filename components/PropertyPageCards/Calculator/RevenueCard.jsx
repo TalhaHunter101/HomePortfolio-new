@@ -14,7 +14,7 @@ export default function RevenueCard() {
         >
           <span className="text-xl font-bold text-purple-900">Revenue</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">$38,447/mo</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">£38,447/mo</span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -30,30 +30,8 @@ export default function RevenueCard() {
           }`}
         >
           <div className="p-4 grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
-                RevPAN
-              </label>
-              <Input
-                type="text"
-                defaultValue="1,264"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                $1264 is the projected RevPan based on comparable Airbnbs for this specific property, according to our Airbnb Calculator.
-              </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
-                Other Income
-              </label>
-              <Input
-                type="text"
-                defaultValue="0"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
-              />
-            </div>
-            <div>
+
+          <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Monthly Revenue
               </label>
@@ -73,6 +51,33 @@ export default function RevenueCard() {
                 startContent={<div className="pointer-events-none text-gray-400">$</div>}
               />
             </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Projected Monthly Rent
+              </label>
+              <Input
+                type="text"
+                defaultValue="1,264"
+                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                $1264 is the projected monthly rent estimates based on comparable for this specific property, according to our valuation tool.
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Other Income
+              </label>
+              <Input
+                type="text"
+                defaultValue="0"
+                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+              />
+            </div>
+
+
+           
           </div>
         </div>
       </CardBody>

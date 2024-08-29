@@ -16,7 +16,7 @@ export default function FinancingCard() {
         >
           <span className="text-xl font-bold text-purple-900">Financing</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">$15,285/mo</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">£15,285/mo</span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -41,7 +41,7 @@ export default function FinancingCard() {
                   color={financingMethod === "Loan" ? "secondary" : "default"}
                   onClick={() => setFinancingMethod("Loan")}
                 >
-                  Loan
+                  Buying with a Mortgage
                 </Button>
                 <Button
                   color={financingMethod === "Cash Only" ? "secondary" : "default"}
@@ -55,19 +55,29 @@ export default function FinancingCard() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Down Payment
+                  LTV
                 </label>
                 <div className="flex space-x-2">
                   <Input
                     type="text"
                     defaultValue="555,000"
-                    startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                    startContent={<div className="pointer-events-none text-gray-400">£</div>}
                   />
+          
+                </div>
+              </div>
+              
+               <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Deposite
+                </label>
+                <div className="flex space-x-2">
                   <Input
                     type="text"
-                    defaultValue="20.00"
-                    endContent={<div className="pointer-events-none text-gray-400">%</div>}
+                    defaultValue="555,000"
+                    startContent={<div className="pointer-events-none text-gray-400">£</div>}
                   />
+          
                 </div>
               </div>
               <div>
@@ -77,12 +87,12 @@ export default function FinancingCard() {
                 <Input
                   type="text"
                   defaultValue="2,220,000"
-                  startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                  startContent={<div className="pointer-events-none text-gray-400">£</div>}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Interest Rate
+                  Mortgage / Interest Rate
                 </label>
                 <Input
                   type="text"
@@ -92,7 +102,7 @@ export default function FinancingCard() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Loan Closing Costs
+                  Mortgage Fees
                 </label>
                 <Input
                   type="text"
@@ -111,7 +121,7 @@ export default function FinancingCard() {
                   color={interestType === "Amortization" ? "secondary" : "default"}
                   onClick={() => setInterestType("Amortization")}
                 >
-                  Amortization
+                  Capital & Interest
                 </Button>
                 <Button
                   color={interestType === "Interest Only" ? "secondary" : "default"}
@@ -124,7 +134,7 @@ export default function FinancingCard() {
             
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-                Amortization Term
+                Mortgage Term (Years)
               </label>
               <Input
                 type="text"

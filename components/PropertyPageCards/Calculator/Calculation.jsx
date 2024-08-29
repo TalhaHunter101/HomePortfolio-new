@@ -17,7 +17,7 @@ function Calculation({ title, propertyPrice }) {
 
       <CardBody>
         <InvestorReturnCal propertyPrice={propertyPrice} />
-        <TotalInvestmentCard />
+        <TotalInvestmentCard propertyPrice={propertyPrice} />
         <FinancingCard />
         <RevenueCard />
         <ExpensesCard />

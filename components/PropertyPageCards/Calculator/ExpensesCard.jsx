@@ -14,7 +14,9 @@ export default function ExpensesCard() {
         >
           <span className="text-xl font-bold text-purple-900">Expenses</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">$6,810/mo</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">
+              £6,810/mo
+            </span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -23,8 +25,8 @@ export default function ExpensesCard() {
             />
           </div>
         </button>
-        
-        <div 
+
+        <div
           className={`overflow-hidden transition-all duration-300 ease-in-out ${
             isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
           }`}
@@ -37,18 +39,37 @@ export default function ExpensesCard() {
               <Input
                 type="text"
                 defaultValue="3.00"
-                endContent={<div className="pointer-events-none text-gray-400">%</div>}
+                endContent={
+                  <div className="pointer-events-none text-gray-400">%</div>
+                }
               />
             </div>
-            <div>
+            <div className="flex items-center">
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Property Management Fee
+                </label>
+                <Input
+                  type="text"
+                  defaultValue="230"
+                  startContent={
+                    <div className="pointer-events-none text-gray-400">£</div>
+                  }
+                />
+              </div>
+              <span className="mx-2">OR</span>
+              <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-                Property Management Fee
-              </label>
-              <Input
-                type="text"
-                defaultValue="0.00"
-                endContent={<div className="pointer-events-none text-gray-400">%</div>}
-              />
+                  .
+                </label>
+                <Input
+                  type="text"
+                  defaultValue="10"
+                  endContent={
+                    <div className="pointer-events-none text-gray-400">%</div>
+                  }
+                />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
@@ -57,17 +78,21 @@ export default function ExpensesCard() {
               <Input
                 type="text"
                 defaultValue="0"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                startContent={
+                  <div className="pointer-events-none text-gray-400">£</div>
+                }
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-                Property Taxes
+                Ground Rent
               </label>
               <Input
                 type="text"
                 defaultValue="2,166"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                startContent={
+                  <div className="pointer-events-none text-gray-400">£</div>
+                }
               />
             </div>
             <div>
@@ -77,19 +102,12 @@ export default function ExpensesCard() {
               <Input
                 type="text"
                 defaultValue="800"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                startContent={
+                  <div className="pointer-events-none text-gray-400">£</div>
+                }
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
-                HOA Fees
-              </label>
-              <Input
-                type="text"
-                defaultValue="0"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
-              />
-            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Utilities
@@ -98,13 +116,17 @@ export default function ExpensesCard() {
                 <Input
                   type="text"
                   defaultValue="1,538"
-                  startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                  startContent={
+                    <div className="pointer-events-none text-gray-400">£</div>
+                  }
                   className="flex-grow"
                 />
                 <Input
                   type="text"
                   defaultValue="4"
-                  endContent={<div className="pointer-events-none text-gray-400">%</div>}
+                  endContent={
+                    <div className="pointer-events-none text-gray-400">%</div>
+                  }
                   className="ml-2 w-20"
                 />
               </div>
@@ -116,7 +138,9 @@ export default function ExpensesCard() {
               <Input
                 type="text"
                 defaultValue="1,153"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                startContent={
+                  <div className="pointer-events-none text-gray-400">£</div>
+                }
               />
             </div>
             <div>
@@ -127,13 +151,17 @@ export default function ExpensesCard() {
                 <Input
                   type="text"
                   defaultValue="0"
-                  startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                  startContent={
+                    <div className="pointer-events-none text-gray-400">£</div>
+                  }
                   className="flex-grow"
                 />
                 <Input
                   type="text"
                   defaultValue="0"
-                  endContent={<div className="pointer-events-none text-gray-400">%</div>}
+                  endContent={
+                    <div className="pointer-events-none text-gray-400">%</div>
+                  }
                   className="ml-2 w-20"
                 />
               </div>
