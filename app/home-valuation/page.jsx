@@ -2,16 +2,18 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Input, Button, Card, Spinner } from "@nextui-org/react";
-import Link from "next/link";
 import { ReportModal } from "@/components/QuestionFlow/QfModal";
+import Link from "next/link";
 
 export default function Component() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null); // State for selected address
+
   const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false); 
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -29,16 +31,22 @@ export default function Component() {
         });
         const data = await response.json();
         setResults(data);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
     } else {
       setResults([]);
     }
+  };
+
+  const handleAddressClick = (address, uprn) => {
+    setQuery(address); // Update the input field with the selected address
+    const selected = { address, uprn };
+    setSelectedAddress(selected); // Store the selected address and UPRN
+    console.log(selected); 
+    setResults([]); // Clear the results
   };
 
   return (
@@ -63,24 +71,26 @@ export default function Component() {
             value={query}
             onChange={handleInputChange}
           />
-         <Button auto flat className="font-bold" color="secondary" onPress={handleOpenModal}>
+          <Button auto flat className="font-bold" color="secondary" onPress={handleOpenModal}>
             Get My Report
           </Button>
-         
         </Card>
       </div>
-      <ReportModal isOpen={isModalOpen} onOpenChange={handleCloseModal} /> 
+      {/* Pass the selectedAddress to the ReportModal */}
+      <ReportModal isOpen={isModalOpen} onOpenChange={handleCloseModal} selectedAddress={selectedAddress} />
       <div className="mt-2 flex flex-col items-center space-y-4">
         {isLoading && <Spinner />}
         {results.length > 0 && (
           <Card className="flex flex-row items-center p-4 shadow-lg rounded-lg min-w-[50vw]">
             <ul>
               {results.map((data, index) => (
-                <Link key={index} href={`/home-valuation/${data?._source?.uprn}`}>
-                  <li className="py-2 border-b cursor-pointer">
-                    {data?._source?.full_address}
-                  </li>
-                </Link>
+                <li
+                  key={index}
+                  className="py-2 border-b cursor-pointer"
+                  onClick={() => handleAddressClick(data?._source?.full_address, data?._source?.uprn)}
+                >
+                  {data?._source?.full_address}
+                </li>
               ))}
             </ul>
           </Card>
