@@ -36,7 +36,7 @@ const SearchCard = ({ property, setCardHover }) => {
               {property?.images?.map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-full">
                   <Image
-                    src={image}
+                    src={image?.original}
                     alt={`Property ${index + 1}`}
                     width={600} // Full width
                     height={200}

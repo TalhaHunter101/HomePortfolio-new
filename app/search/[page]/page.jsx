@@ -12,10 +12,11 @@ import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import withClickOutside from "@/components/DropdownHOC";
+import { debounce } from "lodash";
 
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
-export default function SearchPage({ params }) {
+const SearchPage = ({ params }) => {
   const encodedPage = params.page;
   const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
   const locationValue = page.split(/[\s,]+/)[0];
@@ -25,7 +26,6 @@ export default function SearchPage({ params }) {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-
   const {
     searchTerm,
     setSearchTerm,
@@ -33,51 +33,37 @@ export default function SearchPage({ params }) {
     setResults,
     isDataLoading,
     setIsDataLoading,
-    selectedBeds,
-    minPrice,
-    maxPrice,
-    homeType,
+    searchPostcode,
   } = useStore();
-  const { isDataLoading: loading, results: searchResults } =
-    useFetchZooplaData(searchTerm);
 
-  useEffect(() => {
-    setIsDataLoading(loading);
-    setResults(searchResults);
-    setIsDropdownOpen(true);
-  }, [loading, searchResults, setIsDataLoading, setResults]);
+  const handleChange = async (e) => {
+    const term = e.target.value;
+    console.log("term", term);
+    setSearchTerm(term);
 
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
+    const wordCount = term.length;
+
+    if (wordCount > 2) {
+      await searchPostcode(searchTerm);
+      setIsDropdownOpen(true);
+    }
   };
+ 
 
   const fetchProperties = async () => {
-    let url = `https://zoopla.p.rapidapi.com/properties/v2/list?locationValue=${locationValue}&locationIdentifier=${locationValue}&furnishedState=Any&sortOrder=newest_listings&page=${currentPage}`;
-
-    if (selectedBeds !== "any") {
-      url += `&bedsMax=${selectedBeds}`;
-    }
-    if (minPrice !== "any") {
-      url += `&priceMin=${minPrice}`;
-    }
-    if (maxPrice !== "any") {
-      url += `&priceMax=${maxPrice}`;
-    }
-
-    const options = {
-      method: "GET",
+    const response = await fetch(`/api/search/get-listing-data`, {
+      method: "POST",
       headers: {
-        "x-rapidapi-key": "bcf46a0d4dmsh548b3c3c39ac8aap150bddjsn2d66c886abc8",
-        "x-rapidapi-host": "zoopla.p.rapidapi.com",
+        "Content-Type": "application/json",
       },
-    };
+      body: JSON.stringify({ searchValue: page }),
+    });
 
     try {
       setisnewDataLoading(true);
-      const response = await fetch(url, options);
       const result = await response.json();
-      setListingData(result?.data?.listings?.regular);
-      setTotalCount(result?.data?.analyticsTaxonomy?.searchResultsCount);
+      setListingData(result?.results || []);
+      setTotalCount(result?.totalCount || 0);
       setisnewDataLoading(false);
       setIsDropdownOpen(true);
     } catch (error) {
@@ -91,48 +77,30 @@ export default function SearchPage({ params }) {
     fetchProperties();
   }, [page]);
 
-  console.log("homeType", homeType);
-  
-
-  
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 50) {
-  //       setCurrentPage((prevPage) => prevPage + 1);
-  //     }
-  //   };
-  
-  //   window.addEventListener("scroll", handleScroll);
-  
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
-  
   return (
-    <main className="flex mt-16  flex-col h-screen">
+    <main className="flex mt-16 flex-col h-screen">
       <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center ">
         <div className="flex items-center p-2 w-full gap-2">
           <Input
-            bordered            
-            type="text"           
-            value={searchTerm}          
+            bordered
+            type="text"
+            value={searchTerm}
             contentLeftStyling={false}
             placeholder={page}
             size="lg"
             className="w-full max-w-md z-40"
-            endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
-            onChange={handleChange}
+            endContent={
+              <Icon icon="carbon:close-filled" className="text-2xl" />
+            }
+            onChange={handleChange} // debounce to reduce API calls
           />
-
-
         </div>
 
         <div className="flex items-center gap-2">
           <Beds />
           <Baths />
           <Price />
-          
+
           <Button
             color="primary"
             radius="sm"
@@ -172,12 +140,14 @@ export default function SearchPage({ params }) {
       </div>
 
       {isnewDataLoading ? (
-        <div className="w-screen  flex justify-center items-center h-[85vh]">
-          <Spinner  color="primary" size="lg" />
+        <div className="w-screen flex justify-center items-center h-[85vh]">
+          <Spinner color="primary" size="lg" />
         </div>
       ) : (
         <ShowDataCards totalcount={totalCount} cardData={listingData} />
       )}
     </main>
   );
-}
+};
+
+export default SearchPage;

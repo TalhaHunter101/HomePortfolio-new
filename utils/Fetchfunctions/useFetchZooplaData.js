@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
 export default function useFetchZooplaData(searchTerm) {
   const [isDataLoading, setIsDataLoading] = useState(false);
@@ -18,7 +18,6 @@ export default function useFetchZooplaData(searchTerm) {
   //     });
   //     const postcodeResult = await postcodeResponse.json();
   //     setResults(postcodeResult);
-      
 
   //     if (postcodeResult.length > 0) {
   //       setResults(postcodeResult);
@@ -46,24 +45,23 @@ export default function useFetchZooplaData(searchTerm) {
   //   }
   // }, [searchTerm]);
 
-
-
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
-      const response = await fetch(`/api/get-postcode`, {
+      const response = await fetch(`/api/search/listing-search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: searchTerm }),
+        body: JSON.stringify({ searchValue: searchTerm }),
       });
       const postcodeResult = await response.json();
 
-      if (postcodeResult.postcode.length > 0 || postcodeResult.address.length > 0) {
+      if (postcodeResult && !areAllArraysEmpty(postcodeResult)) {
         setResults(postcodeResult);
-    }
-     
+      } else {
+        setResults(null);
+      }
     } catch (error) {
       console.error(error);
     } finally {

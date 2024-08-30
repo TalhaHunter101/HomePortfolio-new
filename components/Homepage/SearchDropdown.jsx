@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 function SearchDropdown({ results, isDataLoading }) {
+  console.log("results", results);
+
   return (
     <>
       {isDataLoading && (
@@ -24,16 +26,16 @@ function SearchDropdown({ results, isDataLoading }) {
         <Card className="max-h-[50vh] overflow-y-auto py-2">
           <div className="px-2 border-b border-gray-300">
             <div>
-              {results?.postcode?.length > 0 && (
+              {results?.uk?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     PostCode
                   </p>
                   <div>
-                    {results?.postcode.map((item, i) => (
+                    {results?.uk.map((item, i) => (
                       <Link
                         key={i}
-                        href={`/search/${item?.POSTCODE.replace(
+                        href={`/search/${item?._source?.ref_postcode.replace(
                           /\s+/g,
                           "-"
                         )}`}
@@ -48,7 +50,7 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.POSTCODE}
+                              {item?._source?.ref_postcode}
                             </p>
                           </div>
                         </div>
@@ -58,19 +60,23 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
-              {results?.posttown?.length > 0 && (
+              {results?.county?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Town
                   </p>
                   <div>
-                    {results?.posttown.map((item, i) => (
+                    {[
+                      ...new Set(
+                        results?.county?.map(
+                          (item) =>
+                            item?._source?.analyticsTaxonomy?.countyAreaName
+                        )
+                      ),
+                    ].map((countyAreaName, i) => (
                       <Link
                         key={i}
-                        href={`/search/${item?.POST_TOWN.replace(
-                          /\s+/g,
-                          "-"
-                        )}`}
+                        href={`/search/${countyAreaName.replace(/\s+/g, "-")}`}
                       >
                         <div className="flex my-3 cursor-pointer">
                           <Image
@@ -82,7 +88,7 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.POST_TOWN}
+                              {countyAreaName}
                             </p>
                           </div>
                         </div>
@@ -92,23 +98,25 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
-              {results?.thoroughfare?.length > 0 && (
+              {results?.address?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Location
                   </p>
                   <div>
-                    {results?.thoroughfare.map((item, i) => (
-                      <Link key={i} href={`/property/${item?.UPRN}`}>
+                    {results?.address.map((item, i) => (
+                      <Link key={i} href={`/property/${item?._source?.listingId}`}>
                         <div className="flex my-3 cursor-pointer">
-                        <Icon icon="entypo:address" height={20} width={20} color="black" className="mx-2"  />
+                          <Icon
+                            icon="entypo:address"
+                            height={20}
+                            width={20}
+                            color="black"
+                            className="mx-2"
+                          />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.THOROUGHFARE_NAME ? `${item?.THOROUGHFARE_NAME}, ` : ""}
-                              {item?.SUB_BUILDING_NAME ? `${item?.SUB_BUILDING_NAME}, ` : ""}
-                              {item?.BUILDING_NAME ? `${item?.BUILDING_NAME}, ` : ""}
-                              {item?.BUILDING_NUMBER ? `${item?.BUILDING_NUMBER}, ` : ""}
-                              {item?.POST_TOWN} {item?.POSTCODE}
+                            {item?._source?.analyticsTaxonomy.displayAddress}
                             </p>
                           </div>
                         </div>

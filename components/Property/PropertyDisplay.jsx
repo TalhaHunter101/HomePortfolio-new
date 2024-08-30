@@ -35,6 +35,9 @@ import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 
 function PropertyDisplay({ listingData, params }) {
+
+  console.log("listingData", listingData);
+  
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
     listingData?.imageUris?.slice(0, 4) ||
@@ -67,7 +70,7 @@ function PropertyDisplay({ listingData, params }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ postcode: listingData?.branch?.postcode }),
+            body: JSON.stringify({ postcode: listingData?.ref_postcode }),
           }
         );
 
@@ -87,7 +90,7 @@ function PropertyDisplay({ listingData, params }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ city: listingData?.adTargeting?.postTownName }),
+          body: JSON.stringify({ city: listingData?.analyticsTaxonomy?.postTownName }),
         })
 
         if (result.ok) {
@@ -364,7 +367,7 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {listingData?.pricing?.label}
+                  {listingData?.pricing?.internalValue}
                 </h3>
                 <span className="font-bold text-sm">
                   {listingData?.address || listingData?.branch?.address},
@@ -385,8 +388,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.dimensions?.sqft ||
-                      listingData?.floorArea?.value}
+                    {listingData?.analyticsTaxonomy?.sizeSqFeet}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>

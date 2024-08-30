@@ -3,6 +3,8 @@ import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 export function BasicInfoCard({ title, content, data }) {
+  console.log("data........", data);
+
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
@@ -170,7 +172,9 @@ export function BasicInfoCard({ title, content, data }) {
             <div class="flex flex-col gap-y-1 w-full sm:w-[40%]">
               <div class="grid grid-cols-2 ">
                 <p>Status</p>
-                <p class=" text-primaryfonts">{data?.analyticsTaxonomy?.section}</p>
+                <p class=" text-primaryfonts">
+                  {data?.analyticsTaxonomy?.section}
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Community</p>
@@ -178,19 +182,40 @@ export function BasicInfoCard({ title, content, data }) {
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Property Type</p>
-                <p class=" text-primaryfonts">detached_bungalow</p>
+                <p class=" text-primaryfonts">
+                  {data?.analyticsTaxonomy?.propertyType}
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Lot Size</p>
-                <p class=" text-primaryfonts">1,439 sqft.</p>
+                <p class=" text-primaryfonts">
+                  {data?.analyticsTaxonomy?.sizeSqFeet} sqft.
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Virtual Tour</p>
-                <p class="underline cursor-pointer text-primary">null</p>
+                <p class="underline cursor-pointer text-primary">
+                  {data?.content?.virtualTour ? (
+                    <a
+                      href={data?.content?.virtualTour[0]?.original}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View
+                    </a>
+                  ) : (
+                    "NA"
+                  )}
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Floor Size</p>
-                <p class=" text-primaryfonts">NA sqft.</p>
+                <p class=" text-primaryfonts">
+                  {data?.analyticsTaxonomy?.floorArea
+                    ? data?.analyticsTaxonomy?.floorArea.value
+                    : "NA"}{" "}
+                  sqft.
+                </p>
               </div>
             </div>
             <div class="flex flex-col gap-y-1 w-full sm:w-[40%]">
@@ -208,7 +233,7 @@ export function BasicInfoCard({ title, content, data }) {
               </div>
               <div class="grid grid-cols-2 ">
                 <p>County</p>
-                <p class="underline cursor-pointer text-primary">Cumbria</p>
+                <p class="underline cursor-pointer text-primary">{data?.analyticsTaxonomy?.postTownName}</p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Time On HomePortfolio</p>
@@ -216,7 +241,7 @@ export function BasicInfoCard({ title, content, data }) {
               </div>
               <div class="grid grid-cols-2 ">
                 <p>City</p>
-                <p class="underline cursor-pointer text-primary">Alston</p>
+                <p class="underline cursor-pointer text-primary">{data?.location?.townOrCity}</p>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { areAllArraysEmpty } from "@/utils/Helper";
 import { create } from "zustand";
 
 const useStore = create((set) => ({
@@ -17,6 +18,32 @@ const useStore = create((set) => ({
   setMaxPrice: (price) => set({ maxPrice: price }),
   homeType: [],
   setHomeType: (types) => set({ homeType: types }),
+
+  searchPostcode: async (searchTerm) => {
+    try {
+      set({ isDataLoading: true });
+
+      const response = await fetch(`/api/search/listing-search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ searchValue: searchTerm }),
+      });
+
+      const postcodeResult = await response.json();
+
+      if (postcodeResult && !areAllArraysEmpty(postcodeResult)) {
+        set({ results: postcodeResult });
+      } else {
+        set({ results: null });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ isDataLoading: false });
+    }
+  },
 }));
 
 export default useStore;

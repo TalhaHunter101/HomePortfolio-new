@@ -26,6 +26,7 @@ import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import useStore from "@/store/useStore";
 import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
+import useSearchStore from "@/store/useSearchStore";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -81,7 +82,10 @@ export default function SearchPage() {
     setResults,
     isDataLoading,
     setIsDataLoading,
+    searchPostcode,
   } = useStore();
+
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -90,8 +94,8 @@ export default function SearchPage() {
 
   useEffect(() => {
     setIsDataLoading(loading);
-    setResults(searchResults);
-  }, [loading, searchResults, setIsDataLoading, setResults]);
+    searchPostcode();
+  }, [loading, searchResults, setIsDataLoading, searchPostcode]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);

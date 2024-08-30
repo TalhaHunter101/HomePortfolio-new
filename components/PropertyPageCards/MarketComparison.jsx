@@ -111,7 +111,7 @@ export function MarketComparisonCard({ title, price, roi, cards, data }) {
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
                         <Card className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
-                            <ScatterChartComponent data={data?.branch?.postcode} text="PostCode" />
+                            <ScatterChartComponent data={data?.ref_postcode} text="PostCode" />
                           </CardBody>
                         </Card>
                       </div>

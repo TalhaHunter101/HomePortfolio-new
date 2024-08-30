@@ -15,28 +15,28 @@ import { areAllArraysEmpty } from "@/utils/Helper";
 export default function AutocompleteSearch({ properties }) {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState(null); // Initialize as null
+  const [results, setResults] = useState(null);
 
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
-      const response = await fetch(`/api/get-postcode`, {
+      const response = await fetch(`/api/search/listing-search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: searchTerm }),
+        body: JSON.stringify({ searchValue: searchTerm }),
       });
       const postcodeResult = await response.json();
 
       if (postcodeResult && !areAllArraysEmpty(postcodeResult)) {
         setResults(postcodeResult);
       } else {
-        setResults(null); // Set results to null if no data
+        setResults(null);
       }
     } catch (error) {
       console.error(error);
-      setResults(null); // Set results to null on error
+      setResults(null);
     } finally {
       setIsDataLoading(false);
     }
@@ -63,11 +63,10 @@ export default function AutocompleteSearch({ properties }) {
         endContent={<Icon icon="akar-icons:search" />}
       />
 
-
-         {results && (
-       <div>
-         <SearchDropdown results={results} isDataLoading={isDataLoading} />
-       </div>
+      {results && (
+        <div>
+          <SearchDropdown results={results} isDataLoading={isDataLoading} />
+        </div>
       )}
     </div>
   );

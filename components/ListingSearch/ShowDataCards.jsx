@@ -22,29 +22,29 @@ function ShowDataCards({ cardData, totalcount }) {
   const getPropsData = () => {
     const groupedData = [];
     cardData?.forEach((property) => {
-      const { bedrooms, bathrooms, livingRooms } = property?.attributes;
-      const price = parseInt(property?.pricing?.value);
-      const images = property?.imageUris;
-      const id = property?.listingId;
-      const description = property?.description;
+      const { numBedrooms, numBathrooms, numLivingRooms } = property?._source?.counts;
+      const price = parseInt(property?._source?.analyticsTaxonomy?.priceActual);
+      const images = property?._source?.propertyImage;
+      const id = property?._source?.listingId;
+      const description = property?._source?.summaryDescription;
 
       groupedData.push({
         id: id,
-        branch_name: property?.agent?.branchName,
+        branch_name: property?._source?.branch?.name,
         description: description,
-        development_address: property?.address,
-        minBedrooms: bedrooms,
+        development_address: property?._source?.address,
+        minBedrooms: numBedrooms,
         minPrice: price,
-        maxBedrooms: bedrooms,
-        bathrooms: bathrooms,
+        maxBedrooms: numBedrooms,
+        bathrooms: numBathrooms,
         maxPrice: price,
         images: images,
-        developer_logo: property?.agent?.logoUri,
-        developer_name: property?.agent?.name,
-        postcode: property?.postcode,
-        address: property?.address,
-        lng: parseFloat(property?.location?.coordinates?.longitude),
-        lat: parseFloat(property?.location?.coordinates?.latitude),
+        developer_logo: property?._source?.branch?.logoUrl,
+        developer_name: property?._source?.branch?.name,
+        postcode: property?._source?.ref_postcode,
+        address: property?._source?.analyticsTaxonomy?.displayAddress,
+        lng: parseFloat(property?._source?.location?.coordinates?.longitude),
+        lat: parseFloat(property?._source?.location?.coordinates?.latitude),
       });
     });
     const uniqueDevelopmentData = Object.values(groupedData);
@@ -55,8 +55,6 @@ function ShowDataCards({ cardData, totalcount }) {
   useEffect(() => {
     getPropsData();
   }, [cardData]);
-
-  console.log("cardHover",cardHover);
   
 
   return (

@@ -21,7 +21,7 @@ export function PriceHistory({ title, data }) {
             <span>Price history</span>
           </h2>
           <div className="overflow-y-auto  h-auto">
-            {data && data?.firstPublished && (
+            {data && data?.priceHistory?.firstPublished && (
               <div className="grid grid-cols-8 col-auto mb-2 sm:mb-5 text-foreground text-xs sm:text-base font-medium">
                 <div className="flex flex-row col-span-3">
                   <div className="c-zero text-muted-foreground">
@@ -39,7 +39,7 @@ export function PriceHistory({ title, data }) {
                     </svg>
                   </div>
                   <div className="mx-2">
-                    {formatDate(data?.firstPublished?.firstPublishedDate)}
+                    {formatDate(data?.priceHistory?.firstPublished?.firstPublishedDate)}
                   </div>
                 </div>
                 <div className="col-span-3">
@@ -48,7 +48,7 @@ export function PriceHistory({ title, data }) {
                   {/* <span className="subText">CRMLS #224003119</span> */}
                 </div>
                 <div className="col-span-2">
-                  {data?.firstPublished?.priceLabel}
+                  {data?.priceHistory?.firstPublished?.priceLabel}
                 </div>
               </div>
             )}
@@ -101,7 +101,7 @@ export function PriceHistory({ title, data }) {
               </div>
             </div>
 
-            {data && data?.lastSale && (
+            {data && data?.priceHistory?.lastSale && (
               <div className="grid grid-cols-8 col-auto mb-2 sm:mb-5 text-foreground text-xs sm:text-base font-medium">
                 <div className="flex flex-row col-span-3">
                   <div className="c-zero text-muted-foreground">
@@ -118,14 +118,14 @@ export function PriceHistory({ title, data }) {
                       <path d="M416 256c0 17.7-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"></path>
                     </svg>
                   </div>
-                  <div className="mx-2">{formatDate(data?.lastSale?.date)}</div>
+                  <div className="mx-2">{formatDate(data?.priceHistory?.lastSale?.date)}</div>
                 </div>
                 <div className="col-span-3">
                   Last Published
                   <br />
                   {/* <span className="subText">CRMLS #224003119</span> */}
                 </div>
-                <div className="col-span-2">{data?.lastSale?.priceLabel}</div>
+                <div className="col-span-2">{data?.priceHistory?.lastSale?.priceLabel}</div>
               </div>
             )}
           </div>

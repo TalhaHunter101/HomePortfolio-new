@@ -56,6 +56,9 @@ const MapTilerLayerComponent = () => {
 };
 
 const Maps = ({ height, center, hovercard,setfilter }) => {
+
+  console.log("Map center is", center);
+  
   const [likedItems, setLikedItems] = useState({});
   const [visibleCenters, setVisibleCenters] = useState(center);
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
@@ -106,7 +109,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
             >
               <div className="w-full relative cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-105">
                 <img
-                  src={center?.images[0]}
+                  src={center?.images[0].original}
                   className="h-52 w-full"
                   alt={center?.development_name}
                 />
