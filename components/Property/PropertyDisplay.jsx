@@ -33,6 +33,7 @@ import Component from "@/app/home-valuation/page";
 import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
+import { EVCard } from "../PropertyPageCards/EVcards";
 
 function PropertyDisplay({ listingData, params }) {
 
@@ -221,6 +222,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-purple-500",
           id: "publictransport",
           Component: PublicTransportCard,
+        },
+        {
+          name: "EV Charging Stations",
+          icon: "mdi:ev-station",
+          bgColor: "bg-purple-500",
+          id: "EvChargingStations",
+          Component: EVCard,
         },
         {
           name: "Recently Sold homes",

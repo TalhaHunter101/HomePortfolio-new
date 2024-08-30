@@ -64,18 +64,18 @@ export const DreamHouseLineChart = ({ type = "line", data }) => {
   }, [data]);
 
   return (
-    <ResponsiveContainer className="text-sm" width="100%" height={300}>
+    <ResponsiveContainer className="text-xs    " width="100%" height={300}>
       <LineChart
         data={chartData}
         margin={{
           top: 20,
           right: 30,
-          left: 0,
+          left: 10,
           bottom: 0,
         }}
       >
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis className='text-xs' dataKey="name" />
+        <CartesianGrid  vertical={false} strokeDasharray="3 3" />
+        <XAxis className='text-xs ' dataKey="name" />
         <YAxis className='text-xs' tickFormatter={(value) => `$${value}K`} />
         <Tooltip
           formatter={(value) => `$${value}K`}
