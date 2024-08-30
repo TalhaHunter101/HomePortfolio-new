@@ -5,9 +5,7 @@ import { writeFile } from 'fs/promises';
 export async function POST(request) {
   try {
     // Parse the request body
-    const { uprn, email } = await request.json();
-
-    let url = `https://home-portfolio-weld.vercel.app/home-valuation/${uprn}`;
+    const { url, email } = await request.json();
 
     // Validate the URL and email
     if (!url || !email) {

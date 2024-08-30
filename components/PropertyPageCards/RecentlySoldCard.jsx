@@ -12,7 +12,7 @@ const getItemsData = () => [
     // Add more items as needed
 ];
 
-export function RecentlySoldCard({ title, price, roi }) {
+export function RecentlySoldCard({ }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const items = getItemsData();
 
@@ -31,7 +31,7 @@ export function RecentlySoldCard({ title, price, roi }) {
     return (
         <Card className="m-4" style={{ minHeight: '150px' }}>
             <CardHeader>
-                <h2 className="text-xl font-bold">{title}</h2>
+               
             </CardHeader>
             <CardBody>
                 <div className='  border border-subtle-border rounded-md'>

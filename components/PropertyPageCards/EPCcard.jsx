@@ -24,7 +24,7 @@ export function EPCCard({ title, price, roi }) {
     return (
         <Card className="m-4  " style={{ maxHeight: '600px', minWidth: '800px', }}>
             <CardHeader>
-                <h2 className="text-xl font-bold">{title}</h2>
+                
             </CardHeader>
             <CardBody >
                 <div className='overflow-hidden '>

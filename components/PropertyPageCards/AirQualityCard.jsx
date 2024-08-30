@@ -24,7 +24,7 @@ export function AirQualityCard({ title, cards, id }) {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className='border bg-default-white border-subtle-border rounded-md'>

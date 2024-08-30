@@ -7,7 +7,7 @@ import { DistributionBarChart } from './Charts/DistributionBarChart';
 import { formatPrice } from '@/utils/Helper';
 import { useState } from 'react';
 
-export function HomeTypesCard  ({title,city })  {
+export function HomeTypesCard  ({city })  {
 const [minMaxData, setMinMaxData] = useState({})
 const [data, setData] = useState([]);
 const [barchart, setbarchart] = useState({
@@ -73,10 +73,10 @@ const [barchart, setbarchart] = useState({
     
    
   return (
-    <Card className="m-4" style={{ minHeight: '150px' }}>
+    <Card className="m-4" style={{ maxHeight: '900px' }}>
       <CardHeader className='flex flex-col items-start '>
-        <h2 className="text-xl font-bold">{title}</h2><br />
-        <h4 className='p-0'>Homes available for sale by home type, beds & price range
+        
+        <h4 className='p-0 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
         </h4>
       </CardHeader>
       <CardBody>

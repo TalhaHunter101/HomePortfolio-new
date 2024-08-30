@@ -2,6 +2,24 @@ import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from "recharts";
 import { Icon } from "@iconify/react";
 
+// CustomLegend component with merged logic
+const CustomLegend = ({ data, colors }) => (
+  <ul className="p-0 text-xs m-0 text-center  list-none" style={{ marginTop: "-20px" }}>
+    {data.map((entry, index) => (
+      <li key={`item-${index}`} className="inline-block mr-2.5">
+        <Icon
+          icon="icon-park-solid:two-semicircles"
+          width="14"
+          height="14"
+          color={colors[index % colors.length]}
+          className="inline-block align-middle mr-1"
+        />
+        <span style={{ color: colors[index % colors.length] }}>{entry.name}</span>
+      </li>
+    ))}
+  </ul>
+);
+
 // Main component
 export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const [data01, setData01] = useState([]);
@@ -215,18 +233,6 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
     );
   };
 
-  const outerLegendPayload = data01.map((item) => ({
-    value: item.name,
-    type: "square",
-    color: item.fill,
-  }));
-
-  const innerLegendPayload = data02.map((item) => ({
-    value: item.name,
-    type: "square",
-    color: item.fill,
-  }));
-
   return (
     <div style={{ width: "100%", height: 500 }}>
       <ResponsiveContainer>
@@ -274,26 +280,10 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-      <CustomLegend className="mb-4" payload={outerLegendPayload} />
+      
+      <CustomLegend  data={data01} colors={COLORS} />
     </div>
   );
 };
-
-const CustomLegend = ({ payload }) => (
-  <ul className="p-0 m-0 text-center list-none" style={{ marginTop: "-20px"  }}>
-    {payload.map((entry, index) => (
-      <li key={`item-${index}`} className="inline-block mr-2.5">
-        <Icon
-          icon="icon-park-solid:two-semicircles"
-          width="14"
-          height="14"
-          color={entry.color}
-          className="inline-block align-middle mr-1"
-        />
-        <span style={{ color: entry.color }}>{entry.value}</span>
-      </li>
-    ))}
-  </ul>
-);
 
 export default DistributionPieChart;
