@@ -71,8 +71,8 @@ export function DreamHouseCard({ title, price, roi, pricePaidData }) {
         <div className="flex w-full justify-between items-center">
           {/* Title and subtitle on the left */}
           <div>
-            <h2 className="text-xl font-bold">{title}</h2>
-            <span className="text-sm text-default-500">
+            
+            <span className="text-md font-semibold text-default-500">
               Gain insight into current & past market trends
             </span>
           </div>

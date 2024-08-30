@@ -3,11 +3,11 @@ import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from '@iconify/react';
 
-export function NoiseLevelCard  ({title, price, roi })  {
+export function NoiseLevelCard  ({ })  {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className=' bg-default-background  border border-subtle-border rounded-md '>

@@ -15,11 +15,11 @@ const getItemsData = () => [
     // Add more items as needed
   ];
   const items = getItemsData();
-export function NearbyCard({ title }) {
+export function NearbyCard({  }) {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className="bg-gray-250 border border-subtle-border p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-lg">

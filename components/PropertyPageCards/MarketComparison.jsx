@@ -30,7 +30,7 @@ const getItemsData = () => [
   // Add more items as needed
 ];
 
-export function MarketComparisonCard({ title, price, roi, cards, data }) {
+export function MarketComparisonCard({  data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
 
@@ -55,7 +55,7 @@ export function MarketComparisonCard({ title, price, roi, cards, data }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1050px" }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className=" rounded-md border border-subtle-border">

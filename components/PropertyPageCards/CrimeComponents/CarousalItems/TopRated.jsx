@@ -14,7 +14,7 @@ import { Icon } from '@iconify/react';
   return (
     <div className="w-full h-350 p-5 bg-white rounded-lg ">
         <div className=' p-10  '>
-      <div className="mb-4">
+      <div className="shadow-md p-4 rounded-md bg-gray-100 mb-4">
         <h1  className="mb-0">Top Reported Crimes</h1>
         <h1 className="text-sm text-gray-500">Crime for latest month (Mar 2023)</h1>
       </div>

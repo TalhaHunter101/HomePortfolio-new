@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import { smallString } from "@/utils/Helper";
 
-export function SchoolsCard({ title, schoolData }) {
+export function SchoolsCard({  schoolData }) {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedType, setSelectedType] = useState("All grades");
 
@@ -21,7 +21,7 @@ export function SchoolsCard({ title, schoolData }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <div className="rounded-md border border-subtle-border">

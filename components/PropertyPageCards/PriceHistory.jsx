@@ -3,11 +3,11 @@ import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { formatDate } from "@/utils/Helper";
 
-export function PriceHistory({ title, data }) {
+export function PriceHistory({  data }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <h2 className="text-xl font-bold">{title}</h2>
+        
       </CardHeader>
       <CardBody>
         <section

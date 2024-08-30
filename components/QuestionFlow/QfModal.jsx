@@ -17,8 +17,7 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 import Step6 from "./Step6";
 
-
-export const ReportModal = ({ isOpen, onOpenChange }) => {
+export const ReportModal = ({ isOpen, onOpenChange, selectedAddress }) => {
     const [step, setStep] = useState(1);
     const [selectedPropertyType, setSelectedPropertyType] = useState("");
     const [selectedBedrooms, setSelectedBedrooms] = useState("");
@@ -50,10 +49,7 @@ export const ReportModal = ({ isOpen, onOpenChange }) => {
     };
 
     const handleBasementSelect = () => {
-
-
         handleNextStep();
-
     };
 
     const handleSquareFootageSelect = (footage) => {
@@ -61,37 +57,30 @@ export const ReportModal = ({ isOpen, onOpenChange }) => {
         handleNextStep();
     };
 
-
-    const handleSubmit = ({ firstName, lastName }) => {
-
-        console.log("First Name:", firstName);
-        console.log("Last Name:", lastName);
-
+    const handleSubmit = ({ email, selectedAddress }) => {
+        
+        console.log("email", email);
+        console.log("Selected Address:", selectedAddress); // Log the selected address
         onOpenChange(false);
     };
-
 
     const renderStep = () => {
         switch (step) {
             case 1:
-      return <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />;
-
+                return <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />;
             case 2:
                 return <Step2 onBedroomSelect={handleBedroomSelect} />;
-
             case 3:
                 return <Step3 onBathroomSelect={handleBathroomSelect} />;
-
             case 4:
                 return <Step4 onBasementSelect={handleBasementSelect} />;
-
             case 5:
                 return <Step5 onSquareFootageSelect={handleSquareFootageSelect} />;
-            case 6 :
-                return <Step6 onSubmit={handleSubmit} onBack={handlePreviousStep} />
-
+            case 6:
+                // Pass selectedAddress to Step6 as a prop
+                return <Step6 onSubmit={handleSubmit} onBack={handlePreviousStep} selectedAddress={selectedAddress} />;
             default:
-                <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />
+                return <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />;
         }
     };
 
@@ -108,7 +97,6 @@ export const ReportModal = ({ isOpen, onOpenChange }) => {
                 {(onClose) => (
                     <>
                         <ModalHeader className="flex flex-col h-1/2 items-center justify-center bg-gradient-to-b from-[#ffffff] to-[#a792f6b5]">
-
                             <div className="w-full flex justify-between items-center pb-10">
                                 <Button
                                     radius="full"
@@ -135,7 +123,6 @@ export const ReportModal = ({ isOpen, onOpenChange }) => {
                                     onClick={onClose}
                                 />
                             </div>
-
 
                             <Image
                                 alt="Illustration"
