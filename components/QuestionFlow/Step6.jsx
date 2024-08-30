@@ -18,11 +18,12 @@ const Step6 = ({ onSubmit, onBack, selectedAddress }) => {
 
   const handleSubmit = () => {
     // Check if selectedAddress is not null/undefined and email is valid
-    if (selectedAddress && !isEmailInvalid) {
+    if (!selectedAddress && !isEmailInvalid) {
       // Log selectedAddress and email
       console.log("Selected Address:", selectedAddress);
       console.log("Email:", email);
       onSubmit({ selectedAddress, email });
+
     } else {
       // Additional feedback or error handling can be added here if needed
       console.log("Please enter a valid email and select an address.");
