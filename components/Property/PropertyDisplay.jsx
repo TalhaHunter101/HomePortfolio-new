@@ -36,8 +36,6 @@ import { EPCCard } from "../PropertyPageCards/EPCcard";
 import { EVCard } from "../PropertyPageCards/EVcards";
 
 function PropertyDisplay({ listingData, params }) {
-
-  console.log("listingData", listingData);
   
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =

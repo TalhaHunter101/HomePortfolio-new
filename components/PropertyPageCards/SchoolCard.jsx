@@ -4,8 +4,9 @@ import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import { smallString } from "@/utils/Helper";
+import { SchoolMapStatic } from "../Maps";
 
-export function SchoolsCard({  schoolData }) {
+export function SchoolsCard({ schoolData, data }) {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedType, setSelectedType] = useState("All grades");
 
@@ -18,11 +19,16 @@ export function SchoolsCard({  schoolData }) {
     return formattedString;
   }
 
+  const center = [
+    {
+      lat: data?.location?.coordinates?.latitude,
+      lng: data?.location?.coordinates?.longitude,
+    },
+  ];
+
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      <CardHeader>
-        
-      </CardHeader>
+      <CardHeader></CardHeader>
       <CardBody>
         <div className="rounded-md border border-subtle-border">
           <div className=" items-center   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
@@ -58,7 +64,7 @@ export function SchoolsCard({  schoolData }) {
                 <div className="h-full w-full">
                   <div className="w-full h-full border-1 maplibregl-map mapboxgl-map">
                     <div className="">
-                      <p>schools map to be integrated here</p>
+                      <SchoolMapStatic center={center} />
                     </div>
                   </div>
                 </div>
@@ -69,8 +75,12 @@ export function SchoolsCard({  schoolData }) {
                 <div className="ml-2 shadow-md z-50 p-2 mb-2">
                   <div className="flex gap-2 flex-wrap   pb-2 " slot="tabs">
                     <Button
-                    size="sm"
-                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "All grades" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
+                      size="sm"
+                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${
+                        selectedType === "All grades"
+                          ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 "
+                          : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"
+                      } `}
                       onPress={() => setSelectedType("All grades")}
                     >
                       <svg
@@ -89,8 +99,12 @@ export function SchoolsCard({  schoolData }) {
                     </Button>
 
                     <Button
-                    size="sm"
-                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Primary" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
+                      size="sm"
+                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${
+                        selectedType === "Primary"
+                          ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 "
+                          : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"
+                      } `}
                       onPress={() => setSelectedType("Primary")}
                     >
                       <svg
@@ -108,8 +122,12 @@ export function SchoolsCard({  schoolData }) {
                       <span>Primary</span>
                     </Button>
                     <Button
-                    size="sm"
-                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Secondary" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
+                      size="sm"
+                      className={`flex-shrink-0 flex space-x-2 items-center text-sm md:text-base rounded-md px-4 py-2 ${
+                        selectedType === "Secondary"
+                          ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 "
+                          : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"
+                      } `}
                       onPress={() => setSelectedType("Secondary")}
                     >
                       <svg
@@ -128,8 +146,12 @@ export function SchoolsCard({  schoolData }) {
                     </Button>
 
                     <Button
-                    size="sm"
-                      className={`flex-shrink-0 flex space-x-2  items-center text-sm md:text-base rounded-md px-4 py-2 ${selectedType === "Independent" ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 " : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"} `}
+                      size="sm"
+                      className={`flex-shrink-0 flex space-x-2  items-center text-sm md:text-base rounded-md px-4 py-2 ${
+                        selectedType === "Independent"
+                          ? "text-blue-800 bg-blue-200 border border-blue-300 hover:bg-blue-200 "
+                          : "text-gray-800 bg-gray-200 border border-gray-300 hover:bg-gray-200"
+                      } `}
                       onPress={() => setSelectedType("Independent")}
                     >
                       <svg
@@ -151,16 +173,20 @@ export function SchoolsCard({  schoolData }) {
                 <div className="flex-1 w-1/2 overflow-y-scroll  scrollbar    snap-mandatory space-x-2  ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
                   <div className="flex flex-row sm:flex-col">
                     {schoolData &&
-                      schoolData.filter((item) =>
-                        selectedType === "All grades"
-                          ? true
-                          : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
-                      ).length > 0 ? (
+                    schoolData.filter((item) =>
+                      selectedType === "All grades"
+                        ? true
+                        : item?._source?.["PhaseOfEducation (name)"].includes(
+                            selectedType
+                          )
+                    ).length > 0 ? (
                       schoolData
                         .filter((item) =>
                           selectedType === "All grades"
                             ? true
-                            : item?._source?.["PhaseOfEducation (name)"].includes(selectedType)
+                            : item?._source?.[
+                                "PhaseOfEducation (name)"
+                              ].includes(selectedType)
                         )
                         .map((item, index) => (
                           <div
@@ -172,19 +198,29 @@ export function SchoolsCard({  schoolData }) {
                                 <div className="flex flex-row items-center h-full space-x-4 truncate flex-1  relative overflow-hidden text-foreground">
                                   <div className="flex flex-row sm:flex-col">
                                     <div
-                                      className={`text-4xl font-bold text-blue-600 ${item?._source?.["OfstedRating (name)"] ===
-                                          "Outstanding"
+                                      className={`text-4xl font-bold text-blue-600 ${
+                                        item?._source?.[
+                                          "OfstedRating (name)"
+                                        ] === "Outstanding"
                                           ? " text-green-900"
-                                          : item?._source?.["OfstedRating (name)"] === "Good"
-                                            ? " text-yellow-800"
-                                            : " text-red-800"
-                                        }`}
+                                          : item?._source?.[
+                                              "OfstedRating (name)"
+                                            ] === "Good"
+                                          ? " text-yellow-800"
+                                          : " text-red-800"
+                                      }`}
                                       style={{ minWidth: "45px" }}
                                     >
-                                      {item?._source?.["OfstedRating (name)"] === "" ||
-                                        item?._source?.["OfstedRating (name)"].trim() === ""
+                                      {item?._source?.[
+                                        "OfstedRating (name)"
+                                      ] === "" ||
+                                      item?._source?.[
+                                        "OfstedRating (name)"
+                                      ].trim() === ""
                                         ? "Don't know"
-                                        : item?._source?.["OfstedRating (name)"]}
+                                        : item?._source?.[
+                                            "OfstedRating (name)"
+                                          ]}
                                     </div>
                                     <div className="flex flex-col text-sm">
                                       <p
@@ -202,14 +238,24 @@ export function SchoolsCard({  schoolData }) {
                                         )}
                                       </p>
                                       <span>
-                                        {parseInt(item?._source?.StatutoryLowAge)}-
-                                        {parseInt(item?._source?.StatutoryHighAge)},{" "}
-                                        {item?._source?.["Gender (name)"]},
+                                        {parseInt(
+                                          item?._source?.StatutoryLowAge
+                                        )}
+                                        -
+                                        {parseInt(
+                                          item?._source?.StatutoryHighAge
+                                        )}
+                                        , {item?._source?.["Gender (name)"]},
                                         {item?._source?.NumberOfPupils},{" "}
-                                        {item?._source?.["PhaseOfEducation (name)"]}
+                                        {
+                                          item?._source?.[
+                                            "PhaseOfEducation (name)"
+                                          ]
+                                        }
                                       </span>
                                       <div>
-                                        {item?._source?.Street}, {item?._source?.Postcode}
+                                        {item?._source?.Street},{" "}
+                                        {item?._source?.Postcode}
                                       </div>
                                     </div>
                                   </div>
@@ -224,7 +270,6 @@ export function SchoolsCard({  schoolData }) {
                       </div>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
