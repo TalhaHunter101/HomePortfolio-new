@@ -1,8 +1,16 @@
 'use client';
 import React from 'react';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { IndivisualProprtyMapStatic } from '../Maps';
 
 export function LocationCard ({data })  {
+
+
+  const center = {
+    lat: data?.location?.coordinates?.latitude,
+    lng: data?.location?.coordinates?.longitude,
+  }
+  
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
@@ -15,9 +23,11 @@ export function LocationCard ({data })  {
           {data?.address}
         </p>
       </div>
+
+      <IndivisualProprtyMapStatic center={center} />
       </CardBody>
     </Card>
-  );
+  ); 
 };
 
 

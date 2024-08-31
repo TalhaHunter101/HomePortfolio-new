@@ -35,8 +35,6 @@ import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 
 function PropertyDisplay({ listingData, params }) {
-
-  console.log("listingData", listingData);
   
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
