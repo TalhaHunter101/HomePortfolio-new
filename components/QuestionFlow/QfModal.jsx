@@ -78,7 +78,7 @@ export const ReportModal = ({ isOpen, onOpenChange, selectedAddress }) => {
                 return <Step5 onSquareFootageSelect={handleSquareFootageSelect} />;
             case 6:
                 // Pass selectedAddress to Step6 as a prop
-                return <Step6 onSubmit={handleSubmit} onBack={handlePreviousStep} selectedAddress={selectedAddress} />;
+                return <Step6  onBack={handlePreviousStep} selectedAddress={selectedAddress} />;
             default:
                 return <Step1 onPropertyTypeSelect={handlePropertyTypeSelect} />;
         }
