@@ -52,7 +52,7 @@ const calculateStats = (data, propertyType) => {
   };
 };
 
-export function DreamHouseCard({ title, price, roi, pricePaidData }) {
+export function DreamHouseCard({  pricePaidData }) {
   const [detachedStats, setDetachedStats] = useState(null);
   const [semiDetachedStats, setSemiDetachedStats] = useState(null);
   const [flatStats, setFlatStats] = useState(null);
@@ -105,8 +105,8 @@ export function DreamHouseCard({ title, price, roi, pricePaidData }) {
             , in comparison to its previous month.
           </span>
 
-          <div className="flex justify-between flex-col lg:flex-row gap-8 mt-4">
-            <div className="lg:w-7/12">
+          <div className="flex justify-between flex-col  lg:flex-row gap-8 mt-4">
+            <div className="lg:w-7/12 mt-28 ">
               <DreamHouseLineChart  type={type}
            
             data={pricePaidData} />
@@ -208,8 +208,8 @@ export function DreamHouseCard({ title, price, roi, pricePaidData }) {
 
                 {flatStats && (
                   <div className="grid gap-y-1">
-                    <div className="font-medium text-blue-600">
-                      Semi-detached
+                    <div className="font-medium text-gray-600">
+                      Flat
                     </div>
 
                     <ul className="grid gap-2 list-disc pt-2 pl-6">

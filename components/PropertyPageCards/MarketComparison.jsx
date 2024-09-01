@@ -53,7 +53,7 @@ export function MarketComparisonCard({  data }) {
  
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1050px" }}>
+    <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
       <CardHeader>
         
       </CardHeader>
