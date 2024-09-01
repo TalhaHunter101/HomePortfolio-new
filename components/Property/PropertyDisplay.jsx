@@ -429,6 +429,8 @@ function PropertyDisplay({ listingData, params }) {
                       data={listingData}
                       pricePaidData={pricePaidData}
                       propertyPrice={listingData?.analyticsTaxonomy?.price}
+                      uprn={listingData?.location?.uprn}
+                      postcode={listingData?.ref_postcode}
                     />
                   </div>
                 ))}

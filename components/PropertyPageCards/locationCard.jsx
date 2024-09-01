@@ -23,8 +23,11 @@ export function LocationCard ({data })  {
           {data?.address}
         </p>
       </div>
+        <div className='h-[40vh]'>
 
-      <IndivisualProprtyMapStatic center={center} />
+      <IndivisualProprtyMapStatic center={center} height='300px' />
+      </div>
+
       </CardBody>
     </Card>
   ); 

@@ -1,23 +1,24 @@
-import { useState, useMemo } from "react";
-import { Input, Card, CardBody } from "@nextui-org/react";
+import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { useState } from "react";
 
-export default function TotalInvestmentCard({ propertyPrice }) {
+export default function TotalInvestmentCard({
+  purchasePrice,
+  closingCostsPercentage,
+  refurbCost,
+  fees,
+  furnishingCost,
+  otherExpenses,
+  setPurchasePrice,
+  setClosingCostsPercentage,
+  setRefurbCost,
+  setFees,
+  setFurnishingCost,
+  setOtherExpenses,
+  totalInvestment,
+  stampDuty
+}) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const stampDuty = useMemo(() => {
-    if (propertyPrice < 40000) {
-      return 0;
-    } else if (propertyPrice < 250000) {
-      return propertyPrice * 0.03;
-    } else if (propertyPrice < 925000) {
-      return ((propertyPrice - 250000) * 0.08) + 7500;
-    } else if (propertyPrice < 1500000) {
-      return ((propertyPrice - 925000) * 0.13) + 61500;
-    } else {
-      return ((propertyPrice - 1500000) * 0.15) + 136250;
-    }
-  }, [propertyPrice]);
 
   return (
     <div className="mt-2">
@@ -28,7 +29,7 @@ export default function TotalInvestmentCard({ propertyPrice }) {
         >
           <span className="text-xl font-bold text-purple-900">Total Investment</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">£{propertyPrice}</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">£{totalInvestment.toLocaleString('en-GB')}</span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -50,8 +51,9 @@ export default function TotalInvestmentCard({ propertyPrice }) {
               </label>
               <Input
                 type="text"
-                defaultValue="0.00"
-                endContent={<div className="pointer-events-none text-gray-400">%</div>}
+                value={purchasePrice.toLocaleString('en-GB')}
+                onChange={(e) => setPurchasePrice(parseFloat(e.target.value.replace(/,/g, '')))}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
             <div>
@@ -71,7 +73,8 @@ export default function TotalInvestmentCard({ propertyPrice }) {
               </label>
               <Input
                 type="text"
-                defaultValue="2.75"
+                value={closingCostsPercentage}
+                onChange={(e) => setClosingCostsPercentage(parseFloat(e.target.value))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
               />
             </div>
@@ -81,7 +84,8 @@ export default function TotalInvestmentCard({ propertyPrice }) {
               </label>
               <Input
                 type="text"
-                defaultValue={(5000).toLocaleString('en-GB')}
+                value={refurbCost}
+                onChange={(e) => setRefurbCost(parseFloat(e.target.value))}
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
@@ -91,7 +95,8 @@ export default function TotalInvestmentCard({ propertyPrice }) {
               </label>
               <Input
                 type="text"
-                defaultValue="0"
+                value={furnishingCost}
+                onChange={(e) => setFurnishingCost(parseFloat(e.target.value))}
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
@@ -101,7 +106,8 @@ export default function TotalInvestmentCard({ propertyPrice }) {
               </label>
               <Input
                 type="text"
-                defaultValue="0"
+                value={otherExpenses}
+                onChange={(e) => setOtherExpenses(parseFloat(e.target.value))}
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>

@@ -49,3 +49,10 @@ export const smallString = (str, num) => {
     return str;
   }
 };
+
+export const formatDateNew = (dateString) =>{
+  if (!dateString) return;
+  const options = { day: '2-digit', month: 'short', year: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', options).replace(/ /g, ' ');
+}

@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Input, Card, CardBody } from "@nextui-org/react";
+import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-export default function ExpensesCard() {
+export default function ExpensesCard({
+  channelFee = 3.00,
+  propertyManagementFee = 230,
+  supplyFees = 0,
+  groundRent = 2166,
+  insurance = 800,
+  utilities = 1538,
+  maintenance = 1153,
+  otherExpenses = 0,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -14,9 +23,7 @@ export default function ExpensesCard() {
         >
           <span className="text-xl font-bold text-purple-900">Expenses</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">
-              £6,810/mo
-            </span>
+            <span className="text-xl font-bold text-purple-900 mr-2">£{(channelFee + propertyManagementFee + supplyFees + groundRent + insurance + utilities + maintenance + otherExpenses).toLocaleString('en-GB')}/mo</span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -38,7 +45,7 @@ export default function ExpensesCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="3.00"
+                defaultValue={channelFee}
                 endContent={
                   <div className="pointer-events-none text-gray-400">%</div>
                 }
@@ -51,7 +58,7 @@ export default function ExpensesCard() {
                 </label>
                 <Input
                   type="text"
-                  defaultValue="230"
+                  defaultValue={propertyManagementFee}
                   startContent={
                     <div className="pointer-events-none text-gray-400">£</div>
                   }
@@ -59,7 +66,7 @@ export default function ExpensesCard() {
               </div>
               <span className="mx-2">OR</span>
               <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
+                <label className="block text-sm font-medium text-gray-500 mb-1">
                   .
                 </label>
                 <Input
@@ -77,7 +84,7 @@ export default function ExpensesCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="0"
+                defaultValue={supplyFees}
                 startContent={
                   <div className="pointer-events-none text-gray-400">£</div>
                 }
@@ -89,7 +96,7 @@ export default function ExpensesCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="2,166"
+                defaultValue={groundRent}
                 startContent={
                   <div className="pointer-events-none text-gray-400">£</div>
                 }
@@ -101,7 +108,7 @@ export default function ExpensesCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="800"
+                defaultValue={insurance}
                 startContent={
                   <div className="pointer-events-none text-gray-400">£</div>
                 }
@@ -115,7 +122,7 @@ export default function ExpensesCard() {
               <div className="flex">
                 <Input
                   type="text"
-                  defaultValue="1,538"
+                  defaultValue={utilities}
                   startContent={
                     <div className="pointer-events-none text-gray-400">£</div>
                   }
@@ -137,7 +144,7 @@ export default function ExpensesCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="1,153"
+                defaultValue={maintenance}
                 startContent={
                   <div className="pointer-events-none text-gray-400">£</div>
                 }
@@ -150,7 +157,7 @@ export default function ExpensesCard() {
               <div className="flex">
                 <Input
                   type="text"
-                  defaultValue="0"
+                  defaultValue={otherExpenses}
                   startContent={
                     <div className="pointer-events-none text-gray-400">£</div>
                   }
@@ -172,3 +179,4 @@ export default function ExpensesCard() {
     </div>
   );
 }
+

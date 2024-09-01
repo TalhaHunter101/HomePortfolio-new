@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AreaChart,
   Area,
@@ -6,23 +6,20 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
-const data = [
-  { name: '2019', uv: 0 },
-  { name: '2020', uv: 2500000 },
-  { name: '2021', uv: 1000000 },
-  { name: '2022', uv: 4000000 },
-  { name: '2023', uv: 1500000 },
-];
+export const PricetrackerChart = ({ data, categories }) => {
+  const formattedData = data.map((price, index) => ({
+    name: categories[index],
+    uv: price,
+  }));
 
-export const PricetrackerChart = () => {
   return (
-    <div className="w-full h-auto max-w-4xl p-4 mx-auto bg-white rounded-lg ">
+    <div className="w-full h-auto max-w-4xl p-4 mx-auto bg-white rounded-lg">
       <div className="w-full h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={data}
+            data={formattedData}
             margin={{
               top: 10,
               right: 30,
@@ -40,11 +37,20 @@ export const PricetrackerChart = () => {
             <YAxis
               orientation="right"
               axisLine={false}
-              tickLine={false} // This removes the dashes on the Y-axis
-              tickFormatter={(value) => `$${(value / 1000000).toFixed()}M`}
+              tickLine={false}
+              tickFormatter={(value) => {
+                if (value >= 1000000) {
+                  return `£${(value / 1000000).toFixed(2)}M`;
+                } else if (value >= 1000) {
+                  return `£${(value / 1000).toFixed(2)}K`;
+                } else {
+                  return `£${value}`;
+                }
+              }}
               dx={10}
             />
-            <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+
+            <Tooltip formatter={(value) => `£${value.toLocaleString()}`} />
             <Area
               type="monotone"
               dataKey="uv"

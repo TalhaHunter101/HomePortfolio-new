@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Input, Card, CardBody } from "@nextui-org/react";
+import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-export default function RevenueCard() {
+export default function RevenueCard({
+  monthlyRevenue,
+  annualRevenue,
+  setMonthlyRevenue,
+  setAnnualRevenue,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -14,7 +19,7 @@ export default function RevenueCard() {
         >
           <span className="text-xl font-bold text-purple-900">Revenue</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">£38,447/mo</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">£{monthlyRevenue.toLocaleString('en-GB')}/mo</span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -31,24 +36,35 @@ export default function RevenueCard() {
         >
           <div className="p-4 grid grid-cols-2 gap-4">
 
-          <div>
+            <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Monthly Revenue
               </label>
               <Input
                 type="text"
-                defaultValue="38,447"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                value={monthlyRevenue.toLocaleString('en-GB')}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  setMonthlyRevenue(value);
+                  setAnnualRevenue(value * 12); // Automatically update annual revenue
+                }}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Annual Revenue
               </label>
               <Input
                 type="text"
-                defaultValue="461,360"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                value={annualRevenue.toLocaleString('en-GB')}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  setAnnualRevenue(value);
+                  setMonthlyRevenue(value / 12); // Automatically update monthly revenue
+                }}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
             
@@ -58,26 +74,25 @@ export default function RevenueCard() {
               </label>
               <Input
                 type="text"
-                defaultValue="1,264"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                defaultValue="1,264" // This seems to be a static example value; adjust if needed
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
               <p className="text-xs text-gray-500 mt-1">
-                $1264 is the projected monthly rent estimates based on comparable for this specific property, according to our valuation tool.
+                £1264 is the projected monthly rent estimate based on comparables for this specific property, according to our valuation tool.
               </p>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Other Income
               </label>
               <Input
                 type="text"
-                defaultValue="0"
-                startContent={<div className="pointer-events-none text-gray-400">$</div>}
+                defaultValue="0" // If dynamic, you can add a state here as well
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
             </div>
 
-
-           
           </div>
         </div>
       </CardBody>
