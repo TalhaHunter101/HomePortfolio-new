@@ -133,7 +133,7 @@ const [barchart, setbarchart] = useState({
             <span className="self-center  pt-4 text-sm lg:text-base text-zd-600">Houses</span>
             <div className="relative flex-1 font-mono pt-9/16" style={{ width: '100%' }}>
               
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute hidden md:block inset-0 flex items-center justify-center">
                 <DistributionBarChart main_data={data} barchart={barchart} />
               </div>
             </div>

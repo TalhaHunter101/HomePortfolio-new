@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
-import { StatusCard } from "./CrimeComponents/Status";
+// import { StatusCard } from "./CrimeComponents/Status";
 import Carousel from "./CrimeComponents/GraphCarousal";
 
 const statusData = [
@@ -55,7 +55,7 @@ export function CrimeCard({ postcode }) {
         <CardBody>
           <div className="flex flex-col border border-subtle-border rounded-md">
             {/* Status Cards */}
-            <div className="flex p-2  justify-between ">
+            {/* <div className="flex p-2  justify-between ">
               {statusData.map((status, index) => (
                 <StatusCard
                   key={index}
@@ -64,7 +64,7 @@ export function CrimeCard({ postcode }) {
                   iconColor={status.iconColor}
                 />
               ))}
-            </div>
+            </div> */}
 
             {/* Additional Content */}
             <div className="">

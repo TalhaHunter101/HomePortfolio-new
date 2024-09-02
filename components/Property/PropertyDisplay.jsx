@@ -446,7 +446,8 @@ function PropertyDisplay({ listingData, params }) {
             ))}
           </div>
           {/* <div className="flex z-40 w-full h-auto items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 border-b border-divider backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-background/70"> */}
-          <nav className="sticky top-6 p-4 bg-white w-45 h-fit">
+          {/* <div className="hidden lg:block"> */}
+          <nav className="sticky  top-6 p-4 bg-white w-45 h-fit hidden lg:block ">
             <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
               <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
                 {navElements.map((element, index) => (
@@ -524,6 +525,7 @@ function PropertyDisplay({ listingData, params }) {
               </div>
             </div>
           </nav>
+          {/* </div> */}
           {/* </div> */}
         </div>
       </div>
