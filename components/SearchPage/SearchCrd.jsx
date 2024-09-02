@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, CardBody, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, Image, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
@@ -26,9 +26,10 @@ const SearchCard = ({ property, setCardHover }) => {
 
       }}
     >
-      <CardBody className="overflow-hidden py-2">
-        <div className="relative">
-          <div className="w-full overflow-hidden rounded-lg">
+      <CardHeader
+      className="p-0">
+      <div className="relative">
+          <div className="w-full overflow-hidden rounded-none">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -36,6 +37,7 @@ const SearchCard = ({ property, setCardHover }) => {
               {property?.images?.map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-full">
                   <Image
+                  radius="none"
                     src={image?.original}
                     alt={`Property ${index + 1}`}
                     width={600} // Full width
@@ -79,6 +81,9 @@ const SearchCard = ({ property, setCardHover }) => {
             </Button>
           </div>
         </div>
+      </CardHeader>
+      <CardBody className="overflow-hidden py-2">
+        
         <Link href={`/property/${property.id}`}>
           <div className="p-1">
             <h3 className="text-bold text-2xl">£{property?.maxPrice}</h3>
@@ -93,39 +98,39 @@ const SearchCard = ({ property, setCardHover }) => {
                 | {property?.squareFeet} Sqft
               </span>
             </div>
-            <p className="pt-2 text-default-500">{property?.address}</p>
+            <p className="pt-2 text-default-500 text-sm">{property?.address}</p>
             <p className="text-tiny uppercase font-bold">
               {property?.description}
             </p>
 
-            <div className="pt-1 grid grid-cols-2 gap-4 text-xsm">
+            <div className="pt-1 grid grid-cols-2 gap-4 ">
               <div className="flex items-center p-1  border-l-2 border-l-gray-400">
                 {/* <div className="w-1 h-full bg-gray-500 mr-2"></div> */}
                 <div>
-                  <span className=" text-gray-400 text-sm">Gross Yields:</span>
-                  <span className="block">
+                  <span className=" text-gray-400 text-xs">Gross Yields:</span>
+                  <span className="block text-sm">
                     {property?.grossYields || "NA"}%
                   </span>
                 </div>
               </div>
               <div className="flex items-center p-1 border-l-2 border-l-gray-400">
                 <div>
-                  <span className=" text-gray-400 text-sm">Rent Estimate:</span>
-                  <span className="block">
+                  <span className=" text-gray-400 text-xs">Rent Estimate:</span>
+                  <span className="block text-sm">
                     £{property?.rentEstimate || "NA"}
                   </span>
                 </div>
               </div>
               <div className="flex items-center p-1 border-l-2 border-l-gray-400">
                 <div>
-                  <span className="text-gray-400 text-sm">ROI:</span>
-                  <span className="block">{property?.roi || "NA"}%</span>
+                  <span className="text-gray-400 text-xs">ROI:</span>
+                  <span className="block text-sm">{property?.roi || "NA"}%</span>
                 </div>
               </div>
               <div className="flex items-center p-1 border-l-2 border-l-gray-400">
                 <div>
-                  <span className="text-gray-400 text-sm">Cash on Cash:</span>
-                  <span className="block">{property?.cashOnCash || "NA"}%</span>
+                  <span className="text-gray-400 text-xs">Cash on Cash:</span>
+                  <span className="block text-sm">{property?.cashOnCash || "NA"}%</span>
                 </div>
               </div>
             </div>

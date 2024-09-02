@@ -54,9 +54,9 @@ export default function Component() {
       <div className="text-center">
         <h1 className="text-4xl font-bold">
           Get an instant{" "}
-          <span className="relative inline-block">
+          <span className="relative  inline-block">
             <span className="relative z-10">home evaluation</span>
-            <span className="absolute inset-0 bg-[#874debb5] z-0 transform -skew-x-6" />
+            <span className="absolute  inset-0 bg-[#874debb5] z-0 transform -skew-x-6" />
           </span>
           , powered by HomeportFolio AI
         </h1>
@@ -65,13 +65,14 @@ export default function Component() {
         <Card className="flex flex-row items-center p-4 shadow-lg rounded-lg min-w-[50vw]">
           <Input
             fullWidth
+            radius="sm"
             placeholder="Enter address"
             startContent={<Icon icon="bi:house-fill" fontSize={28} />}
             className="mr-4"
             value={query}
             onChange={handleInputChange}
           />
-          <Button auto flat className="font-bold" color="secondary" onPress={handleOpenModal}>
+          <Button auto flat radius="sm" className="font-semibold text-xs md:text-base" color="secondary" onPress={handleOpenModal}>
             Get My Report
           </Button>
         </Card>

@@ -320,7 +320,7 @@ function PropertyDisplay({ listingData, params }) {
 
         {/* {/ main div /} */}
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
-          <div className="lg:col-span-7 max-w-screen">
+          <div className="lg:col-span-7 max-w-screen md:block">
           
             {mainImages && <MainCard images={mainImages} />}
           </div>
@@ -348,14 +348,14 @@ function PropertyDisplay({ listingData, params }) {
                   {listingData?.tags[0]?.label}
                 </span>
                 <span className="px-1 text-primary">
-                  <Icon
+                  {/* <Icon
                     className="inline mx-1"
                     icon="gravity-ui:thunderbolt-fill"
-                  />
+                  /> */}
                   {listingData?.flag}
                 </span>
                 <span className="px-1 text-primary">
-                  <Icon className="inline mx-1" icon="fa-solid:walking" />
+                  {/* <Icon className="inline mx-1" icon="fa-solid:walking" /> */}
                   {listingData?.availability?.label}:
                 </span>
                 <span className="px-1 text-primary">
