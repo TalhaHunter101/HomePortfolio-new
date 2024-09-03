@@ -441,6 +441,7 @@ function PropertyDisplay({ listingData, params }) {
                       title={subElement.name}
                       schoolData={schoolData}
                       city={listingData?.location?.townOrCity}
+                      postTownName={listingData?.analyticsTaxonomy?.postTownName}
                       cards={mcards}
                       data={listingData}
                       pricePaidData={pricePaidData}

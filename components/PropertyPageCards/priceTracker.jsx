@@ -4,7 +4,7 @@ import { PricetrackerChart } from "./Charts/pricetrckerChart";
 
 export function PriceTrackerCard({ uprn, data: newData }) {
   const [data, setData] = useState([]);
-
+ 
   useEffect(() => {
     const getHomeThreeYearData = async () => {
       try {
@@ -21,7 +21,10 @@ export function PriceTrackerCard({ uprn, data: newData }) {
         }
         const reults = await res.json();
 
-        let historicSales = reults[0]._source.historicSales;
+        console.log("Pricing data is",reults);
+        
+
+        let historicSales = reults[0]._source.history?.historicSales;
         historicSales = historicSales
           .replace(/'/g, '"')
           .replace(/None/g, "null");
