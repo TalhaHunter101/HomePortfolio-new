@@ -31,3 +31,9 @@ export const PlanningApplicationMapStatic = dynamic(() => import("./PlanningAppl
   ssr: false,
   loading: () => <p>A map is loading</p>,
 })
+
+
+export const EvChargingMapStatic = dynamic(() => import("./EvChargingMap"), {
+  ssr: false,
+  loading: () => <p>A map is loading</p>,
+})

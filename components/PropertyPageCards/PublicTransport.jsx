@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { TransportMapStatic } from "../Maps";
 
 export function PublicTransportCard({ data }) {
   const [selectedType, setSelectedType] = useState("rail");
+  const [walkScore, setWalkScore] = useState(0);
 
   const transportCounts = data.transports.reduce((acc, transport) => {
     const { poiType } = transport;
@@ -30,6 +31,30 @@ export function PublicTransportCard({ data }) {
       lng: data?.location?.coordinates?.longitude,
     },
   ];
+
+  useEffect(() => {
+    const getWalkScore = async () => {
+      try {
+        const res = await fetch("/api/indevisual/get-walk-score", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            postcode: data?.ref_postcode,
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setWalkScore(data[0]._source?.walk_score);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getWalkScore();
+  }, [data?.ref_postcode]);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -56,7 +81,7 @@ export function PublicTransportCard({ data }) {
                     Transit Score<sup>®</sup>
                   </a>
                 </div>
-                <div className="text-xl text-foreground font-medium">18</div>
+                <div className="text-xl text-foreground font-medium">N/A</div>
               </div>
               <div className="flex flex-col items-center mb-2 pr-2 text-center justify-between">
                 <div className="text-xs md:text-sm capitalize text-foreground">
@@ -69,7 +94,7 @@ export function PublicTransportCard({ data }) {
                   </a>
                 </div>
                 <div className="text-xl text-muted-foreground font-medium">
-                  38
+                  {walkScore || "N/A"}
                 </div>
               </div>
             </div>
@@ -98,7 +123,7 @@ export function PublicTransportCard({ data }) {
                     </div>
                     <div className="text-green-800 flex items-end">
                       <div className="text-2xl lg:text-3xl font-semibold">
-                        27
+                        N/A
                       </div>
                       <div className="text-base lg:text-lg mb-1 flex space-x-2">
                         <svg
@@ -124,7 +149,7 @@ export function PublicTransportCard({ data }) {
                     </div>
                     <div className="text-green-800 flex items-end">
                       <div className="text-2xl lg:text-3xl font-semibold">
-                        38
+                        {walkScore || "N/A"}
                       </div>
                       <div className="text-base lg:text-lg mb-2 flex space-x-2">
                         <svg
@@ -150,7 +175,7 @@ export function PublicTransportCard({ data }) {
                     </div>
                     <div className="text-green-800 flex items-end">
                       <div className="text-2xl lg:text-3xl font-semibold">
-                        18
+                        N/A
                       </div>
                       <div className="text-base lg:text-lg mb-2 flex space-x-2">
                         <svg
