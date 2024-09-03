@@ -35,8 +35,11 @@ import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 import { EVCard } from "../PropertyPageCards/EVcards";
 import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
+import { formatCurrency } from "@/utils/Helper";
 
 function PropertyDisplay({ listingData, params }) {
+  const price = listingData?.pricing?.internalValue
+  const formattedPrice = formatCurrency(price)
   
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
@@ -381,7 +384,7 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {listingData?.pricing?.internalValue}
+                  {formattedPrice}
                 </h3>
                 <span className="font-bold text-sm">
                   {listingData?.address || listingData?.branch?.address},

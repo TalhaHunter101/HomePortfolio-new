@@ -56,3 +56,25 @@ export const formatDateNew = (dateString) =>{
   const date = new Date(dateString);
   return date.toLocaleDateString('en-GB', options).replace(/ /g, ' ');
 }
+
+
+export function formatCurrency(amount) {
+ 
+  if (amount === null || amount === undefined || amount === '') {
+    return 'Invalid number';
+  }
+
+  
+  const numberAmount = Number(amount);
+
+ 
+  if (isNaN(numberAmount)) {
+    return 'Invalid number';
+  }
+
+  
+  return numberAmount.toLocaleString('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}

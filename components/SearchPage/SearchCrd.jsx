@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Button, Card, CardBody, Image, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import millify from 'millify';
+import { formatCurrency } from "@/utils/Helper";
+
 
 const SearchCard = ({ property, setCardHover }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const maxPrice = property?.maxPrice;
-  const humanReadablePrice = millify(maxPrice, { precision: 2 });
+  const humanReadablePrice = formatCurrency(maxPrice);
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>

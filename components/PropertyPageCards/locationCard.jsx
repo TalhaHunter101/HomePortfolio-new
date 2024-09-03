@@ -35,7 +35,14 @@ export function LocationCard({ data }) {
     return (
         <Card className="m-4" style={{ minHeight: '150px' }}>
             <CardHeader>
-                <div className=" w-full flex divide-x bg-gray-250 p-2 mb-2 rounded-lg sm:pr-4">
+            <div className="px-16 w-full py-5 bg-default-white border border-gray-200 rounded-md">
+                    <p className="text-[12px] font-bold text-base mb-3">Location</p>
+                    <p className="text-[12px] font-medium">{data?.address}</p>
+                </div>
+                
+            </CardHeader>
+            <CardBody>
+            <div className=" w-full flex divide-x bg-gray-250 p-2 mb-2 rounded-lg sm:pr-4">
                     
                     <Tabs
                     fullWidth
@@ -83,12 +90,6 @@ export function LocationCard({ data }) {
                             }
                         />
                     </Tabs>
-                </div>
-            </CardHeader>
-            <CardBody>
-                <div className="px-16 py-5 bg-default-white border border-gray-200 rounded-md">
-                    <p className="text-[12px] font-bold text-base mb-3">Location</p>
-                    <p className="text-[12px] font-medium">{data?.address}</p>
                 </div>
                 {renderMap()}
             </CardBody>
