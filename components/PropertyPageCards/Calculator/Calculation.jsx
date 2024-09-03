@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import InvestorReturnCal from "./InvestorReturnCal";
 import TotalInvestmentCard from "./TotalInvestmentCard";
@@ -10,7 +10,8 @@ import FinancialSummary from "./FinancialSummary";
 function Calculation({ title, propertyPrice }) {
   // Manage all relevant states here
   const [purchasePrice, setPurchasePrice] = useState(propertyPrice);
-  const [closingCostsPercentage, setClosingCostsPercentage] = useState(2.75);
+  const [closingCostsPercentage, setClosingCostsPercentage] = useState(0);
+  const [closingCosts, setClosingCosts] = useState(5000);
   const [refurbCost, setRefurbCost] = useState(5000);
   const [fees, setFees] = useState(2000);
   const [furnishingCost, setFurnishingCost] = useState(0);
@@ -19,7 +20,7 @@ function Calculation({ title, propertyPrice }) {
   const [ltv, setLtv] = useState(555000); // Loan-to-Value
   const [deposit, setDeposit] = useState(555000);
   const [loanAmount, setLoanAmount] = useState(2220000);
-  const [mortgageRate, setMortgageRate] = useState(7.25);
+  const [mortgageRate, setMortgageRate] = useState(5);
   const [mortgageFees, setMortgageFees] = useState(1.5);
   const [mortgageTerm, setMortgageTerm] = useState(30);
   const [monthlyRevenue, setMonthlyRevenue] = useState(38447);
@@ -33,21 +34,41 @@ function Calculation({ title, propertyPrice }) {
   const [utilities, setUtilities] = useState(1538);
   const [maintenance, setMaintenance] = useState(1153);
   const [otherExp, setOtherExp] = useState(0);
+  const [stampDuty, setStampDuty] = useState(0);
 
   // Calculate Stamp Duty
-  const stampDuty = useMemo(() => {
-    if (purchasePrice < 40000) {
-      return 0;
-    } else if (purchasePrice < 250000) {
-      return purchasePrice * 0.03;
-    } else if (purchasePrice < 925000) {
-      return ((purchasePrice - 250000) * 0.08) + 7500;
-    } else if (purchasePrice < 1500000) {
-      return ((purchasePrice - 925000) * 0.13) + 61500;
+  // const stampDuty = useMemo(() => {
+ 
+  // }, [purchasePrice]);
+  //275000 * 0.05 = 13750
+
+
+  function calculateStampDuty(amount) {
+    if (amount < 40000) {
+        return amount * 0;  // 0% for amounts less than 40,000
+    } else if (amount < 250000) {
+        return amount * 0.03;  // 3% for amounts between 40,000 and 249,999
+    } else if (amount < 925000) {
+        return ((amount - 250000) * 0.08) + 7500;  // 8% for amounts between 250,000 and 924,999
+    } else if (amount < 1500000) {
+        return ((amount - 925000) * 0.13) + 61500;  // 13% for amounts between 925,000 and 1,499,999
     } else {
-      return ((purchasePrice - 1500000) * 0.15) + 136250;
+        return ((amount - 1500000) * 0.15) + 136250;  // 15% for amounts 1,500,000 and above
     }
-  }, [purchasePrice]);
+}
+
+
+  useEffect(() => {
+  let duty =  calculateStampDuty(purchasePrice);
+  setStampDuty(duty);
+// round to the 2 decimal places
+  let closingCostsPercentage = Math.round((closingCosts / purchasePrice) * 100 * 100) / 100;
+  setClosingCostsPercentage(closingCostsPercentage);
+
+
+  }, [propertyPrice,closingCosts]);
+
+
 
   // Calculate Total Investment
   const totalInvestment = useMemo(() => {
@@ -83,6 +104,8 @@ function Calculation({ title, propertyPrice }) {
             otherExpenses={otherExpenses}
             setPurchasePrice={setPurchasePrice}
             setClosingCostsPercentage={setClosingCostsPercentage}
+            closingCosts={closingCosts}
+            setClosingCosts={setClosingCosts}
             setRefurbCost={setRefurbCost}
             setFees={setFees}
             setFurnishingCost={setFurnishingCost}

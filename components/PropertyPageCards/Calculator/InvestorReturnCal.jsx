@@ -28,22 +28,22 @@ function InvestorReturnCal({propertyPrice}) {
           <Button color="secondary">Calculate</Button>
         </div> */}
 
-        <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="grid grid-cols-4 gap-4 text-center">
           <div>
             <p className="text-gray-600">ROI</p>
             <p className="text-xl font-bold text-purple-900">13.7%</p>
           </div>
           <div>
-            <p className="text-gray-600">Annual Rental Income</p>
+            <p className="text-gray-600">Net Annual Cash Flow</p>
             <p className="text-xl font-bold text-purple-900">£246383</p>
           </div>
           <div>
-            <p className="text-gray-600">Minus Total Operation</p>
+            <p className="text-gray-600">Gross Yield</p>
             <p className="text-xl font-bold text-purple-900">29.5%</p>
           </div>
 
           <div>
-            <p className="text-gray-600">Mortgage Payment</p>
+            <p className="text-gray-600">Cash on Cash</p>
             <p className="text-xl font-bold text-purple-900">29.5%</p>
           </div>
         </div>

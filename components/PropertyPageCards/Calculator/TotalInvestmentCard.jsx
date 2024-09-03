@@ -9,6 +9,8 @@ export default function TotalInvestmentCard({
   fees,
   furnishingCost,
   otherExpenses,
+  closingCosts,
+  setClosingCosts,
   setPurchasePrice,
   setClosingCostsPercentage,
   setRefurbCost,
@@ -69,13 +71,24 @@ export default function TotalInvestmentCard({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-                Closing Costs
+                Closing Costs percentage
               </label>
               <Input
                 type="text"
                 value={closingCostsPercentage}
-                onChange={(e) => setClosingCostsPercentage(parseFloat(e.target.value))}
+                onChange={(e) => setClosingCostsPercentage(typeof(e.target.value) !== NaN && parseFloat(e.target.value))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Closing Costs
+              </label>
+              <Input
+                type="text"
+                value={closingCosts}
+                onChange={(e) => setClosingCosts(parseFloat(e.target.value))}
+                endContent={<div className="pointer-events-none text-gray-400">€</div>}
               />
             </div>
             <div>

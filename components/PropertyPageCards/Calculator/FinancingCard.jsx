@@ -37,6 +37,19 @@ export default function FinancingCard({
           </div>
         </button>
         
+
+<div className="p-4">
+  Financing Method 
+  </div>
+
+<div className="p-4 flex gap-4">
+              <Button color="secondary">Buying with a Mortgage</Button>
+              <Button color="secondary">Cash Only</Button>
+
+
+            </div>
+
+
         <div 
           className={`overflow-hidden transition-all duration-300 ease-in-out ${
             isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
@@ -51,7 +64,7 @@ export default function FinancingCard({
                 type="text"
                 value={ltv.toLocaleString('en-GB')}
                 onChange={(e) => setLtv(parseFloat(e.target.value.replace(/,/g, '')))}
-                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                endContent={<div className="pointer-events-none text-gray-400">%</div>}
               />
             </div>
             
@@ -108,6 +121,17 @@ export default function FinancingCard({
                 value={mortgageTerm}
                 onChange={(e) => setMortgageTerm(parseFloat(e.target.value))}
               />
+            </div>
+
+            <div className="p-4">
+            Interest Type
+  </div>
+
+<div className="p-4 flex gap-4">
+              <Button color="secondary">Capital & Interest</Button>
+              <Button color="secondary">Interest Only</Button>
+
+
             </div>
           </div>
         </div>

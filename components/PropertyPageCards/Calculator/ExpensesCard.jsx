@@ -39,7 +39,7 @@ export default function ExpensesCard({
           }`}
         >
           <div className="p-4 grid grid-cols-2 gap-4">
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Channel Fee
               </label>
@@ -50,7 +50,7 @@ export default function ExpensesCard({
                   <div className="pointer-events-none text-gray-400">%</div>
                 }
               />
-            </div>
+            </div> */}
             <div className="flex items-center">
               <div>
                 <label className="block text-sm font-medium text-gray-500 mb-1">
@@ -80,7 +80,7 @@ export default function ExpensesCard({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-                Supply Fees
+              Service Charge
               </label>
               <Input
                 type="text"
