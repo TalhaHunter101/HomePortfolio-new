@@ -34,6 +34,7 @@ import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 import { EVCard } from "../PropertyPageCards/EVcards";
+import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
 
 function PropertyDisplay({ listingData, params }) {
   
@@ -144,6 +145,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-200",
           id: "pricehistory",
           Component: PriceHistory,
+        },
+        {
+          name: "Rent & Home Valuation",
+          icon: "mdi:currency-usd",
+          bgColor: "bg-green-200",
+          id: "renthomevaluation",
+          Component: RentHomeValCard,
         },
         {
           name: "Is this a good time to buy?",
