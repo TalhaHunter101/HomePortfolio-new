@@ -34,8 +34,9 @@ const MainCard = ({ images }) => {
                 src={ image?.original ? image?.original : image}
                 alt={`Image ${index + 1}`}
                 width="100%"
-                height={415}
+                height={416}
                 className="object-cover w-full h-full"
+                radius="none"
               />
             </div>
           ))}

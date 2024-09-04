@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { formatDate } from "@/utils/Helper";
+import { EstimatedRentCard } from "./Historycomponents/Estimate";
 
 export function PriceHistory({  data }) {
   return (
@@ -128,6 +129,9 @@ export function PriceHistory({  data }) {
                 <div className="col-span-2">{data?.priceHistory?.lastSale?.priceLabel}</div>
               </div>
             )}
+          </div>
+          <div>
+            <EstimatedRentCard />
           </div>
           <div className="flex items-center h-6 mt-2 text-muted-foreground justify-start">
             Source: Public Records

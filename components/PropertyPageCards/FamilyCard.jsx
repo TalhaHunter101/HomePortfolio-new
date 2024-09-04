@@ -36,8 +36,8 @@ export function FamilyCard({ title }) {
                     <div className="mb-6 bg-default-white border border-subtle-border shadow-sm text-xs sm:text-sm p-4 rounded-lg text-default-800">
                         This is more than the city average&nbsp;of <span className="font-semibold text-blue-800">65%</span>.
                     </div>
-                    <div className="flex items-center">
-                        <div className="w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
+                    <div className="flex items-center ">
+                        <div className=" w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
                             <div className="text-xs sm:text-lg font-semibold text-default-800 mb-4">Who lives here?</div>
                             <div className="flex flex-row gap-2 items-center">
                                 <div className="w-2 h-2" style={{ backgroundColor: 'rgb(12, 51, 70)' }}></div>
