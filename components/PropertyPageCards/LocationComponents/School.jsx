@@ -75,7 +75,7 @@ const SchoolsMap = ({ data, schoolData }) => {
       <div className="absolute top-20 left-4 bg-transparent p-4 w-[400px] max-h-[70vh] overflow-y-auto z-10 scrollbar-hide">
         {filteredSchools && filteredSchools.length > 0 ? (
           filteredSchools.map((school, index) => (
-            <div key={index} className="mb-4 p-4 bg-gray-100 rounded-lg">
+            <div key={index} className="mb-4 p-4 bg-white shadow rounded-lg">
               <h2 className="text-xl font-bold">
                 {school?._source?.OfstedRating}
               </h2>

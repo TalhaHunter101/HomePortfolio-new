@@ -92,7 +92,7 @@ export function RentHomeValCard({ price, roi, uprn, data: newData }) {
                 <div className="text-4xl font-bold text-gray-800 mb-6">
                   £{formatNumberWithCommas(rentEstimate)}
                 </div>
-                <div className="flex justify-between text-sm text-gray-600 mb-4">
+                <div className="flex justify-between text-sm text-gray-600 pt-4  mb-10">
                   <div>
                     £{rentPerSqFt.toFixed(2)} <br />
                     <span>per sq.ft.</span>
@@ -104,7 +104,7 @@ export function RentHomeValCard({ price, roi, uprn, data: newData }) {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col items-center text-gray-700 text-sm">
+              <div className="flex flex-col items-center text-gray-700 pt-1 text-sm">
                 <div className="flex w-full justify-between mb-2">
                   <div className="text-md text-gray-500">Low Estimate</div>
                   <div className="text-md text-gray-500">High Estimate</div>
