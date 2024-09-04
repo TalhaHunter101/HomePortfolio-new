@@ -36,10 +36,12 @@ import { EPCCard } from "../PropertyPageCards/EPCcard";
 import { EVCard } from "../PropertyPageCards/EVcards";
 import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
 import { formatCurrency } from "@/utils/Helper";
+import { useListingStore } from "@/store/listingStore";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue
   const formattedPrice = formatCurrency(price)
+  const {squerfoot} = useListingStore()
   
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
@@ -405,7 +407,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.analyticsTaxonomy?.sizeSqFeet}
+                    {listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>

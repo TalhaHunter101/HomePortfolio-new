@@ -1,51 +1,107 @@
-import React from 'react';
-import { Button, ButtonGroup } from '@nextui-org/react';
-import { Icon } from '@iconify/react';
+import React, { useState } from "react";
+import { Button, ButtonGroup } from "@nextui-org/react";
+import { Icon } from "@iconify/react";
+import { SchoolMapStatic } from "@/components/Maps";
 
-const SchoolsMap = ({ center }) => {
-    
-    const schools = [
-        { id: 1, number: '2', name: 'Mission Education Center', type: 'Public, K-5', distance: '0.15 mi away' },
-        { id: 2, number: '3', name: "St. Paul's School", type: 'Private, K-8', distance: '0.18 mi away' },
-        { id: 3, number: '4', name: 'Fairmount Elementary School', type: 'Public, K-5', distance: '0.22 mi away' },
-        { id: 4, number: '5', name: 'Glen Park School', type: 'Public, K-5', distance: '0.35 mi away' },
-        { id: 5, number: '6', name: 'Rooftop School', type: 'Public, K-8', distance: '0.40 mi away' },
-        { id: 6, number: '7', name: 'St. James School', type: 'Private, K-8', distance: '0.45 mi away' },
-        { id: 7, number: '8', name: 'Buena Vista Horace Mann', type: 'Public, K-8', distance: '0.50 mi away' },
-    ];
+const SchoolsMap = ({ data, schoolData }) => {
+  const [selectedType, setSelectedType] = useState("All grades");
 
-    return (
-        <div className="relative h-[80vh] w-full">
-            
-            <div className="absolute top-8 pl-4 left-4 z-20">
-                <ButtonGroup size='' variant='faded' className="w-full">
-                    <Button startContent={<Icon icon="tabler:school" />} >Elementary</Button>
-                    <Button startContent={<Icon icon="tabler:school" />} >Middle</Button>
-                    <Button startContent={<Icon icon="tabler:school" />} >High</Button>
-                </ButtonGroup>
+  const center = [
+    {
+      lat: data?.location?.coordinates?.latitude,
+      lng: data?.location?.coordinates?.longitude,
+    },
+  ];
+
+  // Filtering logic based on selectedType and schoolData
+  const filteredSchools = schoolData?.filter((school) => {
+    if (selectedType === "All grades") return true;
+    return school?._source?.["PhaseOfEducation (name)"]?.includes(selectedType);
+  });
+
+  return (
+    <div className="relative h-[80vh] w-full">
+      {/* Button Group for selecting school type */}
+      <div className="absolute top-8 pl-4 left-4 z-20">
+        <ButtonGroup size="" variant="faded" className="w-full">
+          <Button
+            startContent={<Icon icon="tabler:school" />}
+            onClick={() => setSelectedType("Primary")}
+            className={`${
+              selectedType === "Primary"
+                ? "text-blue-800 bg-blue-200"
+                : "text-gray-800"
+            }`}
+          >
+            Primary
+          </Button>
+          <Button
+            startContent={<Icon icon="tabler:school" />}
+            onClick={() => setSelectedType("Secondary")}
+            className={`${
+              selectedType === "Secondary"
+                ? "text-blue-800 bg-blue-200"
+                : "text-gray-800"
+            }`}
+          >
+            Secondary
+          </Button>
+          <Button
+            startContent={<Icon icon="tabler:school" />}
+            onClick={() => setSelectedType("Independent")}
+            className={`${
+              selectedType === "Independent"
+                ? "text-blue-800 bg-blue-200"
+                : "text-gray-800"
+            }`}
+          >
+            Independent
+          </Button>
+          <Button
+            startContent={<Icon icon="tabler:school" />}
+            onClick={() => setSelectedType("All grades")}
+            className={`${
+              selectedType === "All grades"
+                ? "text-blue-800 bg-blue-200"
+                : "text-gray-800"
+            }`}
+          >
+            All grades
+          </Button>
+        </ButtonGroup>
+      </div>
+
+      {/* Content boxes hovering over the map on the left side */}
+      <div className="absolute top-20 left-4 bg-transparent p-4 w-[400px] max-h-[70vh] overflow-y-auto z-10 scrollbar-hide">
+        {filteredSchools && filteredSchools.length > 0 ? (
+          filteredSchools.map((school, index) => (
+            <div key={index} className="mb-4 p-4 bg-gray-100 rounded-lg">
+              <h2 className="text-xl font-bold">
+                {school?._source?.OfstedRating}
+              </h2>
+              <p className="font-medium text-sm">
+                {school?._source?.EstablishmentName}
+              </p>
+              <p className="text-xs text-gray-600">
+                {school?._source?.["PhaseOfEducation (name)"]}
+              </p>
+              <p className="text-xs text-gray-600">
+                {school?._source?.StatutoryLowAge} -{" "}
+                {school?._source?.StatutoryHighAge} years
+              </p>
             </div>
+          ))
+        ) : (
+          <div className="text-gray-500 text-center">No schools found.</div>
+        )}
+      </div>
 
-            {/* Content boxes hovering over the map on the left side */}
-            <div className="absolute top-20 left-4 bg-transparent p-4 w-[400px] max-h-[70vh] overflow-y-auto z-10 scrollbar-hide">
-                {schools.map((school) => (
-                    <div key={school.id} className="mb-4 p-4 bg-gray-100 rounded-lg ">
-                        <h2 className="text-xl font-bold">{school.number}</h2>
-                        <p className="font-medium text-sm">{school.name}</p>
-                        <p className="text-xs text-gray-600">{school.type}</p>
-                        <p className="text-xs text-gray-600">{school.distance}</p>
-                    </div>
-                ))}
-            </div>
-
-            {/* Map container */}
-            <div className="h-full w-full">
-                {/* Example map content placeholder */}
-                <div className="h-full w-full bg-blue-200">
-                    Map content here
-                </div>
-            </div>
-        </div>
-    );
+      {/* Map container */}
+      <div className="absolute inset-0 z-0">
+        <SchoolMapStatic center={center} />
+      </div>
+    </div>
+  );
 };
 
 export default SchoolsMap;

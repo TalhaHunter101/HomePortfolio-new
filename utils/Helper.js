@@ -78,3 +78,8 @@ export function formatCurrency(amount) {
     maximumFractionDigits: 0,
   });
 }
+
+export function formatNumberWithCommas(number) {
+  if (!number) return "";
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

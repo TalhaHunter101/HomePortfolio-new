@@ -10,10 +10,12 @@ import {
 import { EnergyPerformanceTable } from "./EPCcomponents/table";
 import { PerformanceSection } from "./EPCcomponents/PerformanceSection";
 import ECPBarChart from "./ECPBarChart";
+import { useListingStore } from "@/store/listingStore";
 
-export function EPCCard({ title, price, roi, postcode }) {
+export function EPCCard({ title, price, roi, uprn }) {
   const [epcData, setEpcData] = useState(null);
   const [currentColour, setCurrentColour] = useState("");
+  const { setSquarfoot } = useListingStore();
 
   useEffect(() => {
     const fetchEpcData = async () => {
@@ -23,7 +25,7 @@ export function EPCCard({ title, price, roi, postcode }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ postcode }),
+          body: JSON.stringify({ uprn }),
         });
 
         if (!response.ok) {
@@ -31,13 +33,14 @@ export function EPCCard({ title, price, roi, postcode }) {
         }
         const data = await response.json();
         setEpcData(data[0]?._source);
+        setSquarfoot(data[0]?._source?.TOTAL_FLOOR_AREA);
       } catch (error) {
         console.log("Error:", error);
       }
     };
 
     fetchEpcData();
-  }, [postcode]);
+  }, [uprn]);
 
   const breakdownData = [
     {

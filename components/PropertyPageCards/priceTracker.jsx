@@ -4,7 +4,7 @@ import { PricetrackerChart } from "./Charts/pricetrckerChart";
 
 export function PriceTrackerCard({ uprn, data: newData }) {
   const [data, setData] = useState([]);
- 
+  
   useEffect(() => {
     const getHomeThreeYearData = async () => {
       try {
@@ -20,8 +20,6 @@ export function PriceTrackerCard({ uprn, data: newData }) {
           throw new Error("Failed to fetch data");
         }
         const reults = await res.json();
-
-        console.log("Pricing data is",reults);
         
 
         let historicSales = reults[0]._source.history?.historicSales;
