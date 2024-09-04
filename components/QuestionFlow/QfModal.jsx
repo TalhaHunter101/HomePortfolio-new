@@ -99,6 +99,7 @@ export const ReportModal = ({ isOpen, onOpenChange, selectedAddress }) => {
                         <ModalHeader className="flex flex-col h-1/2 items-center justify-center bg-gradient-to-b from-[#ffffff] to-[#a792f6b5]">
                             <div className="w-full flex justify-between items-center pb-10">
                                 <Button
+                                    
                                     radius="full"
                                     variant="light"
                                     color="secondary"
@@ -126,17 +127,18 @@ export const ReportModal = ({ isOpen, onOpenChange, selectedAddress }) => {
 
                             <Image
                                 alt="Illustration"
-                                src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
+                                
+                                src="https://img.freepik.com/free-vector/gradient-npl-illustration_23-2149250981.jpg?ga=GA1.1.1786082884.1725295430&semt=ais_hybrid"
                                 width={80}
                                 height={80}
                                 radius="sm"
-                                className="mt-4"
+                                className="mt-4 bg-transparent"
                             />
                             <div className="text-center mt-4">
                                 <h2 className="text-3xl font-bold">
                                     Find out what your home is worth with HomePortfolio AI
                                 </h2>
-                                <p className="text-default-500 font-medium mt-2">
+                                <p className="text-default-500 font-medium mt-2 hidden sm:block">
                                     In just a few clicks, you’ll have a detailed valuation tailored
                                     to your home.
                                 </p>

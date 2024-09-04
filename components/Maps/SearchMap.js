@@ -13,7 +13,7 @@ import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { Chip, Image } from "@nextui-org/react";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
-import { formatPrice } from "@/utils/Helper";
+import { formatCurrency, formatPrice } from "@/utils/Helper";
 
 
 const MapEventsHandler = ({ setVisibleCenters, centers }) => {
@@ -89,7 +89,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
           <button class="shadow rounded-full h-auto px-2 text-1.5xs py-2  bg-white hover:bg-white-100 text-black font-semibold ${
             hovercard === center.id && "border-4 border-primary"
           }">
-          £${formatPrice(center.minPrice)}</button>
+          £${formatCurrency(center.minPrice)}</button>
           <div class="w-0 h-0 border-l-[7px] border-r-[7px] border-t-[8px] border-l-transparent border-r-transparent border-t-white m-auto bg-transparent border-white"></div></div>`,
         iconSize: [32, 32],
         iconAnchor: [16, 32],

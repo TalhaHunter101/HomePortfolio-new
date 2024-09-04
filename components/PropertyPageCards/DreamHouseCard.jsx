@@ -112,12 +112,12 @@ export function DreamHouseCard({  pricePaidData }) {
             data={pricePaidData} />
             </div>
 
-            <div className="lg:w-5/12 py-3">
-              <div className="grid gap-y-4">
+            <div className="lg:w-5/12 py-3 hidden md:block ">
+              <div className="grid gap-y-4 ">
                 {/* Single Family Section */}
 
                 {detachedStats && (
-                  <div className="grid gap-y-1">
+                  <div className="grid gap-y-1 ">
                     <div className="font-medium text-purple-500">Detached</div>
 
                     <ul className="grid gap-2 list-disc pt-2 pl-6">

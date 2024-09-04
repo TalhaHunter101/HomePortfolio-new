@@ -34,8 +34,14 @@ import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 import { EVCard } from "../PropertyPageCards/EVcards";
+import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
+import { formatCurrency } from "@/utils/Helper";
+import { useListingStore } from "@/store/listingStore";
 
 function PropertyDisplay({ listingData, params }) {
+  const price = listingData?.pricing?.internalValue
+  const formattedPrice = formatCurrency(price)
+  const {squerfoot} = useListingStore()
   
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
@@ -144,6 +150,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-200",
           id: "pricehistory",
           Component: PriceHistory,
+        },
+        {
+          name: "Rent & Home Valuation",
+          icon: "mdi:currency-usd",
+          bgColor: "bg-green-200",
+          id: "renthomevaluation",
+          Component: RentHomeValCard,
         },
         {
           name: "Is this a good time to buy?",
@@ -320,7 +333,7 @@ function PropertyDisplay({ listingData, params }) {
 
         {/* {/ main div /} */}
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
-          <div className="lg:col-span-7 max-w-screen">
+          <div className="lg:col-span-7 max-w-screen md:block">
           
             {mainImages && <MainCard images={mainImages} />}
           </div>
@@ -348,14 +361,14 @@ function PropertyDisplay({ listingData, params }) {
                   {listingData?.tags[0]?.label}
                 </span>
                 <span className="px-1 text-primary">
-                  <Icon
+                  {/* <Icon
                     className="inline mx-1"
                     icon="gravity-ui:thunderbolt-fill"
-                  />
+                  /> */}
                   {listingData?.flag}
                 </span>
                 <span className="px-1 text-primary">
-                  <Icon className="inline mx-1" icon="fa-solid:walking" />
+                  {/* <Icon className="inline mx-1" icon="fa-solid:walking" /> */}
                   {listingData?.availability?.label}:
                 </span>
                 <span className="px-1 text-primary">
@@ -373,7 +386,7 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {listingData?.pricing?.internalValue}
+                  {formattedPrice}
                 </h3>
                 <span className="font-bold text-sm">
                   {listingData?.address || listingData?.branch?.address},
@@ -394,7 +407,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.analyticsTaxonomy?.sizeSqFeet}
+                    {listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
@@ -433,6 +446,7 @@ function PropertyDisplay({ listingData, params }) {
                       title={subElement.name}
                       schoolData={schoolData}
                       city={listingData?.location?.townOrCity}
+                      postTownName={listingData?.analyticsTaxonomy?.postTownName}
                       cards={mcards}
                       data={listingData}
                       pricePaidData={pricePaidData}

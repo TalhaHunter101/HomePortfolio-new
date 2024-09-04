@@ -91,7 +91,7 @@ export function NearbyCard({  }) {
             </div>
           </section>
           <div className="z-10 w-full h-full  overflow-hidden rounded-br-lg rounded-bl-lg">
-            <div className="hidden xl:flex h-96">
+            <div className=" xl:flex h-96">
               <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
                 {/* Map section on the left */}
                 <div className="flex-1 h-full">

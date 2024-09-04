@@ -186,12 +186,7 @@ export function BasicInfoCard({ title, content, data }) {
                   {data?.analyticsTaxonomy?.propertyType}
                 </p>
               </div>
-              <div class="grid grid-cols-2 ">
-                <p>Lot Size</p>
-                <p class=" text-primaryfonts">
-                  {data?.analyticsTaxonomy?.sizeSqFeet} sqft.
-                </p>
-              </div>
+             
               <div class="grid grid-cols-2 ">
                 <p>Virtual Tour</p>
                 <p class="underline cursor-pointer text-primary">
@@ -223,14 +218,8 @@ export function BasicInfoCard({ title, content, data }) {
                 <p>Year Built</p>
                 <p class=" text-primaryfonts">2005</p>
               </div>
-              <div class="grid grid-cols-2 ">
-                <p>MLS #</p>
-                <p class=" text-primaryfonts">2222927</p>
-              </div>
-              <div class="grid grid-cols-2 ">
-                <p>Style</p>
-                <p class=" text-primaryfonts">Townhouse</p>
-              </div>
+             
+             
               <div class="grid grid-cols-2 ">
                 <p>County</p>
                 <p class="underline cursor-pointer text-primary">{data?.analyticsTaxonomy?.postTownName}</p>
