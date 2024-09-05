@@ -1,4 +1,4 @@
-import { Input, CardBody, Button } from "@nextui-org/react";
+import { Input, CardBody, Button, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 
@@ -70,9 +70,10 @@ export default function FinancingCard({
 
 
 
-          <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4 grid grid-cols-2 gap-4">
 
-          <div>
+<div>
+<div>
   Financing Method 
   </div>
           <div className="flex gap-4">
@@ -82,6 +83,8 @@ export default function FinancingCard({
 
 
             </div>
+</div>
+         
 
 {
   financingMethod == "mortgage" && (
@@ -91,11 +94,20 @@ export default function FinancingCard({
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 LTV
               </label>
-              <Input
-                type="text"
+              {/* <Input
+                type="range"
                 value={ltv.toLocaleString('en-GB')}
+                
                 onChange={(e) => setLtv(parseFloat(e.target.value.replace(/,/g, '')))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
+              /> */}
+              <Slider 
+                value={ltv}
+                onChange={(e) => setLtv(e)}
+                min={0}
+                maxValue={100}
+                step={1}
+                endContent={<div className="pointer-events-none text-gray-400">{ltv}%</div>}
               />
             </div>
             
@@ -125,24 +137,45 @@ export default function FinancingCard({
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Mortgage / Interest Rate
               </label>
-              <Input
+              {/* <Input
                 type="text"
                 value={mortgageRate}
                 onChange={(e) => setMortgageRate(parseFloat(e.target.value))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
+              /> */}
+
+<Slider
+                value={mortgageRate}
+                onChange={(e) => setMortgageRate(e)}
+                min={0}
+                maxValue={30}
+                step={0.1}
+                endContent={<div className="pointer-events-none text-gray-400">{mortgageRate}%</div>}
               />
+
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Mortgage Fees
               </label>
-              <Input
+              {/* <Input
                 type="text"
                 value={mortgageFees}
                 onChange={(e) => setMortgageFees(parseFloat(e.target.value))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
-              />
+              /> */}
+            <Slider
+                value={mortgageFees}
+                onChange={(e) => setMortgageFees(e)}
+                min={0}
+                maxValue={5}
+                step={0.1}
+                endContent={<div className="pointer-events-none text-gray-400">{mortgageFees}%</div>}
+
+/>
+
             </div>
+            
 
 
             {
@@ -152,23 +185,38 @@ export default function FinancingCard({
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Mortgage Term (Years)
               </label>
-              <Input
+              {/* <Input
                 type="text"
                 value={mortgageTerm}
                 onChange={(e) => setMortgageTerm(parseFloat(e.target.value))}
+              /> */}
+
+
+       <Slider
+                value={mortgageTerm}
+                onChange={(e) => setMortgageTerm(e)}
+                min={0}
+                maxValue={50}
+                step={1}
+                endContent={<div className="pointer-events-none text-gray-400">{mortgageTerm} years</div>}
               />
+
             </div>
               )
 }
       
-            <div>Interest Type  </div>
+        <div>
+        <div>Interest Type  </div>
           <div className="flex gap-4">
               <Button color="secondary"  variant={interestType == "capital_interest" ? "solid" : "bordered"} onClick={() => setInterestType("capital_interest")}>Capital & Interest</Button>
                 
               <Button color="secondary"  variant={interestType == "Interest_only" ? "solid" : "bordered"} onClick={() => setInterestType("Interest_only")} >Interest Only</Button>
 
 
-            </div></>
+            </div>
+          </div>   
+            
+            </>
   )
 
 }

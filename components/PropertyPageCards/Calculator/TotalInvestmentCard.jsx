@@ -1,4 +1,4 @@
-import { Input, CardBody } from "@nextui-org/react";
+import { Input, CardBody, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
@@ -73,11 +73,19 @@ export default function TotalInvestmentCard({
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Closing Costs percentage
               </label>
-              <Input
+              {/* <Input
                 type="text"
                 value={closingCostsPercentage}
                 onChange={(e) => setClosingCostsPercentage(typeof(e.target.value) !== NaN && parseFloat(e.target.value))}
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
+              /> */}
+              <Slider
+                value={closingCostsPercentage}
+                onChange={(value) => setClosingCostsPercentage(value)}
+                minValue={0}
+                maxValue={10}
+                step={0.1}
+                endContent={<div className="pointer-events-none text-gray-400">{closingCostsPercentage}%</div>}
               />
             </div>
             <div>
