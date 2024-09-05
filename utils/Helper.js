@@ -83,3 +83,8 @@ export function formatNumberWithCommas(number) {
   if (!number) return "";
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+
+// export function RemoveDecimal(number) {
+//   return number.toFixed(0);
+// }

@@ -1,6 +1,6 @@
 import { Input, CardBody, Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FinancingCard({
   ltv,
@@ -15,8 +15,18 @@ export default function FinancingCard({
   setMortgageRate,
   setMortgageFees,
   setMortgageTerm,
+  monthlyMortgagePayment,
+  setMonthlyMortgagePayment,
+  interestType,
+  setInterestType,
+  financingMethod,
+  setFinancingMethod
 }) {
   const [isOpen, setIsOpen] = useState(true);
+
+
+
+
 
   return (
     <div className="mt-2">
@@ -27,7 +37,14 @@ export default function FinancingCard({
         >
           <span className="text-xl font-bold text-purple-900">Financing</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">£{loanAmount.toLocaleString('en-GB')}/mo</span>
+            {
+              monthlyMortgagePayment == 0 ? (
+                <span className="text-xl font-bold text-purple-900 mr-2">-</span>
+              ) : (
+                <span className="text-xl font-bold text-purple-900 mr-2">£{monthlyMortgagePayment.toLocaleString('en-GB')}/mo</span>
+
+              )
+            }
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -38,16 +55,9 @@ export default function FinancingCard({
         </button>
         
 
-<div className="p-4">
-  Financing Method 
-  </div>
-
-<div className="p-4 flex gap-4">
-              <Button color="secondary">Buying with a Mortgage</Button>
-              <Button color="secondary">Cash Only</Button>
 
 
-            </div>
+
 
 
         <div 
@@ -55,8 +65,29 @@ export default function FinancingCard({
             isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
+
+
+
+
+
           <div className="p-4 space-y-4">
-            <div>
+
+          <div>
+  Financing Method 
+  </div>
+          <div className="flex gap-4">
+              <Button color="secondary"  variant={financingMethod == "mortgage" ? "solid" : "bordered"} onClick={() => setFinancingMethod("mortgage")}>Mortgage</Button>
+                
+              <Button color="secondary"  variant={financingMethod == "cash" ? "solid" : "bordered"} onClick={() => setFinancingMethod("cash")} >Cash Only</Button>
+
+
+            </div>
+
+{
+  financingMethod == "mortgage" && (
+    <>
+       
+       <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 LTV
               </label>
@@ -112,6 +143,11 @@ export default function FinancingCard({
                 endContent={<div className="pointer-events-none text-gray-400">%</div>}
               />
             </div>
+
+
+            {
+              interestType == "capital_interest" && (
+            
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Mortgage Term (Years)
@@ -122,17 +158,21 @@ export default function FinancingCard({
                 onChange={(e) => setMortgageTerm(parseFloat(e.target.value))}
               />
             </div>
+              )
+}
+      
+            <div>Interest Type  </div>
+          <div className="flex gap-4">
+              <Button color="secondary"  variant={interestType == "capital_interest" ? "solid" : "bordered"} onClick={() => setInterestType("capital_interest")}>Capital & Interest</Button>
+                
+              <Button color="secondary"  variant={interestType == "Interest_only" ? "solid" : "bordered"} onClick={() => setInterestType("Interest_only")} >Interest Only</Button>
 
-            <div className="p-4">
-            Interest Type
-  </div>
 
-<div className="p-4 flex gap-4">
-              <Button color="secondary">Capital & Interest</Button>
-              <Button color="secondary">Interest Only</Button>
+            </div></>
+  )
 
-
-            </div>
+}
+       
           </div>
         </div>
       </CardBody>

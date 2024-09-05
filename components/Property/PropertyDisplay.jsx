@@ -64,6 +64,7 @@ function PropertyDisplay({ listingData, params }) {
   const [hoveredSubElement, setHoveredSubElement] = useState(null);
   const [schoolData, setSchoolData] = useState([]);
   const [pricePaidData, setPricePaidData] = useState([])
+  const [rentEstimate, setRentEstimate] = useState(0);
 
   useEffect(() => {
     const getSchoolData = async () => {
@@ -453,6 +454,8 @@ function PropertyDisplay({ listingData, params }) {
                       propertyPrice={listingData?.analyticsTaxonomy?.price}
                       uprn={listingData?.location?.uprn}
                       postcode={listingData?.ref_postcode}
+                      setRentEstimate={setRentEstimate}
+                      rentEstimate={rentEstimate}
                     />
                   </div>
                 ))}

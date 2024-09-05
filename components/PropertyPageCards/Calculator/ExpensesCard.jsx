@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export default function ExpensesCard({
   channelFee = 3.00,
-  propertyManagementFee = 230,
   supplyFees = 0,
   groundRent = 2166,
   insurance = 800,
   utilities = 1538,
   maintenance = 1153,
   otherExpenses = 0,
+  propertyManagementFeePercentage,
+  setPropertyManagementFeePercentage,
+  propertyManagementFee,
+  setPropertyManagementFee,
+  monthlyRevenue
+
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+
+  useEffect(() => {
+    setPropertyManagementFee( (propertyManagementFeePercentage / 100) * monthlyRevenue)
+    setPropertyManagementFee(propertyManagementFee * monthlyRevenue / 100);
+    
+  },[propertyManagementFeePercentage, monthlyRevenue, setPropertyManagementFee, propertyManagementFee]);
+
 
   return (
     <div className="mt-2">
@@ -62,6 +75,13 @@ export default function ExpensesCard({
                   startContent={
                     <div className="pointer-events-none text-gray-400">£</div>
                   }
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setPropertyManagementFee(value);
+                    // percent of monthly revenue
+                    // setPropertyManagementFeePercentage( (value / monthlyRevenue) * 100);
+                  }
+                  }
                 />
               </div>
               <span className="mx-2">OR</span>
@@ -75,6 +95,13 @@ export default function ExpensesCard({
                   endContent={
                     <div className="pointer-events-none text-gray-400">%</div>
                   }
+
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setPropertyManagementFeePercentage(value);
+                    // setPropertyManagementFee(value * monthlyRevenue / 100);
+                  } }
+
                 />
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
@@ -7,8 +7,17 @@ export default function RevenueCard({
   annualRevenue,
   setMonthlyRevenue,
   setAnnualRevenue,
+  rentEstimate
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+
+    setMonthlyRevenue(rentEstimate)
+    setAnnualRevenue(rentEstimate * 12)
+    
+
+  },[rentEstimate, setAnnualRevenue, setMonthlyRevenue]);
 
   return (
     <div className="mt-2">
@@ -74,15 +83,17 @@ export default function RevenueCard({
               </label>
               <Input
                 type="text"
-                defaultValue="1,264" // This seems to be a static example value; adjust if needed
+                disabled
+                value={rentEstimate}
+                defaultValue={rentEstimate} // This seems to be a static example value; adjust if needed
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
               <p className="text-xs text-gray-500 mt-1">
-                £1264 is the projected monthly rent estimate based on comparables for this specific property, according to our valuation tool.
+                {rentEstimate} is the projected monthly rent estimate based on comparables for this specific property, according to our valuation tool.
               </p>
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Other Income
               </label>
@@ -91,7 +102,7 @@ export default function RevenueCard({
                 defaultValue="0" // If dynamic, you can add a state here as well
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
-            </div>
+            </div> */}
 
           </div>
         </div>

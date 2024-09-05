@@ -16,7 +16,7 @@ export default function FinancialSummary({
     <div className="mt-4 mx-4">
       <div className="flex py-2 justify-between items-center">
         <span className="text-lg font-bold text-purple-900">
-          Upfront Equity
+Total Cash Invested
         </span>
         <span className="text-lg font-bold text-black">
           £{upfrontEquity.toLocaleString('en-GB')}

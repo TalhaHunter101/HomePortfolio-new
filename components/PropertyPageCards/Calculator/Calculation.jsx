@@ -7,27 +7,31 @@ import RevenueCard from "./RevenueCard";
 import ExpensesCard from "./ExpensesCard";
 import FinancialSummary from "./FinancialSummary";
 
-function Calculation({ title, propertyPrice }) {
+function Calculation({ title, propertyPrice, rentEstimate }) {
   // Manage all relevant states here
   const [purchasePrice, setPurchasePrice] = useState(propertyPrice);
   const [closingCostsPercentage, setClosingCostsPercentage] = useState(0);
   const [closingCosts, setClosingCosts] = useState(5000);
   const [refurbCost, setRefurbCost] = useState(5000);
-  const [fees, setFees] = useState(2000);
+  const [fees, setFees] = useState(0);
   const [furnishingCost, setFurnishingCost] = useState(0);
   const [otherExpenses, setOtherExpenses] = useState(0);
 
-  const [ltv, setLtv] = useState(555000); // Loan-to-Value
+  const [totalInvestment, setTotalInvestment] = useState(0);
+
+  const [ltv, setLtv] = useState(75); // Loan-to-Value
   const [deposit, setDeposit] = useState(555000);
   const [loanAmount, setLoanAmount] = useState(2220000);
   const [mortgageRate, setMortgageRate] = useState(5);
   const [mortgageFees, setMortgageFees] = useState(1.5);
-  const [mortgageTerm, setMortgageTerm] = useState(30);
+  const [mortgageTerm, setMortgageTerm] = useState(5);
+  const [monthlyMortgagePayment, setMonthlyMortgagePayment] = useState(0);
   const [monthlyRevenue, setMonthlyRevenue] = useState(38447);
   const [annualRevenue, setAnnualRevenue] = useState(461360);
 
   const [channelFee, setChannelFee] = useState(3.00);
-  const [propertyManagementFee, setPropertyManagementFee] = useState(230);
+  const [propertyManagementFee, setPropertyManagementFee] = useState(0);
+  const [propertyManagementFeePercentage, setPropertyManagementFeePercentage] = useState(0);
   const [supplyFees, setSupplyFees] = useState(0);
   const [groundRent, setGroundRent] = useState(2166);
   const [insurance, setInsurance] = useState(800);
@@ -35,6 +39,10 @@ function Calculation({ title, propertyPrice }) {
   const [maintenance, setMaintenance] = useState(1153);
   const [otherExp, setOtherExp] = useState(0);
   const [stampDuty, setStampDuty] = useState(0);
+
+  const [interestType, setInterestType] = useState("capital_Interest");
+  const [financingMethod, setFinancingMethod] = useState("mortgage");
+
 
   // Calculate Stamp Duty
   // const stampDuty = useMemo(() => {
@@ -66,16 +74,58 @@ function Calculation({ title, propertyPrice }) {
   setClosingCostsPercentage(closingCostsPercentage);
 
 
-  }, [propertyPrice,closingCosts]);
+  }, [propertyPrice, closingCosts, purchasePrice]);
 
 
 
   // Calculate Total Investment
-  const totalInvestment = useMemo(() => {
-    const closingCosts = (purchasePrice * closingCostsPercentage) / 100;
-    return purchasePrice + stampDuty + refurbCost + fees + furnishingCost + otherExpenses + closingCosts;
-  }, [purchasePrice, stampDuty, refurbCost, fees, furnishingCost, otherExpenses, closingCostsPercentage]);
-
+    useEffect(() => {
+      // Convert all values to numbers
+      const purchasePriceNum = Number(purchasePrice);
+      const stampDutyNum = Number(stampDuty);
+      const refurbCostNum = Number(refurbCost);
+      const feesNum = Number(fees);
+      const furnishingCostNum = Number(furnishingCost);
+      const otherExpensesNum = Number(otherExpenses);
+      const closingCostsPercentageNum = Number(closingCostsPercentage);
+      const ltvNum = Number(ltv);
+      const mortgageRateNum = Number(mortgageRate);
+      const mortgageTermNum = Number(mortgageTerm);
+    
+      // Calculate closing costs
+      const closingCosts = (purchasePriceNum * closingCostsPercentageNum) / 100;
+    
+      // Calculate total investment
+      const totalInvestment = purchasePriceNum + stampDutyNum + refurbCostNum + feesNum + furnishingCostNum + otherExpensesNum + closingCosts;
+    
+      // Calculate deposit and loan amount
+      const deposit = Math.round(totalInvestment * (ltvNum / 100));
+      const loanAmount = totalInvestment - deposit;
+    
+      // Calculate monthly mortgage payment
+      let monthlyMortgagePayment = Math.round(
+        (loanAmount * (mortgageRateNum / 100) / 12) /
+        (1 - Math.pow(1 + (mortgageRateNum / 100) / 12, -mortgageTermNum * 12))
+      );
+    
+      if (interestType === "Interest_only") {
+        monthlyMortgagePayment = Math.round(loanAmount * (mortgageRateNum / 100) / 12);
+      }
+    
+      if (financingMethod === "cash") {
+        monthlyMortgagePayment = 0;
+      }
+    
+      // Set state values
+      setDeposit(deposit);
+      setLoanAmount(loanAmount);
+      setTotalInvestment(totalInvestment);
+      setMonthlyMortgagePayment(monthlyMortgagePayment);
+    
+    }, [
+      purchasePrice, stampDuty, refurbCost, fees, furnishingCost, otherExpenses,
+      closingCostsPercentage, ltv, mortgageRate, mortgageTerm, interestType, financingMethod
+    ]);
   // Calculate Total Expenses
   const totalExpenses = useMemo(() => {
     return (
@@ -89,6 +139,20 @@ function Calculation({ title, propertyPrice }) {
       otherExp
     );
   }, [channelFee, propertyManagementFee, supplyFees, groundRent, insurance, utilities, maintenance, otherExp]);
+
+
+   useEffect(() => {
+    const calculatedLoanAmount =  purchasePrice * (ltv / 100);
+
+    const calculatedDeposit = purchasePrice - calculatedLoanAmount;
+  
+    setDeposit(calculatedDeposit);
+    setLoanAmount(calculatedLoanAmount);
+  }, [purchasePrice, ltv]);
+
+
+
+
 
   return (
     <Card className="m-4" style={{ minHeight: "400px", minWidth: "800px" }}>
@@ -120,22 +184,30 @@ function Calculation({ title, propertyPrice }) {
             mortgageRate={mortgageRate}
             mortgageFees={mortgageFees}
             mortgageTerm={mortgageTerm}
-            setLtv={setLtv}
+            setLtv={setLtv} 
             setDeposit={setDeposit}
             setLoanAmount={setLoanAmount}
             setMortgageRate={setMortgageRate}
             setMortgageFees={setMortgageFees}
             setMortgageTerm={setMortgageTerm}
+            setMonthlyMortgagePayment={setMonthlyMortgagePayment}
+            monthlyMortgagePayment={monthlyMortgagePayment}
+            interestType={interestType}
+            setInterestType={setInterestType}
+            financingMethod={financingMethod}
+            setFinancingMethod={setFinancingMethod}
           />
           <RevenueCard 
             monthlyRevenue={monthlyRevenue}
             annualRevenue={annualRevenue}
             setMonthlyRevenue={setMonthlyRevenue}
             setAnnualRevenue={setAnnualRevenue}
+            rentEstimate={rentEstimate}
           />
           <ExpensesCard 
             channelFee={channelFee}
             propertyManagementFee={propertyManagementFee}
+            propertyManagementFeePercentage={propertyManagementFeePercentage}
             supplyFees={supplyFees}
             groundRent={groundRent}
             insurance={insurance}
@@ -144,12 +216,15 @@ function Calculation({ title, propertyPrice }) {
             otherExpenses={otherExp}
             setChannelFee={setChannelFee}
             setPropertyManagementFee={setPropertyManagementFee}
+            setPropertyManagementFeePercentage={setPropertyManagementFeePercentage}
             setSupplyFees={setSupplyFees}
             setGroundRent={setGroundRent}
             setInsurance={setInsurance}
             setUtilities={setUtilities}
             setMaintenance={setMaintenance}
             setOtherExp={setOtherExp}
+
+            monthlyRevenue={monthlyRevenue}
           />
           <FinancialSummary 
             totalInvestment={totalInvestment}

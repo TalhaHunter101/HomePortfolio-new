@@ -4,7 +4,7 @@ import { Card, CardBody, Chip, Progress } from "@nextui-org/react";
 import { useListingStore } from "@/store/listingStore";
 import { formatNumberWithCommas } from "@/utils/Helper";
 
-export function RentHomeValCard({ price, roi, uprn, data: newData }) {
+export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newData }) {
   const [data, setData] = useState([]);
   const { squerfoot } = useListingStore();
 
@@ -50,6 +50,7 @@ export function RentHomeValCard({ price, roi, uprn, data: newData }) {
   const lowerSaleEstimate = data[0]?._source?.saleEstimate?.lowerPrice || 0;
   const upperSaleEstimate = data[0]?._source?.saleEstimate?.upperPrice || 0;
 
+setRentEstimate(rentEstimate);
   // Per square foot and per bedroom calculations
   const rentPerSqFt = rentEstimate / sizeSqFeet || 0;
   const rentPerBedroom = rentEstimate / numBedrooms || 0;
