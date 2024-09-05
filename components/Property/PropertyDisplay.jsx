@@ -356,7 +356,7 @@ function PropertyDisplay({ listingData, params }) {
           <div className="flex-1">
             <div className="mb-4">
               <p className="font-bold text-md">
-                <span className="px-1 text-gray-400">
+                {/* <span className="px-1 text-gray-400">
                   <Icon
                     width={10}
                     height={10}
@@ -364,7 +364,7 @@ function PropertyDisplay({ listingData, params }) {
                     icon="fluent-emoji-flat:green-circle"
                   />
                   {listingData?.tags[0]?.label}
-                </span>
+                </span> */}
                 {/* <span className="px-1 text-primary">
                   <Icon
                     className="inline mx-1"
