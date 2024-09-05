@@ -41,8 +41,8 @@ import { useListingStore } from "@/store/listingStore";
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue
   const formattedPrice = formatCurrency(price)
-  const {squerfoot} = useListingStore()
-  
+  const { squerfoot } = useListingStore()
+
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
     listingData?.imageUris?.slice(0, 4) ||
@@ -88,7 +88,7 @@ function PropertyDisplay({ listingData, params }) {
       }
     };
 
-    const getPricePaidData = async ()=>{
+    const getPricePaidData = async () => {
       try {
         const result = await fetch("/api/indevisual/get-price-paid", {
           method: "POST",
@@ -101,10 +101,10 @@ function PropertyDisplay({ listingData, params }) {
         if (result.ok) {
           const resultData = await result.json();
           setPricePaidData(resultData);
-          
+
         }
       } catch (error) {
-        
+
       }
     }
 
@@ -311,6 +311,11 @@ function PropertyDisplay({ listingData, params }) {
   const handleMouseEnter = (id) => {
     setHoveredSubElement(id);
   };
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleReadMore = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <>
@@ -335,11 +340,11 @@ function PropertyDisplay({ listingData, params }) {
         {/* {/ main div /} */}
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
           <div className="lg:col-span-7 max-w-screen md:block">
-          
+
             {mainImages && <MainCard images={mainImages} />}
           </div>
           <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
-        
+
             {thumbnailImages &&
               thumbnailImages?.map((imageUrl, index) => (
                 <ThumbnailCard key={index} imageUrl={imageUrl} />
@@ -361,33 +366,33 @@ function PropertyDisplay({ listingData, params }) {
                   />
                   {listingData?.tags[0]?.label}
                 </span>
-                <span className="px-1 text-primary">
-                  {/* <Icon
+                {/* <span className="px-1 text-primary">
+                  <Icon
                     className="inline mx-1"
                     icon="gravity-ui:thunderbolt-fill"
-                  /> */}
+                  />
                   {listingData?.flag}
-                </span>
-                <span className="px-1 text-primary">
-                  {/* <Icon className="inline mx-1" icon="fa-solid:walking" /> */}
+                </span> */}
+                {/* <span className="px-1 text-primary">
+                  <Icon className="inline mx-1" icon="fa-solid:walking" />
                   {listingData?.availability?.label}:
-                </span>
-                <span className="px-1 text-primary">
+                </span> */}
+                {/* <span className="px-1 text-primary">
                   {listingData?.availability?.day}
-                </span>
-                <span className="px-1 text-primary">
+                </span> */}
+                {/* <span className="px-1 text-primary">
                   {listingData?.availability?.date},
-                </span>
-                <span className="px-1 text-primary">
+                </span> */}
+                {/* <span className="px-1 text-primary">
                   {listingData?.availability?.time[0]?.from}-
                   {listingData?.availability?.time[0]?.to}
-                </span>
+                </span> */}
               </p>
             </div>
             <div className="mb-4 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
-                  {formattedPrice}
+                  £{formattedPrice}
                 </h3>
                 <span className="font-bold text-sm">
                   {listingData?.address || listingData?.branch?.address},
@@ -424,7 +429,17 @@ function PropertyDisplay({ listingData, params }) {
                   size="lg"
                   className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
                 >
-                  Talk to agent
+                  Contact agent
+                </Button>
+              </div>
+              <div className="p-4">
+                {/* Conditional Rendering of Content */}
+                <div style={{ maxHeight: isExpanded ? 'none' : '100px', overflow: 'hidden' }}>
+                  393-391 30th was built in the middle of the Victorian era, 1892. Leonard Haas constructed 30th as a single-family residence over a store. Recently, a second structure was created behind the Victorian consisting of a two-story home with a roof deck. The homes are as much investment property as they are a valuable piece of Noe Valley History. Currently, the store is vacant. It has an entrance to the street and one to the internal alley of the building. It has a kitchen, a full bathroom, and a loft. Above the store is a two-story apartment with internal and external stairs attaching the two floors. Each floor is currently rented to different tenants. The second floor has a living room, dining area, and three bedrooms with one full bathroom. The third floor has one bedroom, a galley kitchen area, and a sitting room. Behind the Victorian is a new construction apartment. It also is two stories with four bedrooms and two and a half bathrooms. On the roof is a four-season deck with all-day sun. Without the store income, the building generates $85,439.52. There may be banked increases. Dont miss out on this Victorian beauty with income and upside.
+                </div>
+                {/* Read More / Show Less Button */}
+                <Button  radius="full" variant="bordered" className="text-xs font-medium text-blue-600"  size="sm"  onClick={toggleReadMore} style={{ marginTop: '1rem' }}>
+                {isExpanded ? 'Show Less' : 'Read More'} {<Icon height={18} width={18} icon={isExpanded ? "iconamoon:arrow-up-2" : "iconamoon:arrow-down-2"} />}
                 </Button>
               </div>
             </div>
@@ -499,13 +514,11 @@ function PropertyDisplay({ listingData, params }) {
                                   (subElement, subIndex) => (
                                     <motion.li
                                       key={subElement.id}
-                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
-                                        subElement.bgColor
-                                      } ${
-                                        hoveredSubElement === subElement.id
+                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${subElement.bgColor
+                                        } ${hoveredSubElement === subElement.id
                                           ? subElement.bgColor
                                           : ""
-                                      }`}
+                                        }`}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: subIndex * 0.1 }}

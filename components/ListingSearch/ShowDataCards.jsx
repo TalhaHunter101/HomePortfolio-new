@@ -1,8 +1,9 @@
-import { Button, Card } from "@nextui-org/react";
+import { Button, Card, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
+import { Icon } from "@iconify/react";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -67,6 +68,19 @@ function ShowDataCards({ cardData, totalcount }) {
     getPropsData();
   }, [cardData]);
 
+  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Sort by"]));
+
+  const selectedValue = React.useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys]
+  );
+
+ 
+  const [isOpen, setIsOpen] = React.useState(false); 
+  const handleToggle = (openState) => {
+    setIsOpen(openState);
+  };
+
   return (
     <div className="w-screen flex flex-grow pt-12">
       {/* Map Section */}
@@ -111,15 +125,32 @@ function ShowDataCards({ cardData, totalcount }) {
               >
                 {showMap ? "Hide Map" : "Show Map"}
               </Button>
-              <Button
-                radius="sm"
-                size="lg"
-                className="w-full max-w-xs"
-                auto
-                onClick={sortData}
-              >
-                Sort by Price
-              </Button>
+              <Dropdown onOpenChange={handleToggle}>
+      <DropdownTrigger>
+      <Button
+          endContent={<Icon icon={isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"} />}
+          radius="sm"
+          size="lg"
+          className="w-full max-w-xs"
+        >
+          {selectedValue}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
+        aria-label="Sort by selection"
+        variant="flat"
+        disallowEmptySelection
+        selectionMode="single"
+        selectedKeys={selectedKeys}
+        onSelectionChange={setSelectedKeys}
+        // onClick={sortData}
+        
+      >
+        <DropdownItem key="roi">Sort by ROI</DropdownItem>
+        <DropdownItem key="  price">Sort by Price</DropdownItem>
+        <DropdownItem key="nil">none</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
             </div>
 
             {/* Cards */}

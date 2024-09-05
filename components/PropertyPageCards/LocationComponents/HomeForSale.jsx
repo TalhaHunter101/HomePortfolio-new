@@ -49,10 +49,11 @@ const HomesForSaleMap = ({ center, nearByListingsData }) => {
   return (
     <div className="relative h-[80vh] w-full">
       {/* Cards Section */}
-      <div className="absolute top-4 left-4  p-4 w-[300px] max-h-[70vh] overflow-y-auto z-[100] scrollbar-hide">
+      <div className="absolute top-4 left-4   p-4 w-[300px] max-h-[70vh] overflow-y-auto z-[100] scrollbar-hide">
         {filter &&
           filter.map((card, index) => (
             <motion.div
+            className="mb-3"
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
