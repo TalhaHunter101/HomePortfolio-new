@@ -179,7 +179,7 @@ export default function FinancingCard({
 
 
             {
-              interestType == "capital_interest" && (
+              interestType === "capital_Interest" && (
             
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
@@ -208,9 +208,9 @@ export default function FinancingCard({
         <div>
         <div>Interest Type  </div>
           <div className="flex gap-4">
-              <Button color="secondary"  variant={interestType == "capital_interest" ? "solid" : "bordered"} onClick={() => setInterestType("capital_interest")}>Capital & Interest</Button>
+              <Button color="secondary"  variant={interestType === "capital_Interest" ? "solid" : "bordered"} onClick={() => setInterestType("capital_interest")}>Capital & Interest</Button>
                 
-              <Button color="secondary"  variant={interestType == "Interest_only" ? "solid" : "bordered"} onClick={() => setInterestType("Interest_only")} >Interest Only</Button>
+              <Button color="secondary"  variant={interestType === "Interest_only" ? "solid" : "bordered"} onClick={() => setInterestType("Interest_only")} >Interest Only</Button>
 
 
             </div>
