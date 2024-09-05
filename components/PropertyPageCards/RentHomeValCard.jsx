@@ -154,6 +154,14 @@ export function RentHomeValCard({ price, roi, uprn, data: newData }) {
                 <div className="text-4xl font-bold text-gray-800 mb-6">
                   £{formatNumberWithCommas(rentEstimate)}
                 </div>
+                <div>
+                  <Chip
+                    radius="lg"
+                    className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                  >
+                   Rent Estimate
+                  </Chip>
+                </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-4">
                   <div>
                     £{rentPerSqFt.toFixed(2)} <br />
