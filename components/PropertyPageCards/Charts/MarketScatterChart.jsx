@@ -26,7 +26,6 @@ const data = [
 
 export const ScatterChartComponent = ({ data,text }) => {
 
-  console.log("scatter data is", data);
   
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);

@@ -21,12 +21,7 @@ const getItemsData = () => [
     name: "Lakeview Park",
     category: "Parks • Lakeview Rd",
     distance: "1.0 miles away",
-  },
-  {
-    name: "Hickory Creek Park",
-    category: "Parks • Hickory Creek Rd",
-    distance: "2.0 miles away",
-  },
+  }
   // Add more items as needed
 ];
 
@@ -70,10 +65,10 @@ export function MarketComparisonCard({  data }) {
               <span>Market Comparison</span>
             </h2>
             <div className="sentences leading-6 w-full lg:w-1/2 pr-2 sm:pr-10 relative z-10 max-w-md text-foreground">
-              <p>
+              {/* <p>
                 There arent too many bidding wars right now in 93063, with homes
                 selling at asking price over the last three months.
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -111,7 +106,7 @@ export function MarketComparisonCard({  data }) {
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
                         <Card className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
-                            <ScatterChartComponent data={data?.ref_postcode} text="PostCode" />
+                            <ScatterChartComponent data={data?.analyticsTaxonomy?.outcode} text="PostCode" />
                           </CardBody>
                         </Card>
                       </div>

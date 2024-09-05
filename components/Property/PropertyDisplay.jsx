@@ -145,19 +145,20 @@ function PropertyDisplay({ listingData, params }) {
       id: "financials",
       subElements: [
         {
-          name: "Price history",
-          icon: "mdi:history",
-          bgColor: "bg-green-200",
-          id: "pricehistory",
-          Component: PriceHistory,
-        },
-        {
           name: "Rent & Home Valuation",
           icon: "mdi:currency-usd",
           bgColor: "bg-green-200",
           id: "renthomevaluation",
           Component: RentHomeValCard,
         },
+        {
+          name: "Price history",
+          icon: "mdi:history",
+          bgColor: "bg-green-200",
+          id: "pricehistory",
+          Component: PriceHistory,
+        },
+       
         {
           name: "Is this a good time to buy?",
           icon: "mdi:chart-line",
