@@ -81,63 +81,8 @@ setRentEstimate(rentEstimate);
           </div>
         ) : (
           <div className="flex gap-2 p-2 flex-row bg-default-background border border-subtle-border rounded-md justify-between">
-            {/* Left div for Rent Estimate */}
-            <div className="w-1/2 rounded-lg shadow p-6 bg-white">
-              <div className="items-center justify-center flex flex-col">
-                <Chip
-                  radius="lg"
-                  className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
-                >
-                  Estimated Rent Valuation
-                </Chip>
-                <div className="text-4xl font-bold text-gray-800 mb-6">
-                  £{formatNumberWithCommas(rentEstimate)}
-                </div>
-                <div className="flex justify-between text-sm text-gray-600 mb-4">
-                  <div>
-                    £{rentPerSqFt.toFixed(2)} <br />
-                    <span>per sq.ft.</span>
-                  </div>
-                  <div className="mx-2 h-10 border-l border-gray-300"></div>
-                  <div>
-                    £{rentPerBedroom.toFixed(2)} <br />
-                    <span>per bedroom</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col items-center text-gray-700 text-sm">
-                <div className="flex w-full justify-between mb-2">
-                  <div className="text-md text-gray-500">Low Estimate</div>
-                  <div className="text-md text-gray-500">High Estimate</div>
-                </div>
-                <Progress
-                  color="primary"
-                  className="h-full w-full rounded-full bg-gradient-to-r from-primary-400 to-purple-600"
-                  value={rentProgress}
-                />
-                <div className="flex w-full justify-between mt-2">
-                  <div className="flex flex-col items-center">
-                    <span className="font-bold">
-                      £{formatNumberWithCommas(lowerRentEstimate)}
-                    </span>
-                    <span className="text-xs">
-                      £{rentPerSqFt.toFixed(2)}/sq.ft.
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <span className="font-bold">
-                      £{formatNumberWithCommas(upperRentEstimate)}
-                    </span>
-                    <span className="text-xs">
-                      £{rentPerSqFt.toFixed(2)}/sq.ft.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right div for Sale Estimate */}
-            <div className="w-1/2 rounded-lg shadow p-6 bg-white">
+           {/* Left div for Sale Estimate */}
+           <div className="w-1/2 rounded-lg shadow p-6 bg-white">
               <div className="items-center justify-center flex flex-col">
                 <Chip
                   radius="lg"
@@ -198,6 +143,70 @@ setRentEstimate(rentEstimate);
                 </div>
               </div>
             </div>
+            {/* Right div for Rent Estimate */}
+            <div className="w-1/2 rounded-lg shadow p-6 bg-white">
+              <div className="items-center justify-center flex flex-col">
+                <Chip
+                  radius="lg"
+                  className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                >
+                  Estimated Rent Valuation
+                </Chip>
+                <div className="text-4xl font-bold text-gray-800 mb-6">
+                  £{formatNumberWithCommas(rentEstimate)}
+                </div>
+                <div>
+                  <Chip
+                    radius="lg"
+                    className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                  >
+                   Rent Estimate
+                  </Chip>
+                </div>
+                <div className="flex justify-between text-sm text-gray-600 mb-4">
+                  <div>
+                    £{rentPerSqFt.toFixed(2)} <br />
+                    <span>per sq.ft.</span>
+                  </div>
+                  <div className="mx-2 h-10 border-l border-gray-300"></div>
+                  <div>
+                    £{rentPerBedroom.toFixed(2)} <br />
+                    <span>per bedroom</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-gray-700 text-sm">
+                <div className="flex w-full justify-between mb-2">
+                  <div className="text-md text-gray-500">Low Estimate</div>
+                  <div className="text-md text-gray-500">High Estimate</div>
+                </div>
+                <Progress
+                  color="primary"
+                  className="h-full w-full rounded-full bg-gradient-to-r from-primary-400 to-purple-600"
+                  value={rentProgress}
+                />
+                <div className="flex w-full justify-between mt-2">
+                  <div className="flex flex-col items-center">
+                    <span className="font-bold">
+                      £{formatNumberWithCommas(lowerRentEstimate)}
+                    </span>
+                    <span className="text-xs">
+                      £{rentPerSqFt.toFixed(2)}/sq.ft.
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="font-bold">
+                      £{formatNumberWithCommas(upperRentEstimate)}
+                    </span>
+                    <span className="text-xs">
+                      £{rentPerSqFt.toFixed(2)}/sq.ft.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
           </div>
         )}
       </CardBody>

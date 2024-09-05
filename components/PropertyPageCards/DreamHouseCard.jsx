@@ -72,15 +72,15 @@ export function DreamHouseCard({  pricePaidData }) {
           {/* Title and subtitle on the left */}
           <div>
             
-            <span className="text-md font-semibold text-default-500">
+            <span className="text-md p-1 font-semibold text-default-500">
               Gain insight into current & past market trends
             </span>
           </div>
 
           {/* Buttons on the right */}
           <div className="flex mt-5  justify-end gap-2">
-            <FilterButton />
-            <DropdownButton />
+            {/* <FilterButton />
+            <DropdownButton /> */}
           </div>
         </div>
       </CardHeader>
