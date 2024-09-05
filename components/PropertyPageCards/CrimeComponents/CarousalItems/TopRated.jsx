@@ -32,36 +32,38 @@ export const CrimeReportCard = ({ reportData }) => {
   const formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
 
   return (
-    <div className="w-full h-350 p-5 bg-white rounded-lg">
-      <div className='p-10'>
-        <div className="shadow-md p-4 rounded-md bg-gray-100 mb-4">
-          <h1 className="mb-0">Top Reported Crimes</h1>
-          <h1 className="text-sm text-gray-500">Crime for latest month ({formattedLatestMonth})</h1>
-        </div>
-        <div className="space-y-2">
-          {crimeData.map((crime, index) => (
-            <div key={index} className="flex justify-between items-center">
-              <h1>{crime.type}</h1>
-              <div className="flex items-center">
-                <h1>{crime.count}</h1>
-                {crime.trend === 'up' ? (
-                  <Icon icon="mdi:arrow-up-bold" color="red" className="ml-2" />
-                ) : crime.trend === 'down' ? (
-                  <Icon icon="mdi:arrow-down-bold" color="green" className="ml-2" />
-                ) : (
-                  <Icon icon="mdi:minus" color="grey" className="ml-2" />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-4">
-          <h1 className="text-primary cursor-pointer flex items-center">
-            <Icon icon="mdi:chevron-down" width={16} className="mr-1" />
-            Show More
-          </h1>
-        </div>
-      </div>
+    <div className="w-full p-6 bg-white rounded-lg ">
+    <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+      <h1 className="text-lg font-semibold text-gray-800 mb-1">Top Reported Crimes</h1>
+      <h2 className="text-sm text-gray-500">Crime for latest month ({formattedLatestMonth})</h2>
     </div>
+
+    <div className="mt-4 space-y-3">
+      {crimeData.map((crime, index) => (
+        <div key={index} className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md shadow-sm">
+          <div className="flex items-center">
+            <h3 className="text-base font-medium text-gray-700">{crime.type}</h3>
+          </div>
+          <div className="flex items-center">
+            <h4 className="text-base font-semibold text-gray-800">{crime.count}</h4>
+            {crime.trend === 'up' ? (
+              <Icon icon="mdi:arrow-up-bold" color="red" className="ml-2" />
+            ) : crime.trend === 'down' ? (
+              <Icon icon="mdi:arrow-down-bold" color="green" className="ml-2" />
+            ) : (
+              <Icon icon="mdi:minus" color="grey" className="ml-2" />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="mt-6 flex justify-center">
+      {/* <button className="text-primary font-medium flex items-center hover:underline">
+        <Icon icon="mdi:chevron-down" width={16} className="mr-1" />
+        Show More
+      </button> */}
+    </div>
+  </div>
   );
 };

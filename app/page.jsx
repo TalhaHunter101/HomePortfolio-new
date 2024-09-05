@@ -15,126 +15,17 @@ import Footer from "@/components/common/Footer/Footer";
 import CardsScroll from "@/components/Homepage/CardScroll";
 
 
-let features = [
-  {
-    description: "Are There any facilities nearby",
-  },
-  {
-    description: "learn about the location",
-  },
-  {
-    description: "show me homes",
-  },
-  {
-    description: "public transit near me",
-  },
-];
-
-let questions = [
-  {
-    description: "is there high seismic risk",
-    value: "risk",
-    cardDetails: {
-      title: "Seismic Risk",
-      description: "The risk of an earthquake is high",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "is this home near a voltage line",
-    value: "voltage",
-    cardDetails: {
-      title: "Voltage Line",
-      description: "The home is near a voltage line",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "what repairs have been done",
-    value: "repairs",
-    cardDetails: {
-      title: "Repairs",
-      description: "The home has had repairs",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "hows the air quality",
-    value: "air",
-    cardDetails: {
-      title: "Air Quality",
-      description: "The air quality is good",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-];
-
-let questions2 = [
-  {
-    description: "show me family friendly neighborhoods",
-    value: "family",
-    cardDetails: {
-      title: "Family details",
-      description: "The neighborhood is family friendly",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "hows the market right now",
-    value: "market",
-    cardDetails: {
-      title: "Market Details",
-      description: "The market is good",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "homes built after 1980",
-    value: "year",
-    cardDetails: {
-      title: "Year Built",
-      description: "The home was built after 1980",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-  {
-    description: "tell me more about the area",
-    value: "air",
-    cardDetails: {
-      title: "Air Quality",
-      description: "The air quality is good",
-      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    }
-  },
-];
 
 
 
 
-const places = [
-  { id: 1, location: "London", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 2, location: "Manchester", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 3, location: "Liverpool", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 4, location: "Nottingham", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 5, location: "Bristol", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 6, location: "Leeds", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 7, location: "Birmingham", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 8, location: "Clacton-on-Sea", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 9, location: "Stratford-upon-Avon", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 10, location: "Norwich", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-];
-let places1 = [
-  { id: 1, location: "London", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 2, location: "Manchester", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 3, location: "Liverpool", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 4, location: "Nottingham", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 5, location: "Bristol", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 6, location: "Leeds", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 7, location: "Birmingham", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 8, location: "Clacton-on-Sea", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 9, location: "Stratford-upon-Avon", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-  { id: 10, location: "Norwich", imageUrl: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" },
-];
+
+
+
+
+
+
+
 
 
 
@@ -477,67 +368,24 @@ export default function Home() {
 
 <div className="overflow-x-clip">
   <div className="max-w-screen-xl mx-auto px-5">
-    <main className="grid lg:grid-cols-5 place-items-center relative">
-      <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-indigo-200 right-0 top-0"></div>
-      <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-purple-200 right-56 top-10"></div>
-      <div className="max-w-sm md:max-w-full lg:col-span-2">
-        <h1 className="text-3xl lg:text-4xl xl:text-6xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center lg:text-start">
-        Explore UK Properties with HomePortfolio™
-        </h1>
-        <p className="text-lg mt-4 max-w-lg text-slate-600 [text-wrap:balance] text-center lg:text-start">
-        Your gateway to detailed property insights across the UK. Powered by comprehensive data and intuitive tools to help you make informed decisions. Discover the ideal home with our state-of-the-art platform.
+  <main className="  place-items-center  h-screen">
 
 
-        </p>
-        {/* <div className="mt-6 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-3">
-          <a
-            href="https://web3templates.com/templates/astroship-pro-astro-saas-website-template"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 focus-visible:outline-none focus-visible:shadow-outline-indigo px-7 py-2.5 bg-indigo-600 text-white hover:bg-indigo-800 flex gap-1 items-center justify-center"
-          >
-            Buy Template — $49
-          </a>
-          <a
-            href="https://github.com/surjithctly/astroship"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 focus-visible:outline-none focus-visible:shadow-outline-indigo px-7 py-2.5 bg-white border-2 border-indigo-500 hover:bg-indigo-50 text-indigo-600 flex gap-1 items-center justify-center"
-          >
-            Free Version
-          </a>
-        </div> */}
 
-<AutocompleteSearch properties={properties} />
+  <div className=" pl-24 flex flex-col justify-center items-center h-full ">
+    <h1 className="text-3xl lg:text-4xl xl:text-6xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
+      Explore UK Properties with HomePortfolio™
+    </h1>
+    {/* <p className="text-lg mt-4 max-w-lg text-slate-600 [text-wrap:balance] text-center">
+      Your gateway to detailed property insights across the UK. Powered by comprehensive data and intuitive tools to help you make informed decisions. Discover the ideal home with our state-of-the-art platform.
+    </p> */}
 
+    <div className="mt-6 w-full flex justify-center gap-3">
+      <AutocompleteSearch properties={properties} />
+    </div>
+  </div>
+</main>
 
-      </div>
-      <div className="py-3 lg:col-span-3 lg:-mr-44">
-        <picture>
-          <source
-            srcSet="https://astroship-pro.web3templates.com/_astro/hero-screenshot.HaV5_ts2_ZE0EX9.avif"
-            type="image/avif"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          <source
-            srcSet="https://astroship-pro.web3templates.com/_astro/hero-screenshot.HaV5_ts2_ZE0EX9.avif, https://astroship-pro.web3templates.com/_astro/hero-screenshot.HaV5_ts2_ZE0EX9.avif"
-            type="image/webp"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          <img
-            src="https://astroship-pro.web3templates.com/_astro/hero-screenshot.HaV5_ts2_ZE0EX9.avif"
-            srcSet="/_astro/hero-screenshot.HaV5_ts2_ZSMuoP.png 240w, /_astro/hero-screenshot.HaV5_ts2_2fuB1b.png 540w, /_astro/hero-screenshot.HaV5_ts2_ZMCIo6.png 720w, /_astro/hero-screenshot.HaV5_ts2_10u77m.png 1183w"
-            alt="Astronaut in the air"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            loading="eager"
-            fetchPriority="high"
-            width="1183"
-            height="787"
-            decoding="async"
-          />
-        </picture>
-      </div>
-    </main>
   </div>
 </div>
 

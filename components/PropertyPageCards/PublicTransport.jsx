@@ -208,7 +208,7 @@ export function PublicTransportCard({ data }) {
               </div>
 
               <div className="flex-1 flex flex-col justify-end h-full">
-                <div className="flex space-x-4">
+                <div className="flex mb-2 space-x-4">
                   <button
                     className={`flex space-x-2 items-center rounded-md px-4 py-2 ${
                       selectedType === "rail"
