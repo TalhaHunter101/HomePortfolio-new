@@ -372,15 +372,16 @@ export default function Home() {
 
 
 
-  <div className=" pl-24 flex flex-col justify-center items-center h-full ">
-    <h1 className="text-3xl lg:text-4xl xl:text-6xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
-      Explore UK Properties with HomePortfolio™
+  <div className=" mt-[-10vh] p-8 flex flex-col justify-center items-center h-full w-[100%] min-w-[95vw] ">
+    <h1 className="text-xl lg:text-4xl xl:text-4xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
+    Find and analyse any UK property in seconds
+    <br />
+    with HomePortfolio
     </h1>
-    {/* <p className="text-lg mt-4 max-w-lg text-slate-600 [text-wrap:balance] text-center">
-      Your gateway to detailed property insights across the UK. Powered by comprehensive data and intuitive tools to help you make informed decisions. Discover the ideal home with our state-of-the-art platform.
-    </p> */}
+    <p className="text-lg mt-4  text-slate-600 [text-wrap:balance] text-center">
+    Discover, source, analyse and track any property in seconds, all in one place    </p> 
 
-    <div className="mt-6 w-full flex justify-center gap-3">
+    <div className="mt-6 w-[60vw] flex justify-center gap-3">
       <AutocompleteSearch properties={properties} />
     </div>
   </div>
