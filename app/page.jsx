@@ -370,9 +370,14 @@ export default function Home() {
   <div className="max-w-screen-xl mx-auto px-5">
   <main className="  place-items-center  h-screen">
 
+  
 
 
   <div className=" mt-[-10vh] p-8 flex flex-col justify-center items-center h-full w-[100%] min-w-[95vw] ">
+
+  <Chip variant="flat" color="secondary" className="mb-2">
+              AI-Powered Property Data Insights
+            </Chip>
     <h1 className="text-xl lg:text-4xl xl:text-4xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
     Find and analyse any UK property in seconds
     <br />
