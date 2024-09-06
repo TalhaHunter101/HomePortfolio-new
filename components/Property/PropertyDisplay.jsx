@@ -41,7 +41,7 @@ import { useListingStore } from "@/store/listingStore";
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue
   const formattedPrice = formatCurrency(price)
-  const { squerfoot } = useListingStore()
+  const { squerfoot,fullAddress } = useListingStore()
 
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
@@ -396,11 +396,11 @@ function PropertyDisplay({ listingData, params }) {
                   £{formattedPrice}
                 </h3>
                 <span className="font-bold text-sm">
-                  {listingData?.address || listingData?.branch?.address},
+                  {fullAddress || listingData?.address},
                 </span>
                 <span className="font-bold text-gray-400 text-sm">
                   {" "}
-                  {listingData?.area}{" "}
+                  {listingData?.area}
                 </span>
               </div>
               <div className="flex flex-row ml-[auto] mr-8 space-x-8">
@@ -414,7 +414,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot}
+                    {listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot || "NA"}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>

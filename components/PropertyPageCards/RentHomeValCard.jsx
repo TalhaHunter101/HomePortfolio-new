@@ -103,12 +103,12 @@ setRentEstimate(rentEstimate);
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-4">
                   <div>
-                    £{salePerSqFt.toFixed(2)} <br />
+                    £{salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)} <br />
                     <span>per sq.ft.</span>
                   </div>
                   <div className="mx-2 h-10 border-l border-gray-300"></div>
                   <div>
-                    £{salePerBedroom.toFixed(2)} <br />
+                    £{salePerBedroom=== 0 ? "N/A" : salePerBedroom.toFixed(2)} <br />
                     <span>per bedroom</span>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(lowerSaleEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{salePerSqFt.toFixed(2)}/sq.ft.
+                      £{salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)}/sq.ft.
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
@@ -137,7 +137,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(upperSaleEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{salePerSqFt.toFixed(2)}/sq.ft.
+                      £{ salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)}/sq.ft.
                     </span>
                   </div>
                 </div>
@@ -165,12 +165,12 @@ setRentEstimate(rentEstimate);
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-4">
                   <div>
-                    £{rentPerSqFt.toFixed(2)} <br />
+                    £{ rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)} <br />
                     <span>per sq.ft.</span>
                   </div>
                   <div className="mx-2 h-10 border-l border-gray-300"></div>
                   <div>
-                    £{rentPerBedroom.toFixed(2)} <br />
+                    £{ rentPerBedroom===0 ? "N/A" : rentPerBedroom.toFixed(2)} <br />
                     <span>per bedroom</span>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(lowerRentEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{rentPerSqFt.toFixed(2)}/sq.ft.
+                      £{ rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)}/sq.ft.
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
@@ -199,7 +199,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(upperRentEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{rentPerSqFt.toFixed(2)}/sq.ft.
+                      £{rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)}/sq.ft.
                     </span>
                   </div>
                 </div>
