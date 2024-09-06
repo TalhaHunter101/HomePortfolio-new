@@ -13,7 +13,7 @@ export function PriceHistory({  data }) {
       <CardBody>
         <section
           id="price-history"
-          className="mb-5 sm:mb-6 h-full border border-gray-200 bg-default-white rounded-lg px-4 py-4  w-full"
+          className="mb-5 sm:mb-6 h-full  bg-default-white rounded-lg px-4 py-4  w-full"
         >
           <div className="text-xs md:text-sm text-foreground bg-opacity-50 bg-default  rounded-lg mb-5 sm:mb-6 p-4 border border-gray-200">
             No recent price changes.

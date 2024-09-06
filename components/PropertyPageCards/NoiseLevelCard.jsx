@@ -10,7 +10,7 @@ export function NoiseLevelCard  ({ })  {
         
       </CardHeader>
       <CardBody>
-        <div className=' bg-default-background  border border-subtle-border rounded-md '>
+        <div className=' bg-default-background   rounded-md '>
         <div className=" bg-default-white   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
             <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-400">
@@ -29,7 +29,7 @@ export function NoiseLevelCard  ({ })  {
           </div>
           
         </div>
-        <div className="border border-gray-200 rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
+        <div className=" rounded-br-lg rounded-bl-lg pt-6  -mt-2 bg-gray-250">
           <canvas className="hidden" width="512" height="512"></canvas>
           <section id="noise-levels" className="mb-5 sm:mb-6">
             <div className="mx-auto w-full max-w-screen md:max-w-screen-md lg:max-w-screen-lg">

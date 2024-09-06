@@ -80,7 +80,7 @@ export function RecentlySoldCard({ city, postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      <CardHeader></CardHeader>
+      
       <CardBody>
         {isDataLoading ? (
           <p>Loading...</p>
@@ -89,7 +89,7 @@ export function RecentlySoldCard({ city, postcode }) {
             {SoldListingData.length === 0 ? (
               <p>No data available</p>
             ) : (
-              <div className="  border border-subtle-border rounded-md">
+              <div className="   rounded-md">
                 <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
                   <div className="flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
                     <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-400">

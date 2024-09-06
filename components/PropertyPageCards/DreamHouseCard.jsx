@@ -85,7 +85,7 @@ export function DreamHouseCard({  pricePaidData }) {
         </div>
       </CardHeader>
       <CardBody>
-        <div className="p-2 border  border-subtle-border rounded-md">
+        <div className="p-2 rounded-md">
           <span className="text-sm">
             Last month on average, Single Family homes sold for{" "}
             <span className="font-medium inline-block text-base text-green-600">

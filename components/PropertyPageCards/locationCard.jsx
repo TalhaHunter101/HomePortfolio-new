@@ -62,7 +62,7 @@ export function LocationCard({ data, postcode,schoolData }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <div className="px-16 w-full py-5 bg-default-white border border-gray-200 rounded-md">
+        <div className=" w-full p-4 bg-default-white  rounded-md">
           <p className="text-[12px] font-bold text-base mb-3">Location</p>
           <p className="text-[12px] font-medium">{data?.address}</p>
         </div>

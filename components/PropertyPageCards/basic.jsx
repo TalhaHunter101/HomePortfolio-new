@@ -11,7 +11,7 @@ export function BasicInfoCard({ title, content, data }) {
         
       </CardHeader>
       <CardBody>
-        <div class="px-16 py-5 bg-default-white border border-gray-200 rounded-md ">
+        <div class=" p-4 bg-default-white  rounded-md ">
           <h3 class="text-xl font-semibold text-black ">Home Highlights</h3>
           <div class="flex flex-wrap gap-4 my-5">
             <div class="flex items-center justify-center p-2 bg-gray-200 rounded-md ">

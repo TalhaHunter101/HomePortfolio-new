@@ -18,11 +18,9 @@ const getItemsData = () => [
 export function NearbyCard({  }) {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
-      <CardHeader>
-        
-      </CardHeader>
+     
       <CardBody>
-        <div className="bg-gray-250 border border-subtle-border p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-lg">
+        <div className="bg-gray-250  p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
             <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-400">
              <Icon icon="mdi:map" />
@@ -40,7 +38,7 @@ export function NearbyCard({  }) {
           </div>
       
         </div>
-        <div className="border border-gray-200 rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
+        <div className=" rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
           <section id="whats-nearby" className="mb-5 sm:mb-6">
             <div className="mx-auto w-full max-w-screen md:max-w-screen-md lg:max-w-screen-lg">
               <div className="px-0 md:px-0 md:pr-0">
@@ -108,7 +106,7 @@ export function NearbyCard({  }) {
                 <div className="flex-1 w-full flex flex-col justify-end h-full">
   <div className="flex p-2 flex-col sm:flex-wrap gap-2 flex-1 flex-row overflow-x-auto overflow-y-hidden snap-x snap-mandatory space-x-2 sm:space-x-0 pr-6 sm:pr-0 ml-2 mb-2 sm:mb-0 sm:-mt-2">
     {items.map((item, index) => (
-      <div key={index} className="rounded-lg  p-1 py-lg bg-white card flex flex-col  relative border-gray-150 bg-gray-100 sm:rounded-lg border">
+      <div key={index} className="rounded-lg shadow p-1 py-lg bg-white card flex flex-col  relative border-gray-150 bg-gray-100 sm:rounded-lg border">
         <div className="text-foreground px-5  xs:px-4 flex items-center py-4 xs:py-0 text-foreground rounded-none relative h-full w-full overflow-hidden flex-1">
           <div className="flex items-center">
             <div className="flex-shrink-0">

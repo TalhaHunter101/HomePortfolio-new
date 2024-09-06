@@ -27,7 +27,7 @@ export function AirQualityCard({ title, cards, id }) {
         
       </CardHeader>
       <CardBody>
-        <div className='border bg-default-white border-subtle-border rounded-md'>
+        <div className=' bg-default-white  rounded-md'>
         <div className=" p-4 sm:p-6 lg:flex relative cursor-pointer overflow-hidden rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
             <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-green-300">

@@ -8,7 +8,7 @@ export function ReachOutCard({  }) {
         
       </CardHeader>
       <CardBody>
-        <div className="px-16 py-5 bg-default-white border border-default-200 rounded-md">
+        <div className="p-5 bg-default-white  rounded-md">
           <div>
             <button className="font-medium px-4 py-2 my-2 bg-purple-100 text-default-600 rounded-md focus:outline-none">
               <li>House For Sale</li>

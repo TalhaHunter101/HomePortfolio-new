@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Card, Text } from '@nextui-org/react';
+import { Card, Chip, Text } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
 
 export const CrimeReportCard = ({ reportData }) => {
@@ -32,38 +32,56 @@ export const CrimeReportCard = ({ reportData }) => {
   const formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
 
   return (
-    <div className="w-full p-6 bg-white rounded-lg ">
-    <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-      <h1 className="text-lg font-semibold text-gray-800 mb-1">Top Reported Crimes</h1>
-      <h2 className="text-sm text-gray-500">Crime for latest month ({formattedLatestMonth})</h2>
-    </div>
-
-    <div className="mt-4 space-y-3">
-      {crimeData.map((crime, index) => (
-        <div key={index} className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md shadow-sm">
-          <div className="flex items-center">
-            <h3 className="text-base font-medium text-gray-700">{crime.type}</h3>
-          </div>
-          <div className="flex items-center">
-            <h4 className="text-base font-semibold text-gray-800">{crime.count}</h4>
-            {crime.trend === 'up' ? (
-              <Icon icon="mdi:arrow-up-bold" color="red" className="ml-2" />
-            ) : crime.trend === 'down' ? (
-              <Icon icon="mdi:arrow-down-bold" color="green" className="ml-2" />
-            ) : (
-              <Icon icon="mdi:minus" color="grey" className="ml-2" />
-            )}
-          </div>
+    <div className="flex w-full justify-between"> 
+      {/* Left Section */}
+      <div className="w-1/2 p-6 bg-white rounded-lg  flex flex-col justify-center">
+        <Chip className="bg-yellow-200 rounded-full mb-5  px-3 py-1 inline-block mb-2">
+          <span className="text-sm font-medium pb-5 text-gray-700">Average crime</span>
+        </Chip>
+        <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
+          4,897 reported crimes
         </div>
-      ))}
-    </div>
+        <p className="text-sm mb-8 text-gray-500 mb-4">
+          in this area in the last 12 months.
+        </p>
+        <p className="text-sm mt-5 text-gray-600">
+          If an area has an average crime rating, it means that for every 1,000 inhabitants, 
+          between 140 and 225 residents have been affected by a crime.
+        </p>
+      </div>
 
-    <div className="mt-6 flex justify-center">
-      {/* <button className="text-primary font-medium flex items-center hover:underline">
-        <Icon icon="mdi:chevron-down" width={16} className="mr-1" />
-        Show More
-      </button> */}
+      {/* Right Section (Crimes List) */}
+      <div className="w-1/2 p-6 bg-white rounded-lg ">
+        <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+          <h1 className="text-lg font-semibold text-gray-800 mb-1">Top Reported Crimes</h1>
+          <h2 className="text-sm text-gray-500">Crime for latest month ({formattedLatestMonth})</h2>
+        </div>
+
+        {/* Scrollable crimes list */}
+        <div className="mt-4 space-y-3 max-h-60 overflow-y-auto ">
+          {crimeData.map((crime, index) => (
+            <div key={index} className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md shadow-sm">
+              <div className="flex items-center">
+                <h3 className="text-base font-medium text-gray-700">{crime.type}</h3>
+              </div>
+              <div className="flex items-center">
+                <h4 className="text-base font-semibold text-gray-800">{crime.count}</h4>
+                {crime.trend === 'up' ? (
+                  <Icon icon="mdi:arrow-up-bold" color="red" className="ml-2" />
+                ) : crime.trend === 'down' ? (
+                  <Icon icon="mdi:arrow-down-bold" color="green" className="ml-2" />
+                ) : (
+                  <Icon icon="mdi:minus" color="grey" className="ml-2" />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          {/* Placeholder for any further actions */}
+        </div>
+      </div>
     </div>
-  </div>
   );
 };

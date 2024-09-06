@@ -47,13 +47,13 @@ export function CrimeCard({ postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
-      <CardHeader></CardHeader>
+
 
       {crimeData.length === 0 ? (
         <div>No data available</div>
       ) : (
         <CardBody>
-          <div className="flex flex-col border border-subtle-border rounded-md">
+          <div className="flex flex-col  rounded-md">
             {/* Status Cards */}
             {/* <div className="flex p-2  justify-between ">
               {statusData.map((status, index) => (

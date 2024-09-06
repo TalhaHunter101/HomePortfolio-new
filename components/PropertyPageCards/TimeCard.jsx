@@ -9,7 +9,7 @@ export function GoodTimeToBuy({  }) {
               
             </CardHeader>
             <CardBody>
-                <div className="w-full bg-default-white py-6 px-4 my-2 border border-gray-300 rounded-md">
+                <div className="w-full bg-default-white py-6 px-4 my-2  rounded-md">
                     <p className="text-sm font-bold mb-3">Buyers Should Act Fast</p>
                     <div className="grid grid-cols-6 gap-4 my-4">
                         <div id="good-2-buy" className="col-span-6 md:col-span-3">

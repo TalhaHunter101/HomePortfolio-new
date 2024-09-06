@@ -76,11 +76,11 @@ const [barchart, setbarchart] = useState({
     <Card className="m-4" style={{ maxHeight: '900px' }}>
       <CardHeader className='flex flex-col items-start '>
         
-        <h4 className='p-0 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
+        <h4 className='pl-4 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
         </h4>
       </CardHeader>
       <CardBody>
-      <div className="h-full border border-subtle-border rounded-md p-4">
+      <div className="h-full  rounded-md p-4">
       <div className="flex flex-col justify-between gap-y-4 h-full layout-single md:fullbleed">
         {/* Home Types Distribution Section */}
         <div className="flex flex-row flex-wrap gap-8">

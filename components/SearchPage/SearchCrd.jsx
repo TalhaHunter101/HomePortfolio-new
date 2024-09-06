@@ -6,6 +6,7 @@ import { formatCurrency } from "@/utils/Helper";
 
 const SearchCard = ({ property, setCardHover }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(false); // State to track the heart icon
   const maxPrice = property?.maxPrice;
   const humanReadablePrice = formatCurrency(maxPrice);
 
@@ -21,6 +22,10 @@ const SearchCard = ({ property, setCardHover }) => {
     );
   };
 
+  const handleLikeToggle = () => {
+    setIsLiked(!isLiked); // Toggle the liked state
+  };
+
   return (
     <Card
       className=""
@@ -33,7 +38,14 @@ const SearchCard = ({ property, setCardHover }) => {
         <div className="relative">
           {/* Heart Icon */}
           <div className="absolute top-2 right-2 z-10">
-          <Icon   color="white" icon="ant-design:heart-twotone" width="24" height="24" />
+            <Icon
+              onClick={handleLikeToggle} // Toggle like on click
+              icon={ isLiked ? "twemoji:red-heart" : "ant-design:heart-twotone"}
+              width="24"
+              height="24"
+              color={isLiked ? "" : "white"} // Change color based on state
+              style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
+            />
           </div>
 
           <div className="w-full overflow-hidden rounded-none">

@@ -80,7 +80,7 @@ setRentEstimate(rentEstimate);
             <p>No data available</p>
           </div>
         ) : (
-          <div className="flex gap-2 p-2 flex-row bg-default-background border border-subtle-border rounded-md justify-between">
+          <div className="flex gap-2 p-2 flex-row bg-default-background  rounded-md justify-between">
            {/* Left div for Sale Estimate */}
            <div className="w-1/2 rounded-lg shadow p-6 bg-white">
               <div className="items-center justify-center flex flex-col">
