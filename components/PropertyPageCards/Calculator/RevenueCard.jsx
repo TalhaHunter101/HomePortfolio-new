@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
 import { Input, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { useCalculationsStore } from "../../../store/calculationsStore";
 
-export default function RevenueCard({
-  monthlyRevenue,
-  annualRevenue,
-  setMonthlyRevenue,
-  setAnnualRevenue,
-  rentEstimate
-}) {
+export default function RevenueCard() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const {
+    monthlyRevenue,
+    setMonthlyRevenue,
+    annualRevenue,
+    setAnnualRevenue,
+    ProjectedMonthlyRevenue,
+  } = useCalculationsStore();
+
+  // Calculate annual revenue based on monthly revenue
   useEffect(() => {
+    if (monthlyRevenue > 0) {
+      const newAnnualRevenue = monthlyRevenue * 12;
+      if (newAnnualRevenue !== annualRevenue) setAnnualRevenue(newAnnualRevenue);
+    }
+  }, [monthlyRevenue, annualRevenue, setAnnualRevenue]);
 
-    setMonthlyRevenue(rentEstimate)
-    setAnnualRevenue(rentEstimate * 12)
-    
-
-  },[rentEstimate, setAnnualRevenue, setMonthlyRevenue]);
+  // Calculate monthly revenue based on annual revenue
+  useEffect(() => {
+    if (annualRevenue > 0) {
+      const newMonthlyRevenue = annualRevenue / 12;
+      if (newMonthlyRevenue !== monthlyRevenue) setMonthlyRevenue(newMonthlyRevenue);
+    }
+  }, [annualRevenue, monthlyRevenue, setMonthlyRevenue]);
 
   return (
     <div className="mt-2">
@@ -54,8 +65,10 @@ export default function RevenueCard({
                 value={monthlyRevenue.toLocaleString('en-GB')}
                 onChange={(e) => {
                   const value = parseFloat(e.target.value.replace(/,/g, ''));
-                  setMonthlyRevenue(value);
-                  setAnnualRevenue(value * 12); // Automatically update annual revenue
+                  if (!isNaN(value) && value !== monthlyRevenue) {
+                    setMonthlyRevenue(value);
+                    setAnnualRevenue(value * 12); // Automatically update annual revenue
+                  }
                 }}
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
@@ -70,8 +83,10 @@ export default function RevenueCard({
                 value={annualRevenue.toLocaleString('en-GB')}
                 onChange={(e) => {
                   const value = parseFloat(e.target.value.replace(/,/g, ''));
-                  setAnnualRevenue(value);
-                  setMonthlyRevenue(value / 12); // Automatically update monthly revenue
+                  if (!isNaN(value) && value !== annualRevenue) {
+                    setAnnualRevenue(value);
+                    setMonthlyRevenue(value / 12); // Automatically update monthly revenue
+                  }
                 }}
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
@@ -84,12 +99,12 @@ export default function RevenueCard({
               <Input
                 type="text"
                 disabled
-                value={rentEstimate}
-                defaultValue={rentEstimate} // This seems to be a static example value; adjust if needed
+                value={ProjectedMonthlyRevenue}
+                defaultValue={ProjectedMonthlyRevenue} // This seems to be a static example value; adjust if needed
                 startContent={<div className="pointer-events-none text-gray-400">£</div>}
               />
               <p className="text-xs text-gray-500 mt-1">
-                {rentEstimate} is the projected monthly rent estimate based on comparables for this specific property, according to our valuation tool.
+                {ProjectedMonthlyRevenue} is the projected monthly rent estimate based on comparables for this specific property, according to our valuation tool.
               </p>
             </div>
 
