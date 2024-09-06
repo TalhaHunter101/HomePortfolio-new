@@ -66,6 +66,10 @@ function PropertyDisplay({ listingData, params }) {
   const [pricePaidData, setPricePaidData] = useState([])
   const [rentEstimate, setRentEstimate] = useState(0);
 
+
+  const formatedSqft = formatCurrency(listingData?.analyticsTaxonomy?.sizeSqFeet|| squerfoot)
+
+
   useEffect(() => {
     const getSchoolData = async () => {
       try {
@@ -404,17 +408,17 @@ function PropertyDisplay({ listingData, params }) {
                 </span>
               </div>
               <div className="flex flex-row ml-[auto] mr-8 space-x-8">
-                <div className="text-center">
+                <div className="">
                   <h3 className="font-semibold text-4xl">{bedrooms}</h3>
                   <p className="text-sm text-gray-600">beds</p>
                 </div>
-                <div className="text-center">
+                <div className="">
                   <h3 className="font-semibold text-4xl">{bathrooms}</h3>
                   <p className="text-sm text-gray-600">baths</p>
                 </div>
-                <div className="text-center">
+                <div className="">
                   <h3 className="font-semibold text-4xl">
-                    {listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot || "NA"}
+                    {formatedSqft  || "NA"}
                   </h3>
                   <p className="text-sm text-gray-600">sqft</p>
                 </div>
@@ -422,8 +426,9 @@ function PropertyDisplay({ listingData, params }) {
             </div>
             <div>
               <p className="text-sm font-bold">
-                {listingData?.title} | on [
-                {listingData?.adTargeting?.branchName}]
+                {listingData?.title} 
+                {/* | on [
+                {listingData?.adTargeting?.branchName}] */}
               </p>
               <div className="pr-4 pt-4">
                 <Button

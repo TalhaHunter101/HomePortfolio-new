@@ -16,7 +16,7 @@ export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newDat
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ uprn: "32092783" }),
+          body: JSON.stringify({ uprn: uprn }),
         });
 
         if (!res.ok) {
