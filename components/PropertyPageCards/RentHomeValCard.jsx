@@ -53,8 +53,12 @@ export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newDat
 setRentEstimate(rentEstimate);
   // Per square foot and per bedroom calculations
   const rentPerSqFt = rentEstimate / sizeSqFeet || 0;
+  const rentLowPerSqFt = lowerRentEstimate / sizeSqFeet || 0;
+  const rentHighPerSqFt = upperRentEstimate / sizeSqFeet || 0;
   const rentPerBedroom = rentEstimate / numBedrooms || 0;
   const salePerSqFt = saleEstimate / sizeSqFeet || 0;
+  const saleLowPerSqFt = lowerSaleEstimate / sizeSqFeet || 0;
+  const saleHighPerSqFt = upperSaleEstimate / sizeSqFeet || 0;
   const salePerBedroom = saleEstimate / numBedrooms || 0;
 
   // Progress bar calculations for rent and sale
@@ -86,7 +90,7 @@ setRentEstimate(rentEstimate);
               <div className="items-center justify-center flex flex-col">
                 <Chip
                   radius="lg"
-                  className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                  className={`text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block`}
                 >
                   Estimated Home Valuation
                 </Chip>
@@ -96,19 +100,25 @@ setRentEstimate(rentEstimate);
                 <div>
                   <Chip
                     radius="lg"
-                    className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                    className={`text-sm font-semibold ${
+                      data[0]?._source?.saleEstimate?.confidenceLevel === "HIGH"
+                        ? "text-green-600 bg-green-100"
+                        : data[0]?._source?.saleEstimate?.confidenceLevel === "LOW"
+                        ? "text-red-500 bg-red-100"
+                        : "text-blue-500 bg-blue-100"
+                    } px-2 py-1 mb-4 inline-block`}
                   >
-                    {data[0]?._source?.saleEstimate?.confidenceLevel}
+                 Confidence Level:   {data[0]?._source?.saleEstimate?.confidenceLevel}
                   </Chip>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-4">
                   <div>
-                    £{salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)} <br />
-                    <span>per sq.ft.</span>
+                    £{salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(0)} <br />
+                    <span>per sqft</span>
                   </div>
-                  <div className="mx-2 h-10 border-l border-gray-300"></div>
+                  <div className="ml-2 mr-4  h-10 border-l border-gray-300"></div>
                   <div>
-                    £{salePerBedroom=== 0 ? "N/A" : salePerBedroom.toFixed(2)} <br />
+                    £{salePerBedroom=== 0 ? "N/A" : formatNumberWithCommas(salePerBedroom.toFixed(0))} <br />
                     <span>per bedroom</span>
                   </div>
                 </div>
@@ -129,7 +139,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(lowerSaleEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)}/sq.ft.
+                      £{saleLowPerSqFt=== 0 ? "N/A" : saleLowPerSqFt.toFixed(0)}/sqft
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
@@ -137,7 +147,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(upperSaleEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{ salePerSqFt=== 0 ? "N/A" : salePerSqFt.toFixed(2)}/sq.ft.
+                      £{ saleHighPerSqFt=== 0 ? "N/A" : formatNumberWithCommas(saleHighPerSqFt.toFixed(0))}/sqft
                     </span>
                   </div>
                 </div>
@@ -158,19 +168,19 @@ setRentEstimate(rentEstimate);
                 <div>
                   <Chip
                     radius="lg"
-                    className="text-sm font-semibold text-blue-600 bg-primary-50 px-2 py-1 mb-4 inline-block"
+                    className="text-sm font-semibold text-green-600  bg-green-100 px-2 py-1 mb-4 inline-block"
                   >
-                   Rent Estimate
-                  </Chip>
+  Confidence Level:  High               
+   </Chip>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mb-4">
                   <div>
                     £{ rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)} <br />
-                    <span>per sq.ft.</span>
+                    <span>per sqft</span>
                   </div>
-                  <div className="mx-2 h-10 border-l border-gray-300"></div>
+                  <div className="ml-2 mr-4  h-10 border-l border-gray-300"></div>
                   <div>
-                    £{ rentPerBedroom===0 ? "N/A" : rentPerBedroom.toFixed(2)} <br />
+                    £{ rentPerBedroom===0 ? "N/A" : formatNumberWithCommas(rentPerBedroom.toFixed(0))} <br />
                     <span>per bedroom</span>
                   </div>
                 </div>
@@ -191,7 +201,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(lowerRentEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{ rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)}/sq.ft.
+                      £{ rentLowPerSqFt===0 ? "N/A" : rentLowPerSqFt.toFixed(2)}/sqft
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
@@ -199,7 +209,7 @@ setRentEstimate(rentEstimate);
                       £{formatNumberWithCommas(upperRentEstimate)}
                     </span>
                     <span className="text-xs">
-                      £{rentPerSqFt===0 ? "N/A" : rentPerSqFt.toFixed(2)}/sq.ft.
+                      £{rentHighPerSqFt===0 ? "N/A" : rentHighPerSqFt.toFixed(2)}/sqft
                     </span>
                   </div>
                 </div>
