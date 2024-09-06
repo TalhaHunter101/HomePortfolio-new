@@ -1,31 +1,56 @@
 import { useEffect, useState } from "react";
-import { Input, CardBody } from "@nextui-org/react";
+import { Input, CardBody, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { useCalculationsStore } from "../../../store/calculationsStore";
 
-export default function ExpensesCard({
-  channelFee = 3.00,
-  supplyFees = 0,
-  groundRent = 2166,
-  insurance = 800,
-  utilities = 1538,
-  maintenance = 1153,
-  otherExpenses = 0,
-  propertyManagementFeePercentage,
-  setPropertyManagementFeePercentage,
-  propertyManagementFee,
-  setPropertyManagementFee,
-  monthlyRevenue
-
-}) {
+export default function ExpensesCard() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const {
+    propertyManagementFee,
+    propertyManagementFeePercentage,
+    serviceCharge,
+    groundRent,
+    insurance,
+    utilities,
+    utilitiesPercentage,
+    maintenance,
+    otherExpenses,
+    setPropertyManagementFee,
+    setPropertyManagementFeePercentage,
+    setServiceCharge,
+    setGroundRent,
+    setInsurance,
+    setUtilities,
+    setUtilitiesPercentage,
+    setMaintenance,
+    setOtherExpenses,
+    monthlyRevenue,
+    totalExpenses,
+    setTotalExpenses,
+  } = useCalculationsStore();
 
+  // Calculate property management fee based on percentage
   useEffect(() => {
-    setPropertyManagementFee( (propertyManagementFeePercentage / 100) * monthlyRevenue)
-    setPropertyManagementFee(propertyManagementFee * monthlyRevenue / 100);
-    
-  },[propertyManagementFeePercentage, monthlyRevenue, setPropertyManagementFee, propertyManagementFee]);
+    if (propertyManagementFeePercentage > 0 && monthlyRevenue > 0) {
+      const newPropertyManagementFee = (propertyManagementFeePercentage / 100) * monthlyRevenue;
+      if (newPropertyManagementFee !== propertyManagementFee) setPropertyManagementFee(newPropertyManagementFee);
+    }
+  }, [propertyManagementFeePercentage, monthlyRevenue, propertyManagementFee, setPropertyManagementFee]);
 
+  // Calculate utilities based on percentage
+  useEffect(() => {
+    if (utilitiesPercentage > 0 && monthlyRevenue > 0) {
+      const newUtilities = (utilitiesPercentage / 100) * monthlyRevenue;
+      if (newUtilities !== utilities) setUtilities(newUtilities);
+    }
+  }, [utilitiesPercentage, monthlyRevenue, utilities, setUtilities]);
+
+  // Calculate total expenses
+  useEffect(() => {
+    const newTotalExpenses = propertyManagementFee + serviceCharge + groundRent + insurance + utilities + maintenance + otherExpenses;
+    if (newTotalExpenses !== totalExpenses) setTotalExpenses(newTotalExpenses);
+  }, [propertyManagementFee, serviceCharge, groundRent, insurance, utilities, maintenance, otherExpenses, totalExpenses, setTotalExpenses]);
 
   return (
     <div className="mt-2">
@@ -36,7 +61,9 @@ export default function ExpensesCard({
         >
           <span className="text-xl font-bold text-purple-900">Expenses</span>
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-900 mr-2">£{(channelFee + propertyManagementFee + supplyFees + groundRent + insurance + utilities + maintenance + otherExpenses).toLocaleString('en-GB')}/mo</span>
+            <span className="text-xl font-bold text-purple-900 mr-2">
+              £{totalExpenses.toLocaleString('en-GB')}/mo
+            </span>
             <Icon
               icon="mdi:chevron-down"
               className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
@@ -52,93 +79,77 @@ export default function ExpensesCard({
           }`}
         >
           <div className="p-4 grid grid-cols-2 gap-4">
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
-                Channel Fee
-              </label>
-              <Input
-                type="text"
-                defaultValue={channelFee}
-                endContent={
-                  <div className="pointer-events-none text-gray-400">%</div>
-                }
-              />
-            </div> */}
-            <div className="flex items-center">
-              <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Property Management Fee
-                </label>
-                <Input
-                  type="text"
-                  defaultValue={propertyManagementFee}
-                  startContent={
-                    <div className="pointer-events-none text-gray-400">£</div>
-                  }
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setPropertyManagementFee(value);
-                    // percent of monthly revenue
-                    // setPropertyManagementFeePercentage( (value / monthlyRevenue) * 100);
-                  }
-                  }
-                />
-              </div>
-              <span className="mx-2">OR</span>
-              <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  .
-                </label>
-                <Input
-                  type="text"
-                  defaultValue="10"
-                  endContent={
-                    <div className="pointer-events-none text-gray-400">%</div>
-                  }
-
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setPropertyManagementFeePercentage(value);
-                    // setPropertyManagementFee(value * monthlyRevenue / 100);
-                  } }
-
-                />
-              </div>
-            </div>
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
-              Service Charge
+                Property Management Fee
               </label>
               <Input
                 type="text"
-                defaultValue={supplyFees}
-                startContent={
-                  <div className="pointer-events-none text-gray-400">£</div>
-                }
+                value={propertyManagementFee.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== propertyManagementFee) setPropertyManagementFee(value);
+                }}
               />
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Property Management Fee (%)
+              </label>
+              <Slider
+                value={propertyManagementFeePercentage}
+                onChange={(e) => setPropertyManagementFeePercentage(e)}
+                min={0}
+                max={100}
+                step={1}
+                endContent={<div className="pointer-events-none text-gray-400">{propertyManagementFeePercentage}%</div>}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Service Charge
+              </label>
+              <Input
+                type="text"
+                value={serviceCharge.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== serviceCharge) setServiceCharge(value);
+                }}
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Ground Rent
               </label>
               <Input
                 type="text"
-                defaultValue={groundRent}
-                startContent={
-                  <div className="pointer-events-none text-gray-400">£</div>
-                }
+                value={groundRent.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== groundRent) setGroundRent(value);
+                }}
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Insurance
               </label>
               <Input
                 type="text"
-                defaultValue={insurance}
-                startContent={
-                  <div className="pointer-events-none text-gray-400">£</div>
-                }
+                value={insurance.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== insurance) setInsurance(value);
+                }}
               />
             </div>
 
@@ -146,59 +157,77 @@ export default function ExpensesCard({
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Utilities
               </label>
-              <div className="flex">
-                <Input
-                  type="text"
-                  defaultValue={utilities}
-                  startContent={
-                    <div className="pointer-events-none text-gray-400">£</div>
-                  }
-                  className="flex-grow"
-                />
-                <Input
-                  type="text"
-                  defaultValue="4"
-                  endContent={
-                    <div className="pointer-events-none text-gray-400">%</div>
-                  }
-                  className="ml-2 w-20"
-                />
-              </div>
+              <Input
+                type="text"
+                value={utilities.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                className="flex-grow"
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== utilities) setUtilities(value);
+                }}
+              />
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Utilities (%)
+              </label>
+              <Slider
+                value={utilitiesPercentage}
+                onChange={(e) => setUtilitiesPercentage(e)}
+                min={0}
+                max={100}
+                step={1}
+                className="flex-grow"
+                endContent={<div className="pointer-events-none text-gray-400">{utilitiesPercentage}%</div>}
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Maintenance
               </label>
               <Input
                 type="text"
-                defaultValue={maintenance}
-                startContent={
-                  <div className="pointer-events-none text-gray-400">£</div>
-                }
+                value={maintenance.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== maintenance) setMaintenance(value);
+                }}
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-500 mb-1">
                 Other Expenses
               </label>
-              <div className="flex">
-                <Input
-                  type="text"
-                  defaultValue={otherExpenses}
-                  startContent={
-                    <div className="pointer-events-none text-gray-400">£</div>
-                  }
-                  className="flex-grow"
-                />
-                <Input
-                  type="text"
-                  defaultValue="0"
-                  endContent={
-                    <div className="pointer-events-none text-gray-400">%</div>
-                  }
-                  className="ml-2 w-20"
-                />
-              </div>
+              <Input
+                type="text"
+                value={otherExpenses.toLocaleString('en-GB')}
+                startContent={<div className="pointer-events-none text-gray-400">£</div>}
+                className="flex-grow"
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(value) && value !== otherExpenses) setOtherExpenses(value);
+                }}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-500 mb-1">
+                Other Expenses (%)
+              </label>
+              <Slider
+                value={0} // Assuming other expenses percentage is not used
+                onChange={() => {}}
+                min={0}
+                max={100}
+                step={1}
+                className="flex-grow"
+                endContent={<div className="pointer-events-none text-gray-400">%</div>}
+              />
             </div>
           </div>
         </div>
@@ -206,4 +235,3 @@ export default function ExpensesCard({
     </div>
   );
 }
-
