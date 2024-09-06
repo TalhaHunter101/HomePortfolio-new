@@ -12,7 +12,7 @@ import { Icon } from "@iconify/react";
         <div className="text-center">
         <p className="text-sm font-medium"><Icon icon={icon} width={20} height={20} className={`inline pb-1 ${iconColor}`} /> {label}</p>
           <p className="text-lg font-bold">{count}</p>
-          <p className="text-xs text-gray-500">last 30 days</p>
+          {/* <p className="text-xs text-gray-500">last 30 days</p> */}
         </div>
       </div>
     );

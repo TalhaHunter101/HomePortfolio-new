@@ -1,25 +1,23 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
-import { Icon } from '@iconify/react';
-import { DecisionDaysChart } from './Charts/DecisionDaysChart';
-import { DevelopmentChart } from './Charts/DevelopmentChart';
-import { EthnicGroupChart } from './Charts/EthnicGroupChart';
-import { TimelineChart } from './Charts/TimelineChart';
-import { ConstraintsList } from './ConstraintList';
+import { Icon } from "@iconify/react";
+import { DecisionDaysChart } from "./Charts/DecisionDaysChart";
+import { DevelopmentChart } from "./Charts/DevelopmentChart";
+import { EthnicGroupChart } from "./Charts/EthnicGroupChart";
+import { TimelineChart } from "./Charts/TimelineChart";
+import { ConstraintsList } from "./ConstraintList";
 
-const Carousel = () => {
+const Carousel = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  
   const components = [
-    <DecisionDaysChart key={0} />,
-    <DevelopmentChart key={1} />,
-    <EthnicGroupChart key={2} />,
-    <TimelineChart key={3} />,
-    <ConstraintsList key={4} />,
+    // <DecisionDaysChart key={0} />,
+    // <DevelopmentChart key={1} />,
+    <EthnicGroupChart key={1} allData={data} />,
+    <TimelineChart key={2} allData={data} />,
+    // <ConstraintsList key={4} />,
   ];
-
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -43,10 +41,11 @@ const Carousel = () => {
           >
             {components.map((Component, index) => (
               <div key={index} className="flex-shrink-0 w-full">
-                <div className="mx-2 p-4 bg-white rounded-lg" style={{ minHeight: '150px' }}>
-                  <div className="flex w-full h-full flex-row">
-                    {Component}
-                  </div>
+                <div
+                  className="mx-2 p-4 bg-white rounded-lg"
+                  style={{ minHeight: "150px" }}
+                >
+                  <div className="flex w-full h-full flex-row">{Component}</div>
                 </div>
               </div>
             ))}
@@ -60,7 +59,12 @@ const Carousel = () => {
             size="sm"
             onClick={handlePrevious}
           >
-            <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
+            <Icon
+              color="gray"
+              icon="bx:bx-chevron-left"
+              width={24}
+              height={24}
+            />
             <span className="sr-only">Previous</span>
           </Button>
           <Button
@@ -70,7 +74,12 @@ const Carousel = () => {
             size="sm"
             onClick={handleNext}
           >
-            <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
+            <Icon
+              color="gray"
+              icon="bx:bx-chevron-right"
+              width={24}
+              height={24}
+            />
             <span className="sr-only">Next</span>
           </Button>
         </div>

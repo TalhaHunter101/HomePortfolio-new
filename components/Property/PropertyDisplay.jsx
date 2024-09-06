@@ -436,7 +436,7 @@ function PropertyDisplay({ listingData, params }) {
               <div className="p-4">
                 {/* Conditional Rendering of Content */}
                 <div style={{ maxHeight: isExpanded ? 'none' : '100px', overflow: 'hidden' }}>
-                  393-391 30th was built in the middle of the Victorian era, 1892. Leonard Haas constructed 30th as a single-family residence over a store. Recently, a second structure was created behind the Victorian consisting of a two-story home with a roof deck. The homes are as much investment property as they are a valuable piece of Noe Valley History. Currently, the store is vacant. It has an entrance to the street and one to the internal alley of the building. It has a kitchen, a full bathroom, and a loft. Above the store is a two-story apartment with internal and external stairs attaching the two floors. Each floor is currently rented to different tenants. The second floor has a living room, dining area, and three bedrooms with one full bathroom. The third floor has one bedroom, a galley kitchen area, and a sitting room. Behind the Victorian is a new construction apartment. It also is two stories with four bedrooms and two and a half bathrooms. On the roof is a four-season deck with all-day sun. Without the store income, the building generates $85,439.52. There may be banked increases. Dont miss out on this Victorian beauty with income and upside.
+                 {listingData?.metaDescription}
                 </div>
                 {/* Read More / Show Less Button */}
                 <Button  radius="full" variant="bordered" className="text-xs font-medium text-blue-600"  size="sm"  onClick={toggleReadMore} style={{ marginTop: '1rem' }}>

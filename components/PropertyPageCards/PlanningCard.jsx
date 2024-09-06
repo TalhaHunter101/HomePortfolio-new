@@ -8,8 +8,10 @@ import { ConstraintsList } from "./PlanningComponents/ConstraintList";
 import FloatingCard from "./PlanningComponents/FloatingCard";
 import { PlanningApplicationMapStatic } from "../Maps";
 
-const countStatus = (data, status) => {
-  return data.filter((item) => item.app_state === status).length;
+const countStatus = (data, decision) => {
+  console.log("data count", data, decision);
+  
+  return data.filter((item) => item?._source?.other_fields?.decision === decision).length;
 };
 
 const dummyData = [
@@ -23,25 +25,25 @@ export function PlanningCard({ postcode }) {
   const statusData = [
     {
       label: "Approved",
-      count: countStatus(planningData, "Permitted"),
+      count: countStatus(planningData, "Approved"),
       iconColor: "text-green-500",
       icon: "mdi:check-circle",
     },
     {
       label: "In progress",
-      count: countStatus(planningData, "In Progress"),
+      count: countStatus(planningData, "Approval"),
       iconColor: "text-blue-500",
       icon: "mdi:progress-clock",
     },
     {
       label: "Pending",
-      count: countStatus(planningData, "Pending"),
+      count: countStatus(planningData, "Application Permitted"),
       iconColor: "text-orange-500",
       icon: "mdi:clock-outline",
     },
     {
       label: "Rejected",
-      count: countStatus(planningData, "Rejected"),
+      count: countStatus(planningData, "Refused"),
       iconColor: "text-red-500",
       icon: "mdi:close-circle",
     },
@@ -101,7 +103,7 @@ export function PlanningCard({ postcode }) {
               ))}
             </div>
             <div className="">
-              <Carousel data={dummyData} />
+              <Carousel data={planningData} />
             </div>
             <div className="z-10 w-full  overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">
