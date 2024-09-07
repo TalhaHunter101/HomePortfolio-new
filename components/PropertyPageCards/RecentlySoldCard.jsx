@@ -4,39 +4,17 @@ import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import SearchCard from "../SearchPage/SearchCrd";
 import { Icon } from "@iconify/react";
 
-const getItemsData = () => [
-  {
-    name: "Rocky Pointe Natural Park",
-    category: "Parks • Kuehner Dr",
-    distance: "0.2 miles away",
-  },
-  {
-    name: "Sunset Valley Trail",
-    category: "Trails • Oak St",
-    distance: "0.5 miles away",
-  },
-  {
-    name: "Lakeview Park",
-    category: "Parks • Lakeview Rd",
-    distance: "1.0 miles away",
-  },
-  {
-    name: "Hickory Creek Park",
-    category: "Parks • Hickory Creek Rd",
-    distance: "2.0 miles away",
-  },
-  // Add more items as needed
-];
+
 
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [SoldListingData, setSoldListingData] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
 
-  const items = getItemsData();
+  
 
   const nextSlide = () => {
-    if (currentIndex < items.length - 1) {
+    if (currentIndex < SoldListingData?.hits.length - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -79,7 +57,7 @@ export function RecentlySoldCard({ city, postcode }) {
   
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px" }}>
+    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1000px" }}>
       
       <CardBody>
         {isDataLoading ? (
@@ -131,8 +109,8 @@ export function RecentlySoldCard({ city, postcode }) {
                       </div>
 
                       {/* Carousel section on the right */}
-                      <div className="flex-1  flex flex-col justify-center h-full">
-                        <div className="relative w-full h-full flex items-center">
+                      <div className="flex-1 w-1/2 flex flex-col justify-center h-full">
+                        <div className="relative  h-full flex items-center">
                           <button
                             onClick={prevSlide}
                             disabled={currentIndex === 0}
@@ -146,7 +124,7 @@ export function RecentlySoldCard({ city, postcode }) {
                               transform: `translateX(-${currentIndex * 100}%)`,
                             }}
                           >
-                            {items.map((item, index) => (
+                            {SoldListingData?.hits?.map((item, index) => (
                               <div
                                 key={index}
                                 className="flex-shrink-0 w-[100%] h-full p-2"
@@ -154,20 +132,22 @@ export function RecentlySoldCard({ city, postcode }) {
                                 <Card className="w-full h-full" shadow="sm">
                                   <CardHeader className="p-0">
                                     <Image
+                                      width={150}
+                                      height={150}
                                       src="https://via.placeholder.com/150"
-                                      alt={item.name}
+                                      alt={item?.name || 'image'}
                                       className="w-full h-64 object-cover rounded-t-md"
                                     />
                                   </CardHeader>
                                   <CardBody className="p-4 flex flex-col justify-between">
                                     <div>
                                       <h3 className="text-lg font-bold">
-                                        {item.name}
+                                        {item._source?.full_address}
                                       </h3>
-                                      <p className="text-sm">{item.category}</p>
+                                      {/* <p className="text-sm">{item.category}</p>
                                       <p className="text-sm text-gray-500">
                                         {item.distance}
-                                      </p>
+                                      </p> */}
                                     </div>
                                   </CardBody>
                                 </Card>
@@ -176,7 +156,7 @@ export function RecentlySoldCard({ city, postcode }) {
                           </div>
                           <button
                             onClick={nextSlide}
-                            disabled={currentIndex === items.length - 1}
+                            disabled={currentIndex === SoldListingData?.hits?.length - 1}
                             className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
                           >
                             &#10095;
