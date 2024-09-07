@@ -23,7 +23,6 @@ const getStatusCountsByMonth = (data) => {
           month,
           year,
           approved: 0,
-          inProgress: 0,
           pending: 0,
           rejected: 0,
           withdrawn: 0,
@@ -32,12 +31,12 @@ const getStatusCountsByMonth = (data) => {
 
       // Increment the correct status count based on the decision
       switch (item?._source?.other_fields?.decision) {
-        case "Application Permitted":
-          monthlyCounts[monthYear].inProgress++;
-          break;
         case "Granted":
+        case "Grant":
+        case "Application Permitted":
         case "Approved":
         case "Approve":
+        case "Approval":
         case "Approve with Conditions":
           monthlyCounts[monthYear].approved++;
           break;

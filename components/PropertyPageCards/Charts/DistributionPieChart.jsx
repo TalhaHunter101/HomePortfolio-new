@@ -20,8 +20,25 @@ const CustomLegend = ({ data, colors }) => (
   </ul>
 );
 
+
+function mapPropertyType(type) {
+  const flatTypes = ["flat", "studio", "maisonette", "park_home"];
+  const semiDetachedTypes = ["semi_detached", "semi_detached_bungalow", "link_detached"];
+  const detachedTypes = ["detached", "detached_bungalow", "barn_conversion", "cottage", "lodge", "bungalow", "hotel"];
+  const terracedTypes = ["terraced", "town_house", "end_terrace", "mews"];
+
+  if (flatTypes.includes(type)) return "Flat";
+  if (semiDetachedTypes.includes(type)) return "Semi-detached";
+  if (detachedTypes.includes(type)) return "Detached";
+  if (terracedTypes.includes(type)) return "Terraced";
+
+  return type || "Unknown"; // Fallback to "Unknown" or original type if not matched
+}
+
+
 // Main component
 export const DistributionPieChart = ({ main_data, setbarchart }) => {
+  
   const [data01, setData01] = useState([]);
   const [data02, setData02] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -29,10 +46,10 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const [activeDataSet, setActiveDataSet] = useState(null);
 
   const COLORS = [
-    // "#9333ea",
+    "#9333ea",
     "#db2777",
     "#4f46e5",
-    // "#4b5563",
+    "#4b5563",
     // "#c084fc"
   ];
 
@@ -49,27 +66,31 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   // Format data01
   function formatData(data) {
     const propertyTypeCount = data.reduce((acc, item) => {
-      const propertyType = item._source.analyticsTaxonomy?.propertyType;
-      if (propertyType) {
+      const propertyType = mapPropertyType(item._source.analyticsTaxonomy?.propertyType);
+      
+      // Only count property types that are in the allowed list
+      if (["Flat", "Detached", "Semi-detached", "Terraced"].includes(propertyType)) {
         acc[propertyType] = (acc[propertyType] || 0) + 1;
       }
       return acc;
     }, {});
-
+  
     return Object.keys(propertyTypeCount).map((key) => ({
       name: key,
       value: propertyTypeCount[key],
     }));
   }
+  
 
   // Format data02 by bedrooms
   function formatDataByBedrooms(data) {
     const propertyTypeByBedrooms = {};
     data.forEach((item) => {
-      const propertyType = item._source.analyticsTaxonomy?.propertyType;
+      const propertyType = mapPropertyType(item._source.analyticsTaxonomy?.propertyType);
       const bedrooms = item._source.analyticsTaxonomy?.bedsMax;
-
-      if (propertyType && bedrooms) {
+  
+      // Only include property types in the allowed list
+      if (propertyType && bedrooms && ["Flat", "Detached", "Semi-detached", "Terraced"].includes(propertyType)) {
         if (!propertyTypeByBedrooms[bedrooms]) {
           propertyTypeByBedrooms[bedrooms] = {};
         }
@@ -77,7 +98,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
           (propertyTypeByBedrooms[bedrooms][propertyType] || 0) + 1;
       }
     });
-
+  
     const formattedData = [];
     Object.keys(propertyTypeByBedrooms).forEach((bedrooms) => {
       const propertyTypes = propertyTypeByBedrooms[bedrooms];
@@ -88,7 +109,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
         });
       });
     });
-
+  
     return formattedData;
   }
 

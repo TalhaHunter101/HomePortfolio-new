@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const getStatusCounts = (data, appType) => {
   const statusCounts = {
     approved: 0,
-    inProgress: 0,
+    // inProgress: 0,
     pending: 0,
     rejected: 0,
     withdrawn: 0,
@@ -16,16 +16,19 @@ const getStatusCounts = (data, appType) => {
     if (item?._source?.other_fields?.application_type === appType) {
       
       switch (item?._source?.other_fields?.decision) {
-        case "Application Permitted":
-          statusCounts.inProgress++;
-          break;
+        // case "Application Permitted":
+        //   statusCounts.inProgress++;
+        //   break;
         case "Granted":
+        case "Grant":
+        case "Application Permitted":
         case "Approved":
         case "Approve":
+        case "Approval":
         case "Approve with Conditions":
           statusCounts.approved++;
           break;
-        case "Approval":
+        case "Undecided":
           statusCounts.pending++;
           break;
         case "Refused":

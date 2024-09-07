@@ -47,9 +47,9 @@ const HomesForSaleMap = ({ center, nearByListingsData }) => {
   }, [nearByListingsData]);
 
   return (
-    <div className="relative h-[80vh] w-full">
+    <div className="relative h-[60vh] w-full">
       {/* Cards Section */}
-      <div className="absolute top-4 left-4   p-4 w-[300px] max-h-[70vh] overflow-y-auto z-[100] scrollbar-hide">
+      <div className="absolute top-4 left-4   p-4 w-[300px] max-h-[50vh] overflow-y-auto z-[100] scrollbar-hide">
         {filter &&
           filter.map((card, index) => (
             <motion.div
@@ -78,6 +78,7 @@ const HomesForSaleMap = ({ center, nearByListingsData }) => {
                 center={toLocation}
                 hovercard={cardHover}
                 setfilter={setFilter}
+                height="500px"
               />
             </Card>
           </motion.div>

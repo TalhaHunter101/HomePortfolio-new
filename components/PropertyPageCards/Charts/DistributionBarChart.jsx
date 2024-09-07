@@ -3,18 +3,39 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { CardBody } from '@nextui-org/react';
 
-export const DistributionBarChart= ({ main_data, barchart })=> {
+// Property type mapping function (same as in the pie chart)
+function mapPropertyType(type) {
+  const flatTypes = ["flat", "studio", "maisonette", "park_home"];
+  const semiDetachedTypes = ["semi_detached", "semi_detached_bungalow", "link_detached"];
+  const detachedTypes = ["detached", "detached_bungalow", "barn_conversion", "cottage", "lodge", "bungalow", "hotel"];
+  const terracedTypes = ["terraced", "town_house", "end_terrace", "mews"];
+
+  if (flatTypes.includes(type)) return "Flat";
+  if (semiDetachedTypes.includes(type)) return "Semi-detached";
+  if (detachedTypes.includes(type)) return "Detached";
+  if (terracedTypes.includes(type)) return "Terraced";
+
+  return type || "Unknown"; // Fallback to "Unknown" or original type if not matched
+}
+
+export const DistributionBarChart = ({ main_data, barchart }) => {
   const [data, setData] = useState([]);
 
+  // Updated filterMainData function with property type mapping
   const filterMainData = (barchartValue) => {
     if (!barchartValue) return [];
   
     const parts = barchartValue.name.split('~');
-    const propertyType = parts[0];
+    const propertyType = mapPropertyType(parts[0]); // Apply property type mapping
     const bedsInfo = parts.length > 1 ? parts[1] : null;
   
+    // Only include the allowed property types
+    if (!["Flat", "Detached", "Semi-detached", "Terraced"].includes(propertyType)) {
+      return [];
+    }
+  
     return main_data.filter(item => {
-      const itemPropertyType = item._source.analyticsTaxonomy?.propertyType;
+      const itemPropertyType = mapPropertyType(item._source.analyticsTaxonomy?.propertyType);
       const itemBedrooms = item._source.analyticsTaxonomy?.bedsMax;
   
       const typeMatches = itemPropertyType === propertyType;
@@ -31,6 +52,7 @@ export const DistributionBarChart= ({ main_data, barchart })=> {
       return typeMatches;
     });
   };
+  
 
   const getPriceRanges = (data) => {
     if (!data || data.length === 0) {
@@ -146,5 +168,4 @@ export const DistributionBarChart= ({ main_data, barchart })=> {
       </div>
     </CardBody>
   );
-}
-
+};
