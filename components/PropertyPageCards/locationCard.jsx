@@ -59,14 +59,14 @@ export function LocationCard({ data, postcode, schoolData }) {
         <Tabs
           radius="none"
           fullWidth
-          className="divide-y divide-gray-300"
+          className="divide-y  divide-gray-300"
           aria-label="Map Options"
           color="primary"
           variant="ghost"
           onSelectionChange={(key) => setActiveMap(key)}
           selectedKey={activeMap}
         >
-          <Tab key="location" title={<div className="flex items-center space-x-2"><Icon icon="mdi:map-marker" /><span>Location</span></div>} />
+          <Tab key="location" title={<div className="flex items-center  space-x-2"><Icon icon="mdi:map-marker" /><span>Location</span></div>} />
           <Tab key="schools" title={<div className="flex items-center space-x-2"><Icon icon="mdi:school" /><span>Schools</span></div>} />
           <Tab key="homes_for_sale" title={<div className="flex items-center space-x-2"><Icon icon="mdi:home-city" /><span>Homes For Sale</span></div>} />
           <Tab key="whats_nearby" title={<div className="flex items-center space-x-2"><Icon icon="mdi:compass-outline" /><span>What&#39;s Nearby</span></div>} />

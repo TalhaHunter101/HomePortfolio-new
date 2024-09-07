@@ -66,9 +66,9 @@ export default function AutocompleteSearch({ properties }) {
   };
 
   return (
-    <div className="mt-4 bg-white shadow p-4 rounded-lg w-full">
+    <div className="mt-4 bg-white shadow p-4 rounded-lg w-full overflow-hidden">
       <Tabs
-      color="primary"
+        color="primary"
         initialValue="1"
         onChange={(tabKey) => setSelectedTab(tabKey)}
         selectedValue={selectedTab}
@@ -86,7 +86,7 @@ export default function AutocompleteSearch({ properties }) {
               className="flex flex-col"
             >
               <Input
-              startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
+                startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
                 placeholder="Search for an address, MLS number or neighborhood"
                 variant="bordered"
                 className="flex-grow radius-lg min-w-xl"
@@ -118,22 +118,16 @@ export default function AutocompleteSearch({ properties }) {
               className="flex flex-row"
             >
               <Input
-              startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
+                startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
                 placeholder="Enter address"
                 variant="bordered"
                 className="flex-grow radius-lg"
                 color="primary"
                 size="lg"
               />
-              {/* <Input
-              
-                placeholder="Unit #"
-                variant="bordered"
-                className="flex-grow  radius-lg ml-4"
-                color="primary"
-                size="lg"
-              /> */}
-              <Button size="lg" color="primary" className="ml-4 text-xs">Get My Report</Button>
+              <Button size="lg" color="primary" className="ml-4 text-xs">
+                Get My Report
+              </Button>
             </motion.div>
           </div>
         </Tab>

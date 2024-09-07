@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { SchoolMapStatic } from "@/components/Maps";
 
@@ -21,54 +20,52 @@ const SchoolsMap = ({ data, schoolData }) => {
 
   return (
     <div className="relative h-[60vh] w-full">
-      {/* Button Group for selecting school type */}
-      <div className="absolute top-8 pl-4 left-4 z-20">
-        <ButtonGroup size="" variant="faded" className="w-full">
-          <Button
-            startContent={<Icon icon="tabler:school" />}
-            onClick={() => setSelectedType("Primary")}
-            className={`${
-              selectedType === "Primary"
-                ? "text-blue-800 bg-blue-200"
-                : "text-gray-800"
-            }`}
-          >
-            Primary
-          </Button>
-          <Button
-            startContent={<Icon icon="tabler:school" />}
-            onClick={() => setSelectedType("Secondary")}
-            className={`${
-              selectedType === "Secondary"
-                ? "text-blue-800 bg-blue-200"
-                : "text-gray-800"
-            }`}
-          >
-            Secondary
-          </Button>
-          <Button
-            startContent={<Icon icon="tabler:school" />}
-            onClick={() => setSelectedType("Independent")}
-            className={`${
-              selectedType === "Independent"
-                ? "text-blue-800 bg-blue-200"
-                : "text-gray-800"
-            }`}
-          >
-            Independent
-          </Button>
-          <Button
-            startContent={<Icon icon="tabler:school" />}
-            onClick={() => setSelectedType("All grades")}
-            className={`${
-              selectedType === "All grades"
-                ? "text-blue-800 bg-blue-200"
-                : "text-gray-800"
-            }`}
-          >
-            All grades
-          </Button>
-        </ButtonGroup>
+      {/* Simple buttons for selecting school type */}
+      <div className="absolute top-8 pl-4 left-4 z-20 flex space-x-2">
+        <button
+          onClick={() => setSelectedType("Primary")}
+          className={`flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-md shadow-md whitespace-nowrap ${
+            selectedType === "Primary"
+              ? "text-blue-800 bg-blue-200"
+              : "text-gray-800"
+          }`}
+        >
+          <Icon icon="tabler:school" width="20" height="20" />
+          <span>Primary</span>
+        </button>
+        <button
+          onClick={() => setSelectedType("Secondary")}
+          className={`flex items-center space-x-2 px-3 py-1 bg-gray-100 rounded-md shadow-md whitespace-nowrap ${
+            selectedType === "Secondary"
+              ? "text-blue-800 bg-blue-200"
+              : "text-gray-800"
+          }`}
+        >
+          <Icon icon="tabler:school" width="20" height="20" />
+          <span>Secondary</span>
+        </button>
+        <button
+          onClick={() => setSelectedType("Independent")}
+          className={`flex items-center space-x-2 px-3 py-1 bg-gray-100 rounded-md shadow-md whitespace-nowrap ${
+            selectedType === "Independent"
+              ? "text-blue-800 bg-blue-200"
+              : "text-gray-800"
+          }`}
+        >
+          <Icon icon="tabler:school" width="20" height="20" />
+          <span>Independent</span>
+        </button>
+        <button
+          onClick={() => setSelectedType("All grades")}
+          className={`flex items-center space-x-2 px-3 py-1 bg-gray-100 rounded-md shadow-md whitespace-nowrap ${
+            selectedType === "All grades"
+              ? "text-blue-800 bg-blue-200"
+              : "text-gray-800"
+          }`}
+        >
+          <Icon icon="tabler:school" width="20" height="20" />
+          <span>All grades</span>
+        </button>
       </div>
 
       {/* Content boxes hovering over the map on the left side */}
