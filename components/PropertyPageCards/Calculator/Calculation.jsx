@@ -6,6 +6,7 @@ import RevenueCard from "./RevenueCard";
 import ExpensesCard from "./ExpensesCard";
 import FinancialSummary from "./FinancialSummary";
 import { useCalculationsStore } from "../../../store/calculationsStore";
+import { Card, CardBody } from "@nextui-org/react";
 
 function Calculation({ title, propertyPrice, rentEstimate }) {
   const {
@@ -67,14 +68,20 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
   }, [propertyPrice, rentEstimate]);
 
   return (
-    <div className="border border-gray-200 bg-default-white rounded-lg p-2">
+    <Card className="m-4">
+      <CardBody>
+
+
+
       <InvestorReturnCal propertyPrice={purchasePrice} />
       <TotalInvestmentCard />
       <FinancingCard />
       <RevenueCard />
       <ExpensesCard />
       <FinancialSummary />
-    </div>
+      </CardBody>
+
+    </Card>
   );
 }
 
