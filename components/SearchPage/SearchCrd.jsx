@@ -107,15 +107,15 @@ const SearchCard = ({ property, setCardHover }) => {
         <Link href={`/property/${property.id}`}>
           <div className="p-1">
             <h3 className="text-bold text-2xl">£{humanReadablePrice}</h3>
-            <div className="text-sm uppercase font-bold">
-              <span className="ml-0 text-bold">
-                &bull; {property?.minBedrooms} Beds
+            <div className="text-sm uppercase flex text-bold">
+              <span className="ml-0 text-bold flex justify-center gap-1">
+                <Icon icon="mdi:bed-outline" width={16} height={16} /> {property?.minBedrooms}
               </span>
-              <span className="ml-2 text-bold">
-                &bull; {property?.bathrooms} Baths
+              <span className="ml-2 text-bold flex justify-center gap-1">
+                <Icon icon="bx:bath" width={16} height={16} /> {property?.bathrooms} 
               </span>
-              <span className="ml-2 text-bold">
-                &bull; {property?.squareFeet} Sqft
+              <span className="ml-2 text-bold flex justify-center gap-1">
+                <Icon icon="carbon:area" width={16} height={16} /> {property?.squareFeet} 
               </span>
             </div>
             <p className="pt-2 text-default-500 text-sm">{property?.address}</p>

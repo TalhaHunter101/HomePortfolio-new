@@ -529,7 +529,7 @@ function PropertyDisplay({ listingData, params }) {
                                         }`}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: subIndex * 0.1 }}
+                                      transition={{ delay: subIndex * 0.01 }}
                                     >
                                       <a
                                         href={"#" + subElement.id}

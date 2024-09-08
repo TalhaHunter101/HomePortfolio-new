@@ -56,7 +56,6 @@ export default function TotalInvestmentCard() {
 
   return (
     <div className="mt-2">
-      <CardBody className="p-0">
         <button
           className="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-50 rounded-xl transition-colors"
           onClick={() => setIsOpen(!isOpen)}
@@ -177,7 +176,6 @@ export default function TotalInvestmentCard() {
             </div>
           </div>
         </div>
-      </CardBody>
     </div>
   );
 }

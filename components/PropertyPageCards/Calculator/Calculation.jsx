@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Card, CardBody } from "@nextui-org/react";
 import InvestorReturnCal from "./InvestorReturnCal";
 import TotalInvestmentCard from "./TotalInvestmentCard";
 import FinancingCard from "./FinancingCard";
@@ -68,24 +67,14 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
   }, [propertyPrice, rentEstimate]);
 
   return (
-    <Card>
-      <CardBody>
-        <div className="border border-gray-200 bg-default-white rounded-lg p-2">
-          <InvestorReturnCal propertyPrice={purchasePrice} />
-          <TotalInvestmentCard
-          />
-          <FinancingCard
-          />
-          <RevenueCard
-          />
-          <ExpensesCard
-    
-          />
-          <FinancialSummary
-          />
-        </div>
-      </CardBody>
-    </Card>
+    <div className="border border-gray-200 bg-default-white rounded-lg p-2">
+      <InvestorReturnCal propertyPrice={purchasePrice} />
+      <TotalInvestmentCard />
+      <FinancingCard />
+      <RevenueCard />
+      <ExpensesCard />
+      <FinancialSummary />
+    </div>
   );
 }
 
