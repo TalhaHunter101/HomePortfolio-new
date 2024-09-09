@@ -20,6 +20,11 @@ export const SchoolMapStatic = dynamic(() => import("./SchoolMap"), {
   loading: () => <p>A map is loading</p>,
 })
 
+export const NearByPlacesStatic = dynamic(() => import("./NearByPlaces"), {
+  ssr: false,
+  loading: () => <p>A map is loading</p>,
+})
+
 
 export const TransportMapStatic = dynamic(() => import("./TransportMap"), {
   ssr: false,
