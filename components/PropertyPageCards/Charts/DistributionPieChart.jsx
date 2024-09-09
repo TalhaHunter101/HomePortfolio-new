@@ -264,7 +264,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             data={data01}
             cx="50%"
             cy="50%"
-            innerRadius={135}
+            innerRadius={40}
             outerRadius={150}
             fill="#8884d8"
             dataKey="value"
@@ -279,7 +279,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             ))}
           </Pie>
 
-          <Pie
+          {/* <Pie
             activeIndex={activeDataSet === "inner" ? activeIndex : -1}
             activeShape={renderActiveShape}
             data={data02}
@@ -298,7 +298,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
-          </Pie>
+          </Pie> */}
         </PieChart>
       </ResponsiveContainer>
       

@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image } from "@nextui-org/react";
 import SearchCard from "../SearchPage/SearchCrd";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 
 
@@ -95,14 +96,18 @@ export function RecentlySoldCard({ city, postcode }) {
                   </div>
                 </div>
                 <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
-                  <div className="hidden xl:flex h-96">
+                  <div className=" xl:flex h-96">
                     <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
                       {/* Map section on the left */}
                       <div className="flex-1 z-40 h-full">
                         <div className="h-full w-full">
                           <div className="w-full h-full bg-white border-1 maplibregl-map mapboxgl-map">
                             <div>
-                              <p>map to be integrated here</p>
+
+
+
+
+
                             </div>
                           </div>
                         </div>
@@ -129,7 +134,7 @@ export function RecentlySoldCard({ city, postcode }) {
                                 key={index}
                                 className="flex-shrink-0 w-[100%] h-full p-2"
                               >
-                                <Card className="w-full h-full" shadow="sm">
+                                {/* <Card className="w-full h-full" shadow="sm">
                                   <CardHeader className="p-0">
                                     <Image
                                       width={150}
@@ -144,13 +149,107 @@ export function RecentlySoldCard({ city, postcode }) {
                                       <h3 className="text-lg font-bold">
                                         {item._source?.full_address}
                                       </h3>
-                                      {/* <p className="text-sm">{item.category}</p>
-                                      <p className="text-sm text-gray-500">
-                                        {item.distance}
-                                      </p> */}
+                                  
                                     </div>
                                   </CardBody>
-                                </Card>
+                                </Card> */}
+                           <Card   >
+      <CardHeader className="p-0 relative">
+        {/* Wrapper for positioning */}
+        <div className="relative">
+          {/* Heart Icon */}
+          {/* <div className="absolute top-2 right-2 z-10">
+            <Icon
+              onClick={handleLikeToggle} // Toggle like on click
+              icon={ isLiked ? "twemoji:red-heart" : "ant-design:heart-twotone"}
+              width="24"
+              height="24"
+              color={isLiked ? "" : "white"} // Change color based on state
+              style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
+            />
+          </div> */}
+
+          <div className="w-full overflow-hidden rounded-none">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              // style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+                <div  className="flex-shrink-0 w-full">
+                  {/* <Link href={`/property/${item?._source?.id}`}> */}
+                    <Image
+                      radius="none"
+                      src={"https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"}
+                      alt={`Property`}
+                      width={600} // Full width
+                      height={200}
+                      classNames={{ wrapper: "min-w-full" }}
+                    />
+                  {/* </Link> */}
+                </div>
+            </div>
+          </div>
+          {/* <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
+            <Button
+              isIconOnly
+              variant="flat"
+              radius="full"
+              size="sm"
+              onClick={handlePrevious}
+            >
+              <Icon
+                color="white"
+                icon="bx:bx-chevron-left"
+                width={24}
+                height={24}
+              />
+              <span className="sr-only">Previous</span>
+            </Button>
+            <Button
+              isIconOnly
+              variant="flat"
+              radius="full"
+              size="sm"
+              onClick={handleNext}
+            >
+              <Icon
+                color="white"
+                icon="bx:bx-chevron-right"
+                width={24}
+                height={24}
+              />
+              <span className="sr-only">Next</span>
+            </Button>
+          </div> */}
+        </div>
+      </CardHeader>
+      <CardBody className="overflow-hidden py-2">
+        {/* <Link href={`/property/${item?._source?.id}`}> */}
+          <div className="p-1">
+            <h3 className="text-bold text-2xl">£{item?._source?.saleEstimate?.currentPrice || "NA"}</h3>
+            <div className="text-sm uppercase flex text-bold">
+              <span className="ml-0 text-bold flex justify-center gap-1">
+                <Icon icon="mdi:bed-outline" width={16} height={16} /> {item?._source?.attributes?.bedrooms || 0}
+              </span>
+              <span className="ml-2 text-bold flex justify-center gap-1">
+                <Icon icon="bx:bath" width={16} height={16} /> {item?._source?.attributes?.bathrooms || 0} 
+              </span>
+              <span className="ml-2 text-bold flex justify-center gap-1">
+                <Icon icon="carbon:area" width={16} height={16} /> {item?._source?.squareFeet || 1000} 
+              </span>
+            </div>
+            <p className="pt-2 text-default-500 text-sm">{item?._source?.full_address}</p>
+            <div className="pt-2 flex space-x-2">
+              <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
+                #bonus room
+              </span>
+              <span className="bg-gray-200 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                +6 more
+              </span>
+            </div>
+          </div>
+        {/* </Link> */}
+      </CardBody>
+    </Card>
                               </div>
                             ))}
                           </div>
