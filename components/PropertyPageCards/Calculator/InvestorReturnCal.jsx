@@ -4,8 +4,8 @@ import { useState } from "react";
 function InvestorReturnCal({propertyPrice}) {
   const [purchasePrice, setPurchasePrice] = useState(propertyPrice);
   return (
-    <div className=" mt-10">
-      <CardBody>
+    <div className="mt-10">
+  
         <h2 className="text-2xl font-bold text-purple-900 mb-4">
           Investor Return Calculator
         </h2>
@@ -47,7 +47,6 @@ function InvestorReturnCal({propertyPrice}) {
             <p className="text-xl font-bold text-purple-900">29.5%</p>
           </div>
         </div>
-      </CardBody>
     </div>
   );
 }

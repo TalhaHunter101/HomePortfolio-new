@@ -32,7 +32,6 @@ export default function RevenueCard() {
 
   return (
     <div className="mt-2">
-      <CardBody className="p-0">
         <button
           className="w-full flex justify-between items-center p-4 bg-white hover:bg-gray-100 rounded-xl transition-colors"
           onClick={() => setIsOpen(!isOpen)}
@@ -121,7 +120,6 @@ export default function RevenueCard() {
 
           </div>
         </div>
-      </CardBody>
     </div>
   );
 }

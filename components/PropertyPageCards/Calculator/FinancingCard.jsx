@@ -94,7 +94,6 @@ export default function FinancingCard() {
 
   return (
     <div className="mt-2">
-      <CardBody className="p-0">
         <button
           className="w-full flex justify-between items-center p-4 bg-white rounded-xl hover:bg-gray-100 transition-colors"
           onClick={() => setIsOpen(!isOpen)}
@@ -242,7 +241,6 @@ export default function FinancingCard() {
             )}
           </div>
         </div>
-      </CardBody>
     </div>
   );
 }

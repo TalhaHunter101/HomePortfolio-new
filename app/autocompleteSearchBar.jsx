@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Input, Tabs, Tab } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
@@ -69,72 +68,186 @@ export default function AutocompleteSearch({ properties }) {
   };
 
   return (
-    <div className="mt-4 bg-white shadow p-4 rounded-lg w-full overflow-hidden">
-      <Tabs
-        color="primary"
-        initialValue="1"
-        onChange={(tabKey) => setSelectedTab(tabKey)}
-        selectedValue={selectedTab}
-        className="flex rounded-lg justify-center"
+    <div className="mt-4 p-4 rounded-lg w-full overflow-hidden">
+      {/* Custom Tabs */}
+      <div className="tabs-container flex justify-center ">
+        <div className="tabs-wrapper">
+          <button
+            onClick={() => setSelectedTab("1")}
+            className={`tab-button ${selectedTab === "1" ? "active-tab" : ""}`}
+          >
+            Browse Listings
+          </button>
+          <button
+            onClick={() => setSelectedTab("2")}
+            className={`tab-button ${selectedTab === "2" ? "active-tab" : ""}`}
+          >
+            Instant Home Evaluation
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <motion.div
+        key={selectedTab}
+        custom={selectedTab === "1" ? 1 : -1}
+        variants={tabVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        className="tab-content-container"
       >
-        <Tab key="1" title="Browse Listings">
-          <div className="p-4">
-            <motion.div
-              key="1"
-              custom={1}
-              variants={tabVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="flex flex-col"
-            >
-              <Input
-                startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
+        {selectedTab === "1" ? (
+          <div className="search-container">
+            <div className="input-wrapper large-input">
+              <Icon
+                icon="fluent:home-48-filled"
+                width="20"
+                height="20"
+                color="gray"
+                className="mr-2"
+              />
+              <input
+                type="text"
                 placeholder="Search for an address, MLS number or neighborhood"
-                variant="bordered"
-                className="flex-grow radius-lg min-w-xl"
+                className="custom-input"
                 value={searchTerm}
-                color="primary"
-                size="lg"
                 onChange={(e) => setSearchTerm(e.target.value)}
-                endContent={<Icon icon="akar-icons:search" />}
               />
+              <Icon icon="akar-icons:search" className="search-icon" />
+            </div>
 
-              {results && (
-                <div>
-                  <SearchDropdown results={results} isDataLoading={isDataLoading} />
-                </div>
-              )}
-            </motion.div>
+            {results && (
+              <div>
+                <SearchDropdown results={results} isDataLoading={isDataLoading} />
+              </div>
+            )}
           </div>
-        </Tab>
-
-        <Tab key="2" title="Instant Home Evaluation">
-          <div className="p-4">
-            <motion.div
-              key="2"
-              custom={-1}
-              variants={tabVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="flex flex-row"
-            >
-              <Input
-                startContent={<Icon icon="fluent:home-48-filled" width="20" height="20" color="gray" />}
+        ) : (
+          <div className="evaluation-container">
+            <div className="input-wrapper large-input">
+              <Icon
+                icon="fluent:home-48-filled"
+                width="20"
+                height="20"
+                color="gray"
+                className="mr-2"
+              />
+              <input
+                type="text"
                 placeholder="Enter address"
-                variant="bordered"
-                className="flex-grow radius-lg"
-                color="primary"
-                size="lg"
+                className="custom-input"
               />
-              <Button size="lg" color="primary" className="ml-4 text-xs">
-                Get My Report
-              </Button>
-            </motion.div>
+              <Icon
+                icon="bi:info-circle"
+                width="20"
+                height="20"
+                color="gray"
+                className="unit-info-icon "
+              />
+              <button className="get-report-button">Get My Report</button>
+            </div>
           </div>
-        </Tab>
-      </Tabs>
+        )}
+      </motion.div>
+
+      <style jsx>{`
+  .tabs-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tabs-wrapper {
+    display: flex;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    background-color: #f5f8fa;
+    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 3D shadow effect */
+  }
+
+  .tab-button {
+    flex: 1;
+    padding: 6px 15px;
+    cursor: pointer;
+    border: none;
+    background-color: #f5f8fa;
+    font-size: 14px;
+    color: #666;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Tab 3D effect */
+  }
+
+  .active-tab {
+    background-color: #d8e9f9;
+    color: #333;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3); /* Deeper shadow for active tab */
+  }
+
+  .tab-content-container {
+    padding: 15px;
+    border-radius: 0 0 15px 15px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); /* 3D effect on content */
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Input 3D effect */
+    transition: box-shadow 0.3s;
+  }
+
+  .input-wrapper:hover {
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15); /* Hover effect */
+  }
+
+  .large-input {
+    width: 100%;
+    padding: 15px;
+  }
+
+ 
+
+  .custom-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+   
+
+  }
+
+  .search-icon {
+    margin-left: 10px;
+  }
+
+  .get-report-button {
+    padding: 5px 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 3D button effect */
+    transition: box-shadow 0.3s;
+  }
+
+  .get-report-button:hover {
+    background-color: #000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Hover effect */
+  }
+`}</style>
+
     </div>
   );
 }
+//working
