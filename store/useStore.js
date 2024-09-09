@@ -13,11 +13,23 @@ const useStore = create((set) => ({
   selectedBaths: "any",
   setSelectedBaths: (baths) => set({ selectedBaths: baths }),
   minPrice: "any",
-  setMinPrice: (price) => set({ minPrice: price }),
+  setMinPrice: (price) => set({ minPrice: parseInt(price) }),
   maxPrice: "any",
-  setMaxPrice: (price) => set({ maxPrice: price }),
+  setMaxPrice: (price) => set({ maxPrice: parseInt(price) }),
   homeType: [],
   setHomeType: (types) => set({ homeType: types }),
+
+  clearAllFilter () {
+    set({
+      searchTerm: "",
+      results: [],
+      selectedBeds: "any",
+      selectedBaths: "any",
+      minPrice: "any",
+      maxPrice: "any",
+      homeType: [],
+    });
+  },
 
   searchPostcode: async (searchTerm) => {
     try {

@@ -477,6 +477,8 @@ function PropertyDisplay({ listingData, params }) {
                       postcode={listingData?.ref_postcode}
                       setRentEstimate={setRentEstimate}
                       rentEstimate={rentEstimate}
+                      latitude={listingData?.location?.coordinates?.latitude}
+                      longitude={listingData?.location?.coordinates?.longitude}
                     />
                   </div>
                 ))}

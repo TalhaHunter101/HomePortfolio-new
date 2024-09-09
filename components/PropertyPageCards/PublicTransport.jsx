@@ -2,12 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { TransportMapStatic } from "../Maps";
+import { BusMapStatic, TransportMapStatic } from "../Maps";
 
-export function PublicTransportCard({ data }) {
+export function PublicTransportCard({ data, latitude, longitude }) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
+  const [busData, setBusData] = useState([]);
+  const [busLocations, setBusLocations] = useState([]);
 
+  // Count transports for each type (rail, bus, ferry)
   const transportCounts = data.transports.reduce((acc, transport) => {
     const { poiType } = transport;
     const key = poiType.includes("rail")
@@ -19,18 +22,18 @@ export function PublicTransportCard({ data }) {
     return acc;
   }, {});
 
-  const filteredTransports = selectedType
-    ? data.transports.filter((transport) =>
-        transport.poiType.includes(selectedType)
-      )
-    : [];
+  // Filter transports based on selected type
+  const filteredTransports =
+    selectedType === "bus"
+      ? busData
+      : data.transports.filter((transport) =>
+          transport.poiType.includes(selectedType)
+        );
 
-  const center = [
-    {
-      lat: data?.location?.coordinates?.latitude,
-      lng: data?.location?.coordinates?.longitude,
-    },
-  ];
+  const center = [{
+    lat: latitude,
+    lng: longitude,
+  }];
 
   useEffect(() => {
     const getWalkScore = async () => {
@@ -47,18 +50,51 @@ export function PublicTransportCard({ data }) {
 
         if (res.ok) {
           const data = await res.json();
-          setWalkScore(data[0]._source?.walk_score);
+          setWalkScore(data[0]?._source?.walk_score);
         }
       } catch (error) {
         console.log(error);
       }
     };
+
+    const getBusData = async () => {
+      try {
+        const lat = parseFloat(latitude);
+        const lng = parseFloat(longitude);
+
+        const response = await fetch(
+          `https://bustimes.org/vehicles.json?ymax=${lat + 0.2}&xmax=${
+            lng + 0.2
+          }&ymin=${lat - 0.2}&xmin=${lng - 0.2}`
+        );
+
+        if (response.ok) {
+          const busData = await response.json();
+          setBusData(busData);
+
+          // Extract latitude and longitude from bus coordinates
+          const busLocations = busData.map((bus) => ({
+            lat: bus.coordinates[1],
+            lng: bus.coordinates[0],
+          }));
+
+          setBusLocations(busLocations); // Set the bus locations with correct lat/lng
+        } else {
+          console.log("Failed to fetch bus data");
+        }
+      } catch (error) {
+        console.log("Error fetching bus data:", error);
+      }
+    };
+
+    getBusData();
     getWalkScore();
-  }, [data?.ref_postcode]);
+  }, [data?.ref_postcode, latitude, longitude, selectedType]);
+
+  console.log("busLocations", busLocations);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      
       <CardBody>
         <div className="rounded-md">
           <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
@@ -66,24 +102,10 @@ export function PublicTransportCard({ data }) {
               <div className="h-6 w-6 lg:w-8 lg:h-8 px-2 flex justify-center items-center mr-1 rounded-full bg-purple-400">
                 <Icon icon="mdi:bus" />
               </div>
-              <span>
-                What are my public transportation options in East Simi Valley?
-              </span>
+              <span>What are my public transportation options?</span>
             </h2>
             <div className="sentences leading-6 w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 text-foreground grid sm:items-center grid-cols-2">
               <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-                <div className="text-xs md:text-sm capitalize text-foreground">
-                  <a
-                    href="https://www.walkscore.com/how-it-works/"
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                  >
-                    Transit Score<sup>®</sup>
-                  </a>
-                </div>
-                <div className="text-xl text-foreground font-medium">N/A</div>
-              </div>
-              <div className="flex flex-col items-center mb-2 pr-2 text-center justify-between">
                 <div className="text-xs md:text-sm capitalize text-foreground">
                   <a
                     href="https://www.walkscore.com/how-it-works/"
@@ -98,111 +120,18 @@ export function PublicTransportCard({ data }) {
                 </div>
               </div>
             </div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 384 512"
-              width="1em"
-              height="1em"
-              fill="currentColor"
-              stroke="currentColor"
-              strokeWidth="0"
-              className="inline-block absolute right-4 top-4 sm:top-6 w-6 h-6 transition-transform text-foreground"
-            ></svg>
           </div>
-          <div className="text-foreground px-4 relative h-full w-full overflow-hidden flex-1">
-            <div className="sm:py-12 py-6">
-              <div className="h-24 sm:h-20 bg-gray-150 text-xs sm:text-sm p-4 rounded-lg text-gray-800">
-                Some bike infrastructure. Most errands require a car. A few
-                nearby public transportation options.
-              </div>
-              <div className="mt-8 w-full flex flex-row justify-between px-4 sm:justify-start">
-                <div className="xs:block flex">
-                  <div>
-                    <div className="text-xs lg:text-sm text-gray-800">
-                      Bike Score <sup>®</sup>
-                    </div>
-                    <div className="text-green-800 flex items-end">
-                      <div className="text-2xl lg:text-3xl font-semibold">
-                        N/A
-                      </div>
-                      <div className="text-base lg:text-lg mb-1 flex space-x-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 640 512"
-                          width="1em"
-                          height="1em"
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeWidth="0"
-                          className="inline-block"
-                        >
-                          <path d="M96 0C43 0 0 43 0 96V352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512H82.7c8.5 0 16.6-3.4 22.6-9.4L160 448H288l54.6 54.6c6 6 14.1 9.4 22.6 9.4H405c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9V96c0-53-43-96-96-96H96zM64 96c0-17.7 14.3-32 32-32H352c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="xs:block sm:ml-12 flex">
-                  <div>
-                    <div className="text-xs lg:text-sm text-gray-800">
-                      Walk Score <sup>®</sup>
-                    </div>
-                    <div className="text-green-800 flex items-end">
-                      <div className="text-2xl lg:text-3xl font-semibold">
-                        {walkScore || "N/A"}
-                      </div>
-                      <div className="text-base lg:text-lg mb-2 flex space-x-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 320 512"
-                          width="1em"
-                          height="1em"
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeWidth="0"
-                          className="inline-block"
-                        >
-                          <path d="M160 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM126.5 199.3c-1 .4-1.9 .8-2.9 1.2l-8 3.5c-16.4 7.3-29 21.2-34.7 38.2l-2.6 7.8c-5.6 16.8-23.7 25.8-40.5 20.2s-25.8-23.7-20.2-40.5l2.6-7.8c11.4-34.1 36.6-61.9 69.4-76.5l8-3.5c20.8-9.2 43.3-14 66.1-14c44.6 0 84.8 26.8 101.9 67.9L281 232.7l21.4 10.7c15.8 7.9 22.2 27.1 14.3 42.9s-27.1 22.2-42.9 14.3L247 287.3c-10.3-5.2-18.4-13.8-22.8-24.5l-9.6-23-19.3 65.5 49.5 54c5.4 5.9 9.2 13 11.2 20.8l23 92.1c4.3 17.1-6.1 34.5-23.3 38.8s-34.5-6.1-38.8-23.3l-22-88.1-70.7-77.1c-14.8-16.1-20.3-38.6-14.7-59.7l16.9-63.5zM68.7 398l25-62.4c2.1 3 4.5 5.8 7 8.6l40.7 44.4-14.5 36.2c-2.4 6-6 11.5-10.6 16.1L54.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L68.7 398z"></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="xs:block sm:ml-12 flex">
-                  <div>
-                    <div className="text-xs lg:text-sm text-gray-800">
-                      Transit Score <sup>®</sup>
-                    </div>
-                    <div className="text-green-800 flex items-end">
-                      <div className="text-2xl lg:text-3xl font-semibold">
-                        N/A
-                      </div>
-                      <div className="text-base lg:text-lg mb-2 flex space-x-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 448 512"
-                          width="1em"
-                          height="1em"
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeWidth="0"
-                          className="inline-block"
-                        >
-                          <path d="M96 0C43 0 0 43 0 96V352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512H82.7c8.5 0 16.6-3.4 22.6-9.4L160 448H288l54.6 54.6c6 6 14.1 9.4 22.6 9.4H405c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9V96c0-53-43-96-96-96H96zM64 96c0-17.7 14.3-32 32-32H352c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div className="hidden xl:flex h-96 mt-10">
             <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
               <div className="flex-1 h-full">
                 <div className="h-full w-full border-1 maplibregl-map mapboxgl-map">
                   <div>
-                    <TransportMapStatic center={center} />
+                    {selectedType === "bus" ? (
+                      <BusMapStatic center={busLocations} />
+                    ) : (
+                      <TransportMapStatic center={center} />
+                    )}
                   </div>
                 </div>
               </div>
@@ -229,7 +158,7 @@ export function PublicTransportCard({ data }) {
                     onClick={() => setSelectedType("bus")}
                   >
                     <Icon icon="mdi:bus" width="1em" height="1em" />
-                    <div>Bus ({transportCounts.bus || 0})</div>
+                    <div>Bus ({transportCounts.bus || busData.length})</div>
                   </button>
                   <button
                     className={`flex space-x-2 items-center rounded-md px-4 py-2 ${
@@ -255,11 +184,17 @@ export function PublicTransportCard({ data }) {
                           <div className="flex flex-col text-foreground rounded-none relative h-full w-full overflow-hidden flex-1">
                             <div className="w-full justify-between">
                               <span className="text-green-800 font-bold">
-                                {transport.title}
+                                {selectedType === "bus"
+                                  ? `Bus ID: ${transport.id}`
+                                  : transport.title}
                               </span>
                               <span className="font-semibold ml-4">
-                                {transport.poiType.replace(/_/g, " ")} •{" "}
-                                {transport.distanceInMiles} mi away
+                                {selectedType === "bus"
+                                  ? `Destination: ${transport.destination}`
+                                  : `${transport.poiType.replace(
+                                      /_/g,
+                                      " "
+                                    )} • ${transport.distanceInMiles} mi away`}
                               </span>
                             </div>
                             <div className="mt-2">
@@ -270,7 +205,9 @@ export function PublicTransportCard({ data }) {
                                   lineHeight: "29px",
                                 }}
                               >
-                                {transport.poiType.replace(/_/g, " ")}
+                                {selectedType === "bus"
+                                  ? `Line: ${transport.service.line_name}`
+                                  : transport.poiType.replace(/_/g, " ")}
                               </span>
                             </div>
                           </div>

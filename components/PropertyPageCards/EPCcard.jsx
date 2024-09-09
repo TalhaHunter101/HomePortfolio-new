@@ -16,6 +16,7 @@ export function EPCCard({ title, price, roi, uprn }) {
   const [epcData, setEpcData] = useState(null);
   const [currentColour, setCurrentColour] = useState("");
   const { setSquarfoot } = useListingStore();
+  const [recData, setRecData] = useState([]);
 
   useEffect(() => {
     const fetchEpcData = async () => {
@@ -31,9 +32,11 @@ export function EPCCard({ title, price, roi, uprn }) {
         if (!response.ok) {
           throw new Error("Failed to fetch EPC data");
         }
-        const data = await response.json();
-        setEpcData(data[0]?._source);
-        setSquarfoot(data[0]?._source?.TOTAL_FLOOR_AREA);
+        const { epcData, recommendationsData } = await response.json();
+        setRecData(recommendationsData);
+
+        setEpcData(epcData[0]?._source);
+        setSquarfoot(epcData[0]?._source?.TOTAL_FLOOR_AREA);
       } catch (error) {
         console.log("Error:", error);
       }
@@ -146,7 +149,7 @@ export function EPCCard({ title, price, roi, uprn }) {
               <Divider orientation="vertical" className="mx-4 h-auto" />
 
               {/* Right Column for Performance */}
-              <PerformanceSection />
+              <PerformanceSection  recData={recData}/>
             </div>
           </div>
         )}

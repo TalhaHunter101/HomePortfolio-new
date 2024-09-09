@@ -4,16 +4,19 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import { areAllArraysEmpty } from "@/utils/Helper";
+import useStore from "@/store/useStore";
 
 export default function AutocompleteSearch({ properties }) {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
+  const {clearAllFilter} = useStore()
 
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
+      clearAllFilter()
       const response = await fetch(`/api/search/listing-search`, {
         method: "POST",
         headers: {

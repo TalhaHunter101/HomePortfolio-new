@@ -7,7 +7,6 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import MarkerClusterGroup from "./MarkerCluster";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 
 const MapTilerLayerComponent = () => {
@@ -27,11 +26,10 @@ const MapTilerLayerComponent = () => {
 };
 
 const MarkersWithCustomIcon = ({ center }) => {
-  
   const map = useMap();
 
   const customIcon = L.icon({
-    iconUrl: "/icons/mapmarker.svg",
+    iconUrl: "/icons/busicon.svg",
     iconSize: [32, 32],
   });
 
@@ -55,16 +53,9 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const TransportMap = ({ height, center = [] }) => {    
+const BusMap = ({ height, center = [] }) => {    
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
-  const zoom = 13;
-
-  const iconCreateFunction = (cluster) => {
-    return L.divIcon({
-      html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,
-      className: 'custom-cluster-icon',
-    });
-  };
+  const zoom = 22;
 
   return (
     <div>
@@ -79,12 +70,10 @@ const TransportMap = ({ height, center = [] }) => {
         }} 
       >
         <MapTilerLayerComponent />
-        <MarkerClusterGroup iconCreateFunction={iconCreateFunction}>
-          <MarkersWithCustomIcon center={center} />
-        </MarkerClusterGroup>
+        <MarkersWithCustomIcon center={center} />
       </MapContainer>
     </div>
   );
 };
 
-export default TransportMap;
+export default BusMap;

@@ -37,3 +37,8 @@ export const EvChargingMapStatic = dynamic(() => import("./EvChargingMap"), {
   ssr: false,
   loading: () => <p>A map is loading</p>,
 })
+
+export const BusMapStatic = dynamic(() => import("./TransportMaps/BusMap"), {
+  ssr: false,
+  loading: () => <p>A map is loading</p>,
+})

@@ -1,6 +1,6 @@
 "use client";
 import { Button, Card, Input, Spinner } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import ShowDataCards from "@/components/ListingSearch/ShowDataCards";
 import Beds from "@/components/SearchPage/beds";
@@ -34,11 +34,14 @@ const SearchPage = ({ params }) => {
     isDataLoading,
     setIsDataLoading,
     searchPostcode,
+    selectedBeds,
+    selectedBaths,
+    minPrice,
+    maxPrice,
   } = useStore();
 
   const handleChange = async (e) => {
     const term = e.target.value;
-    console.log("term", term);
     setSearchTerm(term);
 
     const wordCount = term.length;
@@ -48,15 +51,29 @@ const SearchPage = ({ params }) => {
       setIsDropdownOpen(true);
     }
   };
- 
 
-  const fetchProperties = async () => {
+  // const fetchProperties = async () => {
+
+  // };
+
+  const fetchProperties = useCallback(async () => {
+    setisnewDataLoading(true);
+    const filters = {
+      minPrice,
+      maxPrice,
+      bedrooms: selectedBeds,
+      bathrooms: selectedBaths,
+    };
+
     const response = await fetch(`/api/search/get-listing-data`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ searchValue: page }),
+      body: JSON.stringify({
+        searchValue: page,
+        filters,
+      }),
     });
 
     try {
@@ -71,7 +88,7 @@ const SearchPage = ({ params }) => {
     } finally {
       setisnewDataLoading(false);
     }
-  };
+  }, [page, minPrice, maxPrice, selectedBeds, selectedBaths]);
 
   useEffect(() => {
     fetchProperties();
@@ -108,6 +125,7 @@ const SearchPage = ({ params }) => {
             className="w-full max-w-xs m-2 text-white font-semibold"
             auto
             onPress={() => fetchProperties()}
+            isLoading={isnewDataLoading}
           >
             Search
           </Button>
