@@ -38,7 +38,7 @@ const MarkersWithCustomIcon = ({ center }) => {
   useEffect(() => {
     if (center.length > 0) {
       const bounds = L.latLngBounds(center.map(c => [c.lat, c.lng]));
-      map.fitBounds(bounds, { maxZoom: 16 });
+      map.fitBounds(bounds, { maxZoom: 30 });
     }
   }, [map, center]);
 

@@ -1,93 +1,118 @@
-'use client';
-import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
+"use client";
+import React, { useState, useEffect } from "react";
+import { Card, CardBody, Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { navElements } from '@/public/dummydata/listingData';
 
-export function AirQualityCard({ title, cards, id }) {
+export function AirQualityCard({ latitude, longitude }) {
   const [currentIndex, setCurrentIndex] = useState(0);
- 
-  
+  const [airQualityData, setAirQualityData] = useState(null);
+
+  // Fetch air quality data from API
+  useEffect(() => {
+    const fetchAirQualityData = async () => {
+      try {
+        const response = await fetch(
+          `http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=c6edfc199a2855bf23667e94fc691e70`
+        );
+        const data = await response.json();
+        setAirQualityData(data.list[0]);
+      } catch (error) {
+        console.error("Error fetching air quality data:", error);
+      }
+    };
+
+    fetchAirQualityData();
+  }, [latitude, longitude]);
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? cards.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 5 - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === cards.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 5 - 1 ? 0 : prevIndex + 1));
   };
 
-  return (
-    <Card className="m-4" style={{ minHeight: '150px' }}>
-      <CardHeader>
-        
-      </CardHeader>
-      <CardBody>
-        <div className=' bg-default-white  rounded-md'>
-        <div className=" p-4 sm:p-6 lg:flex relative cursor-pointer overflow-hidden rounded-t-lg">
-          <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-green-300">
-            <Icon icon="mdi:weather-windy" />
-            </div>
-            <span>Is the air quality good in East Simi Valley?</span>
-          </h2>
-          <div className="w-full lg:w-1/2 pr-2 sm:pr-10 relative z-10 max-w-md text-foreground">
-            <p>
-              The air quality in 93063 was <span className="bg-green-200">good</span> last year, with 1 day when the Air Quality Index exceeded 100.
-            </p>
-          </div>
-        </div>
+  const airQualityComponents = airQualityData
+    ? [
+        { label: "CO", value: `${airQualityData.components.co} µg/m³` },
+        { label: "NO", value: `${airQualityData.components.no} µg/m³` },
+        { label: "NO2", value: `${airQualityData.components.no2} µg/m³` },
+        { label: "O3", value: `${airQualityData.components.o3} µg/m³` },
+        { label: "SO2", value: `${airQualityData.components.so2} µg/m³` },
+        { label: "PM2.5", value: `${airQualityData.components.pm2_5} µg/m³` },
+        { label: "PM10", value: `${airQualityData.components.pm10} µg/m³` },
+        { label: "NH3", value: `${airQualityData.components.nh3} µg/m³` },
+      ]
+    : [];
 
-        {/* Carousel Section */}
-        <div className="mt-4 relative">
-          <div className="w-full overflow-hidden rounded-lg">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {cards?.map((card, index) => (
-                <div key={index} className="flex-shrink-0  w-full">
-                  <div className="mx-2 p-4 bg-white  shadow-none rounded-lg shadow-md" style={{ minHeight: '150px' }}>
-                    <div className='flex w-full h-full flex-row'>
-                      <div className='w-3/5 justify-start bg-gray-200'>
-                       left content
-                      </div>
-                      <div className='w-2/5 justify-end bg-gray-300'>
-                        right right
+  return (
+    <Card className="m-4" style={{ minHeight: "250px" }}>
+      <CardBody>
+        <div className="bg-default-white rounded-md">
+          <div className="p-4 sm:p-6 flex flex-col items-center relative cursor-pointer overflow-hidden rounded-t-lg">
+            <h2 className="w-full mb-4 flex justify-center font-semibold capitalize text-foreground text-lg">
+              <div className="h-8 w-8 flex justify-center items-center rounded-full bg-green-300 mr-2">
+                <Icon icon="mdi:weather-windy" width={24} height={24} />
+              </div>
+              Air Quality in Your Area
+            </h2>
+
+            {airQualityData ? (
+              <div className="relative w-full overflow-hidden rounded-lg">
+                {/* Carousel */}
+                <div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                  {airQualityComponents.map((component, index) => (
+                    <div key={index} className="flex-shrink-0 w-full p-4">
+                      <div className="flex flex-col justify-center items-center bg-gray-100 p-6 rounded-lg shadow-md h-full">
+                        <h3 className="font-semibold text-xl mb-2">
+                          {component.label}
+                        </h3>
+                        <p className="text-lg">{component.value}</p>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
+                <div className="absolute inset-y-1/2 flex w-full justify-between px-4">
+                  <Button
+                    isIconOnly
+                    variant="ghost"
+                    radius="full"
+                    size="sm"
+                    onClick={handlePrevious}
+                  >
+                    <Icon
+                      color="gray"
+                      icon="bx:bx-chevron-left"
+                      width={24}
+                      height={24}
+                    />
+                    <span className="sr-only">Previous</span>
+                  </Button>
+                  <Button
+                    isIconOnly
+                    variant="ghost"
+                    radius="full"
+                    size="sm"
+                    onClick={handleNext}
+                  >
+                    <Icon
+                      color="gray"
+                      icon="bx:bx-chevron-right"
+                      width={24}
+                      height={24}
+                    />
+                    <span className="sr-only">Next</span>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <p>Loading air quality data...</p>
+            )}
           </div>
-          <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
-            <Button
-              isIconOnly
-              variant="ghost"
-              radius="full"
-              size="sm"
-              onClick={handlePrevious}
-            >
-              <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
-              <span className="sr-only">Previous</span>
-            </Button>
-            <Button
-              isIconOnly
-              variant="ghost"
-              radius="full"
-              size="sm"
-              onClick={handleNext}
-            >
-              <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
-              <span className="sr-only">Next</span>
-            </Button>
-          </div>
-        </div>
         </div>
       </CardBody>
     </Card>

@@ -37,12 +37,11 @@ export function RecentlySoldCard({ city, postcode }) {
 
         if (response.ok) {
           const data = await response.json();
-          setSoldListingData(data);
+          setSoldListingData(data);          
 
-          // Extract lat/lng from sold listing data
           const locations = data.hits.map((listing) => ({
-            lat: listing._source?.latitude,
-            lng: listing._source?.longitude,
+            lat: listing._source?.address?.latitude,
+            lng: listing._source?.address?.longitude,
           }));
 
           setSoldLocations(locations);
@@ -87,6 +86,8 @@ export function RecentlySoldCard({ city, postcode }) {
     getSoldListingData();
   }, [postcode]);
 
+
+  
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1000px" }}>
       <CardBody>
@@ -132,7 +133,7 @@ export function RecentlySoldCard({ city, postcode }) {
                       <div className="flex-1 z-40 h-full">
                         <div className="h-full w-full">
                           <div className="w-full h-full bg-white border-1 maplibregl-map mapboxgl-map">
-                            <RecentlySoldMapsStatic SoldListingData={soldLocations} />
+                            <RecentlySoldMapsStatic center={soldLocations} />
                           </div>
                         </div>
                       </div>
