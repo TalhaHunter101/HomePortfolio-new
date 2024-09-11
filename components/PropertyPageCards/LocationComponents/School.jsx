@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { SchoolMapStatic } from "@/components/Maps";
+import { smallString } from "@/utils/Helper";
 
 const SchoolsMap = ({ data, schoolData }) => {
   const [selectedType, setSelectedType] = useState("All grades");
@@ -72,21 +73,67 @@ const SchoolsMap = ({ data, schoolData }) => {
       <div className="absolute top-20 left-4 bg-transparent p-4 w-[400px] max-h-[50vh] overflow-y-auto z-10 scrollbar-hide">
         {filteredSchools && filteredSchools.length > 0 ? (
           filteredSchools.map((school, index) => (
-            <div key={index} className="mb-4 p-4 bg-white shadow rounded-lg">
-              <h2 className="text-xl font-bold">
-                {school?._source?.OfstedRating}
-              </h2>
-              <p className="font-medium text-sm">
-                {school?._source?.EstablishmentName}
-              </p>
-              <p className="text-xs text-gray-600">
-                {school?._source?.["PhaseOfEducation (name)"]}
-              </p>
-              <p className="text-xs text-gray-600">
-                {school?._source?.StatutoryLowAge} -{" "}
-                {school?._source?.StatutoryHighAge} years
-              </p>
+            // <div key={index} className="mb-4 p-4 bg-white shadow rounded-lg">
+            //   <h2 className="text-xl font-bold">
+            //     {school?._source?.OfstedRating}
+            //   </h2>
+            //   <p className="font-medium text-sm">
+            //     {school?._source?.EstablishmentName}
+            //   </p>
+            //   <p className="text-xs text-gray-600">
+            //     {school?._source?.["PhaseOfEducation (name)"]}
+            //   </p>
+            //   <p className="text-xs text-gray-600">
+            //     {school?._source?.StatutoryLowAge} -{" "}
+            //     {school?._source?.StatutoryHighAge} years
+            //   </p>
+            // </div>
+            <button key={index} className="w-full h-auto text-left pt-2 pr-2">
+            <div className="relative flex flex-col h-full p-2 pl-6 border rounded-md sm:mr-2 sm:rounded-lg border-purple-150 bg-purple-100">
+              <div className="flex flex-row items-center h-full space-x-4 truncate flex-1  relative overflow-hidden text-foreground">
+                <div className="flex flex-row sm:flex-col">
+                  <div
+                    className={`text-4xl font-bold text-blue-600 ${
+                      school?._source?.["OfstedRating (name)"] === "Outstanding"
+                        ? " text-green-900"
+                        : school?._source?.["OfstedRating (name)"] === "Good"
+                        ? " text-yellow-800"
+                        : " text-red-800"
+                    }`}
+                    style={{ minWidth: "45px" }}
+                  >
+                    {school?._source?.["OfstedRating (name)"] === "" ||
+                    school?._source?.["OfstedRating (name)"].trim() === ""
+                      ? "Don't know"
+                      : school?._source?.["OfstedRating (name)"]}
+                  </div>
+                  <div className="flex flex-col text-sm">
+                    <p
+                      className="truncate text-base font-bold text-purple-800 pr-4"
+                      style={{
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 1,
+                        display: "-webkit-box",
+                      }}
+                      title={school?._source?.EstablishmentName}
+                    >
+                      {smallString(school?._source?.EstablishmentName, 24)}
+                    </p>
+                    <span>
+                      {parseInt(school?._source?.StatutoryLowAge)}-
+                      {parseInt(school?._source?.StatutoryHighAge)},{" "}
+                      {school?._source?.["Gender (name)"]},
+                      {school?._source?.NumberOfPupils},{" "}
+                      {school?._source?.["PhaseOfEducation (name)"]}
+                    </span>
+                    <div>
+                      {school?._source?.Street}, {school?._source?.Postcode}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </button>
           ))
         ) : (
           <div className="text-gray-500 text-center">No schools found.</div>
