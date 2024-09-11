@@ -77,9 +77,9 @@ const amenities = [
     bg_color: "bg-yellow-400",
   },
   {
-    name: "nursery",
-    icon: "cbi:roomsnursery",
-    icon_name: "nursery",
+    name: "Nursery",
+    icon: "ion:school-outline",
+    icon_name: "Nursery",
     color: "purple",
     key: "kindergarten",
     bg_color: "bg-purple-400",

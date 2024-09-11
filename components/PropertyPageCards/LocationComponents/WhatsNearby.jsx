@@ -75,9 +75,9 @@ const amenities = [
     bg_color: "bg-yellow-400",
   },
   {
-    name: "nursery",
-    icon: "cbi:roomsnursery",
-    icon_name: "nursery",
+    name: "Nursery",
+    icon: "ion:school-outline",
+    icon_name: "Nursery",
     color: "purple",
     key: "kindergarten",
     bg_color: "bg-purple-400",
@@ -86,14 +86,36 @@ const amenities = [
 
 const WhatsNearbyMap = ({ center }) => {
   const [locations, setLocations] = useState([]);
-
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
+
+const haversineDistance = (coords1, coords2) => {
+    const toRad = (x) => (Number(x) * Math.PI) / 180;
+
+    const lat1 = Number(coords1.lat);
+    const lon1 = Number(coords1.lon);
+    const lat2 = Number(coords2.lat);
+    const lon2 = Number(coords2.lon);
+
+    const R = 6371; // Radius of the Earth in km
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distance in km
+};
 
   async function getNearbyLocations(
     lat,
     lon,
     amenity = selectedAmenity,
-    radius = 5000,
+    radius = 3000,
     limit = 10
   ) {
     const overpassUrl = "https://overpass-api.de/api/interpreter";
@@ -138,6 +160,7 @@ const WhatsNearbyMap = ({ center }) => {
           }
 
           const address = formatAddress(element.tags);
+          const distance = haversineDistance({ lat, lon }, { lat: center.lat, lon: center.lon });
 
           return {
             name: element.tags.name || "na",
@@ -145,6 +168,7 @@ const WhatsNearbyMap = ({ center }) => {
             address: address,
             lat,
             lon,
+            distance: `${distance.toFixed(2)} km`,
           };
         });
 
@@ -165,7 +189,7 @@ const WhatsNearbyMap = ({ center }) => {
 
     return addressParts.join(", ");
   }
- 
+
   useEffect(() => {
     getNearbyLocations(center.lat, center.lon)
       .then((locations) => {
@@ -176,37 +200,6 @@ const WhatsNearbyMap = ({ center }) => {
         console.error(error);
       });
   }, [selectedAmenity]);
-
-  const places = [
-    {
-      id: 1,
-      name: "Deliciosos Tacos de Canasta",
-      category: "Tacos",
-      address: "2386 Mission St",
-      distance: "1.3 miles away",
-    },
-    {
-      id: 2,
-      name: "Shic Hardware",
-      category: "Hardware",
-      address: "58 Ocean Ave",
-      distance: "1.3 miles away",
-    },
-    {
-      id: 3,
-      name: "Moby Dick",
-      category: "Restaurants",
-      address: "4049 18th St",
-      distance: "1.3 miles away",
-    },
-    {
-      id: 4,
-      name: "Shotwell's",
-      category: "Restaurants",
-      address: "3349 20th St",
-      distance: "1.4 miles away",
-    },
-  ];
 
   return (
     <div className="relative h-[60vh] w-full">

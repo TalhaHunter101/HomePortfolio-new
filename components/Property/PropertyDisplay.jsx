@@ -439,10 +439,9 @@ function PropertyDisplay({ listingData, params }) {
                 </Button>
               </div>
               <div className="p-4">
+                
                 {/* Conditional Rendering of Content */}
-                <div style={{ maxHeight: isExpanded ? 'none' : '100px', overflow: 'hidden' }}>
-                 {listingData?.metaDescription}
-                </div>
+                <div dangerouslySetInnerHTML={{ __html: listingData?.detailedDescription }}  style={{ maxHeight: isExpanded ? 'none' : '100px', overflow: 'hidden' }} />
                 {/* Read More / Show Less Button */}
                 <Button  radius="full" variant="bordered" className="text-xs font-medium text-blue-600"  size="sm"  onClick={toggleReadMore} style={{ marginTop: '1rem' }}>
                 {isExpanded ? 'Show Less' : 'Read More'} {<Icon height={18} width={18} icon={isExpanded ? "iconamoon:arrow-up-2" : "iconamoon:arrow-down-2"} />}
