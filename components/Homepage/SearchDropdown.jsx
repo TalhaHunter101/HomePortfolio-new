@@ -63,7 +63,7 @@ function SearchDropdown({ results, isDataLoading }) {
               {results?.county?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Town
+                    Places
                   </p>
                   <div>
                     {[
@@ -101,7 +101,7 @@ function SearchDropdown({ results, isDataLoading }) {
               {results?.address?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Location
+                    Addresses
                   </p>
                   <div>
                     {results?.address.map((item, i) => (

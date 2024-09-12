@@ -82,7 +82,7 @@ export default function AutocompleteSearch({ properties }) {
             onClick={() => setSelectedTab("2")}
             className={`tab-button ${selectedTab === "2" ? "active-tab" : ""}`}
           >
-            Instant Home Evaluation
+            Instant Home Valuation
           </button>
         </div>
       </div>
@@ -100,16 +100,16 @@ export default function AutocompleteSearch({ properties }) {
         {selectedTab === "1" ? (
           <div className="search-container">
             <div className="input-wrapper large-input">
-              <Icon
+              {/* <Icon
                 icon="fluent:home-48-filled"
                 width="20"
                 height="20"
                 color="gray"
                 className="mr-2"
-              />
+              /> */}
               <input
                 type="text"
-                placeholder="Search for an address, MLS number or neighborhood"
+                placeholder="Search for any address, city, neighbourhood or postcode"
                 className="custom-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -126,13 +126,13 @@ export default function AutocompleteSearch({ properties }) {
         ) : (
           <div className="evaluation-container">
             <div className="input-wrapper large-input">
-              <Icon
+              {/* <Icon
                 icon="fluent:home-48-filled"
                 width="20"
                 height="20"
                 color="gray"
                 className="mr-2"
-              />
+              /> */}
               <input
                 type="text"
                 placeholder="Enter address"

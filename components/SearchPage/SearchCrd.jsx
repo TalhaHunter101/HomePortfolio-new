@@ -110,7 +110,7 @@ const SearchCard = ({ property, setCardHover }) => {
       <CardBody className="overflow-hidden py-2">
         <Link href={`/property/${property.id}`}>
           <div className="p-1">
-            <h3 className="text-bold text-2xl">£{humanReadablePrice}</h3>
+            <h3 className="font-bold text-2xl">£{humanReadablePrice}</h3>
             {/* <div className="text-sm uppercase flex text-bold">
               <span className="ml-0 text-bold flex justify-center gap-1">
                 <Icon icon="mdi:bed-outline" width={16} height={16} />{" "}
