@@ -1,9 +1,17 @@
-import { Button, Card, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
+import { convertToSquareFeet } from "@/utils/Helper";
 
 const defaultProps = {
   lat: Number(23.079727),
@@ -42,9 +50,12 @@ function ShowDataCards({ cardData, totalcount }) {
         developer_logo: property?._source?.branch?.logoUrl,
         developer_name: property?._source?.branch?.name,
         postcode: property?._source?.ref_postcode,
+        areaSize: property?._source?.analyticsTaxonomy?.sizeSqFeet || convertToSquareFeet(property?._source?.totalFloorArea),
+        fullAddress: property?._source?.fullAddress,
         address: property?._source?.analyticsTaxonomy?.displayAddress,
         lng: parseFloat(property?._source?.location?.coordinates?.longitude),
         lat: parseFloat(property?._source?.location?.coordinates?.latitude),
+
       });
     });
     const uniqueDevelopmentData = Object.values(groupedData);
@@ -75,8 +86,7 @@ function ShowDataCards({ cardData, totalcount }) {
     [selectedKeys]
   );
 
- 
-  const [isOpen, setIsOpen] = React.useState(false); 
+  const [isOpen, setIsOpen] = React.useState(false);
   const handleToggle = (openState) => {
     setIsOpen(openState);
   };
@@ -103,7 +113,7 @@ function ShowDataCards({ cardData, totalcount }) {
           </motion.div>
         )}
       </div>
-      
+
       {/* Card List Section */}
       <motion.div
         className="w-full"
@@ -112,8 +122,14 @@ function ShowDataCards({ cardData, totalcount }) {
         transition={{ duration: 0.7, delay: 0.6 }}
       >
         <div className="h-[100vh]">
-          <div className={`${showMap ? "w-[40%]" : "w-full"} flex flex-col p-6 ml-auto`}>
-            <h3 className="text-md uppercase font-bold">{totalcount} Properties</h3>
+          <div
+            className={`${
+              showMap ? "w-[40%]" : "w-full"
+            } flex flex-col p-6 ml-auto`}
+          >
+            <h3 className="text-md uppercase font-bold">
+              {totalcount} Properties
+            </h3>
 
             <div className="flex space-x-2 p-4">
               <Button
@@ -126,31 +142,36 @@ function ShowDataCards({ cardData, totalcount }) {
                 {showMap ? "Hide Map" : "Show Map"}
               </Button>
               <Dropdown onOpenChange={handleToggle}>
-      <DropdownTrigger>
-      <Button
-          endContent={<Icon icon={isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"} />}
-          radius="sm"
-          size="lg"
-          className="w-full max-w-xs"
-        >
-          {selectedValue}
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Sort by selection"
-        variant="flat"
-        disallowEmptySelection
-        selectionMode="single"
-        selectedKeys={selectedKeys}
-        onSelectionChange={setSelectedKeys}
-        // onClick={sortData}
-        
-      >
-        <DropdownItem key="roi">Sort by ROI</DropdownItem>
-        <DropdownItem key="  price">Sort by Price</DropdownItem>
-        <DropdownItem key="nil">none</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    endContent={
+                      <Icon
+                        icon={
+                          isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
+                        }
+                      />
+                    }
+                    radius="sm"
+                    size="lg"
+                    className="w-full max-w-xs"
+                  >
+                    {selectedValue}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  aria-label="Sort by selection"
+                  variant="flat"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selectedKeys}
+                  onSelectionChange={setSelectedKeys}
+                  // onClick={sortData}
+                >
+                  <DropdownItem key="roi">Sort by ROI</DropdownItem>
+                  <DropdownItem key="  price">Sort by Price</DropdownItem>
+                  <DropdownItem key="nil">none</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </div>
 
             {/* Cards */}

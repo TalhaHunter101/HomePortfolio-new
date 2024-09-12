@@ -52,9 +52,42 @@ const SearchPage = ({ params }) => {
     }
   };
 
-  // const fetchProperties = async () => {
+  const fetchEPCData = async (uprn) => {
+    try {
+      const response = await fetch("/api/indevisual/get-epc-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uprn }),
+      });
 
-  // };
+      if (!response.ok) {
+        throw new Error("Failed to fetch EPC data");
+      }
+
+      const { epcData } = await response.json();
+
+      const address1 = epcData[0]?._source?.ADDRESS1 || "";
+      const address2 = epcData[0]?._source?.ADDRESS2 || "";
+      const address3 = epcData[0]?._source?.ADDRESS3 || "";
+      const postcode = epcData[0]?._source?.POSTCODE || "";
+      const town = epcData[0]?._source?.POSTTOWN || "";
+
+      // Combine the addresses to create a full address
+      const fullAddress = [address1, address2, address3,postcode, town]
+        .filter(Boolean)
+        .join(", ");
+
+      return {
+        totalFloorArea: epcData[0]?._source?.TOTAL_FLOOR_AREA || null,
+        fullAddress,
+      };
+    } catch (error) {
+      console.error(`Error fetching EPC data for UPRN ${uprn}:`, error);
+      return null;
+    }
+  };
 
   const fetchProperties = useCallback(async () => {
     setisnewDataLoading(true);
@@ -65,26 +98,51 @@ const SearchPage = ({ params }) => {
       bathrooms: selectedBaths,
     };
 
-    const response = await fetch(`/api/search/get-listing-data`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        searchValue: page,
-        filters,
-      }),
-    });
-
     try {
-      setisnewDataLoading(true);
+      const response = await fetch(`/api/search/get-listing-data`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          searchValue: page,
+          filters,
+        }),
+      });
+
       const result = await response.json();
-      setListingData(result?.results || []);
+      const properties = result?.results || [];
+
+      const updatedProperties = await Promise.all(
+        properties.map(async (property) => {
+          const uprn = property?._source?.location?.uprn;
+          let epcData = {
+            totalFloorArea: null,
+            fullAddress: null,
+          };
+
+          if (uprn) {
+            epcData = await fetchEPCData(uprn);
+          }
+
+          return {
+            ...property,
+            _source: {
+              ...property._source,
+              totalFloorArea: epcData.totalFloorArea, // Add the total floor area
+              fullAddress: epcData.fullAddress, // Add the full address
+            },
+          };
+        })
+      );
+
+      console.log("updatedProperties", updatedProperties);
+      
+
+      setListingData(updatedProperties);
       setTotalCount(result?.totalCount || 0);
-      setisnewDataLoading(false);
-      setIsDropdownOpen(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
     }

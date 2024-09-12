@@ -13,6 +13,7 @@ import {
   stop,
 } from "recharts";
 import { CardBody } from "@nextui-org/react";
+import { marketCompStore } from "@/store/listingStore";
 
 const data = [
   { x: 1000, y: 700000, z: 200 },
@@ -24,9 +25,7 @@ const data = [
   // { x: 4010, y: 2801000, z: 333 },
 ];
 
-export const ScatterChartComponent = ({ data,text }) => {
-
-  
+export const ScatterChartComponent = ({ data, text }) => {
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);
   const [scatterData, setScatterData] = useState([]);
@@ -49,15 +48,13 @@ export const ScatterChartComponent = ({ data,text }) => {
 
           resultData.forEach((item) => {
             const size = item._source?.analyticsTaxonomy?.sizeSqFeet;
-            
+
             const price = item._source.pricing?.internalValue;
             if (size !== "" && price !== undefined) {
               sizesqfeet.push(size);
               prices.push(price);
             }
           });
-
-
 
           setSizePerSqFeet(sizesqfeet);
           setPrices(prices);
@@ -73,18 +70,14 @@ export const ScatterChartComponent = ({ data,text }) => {
             return a.x - b.x;
           });
           setScatterData(scatterData);
-          
         }
       } catch (error) {
         console.log(error);
       }
     };
-    
 
     getMarketComparisonData();
   }, [data]);
-
-  
 
   return (
     <CardBody className="w-full flex flex-col justify-between bg-white rounded-lg">
@@ -95,7 +88,7 @@ export const ScatterChartComponent = ({ data,text }) => {
           <span className="text-teal-400 font-bold">{data}</span>
         </div>
         <div className="bg-gray-300 rounded-lg px-2 py-1 text-gray-700 text-xs flex items-center">
-          1/4
+          
         </div>
       </div>
       <div className="w-full h-64">

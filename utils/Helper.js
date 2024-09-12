@@ -88,3 +88,13 @@ export function formatNumberWithCommas(number) {
 // export function RemoveDecimal(number) {
 //   return number.toFixed(0);
 // }
+
+
+export const convertToSquareFeet = (squareMeters) => {
+  const conversionFactor = 10.7639;
+  const metersValue = parseFloat(squareMeters); // Convert string to a number
+  if (isNaN(metersValue)) {
+    return null; // Handle invalid input
+  }
+  return (metersValue * conversionFactor).toFixed(0); // Round to the nearest whole number
+};

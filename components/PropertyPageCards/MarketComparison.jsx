@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 
 import { ScatterChartComponent } from "./Charts/MarketScatterChart";
 import ComparisonChart from "./Charts/ComparisonChart";
+import { marketCompStore } from "@/store/listingStore";
 
 const getItemsData = () => [
   {
@@ -21,37 +22,48 @@ const getItemsData = () => [
     name: "Lakeview Park",
     category: "Parks • Lakeview Rd",
     distance: "1.0 miles away",
-  }
+  },
+  
   // Add more items as needed
 ];
 
-export function MarketComparisonCard({  data }) {
+export function MarketComparisonCard({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { setMarketComp } = marketCompStore();
 
-
-  
 
   const items = getItemsData();
 
   const nextSlide = () => {
     if (currentIndex < items.length - 1) {
       setCurrentIndex(currentIndex + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+  
+      if (currentIndex === 0) {
+        setMarketComp(data?.analyticsTaxonomy?.outcode);
+      } else if (currentIndex === 1) {
+        setMarketComp(data?.adTargeting?.location);
+      } else if (currentIndex === 2) {
+        setMarketComp(data?.adTargeting?.countyAreaName);
+      }
     }
   };
   
- 
-
+  const prevSlide = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+  
+      if (currentIndex === 1) {
+        setMarketComp(data?.analyticsTaxonomy?.outcode);
+      } else if (currentIndex === 2) {
+        setMarketComp(data?.adTargeting?.location);
+      } else if (currentIndex === 3) {
+        setMarketComp(data?.adTargeting?.countyAreaName);
+      }
+    }
+  };
   return (
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
-      <CardHeader>
-        
-      </CardHeader>
+      <CardHeader></CardHeader>
       <CardBody>
         <div className=" rounded-md ">
           <div className=" bg-default-white p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
@@ -106,7 +118,10 @@ export function MarketComparisonCard({  data }) {
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
                         <Card className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
-                            <ScatterChartComponent data={data?.analyticsTaxonomy?.outcode} text="PostCode" />
+                            <ScatterChartComponent
+                              data={data?.analyticsTaxonomy?.outcode}
+                              text="PostCode"
+                            />
                           </CardBody>
                         </Card>
                       </div>
@@ -114,7 +129,10 @@ export function MarketComparisonCard({  data }) {
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
                         <Card className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
-                            <ScatterChartComponent data={data?.adTargeting?.location} text="Town" />
+                            <ScatterChartComponent
+                              data={data?.adTargeting?.location}
+                              text="Town"
+                            />
                           </CardBody>
                         </Card>
                       </div>
@@ -122,14 +140,17 @@ export function MarketComparisonCard({  data }) {
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
                         <Card className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
-                            <ScatterChartComponent data={data?.adTargeting?.countyAreaName} text="State" />
+                            <ScatterChartComponent
+                              data={data?.adTargeting?.countyAreaName}
+                              text="State"
+                            />
                           </CardBody>
                         </Card>
                       </div>
                     </div>
                     <button
                       onClick={nextSlide}
-                      disabled={currentIndex === items.length - 1}
+                      disabled={currentIndex === 2}
                       className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
                     >
                       &#10095;

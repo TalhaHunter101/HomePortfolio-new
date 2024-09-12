@@ -10,3 +10,9 @@ export const useListingStore = create((set) => ({
 
   setFullAddress: (address) => set({ fullAddress: address }),
 }));
+
+
+export const marketCompStore = create((set) => ({
+  marketComp: null,
+  setMarketComp: (marketComp) => set({ marketComp }),
+}))

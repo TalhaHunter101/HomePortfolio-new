@@ -1,16 +1,19 @@
+import { marketCompStore } from "@/store/listingStore";
 import { calculateMedian, formatPrice } from "@/utils/Helper";
 import React from "react";
 
 const ComparisonChart = ({ data }) => {
 
   const medianPrice = calculateMedian(data?.pricing?.internalValue);
+  const { marketComp } = marketCompStore();
+
   return (
     <div className="relative flex flex-col bg-white p-8 h-full w-full">
       {/* Heading */}
       <div className="text-lg font-semibold text-gray-800 mb-4">
         <span className="text-black">This Home</span> vs{" "}
         <span className="text-gray-400">
-          {data?.adTargeting?.countyAreaName}
+          {marketComp}
         </span>
       </div>
 

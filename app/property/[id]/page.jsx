@@ -842,7 +842,7 @@ export default function PropertyPage({ params }) {
       {isDataLoading ? (
         <div className="w-full h-screen flex justify-center items-center">
           <Spinner className="mt-20" size="lg" />
-        </div>
+        </div> 
       ) : (
         <PropertyDisplay listingData={listingData} params={params} />
       )}

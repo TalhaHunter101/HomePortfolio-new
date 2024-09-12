@@ -5,8 +5,9 @@ import Link from "next/link";
 import { formatCurrency } from "@/utils/Helper";
 
 const SearchCard = ({ property, setCardHover }) => {
+  
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false); // State to track the heart icon
+  const [isLiked, setIsLiked] = useState(false); 
   const maxPrice = property?.maxPrice;
   const humanReadablePrice = formatCurrency(maxPrice);
 
@@ -23,7 +24,7 @@ const SearchCard = ({ property, setCardHover }) => {
   };
 
   const handleLikeToggle = () => {
-    setIsLiked(!isLiked); // Toggle the liked state
+    setIsLiked(!isLiked); 
   };
 
   return (
@@ -40,7 +41,7 @@ const SearchCard = ({ property, setCardHover }) => {
           <div className="absolute top-2 right-2 z-10">
             <Icon
               onClick={handleLikeToggle} // Toggle like on click
-              icon={ isLiked ? "twemoji:red-heart" : "ant-design:heart-twotone"}
+              icon={isLiked ? "twemoji:red-heart" : "ant-design:heart-twotone"}
               width="24"
               height="24"
               color={isLiked ? "" : "white"} // Change color based on state
@@ -109,16 +110,21 @@ const SearchCard = ({ property, setCardHover }) => {
             <h3 className="text-bold text-2xl">£{humanReadablePrice}</h3>
             <div className="text-sm uppercase flex text-bold">
               <span className="ml-0 text-bold flex justify-center gap-1">
-                <Icon icon="mdi:bed-outline" width={16} height={16} /> {property?.minBedrooms}
+                <Icon icon="mdi:bed-outline" width={16} height={16} />{" "}
+                {property?.minBedrooms}
               </span>
               <span className="ml-2 text-bold flex justify-center gap-1">
-                <Icon icon="bx:bath" width={16} height={16} /> {property?.bathrooms} 
+                <Icon icon="bx:bath" width={16} height={16} />{" "}
+                {property?.bathrooms}
               </span>
               <span className="ml-2 text-bold flex justify-center gap-1">
-                <Icon icon="carbon:area" width={16} height={16} /> {property?.squareFeet} 
+                <Icon icon="carbon:area" width={16} height={16} />{" "}
+                {property?.areaSize}
               </span>
             </div>
-            <p className="pt-2 text-default-500 text-sm">{property?.address}</p>
+            <p className="pt-2 text-default-500 text-sm">
+              {property?.fullAddress || property?.address}
+            </p>
             <div className="pt-2 flex space-x-2">
               <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
                 #bonus room
