@@ -48,6 +48,9 @@ const SearchCard = ({ property, setCardHover }) => {
               style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
             />
           </div>
+          <div className="absolute top-2 left-2 z-10">
+            listed 4 days ago
+          </div>
 
           <div className="w-full overflow-hidden rounded-none">
             <div
@@ -108,7 +111,7 @@ const SearchCard = ({ property, setCardHover }) => {
         <Link href={`/property/${property.id}`}>
           <div className="p-1">
             <h3 className="text-bold text-2xl">£{humanReadablePrice}</h3>
-            <div className="text-sm uppercase flex text-bold">
+            {/* <div className="text-sm uppercase flex text-bold">
               <span className="ml-0 text-bold flex justify-center gap-1">
                 <Icon icon="mdi:bed-outline" width={16} height={16} />{" "}
                 {property?.minBedrooms}
@@ -121,7 +124,23 @@ const SearchCard = ({ property, setCardHover }) => {
                 <Icon icon="carbon:area" width={16} height={16} />{" "}
                 {property?.areaSize}
               </span>
-            </div>
+            </div> */}
+             <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">
+                <div className="">
+                  <h3 className="font-semibold text-xl">{property?.minBedrooms}</h3>
+                  <p className="text-sm text-gray-600">beds</p>
+                </div>
+                <div className="">
+                  <h3 className="font-semibold text-xl">{property?.bathrooms}</h3>
+                  <p className="text-sm text-gray-600">baths</p>
+                </div>
+                <div className="">
+                  <h3 className="font-semibold text-xl">
+                    {property?.areaSize  || "NA"}
+                  </h3>
+                  <p className="text-sm text-gray-600">sqft</p>
+                </div>
+              </div>
             <p className="pt-2 text-default-500 text-sm">
               {property?.fullAddress || property?.address}
             </p>
@@ -134,6 +153,39 @@ const SearchCard = ({ property, setCardHover }) => {
                   </span>
                 ))
               }
+
+
+{/* // show ROI, Gross Yield, Rent estimate, Anual cash flow */}
+<div className="mt-4 grid grid-cols-2 gap-4">
+    <div className="">
+    <div className="text-sm font-semibold text-gray-500">ROI</div>
+    <div className="text-lg font-bold text-gray-900">10%</div>
+  </div>
+  <div className="">
+    <div className="text-sm font-semibold text-gray-500">Gross Yield</div>
+    <div className="text-lg font-bold text-gray-900">8%</div>
+  </div>
+  <div className="">
+    <div className="text-sm font-semibold text-gray-500">Rent estimate</div>
+    <div className="text-lg font-bold text-gray-900">$1500</div>
+  </div>
+  <div className="">
+    <div className="text-sm font-semibold text-gray-500">Anual cash flow</div>
+    <div className="text-lg font-bold text-gray-900">$5000</div>
+  </div>
+</div>
+
+
+
+              <div className="grid grid-cols-2">
+              
+              </div>
+
+
+
+
+
+
               {/* <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
                 #bonus room
               </span>

@@ -207,10 +207,10 @@ export function AirQualityCard({ latitude, longitude }) {
         <div className="bg-default-white rounded-md">
           <div className="p-4 sm:p-6 flex flex-col items-center relative cursor-pointer overflow-hidden rounded-t-lg">
             <h2 className="w-full mb-4 flex font-semibold capitalize text-foreground text-lg">
-              <div className="h-8 w-8 flex items-center rounded-full bg-green-300 mr-2">
+              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-green-300 mr-2">
                 <Icon icon="ion:skull" width={24} height={24} />
               </div>
-              Air Quality in Your Area
+              How is the air quality in your area?
             </h2>
 
             {airQualityData ? (
