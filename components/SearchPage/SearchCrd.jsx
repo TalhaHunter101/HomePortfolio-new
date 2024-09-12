@@ -120,12 +120,20 @@ const SearchCard = ({ property, setCardHover }) => {
             </div>
             <p className="pt-2 text-default-500 text-sm">{property?.address}</p>
             <div className="pt-2 flex space-x-2">
-              <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
+
+              {
+                property?.highlights?.map((highlight, index) => (
+                  <span key={index} className="bg-gray-200 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    {highlight?.label}
+                  </span>
+                ))
+              }
+              {/* <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
                 #bonus room
               </span>
               <span className="bg-gray-200 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
                 +6 more
-              </span>
+              </span> */}
             </div>
           </div>
         </Link>
