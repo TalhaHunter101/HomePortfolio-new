@@ -25,6 +25,20 @@ const data = [
   // { x: 4010, y: 2801000, z: 333 },
 ];
 
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const { x, y } = payload[0].payload;
+    return (
+      <div className="custom-tooltip bg-white p-2 border border-gray-300 rounded">
+        <p className="label text-gray-700">{`Home Size: ${x} sqft`}</p>
+        <p className="intro text-gray-700">{`Listing Price: £${(y / 1000).toFixed(0)}K`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 export const ScatterChartComponent = ({ data, text }) => {
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);
@@ -134,7 +148,7 @@ export const ScatterChartComponent = ({ data, text }) => {
               tickLine={false}
               tick={{ fontSize: 12, fill: "#6b7280" }}
               label={{
-                value: "Home Size in Square Feet",
+                value: "Home Size in sqft",
                 position: "insideBottom",
                 offset: -10,
                 fill: "#6b7280",
@@ -150,7 +164,7 @@ export const ScatterChartComponent = ({ data, text }) => {
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: "#6b7280" }}
-              tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
+              tickFormatter={(value) => `£${(value / 1000).toFixed(0)}K`}
               label={{
                 value: "Listing Price",
                 angle: -90,
@@ -162,13 +176,13 @@ export const ScatterChartComponent = ({ data, text }) => {
             />
             <Tooltip
               cursor={{ strokeDasharray: "3 3" }}
+              content={<CustomTooltip />}
               contentStyle={{
                 backgroundColor: "#ffffff",
                 borderColor: "#e5e7eb",
               }}
               labelStyle={{ color: "#374151" }}
               itemStyle={{ color: "#374151" }}
-              formatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
             />
             <Scatter
               name="Glen Park"
