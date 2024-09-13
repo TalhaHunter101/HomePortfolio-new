@@ -5,9 +5,8 @@ import Link from "next/link";
 import { formatCurrency } from "@/utils/Helper";
 
 const SearchCard = ({ property, setCardHover }) => {
-  
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false); 
+  const [isLiked, setIsLiked] = useState(false);
   const maxPrice = property?.maxPrice;
   const humanReadablePrice = formatCurrency(maxPrice);
 
@@ -24,7 +23,7 @@ const SearchCard = ({ property, setCardHover }) => {
   };
 
   const handleLikeToggle = () => {
-    setIsLiked(!isLiked); 
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -48,11 +47,16 @@ const SearchCard = ({ property, setCardHover }) => {
               style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
             />
           </div>
-          <div className="absolute top-2 left-2 z-10">
-            listed 4 days ago
+          <div className="absolute top-2 left-2 z-10">listed 4 days ago</div>
+          <div className="absolute right-0 bottom-0 z-10">
+            <Image
+              alt="Property"
+              className="h-8 w-10"
+              src={property?.developer_logo}
+            />
           </div>
 
-          <div className="w-full overflow-hidden rounded-none">
+          <div className="w-full overflow-hidden rounded-none relative">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -125,66 +129,64 @@ const SearchCard = ({ property, setCardHover }) => {
                 {property?.areaSize}
               </span>
             </div> */}
-             <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">
-                <div className="">
-                  <h3 className="font-semibold text-xl">{property?.minBedrooms}</h3>
-                  <p className="text-sm text-gray-600">beds</p>
-                </div>
-                <div className="">
-                  <h3 className="font-semibold text-xl">{property?.bathrooms}</h3>
-                  <p className="text-sm text-gray-600">baths</p>
-                </div>
-                <div className="">
-                  <h3 className="font-semibold text-xl">
-                    {property?.areaSize  || "NA"}
-                  </h3>
-                  <p className="text-sm text-gray-600">sqft</p>
-                </div>
+            <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">
+              <div className="">
+                <h3 className="font-semibold text-xl">
+                  {property?.minBedrooms}
+                </h3>
+                <p className="text-sm text-gray-600">beds</p>
               </div>
+              <div className="">
+                <h3 className="font-semibold text-xl">{property?.bathrooms}</h3>
+                <p className="text-sm text-gray-600">baths</p>
+              </div>
+              <div className="">
+                <h3 className="font-semibold text-xl">
+                  {property?.areaSize || "NA"}
+                </h3>
+                <p className="text-sm text-gray-600">sqft</p>
+              </div>
+            </div>
             <p className="pt-2 text-default-500 text-sm">
               {property?.fullAddress || property?.address}
             </p>
             <div className="pt-2 flex space-x-2">
+              {property?.highlights?.map((highlight, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-200 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold"
+                >
+                  {highlight?.label}
+                </span>
+              ))}
 
-              {
-                property?.highlights?.map((highlight, index) => (
-                  <span key={index} className="bg-gray-200 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
-                    {highlight?.label}
-                  </span>
-                ))
-              }
-
-
-{/* // show ROI, Gross Yield, Rent estimate, Anual cash flow */}
-<div className="mt-4 grid grid-cols-2 gap-4">
-    <div className="">
-    <div className="text-sm font-semibold text-gray-500">ROI</div>
-    <div className="text-lg font-bold text-gray-900">10%</div>
-  </div>
-  <div className="">
-    <div className="text-sm font-semibold text-gray-500">Gross Yield</div>
-    <div className="text-lg font-bold text-gray-900">8%</div>
-  </div>
-  <div className="">
-    <div className="text-sm font-semibold text-gray-500">Rent estimate</div>
-    <div className="text-lg font-bold text-gray-900">$1500</div>
-  </div>
-  <div className="">
-    <div className="text-sm font-semibold text-gray-500">Anual cash flow</div>
-    <div className="text-lg font-bold text-gray-900">$5000</div>
-  </div>
-</div>
-
-
-
-              <div className="grid grid-cols-2">
-              
+              {/* // show ROI, Gross Yield, Rent estimate, Anual cash flow */}
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="">
+                  <div className="text-sm font-semibold text-gray-500">ROI</div>
+                  <div className="text-lg font-bold text-gray-900">10%</div>
+                </div>
+                <div className="">
+                  <div className="text-sm font-semibold text-gray-500">
+                    Gross Yield
+                  </div>
+                  <div className="text-lg font-bold text-gray-900">8%</div>
+                </div>
+                <div className="">
+                  <div className="text-sm font-semibold text-gray-500">
+                    Rent estimate
+                  </div>
+                  <div className="text-lg font-bold text-gray-900">$1500</div>
+                </div>
+                <div className="">
+                  <div className="text-sm font-semibold text-gray-500">
+                    Anual cash flow
+                  </div>
+                  <div className="text-lg font-bold text-gray-900">$5000</div>
+                </div>
               </div>
 
-
-
-
-
+              <div className="grid grid-cols-2"></div>
 
               {/* <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold">
                 #bonus room

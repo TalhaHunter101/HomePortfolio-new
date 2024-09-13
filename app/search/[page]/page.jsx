@@ -19,20 +19,19 @@ const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 const SearchPage = ({ params }) => {
   const encodedPage = params.page;
   const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
-  const locationValue = page.split(/[\s,]+/)[0];
   const [listingData, setListingData] = useState([]);
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20;
+  const [hasMore, setHasMore] = useState(true); // State to track if more data is available
 
   const {
     searchTerm,
     setSearchTerm,
     results,
-    setResults,
     isDataLoading,
-    setIsDataLoading,
     searchPostcode,
     selectedBeds,
     selectedBaths,
@@ -44,9 +43,7 @@ const SearchPage = ({ params }) => {
     const term = e.target.value;
     setSearchTerm(term);
 
-    const wordCount = term.length;
-
-    if (wordCount > 2) {
+    if (term.length > 2) {
       await searchPostcode(searchTerm);
       setIsDropdownOpen(true);
     }
@@ -107,12 +104,15 @@ const SearchPage = ({ params }) => {
         body: JSON.stringify({
           searchValue: page,
           filters,
+          currentPage,
+          pageSize,
         }),
       });
 
       const result = await response.json();
       const properties = result?.results || [];
 
+      // Process EPC data if necessary
       const updatedProperties = await Promise.all(
         properties.map(async (property) => {
           const uprn = property?._source?.location?.uprn;
@@ -129,28 +129,51 @@ const SearchPage = ({ params }) => {
             ...property,
             _source: {
               ...property._source,
-              totalFloorArea: epcData.totalFloorArea, // Add the total floor area
-              fullAddress: epcData.fullAddress, // Add the full address
+              totalFloorArea: epcData.totalFloorArea,
+              fullAddress: epcData.fullAddress,
             },
           };
         })
       );
 
-      console.log("updatedProperties", updatedProperties);
-      
-
-      setListingData(updatedProperties);
+      // Append new data to the existing listingData
+      setListingData((prevData) => [...prevData, ...updatedProperties]);
       setTotalCount(result?.totalCount || 0);
+
+      // Check if there is more data to load
+      if (updatedProperties.length < pageSize || listingData.length + updatedProperties.length >= result.totalCount) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
     } catch (error) {
       console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
     }
-  }, [page, minPrice, maxPrice, selectedBeds, selectedBaths]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
+
+  useEffect(() => {
+    // Reset listing data when filters change
+    setListingData([]);
+    setCurrentPage(1);
+    setHasMore(true);
+  }, [minPrice, maxPrice, selectedBeds, selectedBaths]);
+
 
   useEffect(() => {
     fetchProperties();
-  }, [page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, currentPage]);
+
+  const loadMoreData = () => {
+    if (!isnewDataLoading && hasMore) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+
 
   return (
     <main className="flex mt-16 flex-col h-screen">
@@ -220,7 +243,13 @@ const SearchPage = ({ params }) => {
           <Spinner color="primary" size="lg" />
         </div>
       ) : (
-        <ShowDataCards totalcount={totalCount} cardData={listingData} />
+         <ShowDataCards
+        totalcount={totalCount}
+        cardData={listingData}
+        loadMoreData={loadMoreData}
+        isLoading={isnewDataLoading}
+        hasMore={hasMore}
+      />
       )}
     </main>
   );

@@ -5,8 +5,9 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Spinner,
 } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
@@ -19,12 +20,34 @@ const defaultProps = {
   zoom: 13,
 };
 
-function ShowDataCards({ cardData, totalcount }) {
+function ShowDataCards({
+  cardData,
+  totalcount,
+  loadMoreData,
+  isLoading,
+  hasMore,
+}) {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState([]);
   const [toLocation, setToLocation] = useState("");
-  const [showMap, setShowMap] = useState(true); // Toggle map visibility
+  const [showMap, setShowMap] = useState(true); 
   const [sortOrder, setSortOrder] = useState("asc"); // Sort order state
+
+  const observer = useRef();
+
+  const lastCardElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMoreData();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore, loadMoreData]
+  );
 
   const getPropsData = () => {
     const groupedData = [];
@@ -50,12 +73,13 @@ function ShowDataCards({ cardData, totalcount }) {
         developer_logo: property?._source?.branch?.logoUrl,
         developer_name: property?._source?.branch?.name,
         postcode: property?._source?.ref_postcode,
-        areaSize: property?._source?.analyticsTaxonomy?.sizeSqFeet || convertToSquareFeet(property?._source?.totalFloorArea),
+        areaSize:
+          property?._source?.analyticsTaxonomy?.sizeSqFeet ||
+          convertToSquareFeet(property?._source?.totalFloorArea),
         fullAddress: property?._source?.fullAddress,
         address: property?._source?.analyticsTaxonomy?.displayAddress,
         lng: parseFloat(property?._source?.location?.coordinates?.longitude),
         lat: parseFloat(property?._source?.location?.coordinates?.latitude),
-
       });
     });
     const uniqueDevelopmentData = Object.values(groupedData);
@@ -181,17 +205,46 @@ function ShowDataCards({ cardData, totalcount }) {
               } gap-4 overflow-y-auto max-h-full`}
             >
               {filter &&
-                filter.map((card, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <SearchCard property={card} setCardHover={setCardHover} />
-                  </motion.div>
-                ))}
+                filter.map((card, index) => {
+                  if (filter.length === index + 1) {
+                    // Last element
+                    return (
+                      <motion.div
+                        key={index}
+                        ref={lastCardElementRef}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
+                        <SearchCard
+                          property={card}
+                          setCardHover={setCardHover}
+                        />
+                      </motion.div>
+                    );
+                  } else {
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
+                        <SearchCard
+                          property={card}
+                          setCardHover={setCardHover}
+                        />
+                      </motion.div>
+                    );
+                  }
+                })}
             </div>
+
+            {isLoading && (
+              <div className="flex justify-center mt-4">
+                <Spinner color="primary" size="lg" />
+              </div>
+            )}
           </div>
         </div>
       </motion.div>

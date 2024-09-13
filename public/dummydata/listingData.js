@@ -1500,3 +1500,14 @@ export const mcards = [
   { title: "Market 3", price: "$700,000", roi: "7%" },
   { title: "Market 4", price: "$800,000", roi: "8%" }
 ];
+
+
+
+export const market_info_menu = [
+  "Summary",
+  // "Comparable",
+  // "Market Trends",
+  // "Market history",
+  // "Growth rate",
+  // "Area Statistics",
+];

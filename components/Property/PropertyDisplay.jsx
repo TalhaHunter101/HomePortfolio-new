@@ -37,6 +37,7 @@ import { EVCard } from "../PropertyPageCards/EVcards";
 import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
 import { formatCurrency } from "@/utils/Helper";
 import { useListingStore } from "@/store/listingStore";
+import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue
@@ -184,6 +185,14 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-500",
           id: "marketcomparison",
           Component: MarketComparisonCard,
+        }, 
+        
+        {
+          name: "Market Info",
+          icon: "mdi:scale-balance",
+          bgColor: "bg-green-500",
+          id: "marketinfo",
+          Component: MarketInfoPage,
         },
         {
           name: "Know your Home Options",
