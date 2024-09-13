@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { RecentlySoldMapsStatic } from "../Maps";
+import { marketInfoStore } from "@/store/listingStore";
 
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [SoldListingData, setSoldListingData] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [soldLocations, setSoldLocations] = useState([]);
+  const { setMarketInfo } = marketInfoStore();
 
   const nextSlide = () => {
     if (currentIndex < SoldListingData?.hits.length - 1) {
@@ -37,7 +39,8 @@ export function RecentlySoldCard({ city, postcode }) {
 
         if (response.ok) {
           const data = await response.json();
-          setSoldListingData(data);          
+          setSoldListingData(data);
+          setMarketInfo(data);
 
           const locations = data.hits.map((listing) => ({
             lat: listing._source?.address?.latitude,
@@ -86,8 +89,6 @@ export function RecentlySoldCard({ city, postcode }) {
     getSoldListingData();
   }, [postcode]);
 
-
-  
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1000px" }}>
       <CardBody>
@@ -170,7 +171,9 @@ export function RecentlySoldCard({ city, postcode }) {
                                             alt="Property"
                                             width={600}
                                             height={200}
-                                            classNames={{ wrapper: "min-w-full" }}
+                                            classNames={{
+                                              wrapper: "min-w-full",
+                                            }}
                                           />
                                         </div>
                                       </div>
@@ -179,19 +182,35 @@ export function RecentlySoldCard({ city, postcode }) {
                                   <CardBody className="overflow-hidden py-2">
                                     <div className="p-1">
                                       <h3 className="text-bold text-2xl">
-                                        £{item?._source?.saleEstimate?.currentPrice || "NA"}
+                                        £
+                                        {item?._source?.saleEstimate
+                                          ?.currentPrice || "NA"}
                                       </h3>
                                       <div className="text-sm uppercase flex text-bold">
                                         <span className="ml-0 text-bold flex justify-center gap-1">
-                                          <Icon icon="mdi:bed-outline" width={16} height={16} />{" "}
-                                          {item?._source?.attributes?.bedrooms || 0}
+                                          <Icon
+                                            icon="mdi:bed-outline"
+                                            width={16}
+                                            height={16}
+                                          />{" "}
+                                          {item?._source?.attributes
+                                            ?.bedrooms || 0}
                                         </span>
                                         <span className="ml-2 text-bold flex justify-center gap-1">
-                                          <Icon icon="bx:bath" width={16} height={16} />{" "}
-                                          {item?._source?.attributes?.bathrooms || 0}
+                                          <Icon
+                                            icon="bx:bath"
+                                            width={16}
+                                            height={16}
+                                          />{" "}
+                                          {item?._source?.attributes
+                                            ?.bathrooms || 0}
                                         </span>
                                         <span className="ml-2 text-bold flex justify-center gap-1">
-                                          <Icon icon="carbon:area" width={16} height={16} />{" "}
+                                          <Icon
+                                            icon="carbon:area"
+                                            width={16}
+                                            height={16}
+                                          />{" "}
                                           {item?._source?.squareFeet || 1000}
                                         </span>
                                       </div>
@@ -206,7 +225,9 @@ export function RecentlySoldCard({ city, postcode }) {
                           </div>
                           <button
                             onClick={nextSlide}
-                            disabled={currentIndex === SoldListingData?.hits?.length - 1}
+                            disabled={
+                              currentIndex === SoldListingData?.hits?.length - 1
+                            }
                             className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
                           >
                             &#10095;

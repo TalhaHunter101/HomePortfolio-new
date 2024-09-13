@@ -1,31 +1,81 @@
-import { market_info_menu } from "@/public/dummydata/listingData";
-import { Card, CardHeader } from "@nextui-org/react";
-import React, { useState } from "react";
+import { marketInfoStore } from "@/store/listingStore";
+import { Card, CardHeader, Chip } from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import ComparesionTable from "./ComparesionTable";
 
 function MarketInfoPage() {
-  const [selectedMarketInfo_menu, setSelectedMarketInfo_menu] =
-    useState("Summary");
+  const { marketInfo } = marketInfoStore();
+  const [mergedData, setMergedData] = useState([]);
+
+  // Function to fetch EPC data for a given UPRN and merge it with marketInfo
+  const fetchEPCData = async (uprn) => {
+    try {
+      const response = await fetch("/api/indevisual/get-epc-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uprn }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch EPC data");
+      }
+
+      const { epcData } = await response.json();
+      if (epcData.length > 0) {
+        const epc = epcData[0]._source;
+        return {
+          currentEnergyEfficiency: epc.CURRENT_ENERGY_EFFICIENCY,
+          currentEnergyRating: epc.CURRENT_ENERGY_RATING,
+          totalFloorArea: epc.TOTAL_FLOOR_AREA,
+        };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching EPC data:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const mergeDataWithEPC = async () => {
+      const updatedData = await Promise.all(
+        marketInfo?.hits?.map(async (property) => {
+          const uprn = property._source.uprn;
+          const epcData = await fetchEPCData(uprn);
+
+          // Merge market info with EPC data
+          return {
+            ...property._source,
+            epcData: epcData || {},
+          };
+        })
+      );
+
+      setMergedData(updatedData);
+    };
+
+    if (marketInfo?.hits) {
+      mergeDataWithEPC();
+    }
+  }, [marketInfo]);
+
   return (
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
-      <CardHeader>Market Information</CardHeader>
+      <CardHeader className="gap-7">
+        <h1 className="text-2xl font-bold">Market Information</h1>
+        <h2 className="text-xl font-semibold text-gray-400">
+          Property Count:{" "}
+        </h2>
+        <Chip color="primary">{marketInfo?.totalCount}</Chip>
+      </CardHeader>
 
-      <div className="flex flex-row overflow-x-scroll scrollbar-narrow ">
-        {market_info_menu?.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              setSelectedMarketInfo_menu(item);
-            }}
-            className={`transition-all duration-500 ease-in-out cursor-pointer flex-shrink-0 font-semibold  m-4 ${
-              selectedMarketInfo_menu === item
-                ? "shadow-cardShadow rounded-md bg-gray-200 text-primary"
-                : "text-primaryfonts"
-            } px-4 py-1`}
-          >
-            <h2 className="text-sm">{item}</h2>
-          </div>
-        ))}
-      </div>
+      {mergedData.length === 0 && <p>No data available</p>}
+
+      {/* Pass the merged data to your comparison table */}
+      <ComparesionTable data={mergedData} />
     </Card>
   );
 }
