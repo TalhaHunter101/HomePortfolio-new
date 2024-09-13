@@ -142,7 +142,7 @@ const SearchCard = ({ property, setCardHover }) => {
               </div>
               <div className="">
                 <h3 className="font-semibold text-xl">
-                  {property?.areaSize || "NA"}
+                  { property?.areaSize !== null && formatCurrency(property?.areaSize) || "NA"}
                 </h3>
                 <p className="text-sm text-gray-600">sqft</p>
               </div>
