@@ -176,13 +176,13 @@ const SearchCard = ({ property, setCardHover }) => {
                   <div className="text-sm font-semibold text-gray-500">
                     Rent estimate
                   </div>
-                  <div className="text-lg font-bold text-gray-900">$1500</div>
+                  <div className="text-lg font-bold text-gray-900">£1500</div>
                 </div>
                 <div className="">
                   <div className="text-sm font-semibold text-gray-500">
                     Anual cash flow
                   </div>
-                  <div className="text-lg font-bold text-gray-900">$5000</div>
+                  <div className="text-lg font-bold text-gray-900">£5000</div>
                 </div>
               </div>
 
