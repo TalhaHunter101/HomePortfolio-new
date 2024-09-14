@@ -133,9 +133,10 @@ function SearchDropdown({ results, isDataLoading }) {
                     Sold Houses
                   </p>
                   {/* /property/${item?._source?.uprn */}
+                  {/* cross check href */}
                   <div>
                     {results?.housPricesAddress.map((item, i) => (
-                      <Link key={i} href="#"> 
+                      <Link key={i} href={`/uprn/${item?._source?.uprn}`}> 
                         <div className="flex my-3 cursor-pointer">
                           <Icon
                             icon="entypo:address"
