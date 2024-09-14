@@ -7,7 +7,6 @@ function MarketInfoPage() {
   const { marketInfo } = marketInfoStore();
   const [mergedData, setMergedData] = useState([]);
 
-  // Function to fetch EPC data for a given UPRN and merge it with marketInfo
   const fetchEPCData = async (uprn) => {
     try {
       const response = await fetch("/api/indevisual/get-epc-data", {
@@ -74,8 +73,8 @@ function MarketInfoPage() {
 
       {mergedData.length === 0 && <p>No data available</p>}
 
-      {/* Pass the merged data to your comparison table */}
-      <ComparesionTable data={mergedData} />
+     
+        <ComparesionTable data={mergedData} />
     </Card>
   );
 }

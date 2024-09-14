@@ -5,6 +5,7 @@ import Footer from "@/components/common/Footer/Footer";
 
 import PropertyDisplay from "@/components/Property/PropertyDisplay";
 import { Spinner } from "@nextui-org/react";
+import { marketInfoStore } from "@/store/listingStore";
 
 export default function PropertyPage({ params }) {
   const listingDatasa = {
@@ -809,6 +810,7 @@ export default function PropertyPage({ params }) {
 
   const [listingData, setlistingData] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
+  const { resetMarketInfo } = marketInfoStore();
 
   useEffect(() => {
     const fetchDatabyListId = async () => {
@@ -835,14 +837,18 @@ export default function PropertyPage({ params }) {
     };
 
     fetchDatabyListId();
-  }, [params.id]);
+
+    return () => {
+      resetMarketInfo();
+    };
+  }, [params.id, resetMarketInfo]);
 
   return (
     <>
       {isDataLoading ? (
         <div className="w-full h-screen flex justify-center items-center">
           <Spinner className="mt-20" size="lg" />
-        </div> 
+        </div>
       ) : (
         <PropertyDisplay listingData={listingData} params={params} />
       )}
