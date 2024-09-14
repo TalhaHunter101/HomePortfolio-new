@@ -15,21 +15,48 @@ export default function AutocompleteSearch({ properties }) {
   const searchPostcode = useCallback(async () => {
     try {
       setIsDataLoading(true);
-      clearAllFilter()
-      const response = await fetch(`/api/search/listing-search`, {
+      clearAllFilter();
+
+      // Fetch results from /listing-search
+      const listingResponse = await fetch(`/api/search/listing-search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ searchValue: searchTerm }),
       });
-      const postcodeResult = await response.json();
+      const listingResult = await listingResponse.json();
 
-      if (postcodeResult && !areAllArraysEmpty(postcodeResult)) {
-        setResults(postcodeResult);
-      } else {
-        setResults(null);
+      let mergedResults = {
+        uk: [],
+        county: [],
+        address: [],
+        regionName: [],
+        housPricesAddress: [] // Initialize with empty array
+      };
+
+      if (listingResult && !areAllArraysEmpty(listingResult)) {
+        mergedResults = { ...listingResult };
       }
+
+      // Fetch results from /get-house-prices
+      const housePriceResponse = await fetch(`/api/search/get-house-prices`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ searchValue: searchTerm }),
+      });
+      const housePriceResult = await housePriceResponse.json();
+
+      // Merge house price results if they exist
+      if (housePriceResult && housePriceResult.housPricesAddress) {
+        mergedResults.housPricesAddress = housePriceResult.housPricesAddress;
+      }
+
+      // Set the merged results
+      setResults(mergedResults);
+
     } catch (error) {
       console.error(error);
       setResults(null);
@@ -37,6 +64,8 @@ export default function AutocompleteSearch({ properties }) {
       setIsDataLoading(false);
     }
   }, [searchTerm]);
+
+  
 
   useEffect(() => {
     if (searchTerm === "") {

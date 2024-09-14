@@ -125,6 +125,36 @@ function SearchDropdown({ results, isDataLoading }) {
                   </div>
                 </div>
               )}
+
+
+              {results?.housPricesAddress?.length > 0 && (
+                <div className="px-2 border-b-[1px] border-gray-300">
+                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                    Sold Houses
+                  </p>
+                  {/* /property/${item?._source?.uprn */}
+                  <div>
+                    {results?.housPricesAddress.map((item, i) => (
+                      <Link key={i} href="#"> 
+                        <div className="flex my-3 cursor-pointer">
+                          <Icon
+                            icon="entypo:address"
+                            height={20}
+                            width={20}
+                            color="black"
+                            className="mx-2"
+                          />
+                          <div>
+                            <p className="text-sm text-primaryfonts">
+                            {item?._source?.full_address}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Card>
