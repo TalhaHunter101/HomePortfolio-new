@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FamilyCustomPieChart } from "../Charts/FamilyPieChart";
 
 function Peoplegender({ PeopleGenderData }) {
-  console.log("Peoplegender", PeopleGenderData);
 
   const [chartData, setChartData] = useState([]);
   const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
