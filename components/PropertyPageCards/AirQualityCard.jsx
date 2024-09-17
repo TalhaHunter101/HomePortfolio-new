@@ -128,25 +128,25 @@ export function AirQualityCard({ latitude, longitude }) {
     bgColor: detail.bgColor,
   }));
 
-  const DayGrid = () => {
-    return (
-      <div className="flex flex-col space-y-1"> 
-        {months.map((month, index) => (
-          <div key={index} className="flex  items-center">
-            <span className="w-8 text-xs text-left  mr-2">{month}</span> 
-            <div className="grid grid-flow-col auto-cols-max gap-0.5">
-              {daysHighlighted[index].map((highlight, dayIndex) => (
-                <div
-                  key={dayIndex}
-                  className={`w-3 h-3 ${highlight === 1 ? "bg-green-400" : "bg-gray-200"} rounded-sm`}
-                ></div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // const DayGrid = () => {
+  //   return (
+  //     <div className="flex flex-col space-y-1"> 
+  //       {months.map((month, index) => (
+  //         <div key={index} className="flex  items-center">
+  //           <span className="w-8 text-xs text-left  mr-2">{month}</span> 
+  //           <div className="grid grid-flow-col auto-cols-max gap-0.5">
+  //             {daysHighlighted[index].map((highlight, dayIndex) => (
+  //               <div
+  //                 key={dayIndex}
+  //                 className={`w-3 h-3 ${highlight === 1 ? "bg-green-400" : "bg-gray-200"} rounded-sm`}
+  //               ></div>
+  //             ))}
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <Card className="m-4 min-h-[250px]">
@@ -221,7 +221,7 @@ export function AirQualityCard({ latitude, longitude }) {
                             </p>
                           </div>
                           <div className="flex flex-col items-center  p-6 rounded-lg shadow h-full">
-                            <h3 className="font-semibold text-xl mb-4 text-center text-gray-700">
+                            <h3 className="font-semibold text-xl mb-4 mt-10 text-center text-gray-700">
                               {component.label}
                             </h3>
                             <p className="text-2xl font-bold mb-3 text-center text-gray-800">
@@ -230,7 +230,7 @@ export function AirQualityCard({ latitude, longitude }) {
                             <p className={`text-md font-medium text-center rounded-lg mt-4 p-2 bg-${component.color}-100 text-${component.color}-700`}>
                               {component.level}
                             </p>
-                            <DayGrid  />
+                            {/* <DayGrid  /> */}
                           </div>
                         </div>
                       )}
