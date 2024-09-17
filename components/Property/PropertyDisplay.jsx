@@ -38,7 +38,7 @@ import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
 import { formatCurrency } from "@/utils/Helper";
 import { useListingStore } from "@/store/listingStore";
 import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
-
+ 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue
   const formattedPrice = formatCurrency(price)

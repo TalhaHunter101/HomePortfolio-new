@@ -1,11 +1,13 @@
 import { marketInfoStore } from "@/store/listingStore";
-import { Card, CardHeader, Chip } from "@nextui-org/react";
+import { Card, CardHeader, Chip, Button } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import ComparesionTable from "./ComparesionTable";
+import { RecentlySoldCard } from "../RecentlySoldCard";
 
-function MarketInfoPage() {
+function MarketInfoPage({ city, postcode }) {
   const { marketInfo } = marketInfoStore();
   const [mergedData, setMergedData] = useState([]);
+  const [activeView, setActiveView] = useState("table"); // State to track which view is active
 
   const fetchEPCData = async (uprn) => {
     try {
@@ -69,12 +71,38 @@ function MarketInfoPage() {
           Property Count:{" "}
         </h2>
         <Chip color="primary">{marketInfo?.totalCount}</Chip>
+        <div className="flex gap-4 mb-4 ml-auto">
+        <Button
+          auto
+          color={activeView === "table" ? "primary" : "default"}
+          onClick={() => setActiveView("table")}
+        >
+          Table View
+        </Button>
+        <Button
+          auto
+          color={activeView === "map" ? "primary" : "default"}
+          onClick={() => setActiveView("map")}
+        >
+          Map View
+        </Button>
+      </div>
       </CardHeader>
 
-      {mergedData.length === 0 && <p>No data available</p>}
+      {/* Buttons for switching views */}
+      
 
-     
+      {/* Conditionally render the table or the map based on active view */}
+      {activeView === "table" && mergedData.length === 0 && (
+        <p>No data available</p>
+      )}
+      {activeView === "table" && mergedData.length > 0 && (
         <ComparesionTable data={mergedData} />
+      )}
+
+      {activeView === "map" && (
+        <RecentlySoldCard city={city} postcode={postcode} />
+      )}
     </Card>
   );
 }
