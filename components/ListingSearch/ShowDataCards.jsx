@@ -28,44 +28,7 @@ function ShowDataCards({
   const [toLocation, setToLocation] = useState("");
   const [showMap, setShowMap] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
-
-  const getPropsData = () => {
-    const groupedData = [];
-    cardData?.forEach((property) => {
-      const { numBedrooms, numBathrooms, numLivingRooms } =
-        property?._source?.counts;
-      const price = parseInt(property?._source?.analyticsTaxonomy?.priceActual);
-      const images = property?._source?.propertyImage;
-      const id = property?._source?.listingId;
-      const description = property?._source?.summaryDescription;
-
-      groupedData.push({
-        id: id,
-        branch_name: property?._source?.branch?.name,
-        description: description,
-        development_address: property?._source?.address,
-        minBedrooms: numBedrooms,
-        minPrice: price,
-        maxBedrooms: numBedrooms,
-        bathrooms: numBathrooms,
-        maxPrice: price,
-        images: images,
-        developer_logo: property?._source?.branch?.logoUrl,
-        developer_name: property?._source?.branch?.name,
-        postcode: property?._source?.ref_postcode,
-        areaSize:
-          property?._source?.analyticsTaxonomy?.sizeSqFeet ||
-          convertToSquareFeet(property?._source?.totalFloorArea),
-        fullAddress: property?._source?.fullAddress,
-        address: property?._source?.analyticsTaxonomy?.displayAddress,
-        lng: parseFloat(property?._source?.location?.coordinates?.longitude),
-        lat: parseFloat(property?._source?.location?.coordinates?.latitude),
-      });
-    });
-    const uniqueDevelopmentData = Object.values(groupedData);
-    setToLocation(uniqueDevelopmentData);
-    setFilter(uniqueDevelopmentData); // Set initial filter data
-  };
+  
 
   const sortData = () => {
     const sortedData = [...filter].sort((a, b) => {
@@ -80,6 +43,44 @@ function ShowDataCards({
   };
 
   useEffect(() => {
+    const getPropsData = () => {
+      const groupedData = [];
+      cardData?.forEach((property) => {
+        const { numBedrooms, numBathrooms, numLivingRooms } =
+          property?._source?.counts;
+        const price = parseInt(property?._source?.analyticsTaxonomy?.priceActual);
+        const images = property?._source?.propertyImage;
+        const id = property?._source?.listingId;
+        const description = property?._source?.summaryDescription;
+
+        groupedData.push({
+          id: id,
+          branch_name: property?._source?.branch?.name,
+          description: description,
+          development_address: property?._source?.address,
+          minBedrooms: numBedrooms,
+          minPrice: price,
+          maxBedrooms: numBedrooms,
+          bathrooms: numBathrooms,
+          maxPrice: price,
+          images: images,
+          developer_logo: property?._source?.branch?.logoUrl,
+          developer_name: property?._source?.branch?.name,
+          postcode: property?._source?.ref_postcode,
+          areaSize:
+            property?._source?.analyticsTaxonomy?.sizeSqFeet ||
+            convertToSquareFeet(property?._source?.totalFloorArea),
+          fullAddress: property?._source?.fullAddress,
+          address: property?._source?.analyticsTaxonomy?.displayAddress,
+          lng: parseFloat(property?._source?.location?.coordinates?.longitude),
+          lat: parseFloat(property?._source?.location?.coordinates?.latitude),
+        });
+      });
+      const uniqueDevelopmentData = Object.values(groupedData);
+      setToLocation(uniqueDevelopmentData);
+      setFilter(uniqueDevelopmentData); 
+    };
+
     getPropsData();
   }, [cardData]);
 
@@ -110,8 +111,9 @@ function ShowDataCards({
               <SearchMap
                 center={toLocation}
                 hovercard={cardHover}
-                setfilter={setFilter}
+                // setfilter={setFilter}
                 height={"100vh"}
+                key={currentPage} // Ensure re-rendering on pagination change
               />
             </Card>
           </motion.div>
@@ -126,8 +128,12 @@ function ShowDataCards({
         transition={{ duration: 0.7, delay: 0.6 }}
       >
         <div className="h-[100vh]">
-          <div className={`${showMap ? "w-[40%]" : "w-full"} flex flex-col p-6 ml-auto`}>
-            <h3 className="text-md uppercase font-bold">{totalcount} Properties</h3>
+          <div
+            className={`${showMap ? "w-[40%]" : "w-full"} flex flex-col p-6 ml-auto`}
+          >
+            <h3 className="text-md uppercase font-bold">
+              {totalcount} Properties
+            </h3>
 
             <div className="flex space-x-2 p-4">
               <Button
@@ -163,39 +169,39 @@ function ShowDataCards({
                   selectionMode="single"
                   selectedKeys={selectedKeys}
                   onSelectionChange={setSelectedKeys}
-                  // onClick={sortData}
                 >
                   <DropdownItem key="roi">Sort by ROI</DropdownItem>
-                  <DropdownItem key="  price">Sort by Price</DropdownItem>
-                  <DropdownItem key="nil">none</DropdownItem>
+                  <DropdownItem key="price">Sort by Price</DropdownItem>
+                  <DropdownItem key="nil">None</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </div>
 
             {/* Cards */}
-            <div
-              className={`grid p-4 grid-cols-1 md:grid-cols-1 ${
-                showMap ? "2xl:grid-cols-2" : "2xl:grid-cols-4"
-              } gap-4 overflow-y-auto max-h-full`}
-            >
-              {filter &&
-                filter.map((card, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <SearchCard property={card} setCardHover={setCardHover} />
-                  </motion.div>
-                ))}
-            </div>
-
-            {isLoading && (
-              <div className="flex justify-center mt-4">
-                <Spinner color="primary" size="lg" />
+            <div className="relative">
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
+                  <Spinner color="primary" size="lg" />
+                </div>
+              )}
+              <div
+                className={`grid p-4 grid-cols-1 md:grid-cols-1 ${
+                  showMap ? "2xl:grid-cols-2" : "2xl:grid-cols-4"
+                } gap-4 overflow-y-auto max-h-full`}
+              >
+                {filter &&
+                  filter.map((card, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <SearchCard property={card} setCardHover={setCardHover} />
+                    </motion.div>
+                  ))}
               </div>
-            )}
+            </div>
 
             {/* Pagination */}
             {totalcount > pageSize && (

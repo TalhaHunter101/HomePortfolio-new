@@ -22,6 +22,8 @@ const SearchPage = ({ params }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
   
   const pageSize = 20;
 
@@ -141,6 +143,7 @@ const SearchPage = ({ params }) => {
       console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
+      setIsInitialLoading(false); 
     }
   }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
 
@@ -220,7 +223,7 @@ const SearchPage = ({ params }) => {
         </div>
       </div>
 
-      {isnewDataLoading ? (
+      {isInitialLoading ? (
         <div className="w-screen flex justify-center items-center h-[85vh]">
           <Spinner color="primary" size="lg" />
         </div>
