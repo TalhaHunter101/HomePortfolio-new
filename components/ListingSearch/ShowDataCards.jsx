@@ -6,48 +6,28 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Spinner,
+  Pagination, // Import Pagination
 } from "@nextui-org/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { convertToSquareFeet } from "@/utils/Helper";
 
-const defaultProps = {
-  lat: Number(23.079727),
-  lng: Number(77.37855),
-  zoom: 13,
-};
-
 function ShowDataCards({
   cardData,
   totalcount,
-  loadMoreData,
+  currentPage,
+  setCurrentPage,
+  pageSize,
   isLoading,
-  hasMore,
 }) {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState([]);
   const [toLocation, setToLocation] = useState("");
-  const [showMap, setShowMap] = useState(true); 
-  const [sortOrder, setSortOrder] = useState("asc"); // Sort order state
-
-  const observer = useRef();
-
-  const lastCardElementRef = useCallback(
-    (node) => {
-      if (isLoading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          loadMoreData();
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isLoading, hasMore, loadMoreData]
-  );
+  const [showMap, setShowMap] = useState(true);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const getPropsData = () => {
     const groupedData = [];
@@ -146,14 +126,8 @@ function ShowDataCards({
         transition={{ duration: 0.7, delay: 0.6 }}
       >
         <div className="h-[100vh]">
-          <div
-            className={`${
-              showMap ? "w-[40%]" : "w-full"
-            } flex flex-col p-6 ml-auto`}
-          >
-            <h3 className="text-md uppercase font-bold">
-              {totalcount} Properties
-            </h3>
+          <div className={`${showMap ? "w-[40%]" : "w-full"} flex flex-col p-6 ml-auto`}>
+            <h3 className="text-md uppercase font-bold">{totalcount} Properties</h3>
 
             <div className="flex space-x-2 p-4">
               <Button
@@ -205,44 +179,32 @@ function ShowDataCards({
               } gap-4 overflow-y-auto max-h-full`}
             >
               {filter &&
-                filter.map((card, index) => {
-                  if (filter.length === index + 1) {
-                    // Last element
-                    return (
-                      <motion.div
-                        key={index}
-                        ref={lastCardElementRef}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                      >
-                        <SearchCard
-                          property={card}
-                          setCardHover={setCardHover}
-                        />
-                      </motion.div>
-                    );
-                  } else {
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                      >
-                        <SearchCard
-                          property={card}
-                          setCardHover={setCardHover}
-                        />
-                      </motion.div>
-                    );
-                  }
-                })}
+                filter.map((card, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <SearchCard property={card} setCardHover={setCardHover} />
+                  </motion.div>
+                ))}
             </div>
 
             {isLoading && (
               <div className="flex justify-center mt-4">
                 <Spinner color="primary" size="lg" />
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalcount > pageSize && (
+              <div className="flex justify-center mt-4">
+                <Pagination
+                  total={Math.ceil(totalcount / pageSize)}
+                  page={currentPage}
+                  onChange={(page) => setCurrentPage(page)}
+                />
               </div>
             )}
           </div>

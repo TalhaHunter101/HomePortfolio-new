@@ -8,11 +8,9 @@ import Baths from "@/components/SearchPage/baths";
 import Price from "@/components/SearchPage/price";
 import Filter from "@/components/SearchPage/filter";
 import useStore from "@/store/useStore";
-import useFetchZooplaData from "@/utils/Fetchfunctions/useFetchZooplaData";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import withClickOutside from "@/components/DropdownHOC";
-import { debounce } from "lodash";
 
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
@@ -24,8 +22,8 @@ const SearchPage = ({ params }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  
   const pageSize = 20;
-  const [hasMore, setHasMore] = useState(true); // State to track if more data is available
 
   const {
     searchTerm,
@@ -136,42 +134,26 @@ const SearchPage = ({ params }) => {
         })
       );
 
-      // Append new data to the existing listingData
-      setListingData((prevData) => [...prevData, ...updatedProperties]);
+      // Replace existing listingData with new data
+      setListingData(updatedProperties);
       setTotalCount(result?.totalCount || 0);
-
-      // Check if there is more data to load
-      if (updatedProperties.length < pageSize || listingData.length + updatedProperties.length >= result.totalCount) {
-        setHasMore(false);
-      } else {
-        setHasMore(true);
-      }
     } catch (error) {
       console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
 
   useEffect(() => {
     // Reset listing data when filters change
     setListingData([]);
     setCurrentPage(1);
-    setHasMore(true);
   }, [minPrice, maxPrice, selectedBeds, selectedBaths]);
-
 
   useEffect(() => {
     fetchProperties();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, currentPage]);
 
-  const loadMoreData = () => {
-    if (!isnewDataLoading && hasMore) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
 
 
 
@@ -243,13 +225,14 @@ const SearchPage = ({ params }) => {
           <Spinner color="primary" size="lg" />
         </div>
       ) : (
-         <ShowDataCards
-        totalcount={totalCount}
-        cardData={listingData}
-        loadMoreData={loadMoreData}
-        isLoading={isnewDataLoading}
-        hasMore={hasMore}
-      />
+        <ShowDataCards
+          totalcount={totalCount}
+          cardData={listingData}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          isLoading={isnewDataLoading}
+        />
       )}
     </main>
   );
