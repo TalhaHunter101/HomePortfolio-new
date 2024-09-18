@@ -49,7 +49,7 @@ function ComparesionTable({ data }) {
     { key: "status", label: "STATUS" },
     { key: "beds", label: "BEDS" },
     { key: "baths", label: "BATHS" },
-    { key: "area", label: "AREA" },
+    { key: "area", label: "AREA SQFT" },
     { key: "epc", label: "EPC CUR. & POT." },
     { key: "type", label: "PROPETY TYPE" },
   ];
@@ -98,7 +98,7 @@ function ComparesionTable({ data }) {
         );
       case "area":
         return item.epcData && item.epcData.totalFloorArea
-          ? `${convertToSqFt(item.epcData.totalFloorArea)} ft²`
+          ? `${convertToSqFt(item.epcData.totalFloorArea)}`
           : "N/A";
       case "epc":
         return item.epcData ? (
@@ -108,11 +108,7 @@ function ComparesionTable({ data }) {
                 {item.epcData.currentEnergyRating} { item.epcData.currentEnergyEfficiency}
               </Chip>
             </Tooltip>
-            {/* <Tooltip content="Current Energy Rating">
-              <Chip color="warning" variant="flat">
-                
-              </Chip>
-            </Tooltip> */}
+           
           </div>
         ) : (
           "N/A"

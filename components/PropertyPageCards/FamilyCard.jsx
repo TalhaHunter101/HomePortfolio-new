@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Button } from "@nextui-org/react";
+import { Card, CardBody, Button, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Peoplegender from "./Demographic/Peoplegender";
 import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
 import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 
-export function FamilyCard({ postcode }) {
+export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [peopleGenderData, setPeopleGenderData] = useState([]);
   const [housingData, setHousingData] = useState([]);
@@ -60,15 +60,25 @@ export function FamilyCard({ postcode }) {
 
   // Carousel navigation functions
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
+      <CardHeader>
+        <div className="flex items-center mb-4">
+          <Icon
+            icon="mdi:account-group"
+            width={24}
+            className="text-gray-700 mr-2"
+          />
+          <h2 className="text-xl font-semibold text-gray-700">Demographics</h2>
+        </div>
+      </CardHeader>
       <CardBody>
         <div className="relative w-full overflow-hidden rounded-lg">
           {/* Carousel Container */}
@@ -76,21 +86,27 @@ export function FamilyCard({ postcode }) {
             className="flex transition-transform duration-700 ease-in-out"
             style={{
               transform: `translateX(-${currentIndex * 100}%)`,
-              width: "100%", // Adjusted for two slides
+              width: "100%",
             }}
           >
-           
+            {/* Slide 1 */}
             <div className="flex-shrink-0 w-full">
-              <Peoplegender PeopleGenderData={peopleGenderData} />
+              <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
             </div>
 
             {/* Slide 2 */}
             <div className="flex-shrink-0 w-full">
-              <div className="grid grid-rows-1 md:grid-rows-3 gap-4">
-                <HouseTypeData housingData={housingData} />
-                <HouseTenure tenureData={tenureData} />
-                <HouseOccupation occupationData={occupationData} />
-              </div>
+              <HouseTypeData housingData={housingData} city={city} />
+            </div>
+
+            {/* Slide 3 */}
+            <div className="flex-shrink-0 w-full">
+              <HouseTenure tenureData={tenureData} city={city} />
+            </div>
+
+            {/* Slide 4 */}
+            <div className="flex-shrink-0 w-full">
+              <HouseOccupation occupationData={occupationData} city={city} />
             </div>
           </div>
 

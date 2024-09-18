@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FamilyCustomPieChart } from "../Charts/FamilyPieChart";
+import { FamilyCustomBarChart } from "../Charts/FamilyPieChart";
+import { Icon } from "@iconify/react";
 
-function Peoplegender({ PeopleGenderData }) {
-
+function Peoplegender({ PeopleGenderData,city }) {
   const [chartData, setChartData] = useState([]);
   const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
 
@@ -48,15 +48,73 @@ function Peoplegender({ PeopleGenderData }) {
   return (
     <div className="m-4" style={{ minHeight: "150px" }}>
       <div className="py-4 sm:py-6 text-foreground px-4 relative h-full w-full overflow-hidden flex-1">
-        <div className="mb-6 bg-default-white border border-subtle-border shadow-sm text-xs sm:text-sm p-4 rounded-lg text-default-800">
-          This is more than the city average&nbsp;of{" "}
-          <span className="font-semibold text-blue-800">65%</span>.
+        <div className="bg-white p-6 rounded-lg w-full">
+          <div className="flex items-center mb-4">
+            <Icon
+              icon="mdi:account-group"
+              width={24}
+              className="text-gray-700 mr-2"
+            />
+            <h2 className="text-xl font-semibold text-gray-700">
+              Peoplegender
+            </h2>
+          </div>
+
+          <div className="flex flex-col lg:flex-row justify-between gap-8">
+            {/* Left section */}
+            <div className="lg:w-2/3">
+              <h3 className="text-lg font-semibold mb-2">
+                Who lives in {city}?
+              </h3>
+              <p className="text-gray-600 mb-2">
+                The population of {city} is
+                <span className="font-semibold">2,902</span> with{" "}
+                <span className="font-semibold">48%</span> males and{" "}
+                <span className="font-semibold">52%</span> females, and a median
+                age of <span className="font-semibold">38</span>.
+              </p>
+              <p className="text-gray-600 mb-2">
+                <span className="font-semibold">55%</span> of this neighborhood
+                is occupied by families with{" "}
+                <span className="font-semibold">27%</span> single families,{" "}
+                <span className="font-semibold">22%</span> one-person household,
+                and <span className="font-semibold">51%</span> couple families
+                with kids. The average household size in Allandale is{" "}
+                <span className="font-semibold">2.22</span>, and the average
+                family size is <span className="font-semibold">3.04</span>.
+              </p>
+              <p className="text-gray-600">
+                <span className="font-semibold">56%</span> of residents in this
+                neighborhood have a college degree.
+              </p>
+            </div>
+
+            {/* Right section */}
+            <div className="lg:w-1/3 flex flex-col gap-4">
+              <div className="flex justify-between text-gray-700">
+                <span>Total Population</span>
+                <span className="font-semibold text-xl">23k</span>
+              </div>
+              <div className="flex justify-between text-gray-700">
+                <span>Median Age</span>
+                <span className="font-semibold text-xl">38</span>
+              </div>
+              <div className="flex justify-between text-gray-700">
+                <span>Average HH Income</span>
+                <span className="font-semibold text-xl">£88,189</span>
+              </div>
+              <div className="flex justify-between text-gray-700">
+                <span>Single Family Household</span>
+                <span className="font-semibold text-xl">26%</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex items-center ">
           <div className=" w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
-            <div className="text-xs sm:text-lg font-semibold text-default-800 mb-4">
+            {/* <div className="text-xs sm:text-lg font-semibold text-default-800 mb-4">
               Who lives here?
-            </div>
+            </div> */}
             {chartData.map((item, index) => (
               <div key={index} className="flex flex-row gap-2 items-center">
                 <div
@@ -70,7 +128,7 @@ function Peoplegender({ PeopleGenderData }) {
             ))}
           </div>
           <div className="w-1/2 h-64 ml-2">
-            <FamilyCustomPieChart data={chartData} />
+            <FamilyCustomBarChart data={chartData} />
           </div>
         </div>
       </div>

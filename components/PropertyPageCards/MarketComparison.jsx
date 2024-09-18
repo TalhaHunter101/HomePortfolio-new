@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 
 import { ScatterChartComponent } from "./Charts/MarketScatterChart";
 import ComparisonChart from "./Charts/ComparisonChart";
-import { marketCompStore } from "@/store/listingStore";
+import { marketCompStore, useListingStore } from "@/store/listingStore";
 
 const getItemsData = () => [
   {
@@ -24,12 +24,15 @@ const getItemsData = () => [
     distance: "1.0 miles away",
   },
   
-  // Add more items as needed
 ];
 
 export function MarketComparisonCard({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { setMarketComp } = marketCompStore();
+  const { setMarketComp,marketComp } = marketCompStore();
+  const [currentPrice, setCurrentPrice] = useState(0)
+  const [currentSize, setCurrentSize] = useState(0)
+  const { squerfoot,fullAddress } = useListingStore()
+
 
 
   const items = getItemsData();
@@ -38,7 +41,7 @@ export function MarketComparisonCard({ data }) {
     if (currentIndex < items.length - 1) {
       setCurrentIndex(currentIndex + 1);
   
-      if (currentIndex === 0) {
+      if (currentIndex === 0 && !marketComp) {
         setMarketComp(data?.analyticsTaxonomy?.outcode);
       } else if (currentIndex === 1) {
         setMarketComp(data?.adTargeting?.location);
@@ -47,6 +50,7 @@ export function MarketComparisonCard({ data }) {
       }
     }
   };
+  
   
   const prevSlide = () => {
     if (currentIndex > 0) {
@@ -60,7 +64,22 @@ export function MarketComparisonCard({ data }) {
         setMarketComp(data?.adTargeting?.countyAreaName);
       }
     }
+   
   };
+
+  useEffect(() => {
+    if (currentIndex === 0) {
+      setMarketComp(data?.analyticsTaxonomy?.outcode);
+    } else if (currentIndex === 1) {
+      setMarketComp(data?.adTargeting?.location);
+    } else if (currentIndex === 2) {
+      setMarketComp(data?.adTargeting?.countyAreaName);
+    }
+    setCurrentPrice(parseInt(data?.analyticsTaxonomy?.price));
+    setCurrentSize(data?.analyticsTaxonomy?.sizeSqFeet || squerfoot);
+
+  }, [currentIndex, data, setMarketComp, squerfoot]);
+  
   return (
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
       <CardHeader></CardHeader>
@@ -77,10 +96,7 @@ export function MarketComparisonCard({ data }) {
               <span>Market Comparison</span>
             </h2>
             <div className="sentences leading-6 w-full lg:w-1/2 pr-2 sm:pr-10 relative z-10 max-w-md text-foreground">
-              {/* <p>
-                There arent too many bidding wars right now in 93063, with homes
-                selling at asking price over the last three months.
-              </p> */}
+             
             </div>
           </div>
 
@@ -121,6 +137,8 @@ export function MarketComparisonCard({ data }) {
                             <ScatterChartComponent
                               data={data?.analyticsTaxonomy?.outcode}
                               text="PostCode"
+                              price={currentPrice}
+                              currentSize={currentSize}
                             />
                           </CardBody>
                         </Card>
@@ -132,6 +150,8 @@ export function MarketComparisonCard({ data }) {
                             <ScatterChartComponent
                               data={data?.adTargeting?.location}
                               text="Town"
+                              price={currentPrice}
+                              currentSize={currentSize}
                             />
                           </CardBody>
                         </Card>
@@ -143,6 +163,8 @@ export function MarketComparisonCard({ data }) {
                             <ScatterChartComponent
                               data={data?.adTargeting?.countyAreaName}
                               text="State"
+                              price={currentPrice}
+                              currentSize={currentSize}
                             />
                           </CardBody>
                         </Card>

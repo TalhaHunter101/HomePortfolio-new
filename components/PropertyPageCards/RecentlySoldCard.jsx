@@ -5,14 +5,11 @@ import { Icon } from "@iconify/react";
 import { RecentlySoldMapsStatic } from "../Maps";
 import { marketInfoStore } from "@/store/listingStore";
 
-
 const calculateMedian = (prices) => {
-  
   if (prices.length === 0) return 0;
 
   const sortedPrices = prices.sort((a, b) => a - b);
   const middleIndex = Math.floor(sortedPrices.length / 2);
-  
 
   if (sortedPrices.length % 2 === 0) {
     return (sortedPrices[middleIndex - 1] + sortedPrices[middleIndex]) / 2;
@@ -20,7 +17,6 @@ const calculateMedian = (prices) => {
 
   return sortedPrices[middleIndex];
 };
-
 
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -66,8 +62,10 @@ export function RecentlySoldCard({ city, postcode }) {
           }));
 
           const prices = data.hits
-            .map((listing) => parseInt(listing._source?.saleEstimate?.currentPrice || 0, 10))
-            .filter(price => !isNaN(price)); 
+            .map((listing) =>
+              parseInt(listing._source?.saleEstimate?.currentPrice || 0, 10)
+            )
+            .filter((price) => !isNaN(price));
           setMedianPrice(calculateMedian(prices));
 
           setSoldLocations(locations);
@@ -113,7 +111,7 @@ export function RecentlySoldCard({ city, postcode }) {
   }, [postcode]);
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1000px" }}>
+    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
       <CardBody>
         {isDataLoading ? (
           <p>Loading...</p>
@@ -144,7 +142,7 @@ export function RecentlySoldCard({ city, postcode }) {
                         Median Price in {city}
                       </div>
                       <div className="text-xl text-muted-foreground font-medium">
-                      £{medianPrice.toLocaleString()}
+                        £{medianPrice.toLocaleString()}
                       </div>
                     </div>
                   </div>
@@ -163,100 +161,67 @@ export function RecentlySoldCard({ city, postcode }) {
                       </div>
 
                       {/* Carousel section */}
-                      <div className="flex-1 w-1/2 flex flex-col justify-center h-full">
-                        <div className="relative h-full flex items-center">
-                          <button
-                            onClick={prevSlide}
-                            disabled={currentIndex === 0}
-                            className="absolute left-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
-                          >
-                            &#10094;
-                          </button>
-                          <div
-                            className="flex transition-transform duration-500 ease-in-out w-full"
-                            style={{
-                              transform: `translateX(-${currentIndex * 100}%)`,
-                            }}
-                          >
-                            {SoldListingData?.hits?.map((item, index) => (
-                              <div
-                                key={index}
-                                className="flex-shrink-0 w-[100%] h-full p-2"
-                              >
-                                <Card>
-                                  <CardHeader className="p-0 relative">
-                                    <div className="w-full overflow-hidden rounded-none">
-                                      <div className="flex transition-transform duration-500 ease-in-out">
-                                        <div className="flex-shrink-0 w-full">
-                                          <Image
-                                            radius="none"
-                                            src="https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"
-                                            alt="Property"
-                                            width={600}
-                                            height={200}
-                                            classNames={{
-                                              wrapper: "min-w-full",
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </CardHeader>
-                                  <CardBody className="overflow-hidden py-2">
-                                    <div className="p-1">
-                                      <h3 className="text-bold text-2xl">
-                                        £
-                                        {item?._source?.saleEstimate
-                                          ?.currentPrice || "NA"}
-                                      </h3>
-                                      <div className="text-sm uppercase flex text-bold">
-                                        <span className="ml-0 text-bold flex justify-center gap-1">
-                                          <Icon
-                                            icon="mdi:bed-outline"
-                                            width={16}
-                                            height={16}
-                                          />{" "}
-                                          {item?._source?.attributes
-                                            ?.bedrooms || 0}
-                                        </span>
-                                        <span className="ml-2 text-bold flex justify-center gap-1">
-                                          <Icon
-                                            icon="bx:bath"
-                                            width={16}
-                                            height={16}
-                                          />{" "}
-                                          {item?._source?.attributes
-                                            ?.bathrooms || 0}
-                                        </span>
-                                        <span className="ml-2 text-bold flex justify-center gap-1">
-                                          <Icon
-                                            icon="carbon:area"
-                                            width={16}
-                                            height={16}
-                                          />{" "}
-                                          {item?._source?.squareFeet || 1000}
-                                        </span>
-                                      </div>
-                                      <p className="pt-2 text-default-500 text-sm">
-                                        {item?._source?.full_address}
-                                      </p>
-                                    </div>
-                                  </CardBody>
-                                </Card>
+                      {/* Carousel section replaced with a column layout */}
+                      <div className="flex-1 w-full flex flex-col h-full overflow-y-auto">
+                        {/* Display all items in a vertical column */}
+                        {SoldListingData?.hits?.map((item, index) => (
+                          <div key={index} className="w-full p-2">
+                            <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
+                              <div className="flex-shrink-0">
+                                <Image
+                                  radius="none"
+                                  src="https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"
+                                  alt="Property"
+                                  width={100}
+                                  height={100}
+                                  classNames={{
+                                    wrapper: "min-w-full",
+                                  }}
+                                />
                               </div>
-                            ))}
+                              <div className="ml-4">
+                                <h3 className="text-bold text-2xl">
+                                  £
+                                  {item?._source?.saleEstimate?.currentPrice ||
+                                    "NA"}
+                                </h3>
+                                <div className="text-sm uppercase flex text-bold">
+                                  <span className="ml-0 text-bold flex justify-center gap-1">
+                                    <Icon
+                                      icon="mdi:bed-outline"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
+                                    {item?._source?.attributes?.bedrooms || 0}
+                                  </span>
+                                  <span className="ml-2 text-bold flex justify-center gap-1">
+                                    <Icon
+                                      icon="bx:bath"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
+                                    {item?._source?.attributes?.bathrooms || 0}
+                                  </span>
+                                  <span className="ml-2 text-bold flex justify-center gap-1">
+                                    <Icon
+                                      icon="carbon:area"
+                                      width={16}
+                                      height={16}
+                                    />{" "}
+                                    {item?._source?.squareFeet || 1000}
+                                  </span>
+                                </div>
+
+                                <p className="pt-2 text-default-500 text-sm">
+                                  {item?._source?.full_address}
+                                </p>
+                              </div>
+                            </div>
                           </div>
-                          <button
-                            onClick={nextSlide}
-                            disabled={
-                              currentIndex === SoldListingData?.hits?.length - 1
-                            }
-                            className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
-                          >
-                            &#10095;
-                          </button>
-                        </div>
+                        ))}
                       </div>
+                      {/* End of card section */}
+
                       {/* End of carousel section */}
                     </div>
                   </div>

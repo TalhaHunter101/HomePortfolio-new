@@ -13,17 +13,7 @@ import {
   stop,
 } from "recharts";
 import { CardBody } from "@nextui-org/react";
-import { marketCompStore } from "@/store/listingStore";
 
-const data = [
-  { x: 1000, y: 700000, z: 200 },
-  { x: 1500, y: 1400000, z: 260 },
-  { x: 2000, y: 2100000, z: 400 },
-  { x: 2500, y: 2800000, z: 280 },
-  { x: 3000, y: 1400000, z: 500 },
-  { x: 3500, y: 700000, z: 200 },
-  // { x: 4010, y: 2801000, z: 333 },
-];
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -39,7 +29,9 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export const ScatterChartComponent = ({ data, text }) => {
+export const ScatterChartComponent = ({ data, text, price,currentSize }) => { 
+  console.log("currentSize is",currentSize);
+  
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);
   const [scatterData, setScatterData] = useState([]);
@@ -62,8 +54,8 @@ export const ScatterChartComponent = ({ data, text }) => {
 
           resultData.forEach((item) => {
             const size = item._source?.analyticsTaxonomy?.sizeSqFeet;
-
             const price = item._source.pricing?.internalValue;
+
             if (size !== "" && price !== undefined) {
               sizesqfeet.push(size);
               prices.push(price);
@@ -83,6 +75,15 @@ export const ScatterChartComponent = ({ data, text }) => {
             }
             return a.x - b.x;
           });
+
+          if (price) {
+            scatterData.push({
+              x: parseInt(currentSize) || 0, 
+              y: price, 
+              isCurrentListing: true 
+            });
+          }
+
           setScatterData(scatterData);
         }
       } catch (error) {
@@ -91,7 +92,7 @@ export const ScatterChartComponent = ({ data, text }) => {
     };
 
     getMarketComparisonData();
-  }, [data]);
+  }, [data, price, currentSize]);
 
   return (
     <CardBody className="w-full flex flex-col justify-between bg-white rounded-lg">
@@ -100,9 +101,6 @@ export const ScatterChartComponent = ({ data, text }) => {
           <span className="text-pink-500 font-bold">This Home</span>
           <span className="text-gray-700 mx-2">vs</span>
           <span className="text-teal-400 font-bold">{data}</span>
-        </div>
-        <div className="bg-gray-300 rounded-lg px-2 py-1 text-gray-700 text-xs flex items-center">
-          
         </div>
       </div>
       <div className="w-full h-64">
@@ -186,11 +184,21 @@ export const ScatterChartComponent = ({ data, text }) => {
             />
             <Scatter
               name="Glen Park"
-              data={scatterData}
+              data={scatterData.filter(item => !item.isCurrentListing)} // Normal scatter points
               fill="url(#bubbleGradient)"
               shape="circle"
               stroke="#0ea5e9"
               strokeWidth={1}
+              legendType="circle"
+              isAnimationActive
+            />
+            <Scatter
+              name="Current Listing"
+              data={scatterData.filter(item => item.isCurrentListing)} // Green dot for the current listing
+              fill="green"
+              shape="circle"
+              stroke="green"
+              strokeWidth={2}
               legendType="circle"
               isAnimationActive
             />
