@@ -118,16 +118,16 @@ function HouseTypeData({ housingData, city }) {
 
       <ResponsiveContainer>
         <BarChart
-          layout="vertical"
+          layout="horizontal"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 100, bottom: 20 }}
+          margin={{ top: 20, right: 10, left: 10, bottom: 20 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" allowDecimals={false} />
-          <YAxis dataKey="name" type="category" interval={0} width={100} />
+          <YAxis type="number" allowDecimals={false} />
+          <XAxis dataKey="name" type="category" interval={0} width={100} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="#8884d8" barSize={20} />
+          <Bar dataKey="count" fill="#8884d8" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

@@ -51,7 +51,7 @@ const SearchCard = ({ property, setCardHover }) => {
           <div className="absolute right-0 bottom-0 z-10">
             <Image
               alt="Property"
-              className="h-8 w-10"
+              className="h-8 w-10 rounded-none"
               src={property?.developer_logo}
             />
           </div>
