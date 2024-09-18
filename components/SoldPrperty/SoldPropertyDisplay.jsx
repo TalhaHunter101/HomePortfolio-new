@@ -12,7 +12,7 @@ import { useListingStore } from "@/store/listingStore";
 function PropertyDisplay({ listingData, params }) {
 
 const fullAdress = listingData?.full_address
-const formattedPrice = listingData?.saleEstimate?.currentPrice
+const formattedPrice = listingData?.history?.historicSales[0]?.price || listingData?.saleEstimate?.currentPrice
 
 
 
@@ -129,8 +129,8 @@ const formattedPrice = listingData?.saleEstimate?.currentPrice
              startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
              radius="lg"
         variant="bordered"
-       color="danger" className="bg-red-200 mb-2">
-                Sold Out
+       color="warning" className="bg-white-200 mb-2 text-black">
+               Currently Off-Market
               </Chip>   
                <h3 className="font-bold text-4xl">£{formattedPrice}</h3>
                 <span className="font-bold text-sm">
