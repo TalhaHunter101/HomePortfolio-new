@@ -1,49 +1,66 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Chip, Image } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { BasicInfoCard } from "../PropertyPageCards/basic";
-import { PriceHistory } from "../PropertyPageCards/PriceHistory";
-import { MarketComparisonCard } from "../PropertyPageCards/MarketComparison";
-import { formatCurrency } from "@/utils/Helper";
-import { useListingStore } from "@/store/listingStore";
-
+import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
+import { LocationCard } from "../PropertyPageCards/locationCard"; 
 
 function PropertyDisplay({ listingData, params }) {
-
-const fullAdress = listingData?.full_address
-const formattedPrice = listingData?.history?.historicSales[0]?.price || listingData?.saleEstimate?.currentPrice
-
-
+  console.log("listingData", listingData);
+  const [rentEstimate, setRentEstimate] = useState(0);
+  const [schoolData, setSchoolData] = useState([]); 
 
   
+  const uprn = params?.uprn || "123456"; 
 
-  const bedrooms =
-    listingData?.attributes?.bedrooms ||
+  // Hardcoded values for demonstration
+  const fullAdress = listingData?.full_address
+  const formattedPrice = listingData?.history?.historicSales[0]?.price || listingData?.saleEstimate?.currentPrice
+  
+  
+  
     
-    null;
-  const bathrooms =
-    listingData?.attributes?.bathrooms ||
-   
-    null;
+  
+    const bedrooms =
+      listingData?.attributes?.bedrooms ||
+      
+      null;
+    const bathrooms =
+      listingData?.attributes?.bathrooms ||
+     
+      null;
+  const squareFeet = listingData?.analyticsTaxonomy?.sizeSqFeet || null; 
+  const builtYear = 1962; // Hardcoded year built
+  const newData = {
+    counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
+    // analyticsTaxonomy: { sizeSqFeet: 1050 },
+    analyticsTaxonomy: listingData?.analyticsTaxonomy,
+  }; 
 
-  const [schoolData, setSchoolData] = useState([]);
   const [pricePaidData, setPricePaidData] = useState([]);
-  const [rentEstimate, setRentEstimate] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
-
-
+  const locationData = {
+    address: fullAdress,
+    location: {
+      coordinates: {
+        latitude:listingData?.address?.latitude,
+            longitude:listingData?.address?.longitude
+      },
+    },
+  };
 
   useEffect(() => {
     const getSchoolData = async () => {
       try {
-        const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ postcode: listingData?.ref_postcode }),
-        });
+        const response = await fetch(
+          `/api/indevisual/get-schools-by-postcode`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ postcode: listingData?.ref_postcode }),
+          }
+        );
 
         if (response.ok) {
           const result = await response.json();
@@ -71,132 +88,81 @@ const formattedPrice = listingData?.history?.historicSales[0]?.price || listingD
           setPricePaidData(resultData);
         }
       } catch (error) {
-        console.log(error);
+        console.log("error is", error);
       }
     };
 
-    // getSchoolData();
-    // getPricePaidData();
+    getSchoolData();
+    getPricePaidData();
   }, [listingData]);
 
-  const toggleReadMore = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const postcode = listingData?.ref_postcode; 
 
   return (
     <>
-      <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-between w-full">
-          <Button size="lg" variant="flat" className="bg-transparent">
-            <Icon icon="mdi:keyboard-arrow-left" />
-            Back to {params.id}
-          </Button>
-          <div className="flex space-x-2">
-            <Button size="lg" className="bg-transparent">
-              <Icon icon="mdi:heart-outline" />
-              Like
-            </Button>
-            <Button size="lg" className="bg-transparent">
-              <Icon icon="bx:share" />
-              Share
-            </Button>
+      <div className="max-w-full mx-auto mt-20 px-4">
+        {/* Property Details Header */}
+        <div className="flex flex-col items-center text-center">
+          <div className="mb-2">
+            <Chip
+              startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
+              radius="lg"
+              variant="bordered"
+              color="warning"
+              size="sm"
+            >
+              Currently Off-Market
+            </Chip>
           </div>
-        </div>
-
-        
-        <div className=" p-4 w-full">
-          <div className="lg:col-span-7 max-w-screen md:block flex items-center justify-center">
-          
-           
-              <Image
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGhvdXNlfGVufDB8fHx8MTY3MjEyOTc4Mw&ixlib=rb-1.2.1&q=80&w=1080"
-                alt="Beautiful House"
-                width={1500}
-                className="h-96   object-cover"
-              />
-            
+          <h3 className="font-bold text-2xl">{fullAdress}</h3>
+          {/* <h3 className="font-bold text-2xl">£{formattedPrice}</h3> */}
+          <div className="text-gray-500 text-sm mt-1">
+            Single Family | {bedrooms || 'N.A'} Beds | {bathrooms || 'N.A'} Bath | {squareFeet || 'N.A'} sq.ft. | Built {builtYear || 'N.A'}
           </div>
-       
-        </div>
-
-        {/* Property Details */}
-        <div className="p-4 flex justify-between w-full">
-          <div className="flex-1">
-          <div className="mb-4 flex items-center relative">
-             
-              <div className="flex-1 text-left">
-             <Chip  
-             startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
-             radius="lg"
+          <div className="flex justify-center space-x-4 text-sm mt-2">
+            <span>
+              Rent alert:{" "}
+              <Chip startContent={<Icon icon="fluent-emoji-flat:green-circle" />}
         variant="bordered"
-       color="warning" className="bg-white-200 mb-2 text-black">
-               Currently Off-Market
-              </Chip>   
-               <h3 className="font-bold text-4xl">£{formattedPrice}</h3>
-                <span className="font-bold text-sm">
-                  {fullAdress || listingData?.address},
-                </span>
-                <span className="font-bold text-gray-400 text-sm">
-                  {" "}
-                  {/* {listingData?.area} */}
-                </span>
-              </div>
-              <div className="flex flex-row ml-[auto] mr-8 space-x-8">
-                <div className="">
-                  <h3 className="font-semibold text-4xl">{bedrooms}</h3>
-                  <p className="text-sm text-gray-600">beds</p>
-                </div>
-                <div className="">
-                  <h3 className="font-semibold text-4xl">{bathrooms}</h3>
-                  <p className="text-sm text-gray-600">baths</p>
-                </div>
-                {/* <div className="">
-                  <h3 className="font-semibold text-4xl"> */}
-                    {/* {formatedSqft || "NA"} */}
-                  {/* </h3>
-                  <p className="text-sm text-gray-600">sqft</p>
-                </div> */}
-              </div>
-            </div>
-            <div>
-              {/* <p className="text-sm font-bold">{listingData?.title}</p> */}
-              <div className="pr-4 pt-4">
-                <Button
-                  size="lg"
-                  className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
-                >
-                  Contact agent
-                </Button>
-              </div>
-
-            </div>
-
-            {/* Basic Info Card */}
-            <div id="basics">
-              {/* <BasicInfoCard {...listingData} title="The Basics" /> */}
-            </div>
-
-            {/* Price History Card */}
-            <div id="pricehistory">
-              {/* <PriceHistory
-                {...listingData}
-                title="Price History"
-                pricePaidData={pricePaidData}
-              /> */}
-            </div>
-
-            {/* Market Comparison Card */}
-            <div id="marketcomparison">
-              {/* <MarketComparisonCard
-                {...listingData}
-                title="Market Comparison"
-                pricePaidData={pricePaidData}
-                propertyPrice={listingData?.analyticsTaxonomy?.price}
-                uprn={listingData?.location?.uprn}
-                postcode={listingData?.ref_postcode}
-              /> */}
-            </div>
+        color="success" size="sm">
+                ON
+              </Chip>
+            </span>
+            <span>
+              Market updates:{" "}
+              <Chip startContent={<Icon icon="fluent-emoji-flat:green-circle" />}
+        variant="bordered"
+        color="success" size="sm">
+                ON
+              </Chip>
+            </span>
           </div>
+        </div>
+
+        {/* Full-width Rent Estimate using RentHomeValCard */}
+        <div className="mt-6 w-full">
+          <RentHomeValCard
+            uprn={uprn} 
+            data={newData}
+            setRentEstimate={setRentEstimate} 
+          />
+        </div>
+
+        {/*  rent estimate */}
+        <div className="mt-6 text-center">
+          <h4 className="text-xl font-bold">
+            Current Rent Estimate: £{rentEstimate}
+          </h4>
+        </div>
+
+        {/*  LocationCard */}
+        <div className="mt-6 w-full">
+          <LocationCard
+         data={locationData}
+            postcode={postcode}
+            schoolData={schoolData} 
+           
+          />
         </div>
       </div>
     </>
