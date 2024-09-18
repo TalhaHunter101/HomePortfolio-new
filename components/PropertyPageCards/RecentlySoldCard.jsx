@@ -5,12 +5,30 @@ import { Icon } from "@iconify/react";
 import { RecentlySoldMapsStatic } from "../Maps";
 import { marketInfoStore } from "@/store/listingStore";
 
+
+const calculateMedian = (prices) => {
+  
+  if (prices.length === 0) return 0;
+
+  const sortedPrices = prices.sort((a, b) => a - b);
+  const middleIndex = Math.floor(sortedPrices.length / 2);
+  
+
+  if (sortedPrices.length % 2 === 0) {
+    return (sortedPrices[middleIndex - 1] + sortedPrices[middleIndex]) / 2;
+  }
+
+  return sortedPrices[middleIndex];
+};
+
+
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [SoldListingData, setSoldListingData] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [soldLocations, setSoldLocations] = useState([]);
   const { setMarketInfo } = marketInfoStore();
+  const [medianPrice, setMedianPrice] = useState(0);
 
   const nextSlide = () => {
     if (currentIndex < SoldListingData?.hits.length - 1) {
@@ -46,6 +64,11 @@ export function RecentlySoldCard({ city, postcode }) {
             lat: listing._source?.address?.latitude,
             lng: listing._source?.address?.longitude,
           }));
+
+          const prices = data.hits
+            .map((listing) => parseInt(listing._source?.saleEstimate?.currentPrice || 0, 10))
+            .filter(price => !isNaN(price)); 
+          setMedianPrice(calculateMedian(prices));
 
           setSoldLocations(locations);
           setIsDataLoading(false);
@@ -121,7 +144,7 @@ export function RecentlySoldCard({ city, postcode }) {
                         Median Price in {city}
                       </div>
                       <div className="text-xl text-muted-foreground font-medium">
-                        $796K
+                      £{medianPrice.toLocaleString()}
                       </div>
                     </div>
                   </div>

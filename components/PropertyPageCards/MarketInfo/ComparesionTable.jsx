@@ -51,6 +51,7 @@ function ComparesionTable({ data }) {
     { key: "baths", label: "BATHS" },
     { key: "area", label: "AREA" },
     { key: "epc", label: "EPC CUR. & POT." },
+    { key: "type", label: "PROPETY TYPE" },
   ];
 
   const renderCell = (item, columnKey) => {
@@ -104,18 +105,24 @@ function ComparesionTable({ data }) {
           <div className="flex gap-2">
             <Tooltip content="Current Energy Efficiency">
               <Chip color="success" variant="flat">
-                {item.epcData.currentEnergyRating}
+                {item.epcData.currentEnergyRating} { item.epcData.currentEnergyEfficiency}
               </Chip>
             </Tooltip>
-            <Tooltip content="Current Energy Rating">
+            {/* <Tooltip content="Current Energy Rating">
               <Chip color="warning" variant="flat">
-                {item.epcData.currentEnergyEfficiency}
+                
               </Chip>
-            </Tooltip>
+            </Tooltip> */}
           </div>
         ) : (
           "N/A"
         );
+        case "type":
+          return (
+            <p>
+              {item.attributes.propertyType || "N/A"}
+            </p>
+          );
       default:
         return "N/A";
     }
