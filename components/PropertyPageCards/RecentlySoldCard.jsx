@@ -148,7 +148,7 @@ export function RecentlySoldCard({ city, postcode }) {
                   </div>
                 </div>
 
-                <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
+                <div className="z-10 w-full rounded-br-lg rounded-bl-lg">
                   <div className="xl:flex h-96">
                     <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
                       {/* Map section */}
@@ -161,67 +161,65 @@ export function RecentlySoldCard({ city, postcode }) {
                       </div>
 
                       {/* Carousel section */}
-                      {/* Carousel section replaced with a column layout */}
-                      <div className="flex-1 w-full flex flex-col h-full overflow-y-auto">
-                        {/* Display all items in a vertical column */}
-                        {SoldListingData?.hits?.map((item, index) => (
-                          <div key={index} className="w-full p-2">
-                            <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
-                              <div className="flex-shrink-0">
-                                <Image
-                                  radius="none"
-                                  src="https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"
-                                  alt="Property"
-                                  width={100}
-                                  height={100}
-                                  classNames={{
-                                    wrapper: "min-w-full",
-                                  }}
-                                />
-                              </div>
-                              <div className="ml-4">
-                                <h3 className="text-bold text-2xl">
-                                  £
-                                  {item?._source?.saleEstimate?.currentPrice ||
-                                    "NA"}
-                                </h3>
-                                <div className="text-sm uppercase flex text-bold">
-                                  <span className="ml-0 text-bold flex justify-center gap-1">
-                                    <Icon
-                                      icon="mdi:bed-outline"
-                                      width={16}
-                                      height={16}
-                                    />{" "}
-                                    {item?._source?.attributes?.bedrooms || 0}
-                                  </span>
-                                  <span className="ml-2 text-bold flex justify-center gap-1">
-                                    <Icon
-                                      icon="bx:bath"
-                                      width={16}
-                                      height={16}
-                                    />{" "}
-                                    {item?._source?.attributes?.bathrooms || 0}
-                                  </span>
-                                  <span className="ml-2 text-bold flex justify-center gap-1">
-                                    <Icon
-                                      icon="carbon:area"
-                                      width={16}
-                                      height={16}
-                                    />{" "}
-                                    {item?._source?.squareFeet || 1000}
-                                  </span>
-                                </div>
+                      <div className="flex-1 h-full overflow-hidden">
+                        <div className="h-full overflow-y-auto">
+                          {SoldListingData?.hits?.map((item, index) => (
+                            <div key={index} className="w-full p-2">
+                              <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
+                                {/* <div className="flex-shrink-0">
+                                  <Image
+                                    radius="none"
+                                    src="https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"
+                                    alt="Property"
+                                    width={100}
+                                    height={100}
+                                    classNames={{
+                                      wrapper: "min-w-full",
+                                    }}
+                                  />
+                                </div> */}
+                                <div className="ml-4">
+                                  <h3 className="text-bold text-2xl">
+                                    £
+                                    {item?._source?.saleEstimate?.currentPrice ||
+                                      "NA"}
+                                  </h3>
+                                  <div className="text-sm uppercase flex text-bold">
+                                    <span className="ml-0 text-bold flex justify-center gap-1">
+                                      <Icon
+                                        icon="mdi:bed-outline"
+                                        width={16}
+                                        height={16}
+                                      />{" "}
+                                      {item?._source?.attributes?.bedrooms || 0}
+                                    </span>
+                                    <span className="ml-2 text-bold flex justify-center gap-1">
+                                      <Icon
+                                        icon="bx:bath"
+                                        width={16}
+                                        height={16}
+                                      />{" "}
+                                      {item?._source?.attributes?.bathrooms || 0}
+                                    </span>
+                                    <span className="ml-2 text-bold flex justify-center gap-1">
+                                      <Icon
+                                        icon="carbon:area"
+                                        width={16}
+                                        height={16}
+                                      />{" "}
+                                      {item?._source?.squareFeet || 1000}
+                                    </span>
+                                  </div>
 
-                                <p className="pt-2 text-default-500 text-sm">
-                                  {item?._source?.full_address}
-                                </p>
+                                  <p className="pt-2 text-default-500 text-sm">
+                                    {item?._source?.full_address}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                      {/* End of card section */}
-
                       {/* End of carousel section */}
                     </div>
                   </div>
