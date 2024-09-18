@@ -100,7 +100,7 @@ function PropertyDisplay({ listingData, params }) {
 
   return (
     <>
-      <div className="max-w-full mx-auto mt-20 px-4">
+      <div className="max-w-full mx-auto mt-48 px-4">
         {/* Property Details Header */}
         <div className="flex flex-col items-center text-center">
           <div className="mb-2">
@@ -119,7 +119,7 @@ function PropertyDisplay({ listingData, params }) {
           <div className="text-gray-500 text-sm mt-1">
             Single Family | {bedrooms || 'N.A'} Beds | {bathrooms || 'N.A'} Bath | {squareFeet || 'N.A'} sq.ft. | Built {builtYear || 'N.A'}
           </div>
-          <div className="flex justify-center space-x-4 text-sm mt-2">
+          {/* <div className="flex justify-center space-x-4 text-sm mt-2">
             <span>
               Rent alert:{" "}
               <Chip startContent={<Icon icon="fluent-emoji-flat:green-circle" />}
@@ -136,7 +136,7 @@ function PropertyDisplay({ listingData, params }) {
                 ON
               </Chip>
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Full-width Rent Estimate using RentHomeValCard */}
