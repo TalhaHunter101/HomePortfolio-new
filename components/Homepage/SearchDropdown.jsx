@@ -157,20 +157,28 @@ function SearchDropdown({ results, isDataLoading }) {
               )} */}
 
 
-              {results?.postcode?.length > 0 && (
+
+{results?.posttown?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    PostCode
+                    Places
                   </p>
                   <div>
-                    {results?.postcode.map((item, i) => (
+                    {results?.posttown.map((item, i) => (
+                      // <Link
+                      //   key={i}
+                      //   href={`/search/${item?.POST_TOWN.replace(
+                      //     /\s+/g,
+                      //     "-"
+                      //   )}`}
+                      // >
                       <Link
-                        key={i}
-                        href={`/search/${item?.POSTCODE.replace(
-                          /\s+/g,
-                          "-"
-                        )}`}
-                      >
+                      key={i}
+                      href={`/search/${item?.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                    >
                         <div className="flex my-3 cursor-pointer">
                           <Image
                             src="/icons/location.svg"
@@ -181,7 +189,7 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.POSTCODE}
+                              {item}
                             </p>
                           </div>
                         </div>
@@ -191,20 +199,30 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
-              {results?.posttown?.length > 0 && (
+
+              {results?.postcode?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Town
+                    PostCode
                   </p>
                   <div>
-                    {results?.posttown.map((item, i) => (
+                    {results?.postcode.map((item, i) => (
+                      // <Link
+                      //   key={i}
+                      //   href={`/search/${item?.POSTCODE.replace(
+                      //     /\s+/g,
+                      //     "-"
+                      //   )}`}
+                      // >
+
                       <Link
-                        key={i}
-                        href={`/search/${item?.POST_TOWN.replace(
-                          /\s+/g,
-                          "-"
-                        )}`}
-                      >
+                      key={i}
+                      href={`/search/${item?.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                    >
+
                         <div className="flex my-3 cursor-pointer">
                           <Image
                             src="/icons/location.svg"
@@ -215,7 +233,7 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.POST_TOWN}
+                              {item}
                             </p>
                           </div>
                         </div>
@@ -224,6 +242,8 @@ function SearchDropdown({ results, isDataLoading }) {
                   </div>
                 </div>
               )}
+
+            
 
               {results?.address?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
@@ -232,7 +252,10 @@ function SearchDropdown({ results, isDataLoading }) {
                   </p>
                   <div>
                     {results?.address.map((item, i) => (
-                      <Link key={i} href={`/uprn/${item?.UPRN}`}>
+                      <Link key={i} 
+                      href={item?.is_property ? `/property/${item?.listingId}` : `/uprn/${item?.address.uprn}`}
+                 
+                      >
                         <div className="flex my-3 cursor-pointer">
                           <Icon
                             icon="entypo:address"
@@ -243,7 +266,8 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                            {item?.SUB_BUILDING_NAME} {item?.BUILDING_NAME} {item?.BUILDING_NUMBER} {item?.THOROUGHFARE}
+                            {/* {item?.SUB_BUILDING_NAME} {item?.BUILDING_NAME} {item?.BUILDING_NUMBER} {item?.THOROUGHFARE} */}
+                            {item?.full_address}
                             </p>
                           </div>
                         </div>
