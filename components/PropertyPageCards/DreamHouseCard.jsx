@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { DreamHouseLineChart } from "./Charts/LineChartDreamHouse";
 import { FilterButton } from "./DreamhouseComponents/Filter";
 import { DropdownButton } from "./DreamhouseComponents/DateFilter";
+import { Icon } from "@iconify/react";
 
 const calculateStats = (data, propertyType) => {
   if (!data || data.length === 0) {
@@ -68,21 +69,32 @@ export function DreamHouseCard({  pricePaidData }) {
   return (
     <Card className="m-4" style={{ minHeight: "400px", minWidth: "800px" }}>
       <CardHeader>
-        <div className="flex w-full justify-between items-center">
-          {/* Title and subtitle on the left */}
+      <div className="flex items-center m-5">
+    <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
+      <Icon
+        icon="fluent-mdl2:insights"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">Gain insight into current & past market trends</h2>
+  </div>
+
+        {/* <div className="flex w-full justify-between items-center">
+          
           <div>
             
             <span className="text-md p-1 font-semibold text-default-500">
               Gain insight into current & past market trends
-            </span>
+            </span>sss
           </div>
 
-          {/* Buttons on the right */}
+         
           <div className="flex mt-5  justify-end gap-2">
-            {/* <FilterButton />
-            <DropdownButton /> */}
+            <FilterButton />
+            <DropdownButton />
           </div>
-        </div>
+        </div> */}
       </CardHeader>
       <CardBody>
         <div className="p-2 rounded-md">

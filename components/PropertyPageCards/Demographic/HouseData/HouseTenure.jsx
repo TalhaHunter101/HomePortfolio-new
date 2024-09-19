@@ -51,10 +51,10 @@ function HouseTenure({ tenureData, city }) {
 
   return (
     <Card style={{ width: '100%', height: 800 }}>
-     <div className="bg-white p-6 rounded-lg w-full">
+      <div className="bg-white p-6 rounded-lg w-full">
         <div className="flex items-center mb-4">
           <Icon
-            icon="mdi:account-group"
+            icon="fluent:person-key-20-filled"
             width={24}
             className="text-gray-700 mr-2"
           />
@@ -63,7 +63,7 @@ function HouseTenure({ tenureData, city }) {
 
         <div className="flex flex-col lg:flex-row justify-between gap-8">
           {/* Left section */}
-          <div className="lg:w-2/3">
+          <div className="lg:w-1/2">
             <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
             <p className="text-gray-600 mb-2">
               The population of {city} is
@@ -89,43 +89,42 @@ function HouseTenure({ tenureData, city }) {
           </div>
 
           {/* Right section */}
-          <div className="lg:w-1/3 flex flex-col gap-4">
-            <div className="flex justify-between text-gray-700">
+          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col text-center">
               <span>Total Population</span>
-              <span className="font-semibold text-xl">23k</span>
+              <span className="font-semibold text-3xl">23k</span>
             </div>
-            <div className="flex justify-between text-gray-700">
+            <div className="flex flex-col text-center">
               <span>Median Age</span>
-              <span className="font-semibold text-xl">38</span>
+              <span className="font-semibold text-3xl">38</span>
             </div>
-            <div className="flex justify-between text-gray-700">
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-14">
+            <div className="flex flex-col text-center">
               <span>Average HH Income</span>
-              <span className="font-semibold text-xl">£88,189</span>
+              <span className="font-semibold text-3xl">£88,189</span>
             </div>
-            <div className="flex justify-between text-gray-700">
+            <div className="flex flex-col text-center">
               <span>Single Family Household</span>
-              <span className="font-semibold text-xl">26%</span>
+              <span className="font-semibold text-3xl">26%</span>
+            </div>
             </div>
           </div>
         </div>
       </div>
-      <ResponsiveContainer>
+      <ResponsiveContainer className={'text-xs'} width="100%">
         <BarChart
-          layout="vertical"
+          layout="horizontal"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 100, bottom: 20 }}
+          margin={{ top: 25, right: 10, left: 10, bottom: 25 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" allowDecimals={false} />
-          <YAxis
-            dataKey="name"
-            type="category"
-            interval={0}
-            width={150}
-          />
+          <YAxis type="number" allowDecimals={false} />
+          <XAxis dataKey="name" type="category" interval={0} width={100} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="#82ca9d" barSize={20} />
+          <Bar dataKey="count" fill="#82ca9d" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

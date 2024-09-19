@@ -1,8 +1,9 @@
 import { marketInfoStore } from "@/store/listingStore";
-import { Card, CardHeader, Chip, Button } from "@nextui-org/react";
+import { Card, CardHeader, Chip, Button, CardBody } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import ComparesionTable from "./ComparesionTable";
 import { RecentlySoldCard } from "../RecentlySoldCard";
+import { Icon } from "@iconify/react";
 
 function MarketInfoPage({ city, postcode }) {
   const { marketInfo } = marketInfoStore();
@@ -65,8 +66,22 @@ function MarketInfoPage({ city, postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
-      <CardHeader className="gap-7">
-        <h1 className="text-2xl font-bold">Market Information</h1>
+      <CardHeader className="">
+        
+      <div className="flex items-center m-5">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="icon-park-outline:market-analysis"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">How is the Market here?</h2>
+  </div>
+      </CardHeader>
+      <CardBody>
+        <div className="flex gap-4 mb-4">
+      <h1 className="text-2xl font-bold">Market Information</h1>
         <h2 className="text-xl font-semibold text-gray-400">
           Property Count:{" "}
         </h2>
@@ -87,8 +102,7 @@ function MarketInfoPage({ city, postcode }) {
           Map View
         </Button>
       </div>
-      </CardHeader>
-
+      </div>
       {/* Buttons for switching views */}
       
 
@@ -103,6 +117,7 @@ function MarketInfoPage({ city, postcode }) {
       {activeView === "map" && (
         <RecentlySoldCard city={city} postcode={postcode} />
       )}
+      </CardBody>
     </Card>
   );
 }
