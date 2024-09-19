@@ -33,7 +33,7 @@ const defaultProps = {
   lng: Number(77.37855),
 
   zoom: 13,
-};
+}; 
 // Data for the cards
 const cardData = [
   {

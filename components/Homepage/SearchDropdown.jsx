@@ -26,7 +26,7 @@ function SearchDropdown({ results, isDataLoading }) {
         <Card className="max-h-[50vh] overflow-y-auto py-2">
           <div className="px-2 border-b border-gray-300">
             <div>
-              {results?.uk?.length > 0 && (
+              {/* {results?.uk?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     PostCode
@@ -132,8 +132,7 @@ function SearchDropdown({ results, isDataLoading }) {
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Sold Houses
                   </p>
-                  {/* /property/${item?._source?.uprn */}
-                  {/* cross check href */}
+                 
                   <div>
                     {results?.housPricesAddress.map((item, i) => (
                       <Link key={i} href={`/uprn/${item?._source?.uprn}`}> 
@@ -155,7 +154,112 @@ function SearchDropdown({ results, isDataLoading }) {
                     ))}
                   </div>
                 </div>
+              )} */}
+
+
+              {results?.postcode?.length > 0 && (
+                <div className="px-2 border-b-[1px] border-gray-300">
+                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                    PostCode
+                  </p>
+                  <div>
+                    {results?.postcode.map((item, i) => (
+                      <Link
+                        key={i}
+                        href={`/search/${item?.POSTCODE.replace(
+                          /\s+/g,
+                          "-"
+                        )}`}
+                      >
+                        <div className="flex my-3 cursor-pointer">
+                          <Image
+                            src="/icons/location.svg"
+                            height={20}
+                            width={20}
+                            alt="dev"
+                            className="mx-2"
+                          />
+                          <div>
+                            <p className="text-sm text-primaryfonts">
+                              {item?.POSTCODE}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               )}
+
+              {results?.posttown?.length > 0 && (
+                <div className="px-2 border-b-[1px] border-gray-300">
+                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                    Town
+                  </p>
+                  <div>
+                    {results?.posttown.map((item, i) => (
+                      <Link
+                        key={i}
+                        href={`/search/${item?.POST_TOWN.replace(
+                          /\s+/g,
+                          "-"
+                        )}`}
+                      >
+                        <div className="flex my-3 cursor-pointer">
+                          <Image
+                            src="/icons/location.svg"
+                            height={20}
+                            width={20}
+                            alt="dev"
+                            className="mx-2"
+                          />
+                          <div>
+                            <p className="text-sm text-primaryfonts">
+                              {item?.POST_TOWN}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {results?.address?.length > 0 && (
+                <div className="px-2 border-b-[1px] border-gray-300">
+                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                    Addresses
+                  </p>
+                  <div>
+                    {results?.address.map((item, i) => (
+                      <Link key={i} href={`/uprn/${item?.UPRN}`}>
+                        <div className="flex my-3 cursor-pointer">
+                          <Icon
+                            icon="entypo:address"
+                            height={20}
+                            width={20}
+                            color="black"
+                            className="mx-2"
+                          />
+                          <div>
+                            <p className="text-sm text-primaryfonts">
+                            {item?.SUB_BUILDING_NAME} {item?.BUILDING_NAME} {item?.BUILDING_NUMBER} {item?.THOROUGHFARE}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+
+
+            
+              
+
+
+              
             </div>
           </div>
         </Card>

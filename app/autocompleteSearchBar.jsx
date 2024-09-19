@@ -18,12 +18,12 @@ export default function AutocompleteSearch({ properties }) {
       clearAllFilter();
 
       // Fetch results from /listing-search
-      const listingResponse = await fetch(`/api/search/listing-search`, {
+      const listingResponse = await fetch(`/api/get-postcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ searchValue: searchTerm }),
+        body: JSON.stringify({ query: searchTerm }),
       });
       const listingResult = await listingResponse.json();
 
@@ -34,25 +34,27 @@ export default function AutocompleteSearch({ properties }) {
         regionName: [],
         housPricesAddress: [] // Initialize with empty array
       };
+      console.log("mergedResults", mergedResults);
+      
 
       if (listingResult && !areAllArraysEmpty(listingResult)) {
         mergedResults = { ...listingResult };
       }
 
       // Fetch results from /get-house-prices
-      const housePriceResponse = await fetch(`/api/search/get-house-prices`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ searchValue: searchTerm }),
-      });
-      const housePriceResult = await housePriceResponse.json();
+      // const housePriceResponse = await fetch(`/api/search/get-house-prices`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ searchValue: searchTerm }),
+      // });
+      // const housePriceResult = await housePriceResponse.json();
 
-      // Merge house price results if they exist
-      if (housePriceResult && housePriceResult.housPricesAddress) {
-        mergedResults.housPricesAddress = housePriceResult.housPricesAddress;
-      }
+      // // Merge house price results if they exist
+      // if (housePriceResult && housePriceResult.housPricesAddress) {
+      //   mergedResults.housPricesAddress = housePriceResult.housPricesAddress;
+      // }
 
       // Set the merged results
       setResults(mergedResults);
