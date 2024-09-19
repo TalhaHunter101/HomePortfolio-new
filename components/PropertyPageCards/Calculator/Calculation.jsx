@@ -6,7 +6,8 @@ import RevenueCard from "./RevenueCard";
 import ExpensesCard from "./ExpensesCard";
 import FinancialSummary from "./FinancialSummary";
 import { useCalculationsStore } from "../../../store/calculationsStore";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Icon } from "@iconify/react";
 
 function Calculation({ title, propertyPrice, rentEstimate }) {
   const {
@@ -69,6 +70,18 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
 
   return (
     <Card className="m-4">
+      <CardHeader>
+      <div className="flex items-center m-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
+      <Icon
+        icon="solar:calculator-minimalistic-bold"
+        width={20} // Adjust the icon size to fit well within the circle
+        className="text-green-900" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">What would be my returns here?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
 
 

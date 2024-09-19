@@ -6,6 +6,7 @@ import { ScatterChartComponent } from './Charts/MarketScatterChart';
 import { DistributionBarChart } from './Charts/DistributionBarChart';
 import { formatPrice } from '@/utils/Helper';
 import { useState } from 'react';
+import { Icon } from '@iconify/react';
 
 export function HomeTypesCard  ({city })  {
 const [minMaxData, setMinMaxData] = useState({})
@@ -74,10 +75,19 @@ const [barchart, setbarchart] = useState({
    
   return (
     <Card className="m-4" style={{ maxHeight: '900px' }}>
-      <CardHeader className='flex flex-col items-start '>
-        
-        <h4 className='pl-4 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
-        </h4>
+      <CardHeader >
+      <div className="flex items-center m-5">
+    <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
+      <Icon
+        icon="carbon:home"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">What type of Homes available for sale by home type, beds & price range?</h2>
+  </div>
+        {/* <h4 className='pl-4 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
+        </h4> */}
       </CardHeader>
       <CardBody>
       <div className="h-full  rounded-md p-4">

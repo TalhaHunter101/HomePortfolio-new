@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { Card } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import {
@@ -53,21 +54,86 @@ function HouseOccupation({ occupationData, city }) {
   }, [occupationData]);
 
   return (
-    <Card style={{ width: '100%', height: 800 }}>
-      <h1 className="text-lg text-center">House Occupation</h1>
-      
-      <ResponsiveContainer>
+    <Card style={{ width: "100%", height: 800 }}>
+       <div className="flex items-center mb-4">
+          <Icon
+            icon="tdesign:member"
+            width={24}
+            className="text-gray-700 mr-2"
+          />
+          <h2 className="text-xl font-semibold text-gray-700">House Occupation</h2>
+        </div>
+      <div className="flex flex-col lg:flex-row justify-between gap-8 p-2">
+          {/* Left section */}
+          <div className="lg:w-1/2">
+            <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
+            <p className="text-gray-600 mb-2">
+              The population of {city} is
+              <span className="font-semibold">2,902</span> with{" "}
+              <span className="font-semibold">48%</span> males and{" "}
+              <span className="font-semibold">52%</span> females, and a median
+              age of <span className="font-semibold">38</span>.
+            </p>
+            <p className="text-gray-600 mb-2">
+              <span className="font-semibold">55%</span> of this neighborhood is
+              occupied by families with{" "}
+              <span className="font-semibold">27%</span> single families,{" "}
+              <span className="font-semibold">22%</span> one-person household,
+              and <span className="font-semibold">51%</span> couple families
+              with kids. The average household size in Allandale is{" "}
+              <span className="font-semibold">2.22</span>, and the average
+              family size is <span className="font-semibold">3.04</span>.
+            </p>
+            <p className="text-gray-600">
+              <span className="font-semibold">56%</span> of residents in this
+              neighborhood have a college degree.
+            </p>
+          </div>
+
+          {/* Right section */}
+          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col text-center">
+              <span>Total Population</span>
+              <span className="font-semibold text-3xl">23k</span>
+            </div>
+            <div className="flex flex-col text-center">
+              <span>Median Age</span>
+              <span className="font-semibold text-3xl">38</span>
+            </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-14">
+            <div className="flex flex-col text-center">
+              <span>Average HH Income</span>
+              <span className="font-semibold text-3xl">£88,189</span>
+            </div>
+            <div className="flex flex-col text-center">
+              <span>Single Family Household</span>
+              <span className="font-semibold text-3xl">26%</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      <ResponsiveContainer className={"text-xs"} width="100%" height={500} >
         <BarChart
-          layout="vertical"
+          layout="horizontal" // Layout is set to horizontal
           data={chartData}
-          margin={{ top: 20, right: 30, left: 100, bottom: 20 }}
+          margin={{ top: 20, right: 30, left: 10, bottom: 20 }} // Adjust margins
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" allowDecimals={false} />
-          <YAxis dataKey="name" type="category" interval={0} width={200} />
+          <YAxis type="number" allowDecimals={false} />
+          <XAxis
+            dataKey="name"
+            type="category"
+            interval={0}
+            width={150}
+            angle={-45} // Rotate labels by -45 degrees
+            textAnchor="end" // Align text to the end for better readability
+            height={100} // Increase height to accommodate rotated text
+          />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="#8884d8" barSize={20} />
+          <Bar dataKey="count" fill="#8884d8" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
