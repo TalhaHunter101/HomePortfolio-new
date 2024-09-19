@@ -120,7 +120,7 @@ function HouseTypeData({ housingData, city }) {
         <BarChart
           layout="horizontal"
           data={chartData}
-          margin={{ top: 20, right: 10, left: 10, bottom: 20 }}
+          margin={{ top: 25, right: 10, left: 10, bottom: 25 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <YAxis type="number" allowDecimals={false} />
