@@ -30,14 +30,14 @@ const amenities = [
     key: "bar",
     bg_color: "bg-desert-200",
   },
-  {
-    name: "pubs",
-    icon: "fluent:drink-beer-24-regular",
-    icon_name: "bar",
-    color: "goldenrod",
-    key: "pub",
-    bg_color: "bg-desert-200",
-  },
+  // {
+  //   name: "pubs",
+  //   icon: "fluent:drink-beer-24-regular",
+  //   icon_name: "bar",
+  //   color: "goldenrod",
+  //   key: "pub",
+  //   bg_color: "bg-desert-200",
+  // },
   {
     name: "Parking",
     icon: "fluent-mdl2:parking-solid",

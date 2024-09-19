@@ -48,6 +48,10 @@ export function EVCard({ price, roi, postTownName }) {
   }, [postTownName]);
 
 
+  console.log("evChargingData",evChargingData);
+  
+
+
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1066px" }}>
       
@@ -136,6 +140,8 @@ export function EVCard({ price, roi, postTownName }) {
                             address2={item._source.deviceOwnerWebsite}
                             description2={item._source.deviceNetworks}
                             svgIcon2={item._source.svgIcon}
+                            type={item._source.connector1Type}
+                            status={item._source.connector1Status}
                           />
                         </div>
                       ))}

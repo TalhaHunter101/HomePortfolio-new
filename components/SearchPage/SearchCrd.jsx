@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Button, Card, CardBody, Image, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { formatCurrency } from "@/utils/Helper";
+import { formatCurrency, timeAgo } from "@/utils/Helper";
 
 const SearchCard = ({ property, setCardHover }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const maxPrice = property?.maxPrice;
   const humanReadablePrice = formatCurrency(maxPrice);
+  console.log("date is prorjor",property?.date);
+  
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -47,7 +49,7 @@ const SearchCard = ({ property, setCardHover }) => {
               style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
             />
           </div>
-          <div className="absolute top-2 left-2 z-10">listed 4 days ago</div>
+          <div className="absolute top-2 left-2 z-10 bg-[#fdfdfdb5] px-2 rounded-md">listed {timeAgo(property?.date)}</div>
           <div className="absolute right-0 bottom-0 z-10">
             <Image
               alt="Property"

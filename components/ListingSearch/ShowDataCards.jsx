@@ -74,6 +74,7 @@ function ShowDataCards({
           address: property?._source?.analyticsTaxonomy?.displayAddress,
           lng: parseFloat(property?._source?.location?.coordinates?.longitude),
           lat: parseFloat(property?._source?.location?.coordinates?.latitude),
+          date: property?._source?.publishedOn,
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);
