@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, Button, Progress } from "@nextui-org/react";
+import { Card, CardBody, Button, Progress, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export function AirQualityCard({ latitude, longitude }) {
@@ -150,15 +150,27 @@ export function AirQualityCard({ latitude, longitude }) {
 
   return (
     <Card className="m-4 min-h-[250px]">
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="ion:skull"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700"> How is the air quality in your area?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         <div className="bg-white rounded-md">
           <div className="p-6 flex flex-col items-center relative cursor-pointer overflow-hidden rounded-t-lg">
-            <h2 className="w-full mb-4 flex font-semibold capitalize text-lg text-black">
+            {/* <h2 className="w-full mb-4 flex font-semibold capitalize text-lg text-black">
               <div className="h-8 w-8 flex items-center justify-center rounded-full bg-green-300 mr-2">
                 <Icon icon="ion:skull" width={24} height={24} />
               </div>
               How is the air quality in your area?
-            </h2>
+            </h2> */}
 
             {airQualityData ? (
               <div className="relative w-full overflow-hidden rounded-lg">
@@ -177,7 +189,7 @@ export function AirQualityCard({ latitude, longitude }) {
                     >
                      
                       {index === 0 ? (
-                        <div className="flex justify-between p-5 rounded-lg shadow-md w-full max-w-6xl">
+                        <div className="flex justify-between  rounded-lg shadow-md w-full max-w-6xl">
                           <div className="w-3/5 text-left p-8 ">
                             <h3 className="text-lg font-medium mt-24 mb-2">Average air quality last month</h3>
                             <h1 className="text-5xl font-semibold mb-4">Good</h1>

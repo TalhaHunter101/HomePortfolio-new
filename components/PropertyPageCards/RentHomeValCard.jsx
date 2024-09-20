@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Chip, Progress } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Chip, Progress } from "@nextui-org/react";
 import { useListingStore } from "@/store/listingStore";
 import { formatNumberWithCommas } from "@/utils/Helper";
+import { Icon } from "@iconify/react";
 
 export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newData }) {
   const [data, setData] = useState([]);
@@ -78,6 +79,18 @@ setRentEstimate(rentEstimate);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="hugeicons:chart-evaluation"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">What are the estimates?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         {data.length === 0 ? (
           <div className="text-center">

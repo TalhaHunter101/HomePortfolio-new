@@ -112,6 +112,18 @@ export function RecentlySoldCard({ city, postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
+      <CardHeader>
+      <div className="flex items-center my-2  ">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="mdi:home-group"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">Recently Sold?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         {isDataLoading ? (
           <p>Loading...</p>
@@ -123,9 +135,7 @@ export function RecentlySoldCard({ city, postcode }) {
               <div className="rounded-md">
                 <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
                   <div className="flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-                    <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-400">
-                      <Icon icon="mdi:home-group" />
-                    </div>
+
                     <span>Recently Sold Homes in {city}</span>
                   </div>
                   <div className="grid item-start sm:items-center grid-cols-2">

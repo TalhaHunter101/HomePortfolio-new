@@ -82,23 +82,21 @@ export function MarketComparisonCard({ data }) {
   
   return (
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
-      <CardHeader></CardHeader>
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="mdi:scale-balance"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">How does the market compare here?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         <div className=" rounded-md ">
-          <div className=" bg-default-white p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
-            <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize space-x-2 text-foreground mb-2 sm:mb-4 text-lg">
-              <div
-                slot="before"
-                className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-green-500"
-              >
-                <Icon icon="mdi:scale-balance" />
-              </div>
-              <span>Market Comparison</span>
-            </h2>
-            <div className="sentences leading-6 w-full lg:w-1/2 pr-2 sm:pr-10 relative z-10 max-w-md text-foreground">
-             
-            </div>
-          </div>
+         
 
           {/* Carousel Section */}
           <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">

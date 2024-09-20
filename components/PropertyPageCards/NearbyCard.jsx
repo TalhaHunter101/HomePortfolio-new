@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { NearByPlacesStatic } from "../Maps";
 
@@ -185,26 +185,37 @@ export function NearbyCard({ data }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      <CardBody>
-        <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-lg">
-          <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-400">
-              <Icon icon="mdi:map" />
-            </div>
-            <span>What’s nearby 6677 Charing Street?</span>
-          </h2>
-          <div className="w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 grid grid-cols-1 items-start sm:items-center">
-            <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-              <div className="text-xs md:text-sm capitalize text-foreground">
-                Nearest grocery
-              </div>
-              <div className="text-base md:text-base text-foreground font-medium">
-                Old Susana Postal Express <br />
-                <span>(2,109 ft)</span>
-              </div>
-            </div>
-          </div>
+      <CardHeader>
+  <div className="flex  w-full items-center  justify-between">
+    {/* Left Section: Icon and Question */}
+    <div className="flex items-center">
+      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+        <Icon
+          icon="mdi:map"
+          width={16} // Adjust the icon size to fit well within the circle
+          className="text-purple-700" // Adjust the icon color if needed
+        />
+      </div>
+      <h2 className="text-xl font-bold text-gray-700">What’s nearby 6677 Charing Street?</h2>
+    </div>
+
+    {/* Right Section: Address Info */}
+    <div className="relative mt-2 pr-2 sm:pr-10 md:pr-2 z-10 max-w-md grid grid-cols-1 items-start sm:items-center text-right">
+      <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
+        <div className="text-xs md:text-sm capitalize text-foreground">
+          Nearest grocery
         </div>
+        <div className="text-base md:text-base text-foreground font-medium">
+          Old Susana Postal Express <br />
+          <span>(2,109 ft)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</CardHeader>
+
+      <CardBody>
+        
 
         <div className="rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
           <section id="whats-nearby" className="mb-5 sm:mb-6">

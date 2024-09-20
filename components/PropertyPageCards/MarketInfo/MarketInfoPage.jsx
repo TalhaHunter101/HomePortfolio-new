@@ -68,7 +68,7 @@ function MarketInfoPage({ city, postcode }) {
     <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
       <CardHeader className="">
         
-      <div className="flex items-center m-5">
+      <div className="flex items-center my-2">
     <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
       <Icon
         icon="icon-park-outline:market-analysis"
