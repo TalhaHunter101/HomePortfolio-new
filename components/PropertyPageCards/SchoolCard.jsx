@@ -28,10 +28,21 @@ export function SchoolsCard({ schoolData, data }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="mdi:school"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">How Are the Schools in East Simi Valley?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         <div className="rounded-md ">
-          <div className=" items-center   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
+          {/* <div className=" items-center   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
             <h2 className="w-full  pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize space-x-2 text-foreground mb-2 sm:mb-4 text-lg">
               <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-200">
                 <Icon icon="mdi:school" />
@@ -40,21 +51,21 @@ export function SchoolsCard({ schoolData, data }) {
             </h2>
             <div className="sentences leading-6 w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 text-foreground grid item-start sm:items-center grid-cols-2">
               <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-                {/* <div className="text-xs md:text-sm capitalize text-foreground">
+                <div className="text-xs md:text-sm capitalize text-foreground">
                   Simi Valley Avg
-                </div> */}
-                {/* <div className="text-xl text-foreground font-medium">5/10</div> */}
+                </div>
+                <div className="text-xl text-foreground font-medium">5/10</div>
               </div>
               <div className="flex flex-col items-center mb-2 pr-2 text-center justify-between">
-                {/* <div className="text-xs md:text-sm capitalize text-foreground">
+                <div className="text-xs md:text-sm capitalize text-foreground">
                   Nearby Avg
                 </div>
                 <div className="text-xl text-muted-foreground font-medium">
                   5/10
-                </div> */}
+                </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* map and tabs */}
           <div className="hidden xl:flex h-96 mt-10">

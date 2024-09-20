@@ -331,20 +331,23 @@ function PropertyDisplay({ listingData, params }) {
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
-
+  
+    const [isLiked, setIsLiked] = useState(false);
+  
+    const handleIconClick = () => {
+      setIsLiked(!isLiked);
+    };
   return (
     <>
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-between w-full">
-          <Button size="lg" variant="flat" className="bg-transparent">
-            <Icon icon="mdi:keyboard-arrow-left" />
-            Back to {params.id}
-          </Button>
-          <div className="flex space-x-2">
-            <Button size="lg" className="bg-transparent">
-              <Icon icon="mdi:heart-outline" />
-              Like
-            </Button>
+        <div className="p-4 flex items-center justify-end  w-full">
+         
+          <div className="flex  space-x-2">
+          <Icon
+  icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
+  onClick={handleIconClick}
+  className={`text-2xl mt-3 cursor-pointer ${isLiked ? "text-red-500" : "text-gray-500"}`}
+/>
             <Button size="lg" className="bg-transparent">
               <Icon icon="bx:share" />
               Share

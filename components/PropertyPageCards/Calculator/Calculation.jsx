@@ -71,7 +71,7 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
   return (
     <Card className="m-4">
       <CardHeader>
-      <div className="flex items-center m-2">
+      <div className="flex items-center my-2">
     <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
       <Icon
         icon="solar:calculator-minimalistic-bold"

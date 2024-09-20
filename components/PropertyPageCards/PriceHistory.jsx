@@ -3,12 +3,22 @@ import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { formatDate } from "@/utils/Helper";
 import { EstimatedRentCard } from "./Historycomponents/Estimate";
+import { Icon } from "@iconify/react";
 
 export function PriceHistory({  data }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="ic:round-history"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">What are the recent price changes?</h2>
+  </div>
       </CardHeader>
       <CardBody>
         <section

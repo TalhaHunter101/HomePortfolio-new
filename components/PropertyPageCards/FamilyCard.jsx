@@ -72,7 +72,7 @@ export function FamilyCard({ postcode, city }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
      <CardHeader>
-  <div className="flex items-center m-5">
+  <div className="flex items-center my-2  ">
     <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
       <Icon
         icon="mdi:account-group"

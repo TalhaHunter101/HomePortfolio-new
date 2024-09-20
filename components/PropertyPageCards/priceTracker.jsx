@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { PricetrackerChart } from "./Charts/pricetrckerChart";
 import { useListingStore } from "@/store/listingStore";
+import { Icon } from "@iconify/react";
 
 export function PriceTrackerCard({ uprn, data: newData }) {
   const [data, setData] = useState([]);
@@ -59,7 +60,18 @@ export function PriceTrackerCard({ uprn, data: newData }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
-      <CardHeader></CardHeader>
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="solar:tag-price-bold"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">What is the price trend?</h2>
+  </div>
+      </CardHeader>
       <CardBody>
         {chartData.length <= 0 ? (
           <p className="text-default-500">No data available</p>

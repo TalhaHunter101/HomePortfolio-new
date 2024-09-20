@@ -95,9 +95,43 @@ export function PublicTransportCard({ data, latitude, longitude }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
+      <CardHeader>
+  <div className="flex w-full justify-between my-2">
+    {/* Left Section: Icon and Question */}
+    <div className="flex items-center space-x-2">
+      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full">
+        <Icon
+          icon="mdi:bus"
+          width={16} // Adjust the icon size to fit well within the circle
+          className="text-purple-700" // Adjust the icon color if needed
+        />
+      </div>
+      <h2 className="text-xl font-bold text-gray-700">
+        What are my public transportation options?
+      </h2>
+    </div>
+
+    {/* Right Section: Walk Score Info */}
+    <div className="flex flex-col items-center pr-2">
+      <div className="text-xs  md:text-sm capitalize text-foreground">
+        <a
+          href="https://www.walkscore.com/how-it-works/"
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >
+          Walk Score<sup>®</sup>
+        </a>
+      </div>
+      <div className="text-xl text-muted-foreground font-medium">
+        {walkScore || "N/A"}
+      </div>
+    </div>
+  </div>
+</CardHeader>
+
       <CardBody>
         <div className="rounded-md">
-          <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
+          {/* <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
             <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
               <div className="h-6 w-6 lg:w-8 lg:h-8 px-2 flex justify-center items-center mr-1 rounded-full bg-purple-400">
                 <Icon icon="mdi:bus" />
@@ -120,7 +154,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="hidden xl:flex h-96 mt-10">
             <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
