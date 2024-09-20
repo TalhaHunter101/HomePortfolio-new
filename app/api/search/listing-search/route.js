@@ -7,7 +7,8 @@ export async function POST(request) {
     const data = await searchListingsProperty(searchValue);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.log("error is", error);
+    console.log("error", error);
     return NextResponse.json("Error", { status: 500 });
+
   }
 }
