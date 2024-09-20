@@ -21,8 +21,8 @@ export function SchoolsCard({ schoolData, data }) {
 
   const center = [
     {
-      lat: data?.location?.coordinates?.latitude,
-      lng: data?.location?.coordinates?.longitude,
+      lat: data?.location?.coordinates?.latitude || 51.5637103 ,
+      lng: data?.location?.coordinates?.longitude || -0.4065691,
     },
   ];
 

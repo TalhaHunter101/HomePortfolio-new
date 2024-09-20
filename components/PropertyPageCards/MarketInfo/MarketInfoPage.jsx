@@ -39,7 +39,7 @@ function MarketInfoPage({ city, postcode }) {
       console.error("Error fetching EPC data:", error);
       return null;
     }
-  };
+  }; 
 
   useEffect(() => {
     const mergeDataWithEPC = async () => {

@@ -72,6 +72,7 @@ function PropertyDisplay({ listingData, params }) {
 
 
   useEffect(() => {
+
     const getSchoolData = async () => {
       try {
         const response = await fetch(
@@ -181,7 +182,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Market Comparison",
-          icon: "mdi:scale-balance",
+          icon: "mdi:scale-balance", 
           bgColor: "bg-green-500",
           id: "marketcomparison",
           Component: MarketComparisonCard,

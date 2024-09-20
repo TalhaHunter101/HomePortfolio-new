@@ -7,6 +7,8 @@ import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
 import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 
+
+
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [peopleGenderData, setPeopleGenderData] = useState([]);

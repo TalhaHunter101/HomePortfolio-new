@@ -841,7 +841,7 @@ export default function PropertyPage({ params }) {
     return () => {
       resetMarketInfo();
     };
-  }, [params.id, resetMarketInfo]);
+  }, [params.id, resetMarketInfo]) ;
 
   return (
     <>
