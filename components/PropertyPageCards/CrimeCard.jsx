@@ -18,7 +18,7 @@ const dummyData = [
 ];
 export function CrimeCard({ postcode }) {
   const [crimeData, setCrimeData] = useState([]);
-
+ 
   const getCrimeData = async (postcode) => {
     try {
       const response = await fetch("/api/indevisual/get-crime-data", {
