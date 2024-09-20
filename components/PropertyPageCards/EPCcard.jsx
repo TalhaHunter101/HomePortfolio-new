@@ -1,15 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Divider,
-} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Button, Divider } from "@nextui-org/react";
 import { EnergyPerformanceTable } from "./EPCcomponents/table";
 import { PerformanceSection } from "./EPCcomponents/PerformanceSection";
 import ECPBarChart from "./ECPBarChart";
+import { Icon } from '@iconify/react';
 import { useListingStore } from "@/store/listingStore";
 
 export function EPCCard({ title, price, roi, uprn }) {
@@ -17,6 +12,7 @@ export function EPCCard({ title, price, roi, uprn }) {
   const [currentColour, setCurrentColour] = useState("");
   const { setSquarfoot } = useListingStore();
   const [recData, setRecData] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0); // Carousel index
 
   useEffect(() => {
     const fetchEpcData = async () => {
@@ -45,6 +41,7 @@ export function EPCCard({ title, price, roi, uprn }) {
     fetchEpcData();
   }, [uprn]);
 
+  // Define breakdownData after fetching EPC data
   const breakdownData = [
     {
       feature: "Walls",
@@ -97,59 +94,99 @@ export function EPCCard({ title, price, roi, uprn }) {
       rating: epcData?.SECONDHEAT_ENERGY_EFF || "-",
     },
   ];
+
+  // Carousel data
+  const slides = [
+    {
+      content: (
+        <div>
+          <h3 className="font-semibold mb-2">Energy Performance Certificate (EPC)</h3>
+          <span className=" text-gray-500 text-xs">
+            This property&apos;s current energy rating is{" "}
+            <strong>{epcData?.CURRENT_ENERGY_RATING}</strong>. It has the potential to be{" "}
+            <strong>{epcData?.POTENTIAL_ENERGY_RATING}</strong>.
+            <svg
+              aria-hidden="true"
+              x="515"
+              y="320"
+              width="50"
+              height="30"
+              className={`rating-current rating-label`}
+            >
+              <polygon
+                points="0,15 15,30 60,30 60,0 15,0 0,15"
+                className={`${currentColour.class}`}
+              ></polygon>
+              <text x="20" y="20" className="govuk-!-font-weight-bold">
+                {epcData?.CURRENT_ENERGY_EFFICIENCY} {epcData?.CURRENT_ENERGY_RATING}
+              </text>
+            </svg>
+          </span>
+          <ECPBarChart data={epcData} setCurrentColour={setCurrentColour} />
+        </div>
+      ),
+    },
+    {
+      content: <EnergyPerformanceTable data={breakdownData} />,
+    },
+    {
+      content: <PerformanceSection recData={recData} />,
+    },
+  ];
+
+  // Carousel navigation
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
+  };
+
   return (
-    <Card className="m-4  " style={{ maxHeight: "800px", minWidth: "800px" }}>
+    <Card className="m-4" style={{ maxHeight: "800px", minWidth: "800px" }}>
       <CardHeader></CardHeader>
       <CardBody>
         {epcData && (
-          <div className="overflow-hidden ">
-            <div className="flex p-4 border border-subtle-border rounded-md">
-              <div className="w-1/2 pr-4">
-                <h3 className="font-semibold mb-2">
-                  Energy Performance Certificate (EPC)
-                </h3>
-                <span className="mb-4 text-gray-500 text-xs">
-                  This property&apos;s current energy rating is{" "}
-                  <strong>{epcData?.CURRENT_ENERGY_RATING}</strong>. It has the
-                  potential to be{" "}
-                  <strong>
-                    {epcData && epcData["POTENTIAL_ENERGY_RATING"]}
-                  </strong>
-                  .
-                  <svg
-                    aria-hidden="true"
-                    x="515"
-                    y="320"
-                    width="50"
-                    height="30"
-                    className={`rating-current rating-label `}
-                  >
-                    <polygon
-                      points="0,15 15,30 60,30 60,0 15,0 0,15"
-                      class={`${currentColour.class}`}
-                    ></polygon>
-                    <text x="20" y="20" class="govuk-!-font-weight-bold">
-                      {epcData?.CURRENT_ENERGY_EFFICIENCY}{" "}
-                      {epcData?.CURRENT_ENERGY_RATING}
-                    </text>
-                  </svg>
-                </span>
-
-                {/* Placeholder for EPC graph */}
-                <ECPBarChart
-                  data={epcData}
-                  setCurrentColour={setCurrentColour}
-                />
-
-                <Divider className="my-4" />
-
-                <EnergyPerformanceTable data={breakdownData} />
+          <div className="overflow-hidden">
+            <div className="relative h-full w-full flex-1">
+              {/* Carousel Implementation */}
+              <div className="w-full overflow-hidden rounded-lg">
+                <div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                  {slides.map((slide, index) => (
+                    <div key={index} className="flex-shrink-0 w-full">
+                      <div className="mx-2 p-4 bg-white rounded-lg">
+                        {slide.content}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-
-              <Divider orientation="vertical" className="mx-4 h-auto" />
-
-              {/* Right Column for Performance */}
-              <PerformanceSection  recData={recData}/>
+              <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
+                <Button
+                  isIconOnly
+                  variant="ghost"
+                  radius="full"
+                  size="sm"
+                  onClick={handlePrevious}
+                >
+                  <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
+                  <span className="sr-only">Previous</span>
+                </Button>
+                <Button
+                  isIconOnly
+                  variant="ghost"
+                  radius="full"
+                  size="sm"
+                  onClick={handleNext}
+                >
+                  <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
+                  <span className="sr-only">Next</span>
+                </Button>
+              </div>
             </div>
           </div>
         )}

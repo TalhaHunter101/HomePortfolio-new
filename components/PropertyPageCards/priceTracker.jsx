@@ -6,7 +6,7 @@ import { useListingStore } from "@/store/listingStore";
 export function PriceTrackerCard({ uprn, data: newData }) {
   const [data, setData] = useState([]);
   const { setFullAddress } = useListingStore();
-
+ 
   useEffect(() => {
     const getHomeThreeYearData = async () => {
       try {
@@ -88,7 +88,7 @@ export function PriceTrackerCard({ uprn, data: newData }) {
                         categories={chartCategories}
                       />
                     </div>
-                  </div>
+                  </div> 
                 </div>
                 <div className="flex justify-between font-light text-foreground">
                   <div>
