@@ -61,7 +61,7 @@ function HouseOccupation({ occupationData, city }) {
 
   return (
     
-      <><div className="flex items-center p-2  mb-4">
+      <><div className="flex items-center p-2">
       <Icon
         icon="tdesign:member"
         width={24}
@@ -117,13 +117,21 @@ function HouseOccupation({ occupationData, city }) {
             </div>
           </div>
         </div>
-      </div><ResponsiveContainer width="100%" height={500}>
+      </div>
+      <div className="flex flex-col gap-4 mt-8">
+      <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Legend
             layout="vertical"
             verticalAlign="middle"
             align="left"
-            wrapperStyle={{ paddingLeft: 20 }} />
+            wrapperStyle={{ 
+              paddingLeft: 60, 
+              paddingTop: 20, 
+              paddingBottom: 20, 
+              marginLeft: 10 
+            }} 
+          />
           <Tooltip />
           <Pie
             data={chartData}
@@ -131,7 +139,7 @@ function HouseOccupation({ occupationData, city }) {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={150}
+            outerRadius={100}
             fill="#82ca9d"
             label
           >
@@ -140,8 +148,9 @@ function HouseOccupation({ occupationData, city }) {
             ))}
           </Pie>
         </PieChart>
-      </ResponsiveContainer></>
-  
+      </ResponsiveContainer>
+      </div>
+      </>
   );
 }
 

@@ -150,24 +150,25 @@ function HouseTypeData({ housingData, city }) {
 
       <div className="flex w-full h-96 mt-8">
         {/* Custom Legend Section */}
-        <div className="legend-container w-1/4 p-4">
+        <div className="legend-container w-1/4 p-4 pt-16">
           <CustomLegend />
         </div>
 
         {/* Bar Chart Section */}
         <div className="chart-container w-3/4">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer>
             <BarChart
               layout="horizontal"
               data={chartData}
               margin={{ top: 25, right: 10, left: 10, bottom: 25 }}
+              height={100}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <YAxis type="number" allowDecimals={false} />
               <XAxis dataKey="name" type="category" interval={0} width={100} />
               <Tooltip />
               <Legend content={<div />} /> {/* Empty legend to avoid default legend */}
-              <Bar dataKey="count" fill="#8884d8" barSize={40}>
+              <Bar dataKey="count" fill="#8884d8" barSize={80}>
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
