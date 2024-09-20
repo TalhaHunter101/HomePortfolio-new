@@ -83,8 +83,8 @@ export function FamilyCard({ postcode, city }) {
     <h2 className="text-xl font-bold text-gray-700">What are the demographics here?</h2>
   </div>
 </CardHeader>
-      <CardBody>
-        <div className="relative w-full overflow-hidden rounded-lg">
+     
+        <div className="relative w-full shadow-none  overflow-hidden ">
           {/* Carousel Container */}
           <div
             className="flex transition-transform duration-700 ease-in-out"
@@ -94,7 +94,7 @@ export function FamilyCard({ postcode, city }) {
             }}
           >
             {/* Slide 1 */}
-            <div className="flex-shrink-0 w-full">
+            <div className="flex-shrink-0 w-full shadow-none">
               <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
             </div>
 
@@ -148,7 +148,7 @@ export function FamilyCard({ postcode, city }) {
             </Button>
           </div>
         </div>
-      </CardBody>
+      
     </Card>
   );
 }
