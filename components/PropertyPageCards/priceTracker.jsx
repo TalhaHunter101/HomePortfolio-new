@@ -4,10 +4,12 @@ import { PricetrackerChart } from "./Charts/pricetrckerChart";
 import { useListingStore } from "@/store/listingStore";
 import { Icon } from "@iconify/react";
 
-export function PriceTrackerCard({ uprn, data: newData }) {
+export function PriceTrackerCard({ uprn, data: newData, postcode }) {
   const [data, setData] = useState([]);
   const { setFullAddress } = useListingStore();
- 
+  const [growthRate, setGrowthRate] = useState(null);
+  const [ratePerYear, setRatePerYear] = useState(null);
+
   useEffect(() => {
     const getHomeThreeYearData = async () => {
       try {
@@ -25,14 +27,49 @@ export function PriceTrackerCard({ uprn, data: newData }) {
         const reults = await res.json();
 
         setFullAddress(reults[0]?._source?.full_address);
-        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setData([]);
+      }
+    };
 
-        let historicSales = reults[0]._source.history?.historicSales;
-        historicSales = historicSales
-          .replace(/'/g, '"')
-          .replace(/None/g, "null");
-        const parsedHistoricSales = JSON.parse(historicSales);
-        setData(parsedHistoricSales);
+    const getPriceTrackerData = async () => {
+      try {
+        const res = await fetch("/api/indevisual/get-price-tracking-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ postcode }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const reults = await res.json();
+        setData(reults?.hits);
+
+        // Calculate growth rate and rate per year
+        const sortedData = reults?.hits?.map((item) => ({
+          year: new Date(item._source.deed_date).getFullYear(),
+          price: Number(item._source.price_paid),
+        })).sort((a, b) => a.year - b.year);
+
+        if (sortedData.length > 1) {
+          const earliestPrice = sortedData[0].price;
+          const latestPrice = sortedData[sortedData.length - 1].price;
+          const earliestYear = sortedData[0].year;
+          const latestYear = sortedData[sortedData.length - 1].year;
+
+          const growthRateCalc = ((latestPrice - earliestPrice) / earliestPrice) * 100;
+          const ratePerYearCalc = (latestPrice - earliestPrice) / (latestYear - earliestYear);
+
+          setGrowthRate(growthRateCalc.toFixed(2)); // Format to 2 decimal places
+          setRatePerYear(ratePerYearCalc.toFixed(2)); // Format to 2 decimal places
+        }
+
+        console.log("pricetrack data is", reults);
+
       } catch (error) {
         console.error("Error fetching data:", error);
         setData([]);
@@ -42,38 +79,30 @@ export function PriceTrackerCard({ uprn, data: newData }) {
     if (uprn) {
       getHomeThreeYearData();
     }
-  }, [uprn]);
 
-  const { chartData, chartCategories } = data.reduce(
-    (acc, item) => {
-      acc.chartData.unshift(item.price);
-      acc.chartCategories.unshift(
-        new Date(item.date).toLocaleString("default", {
-          month: "short",
-          year: "numeric",
-        })
-      );
-      return acc;
-    },
-    { chartData: [], chartCategories: [] }
-  );
+    if (postcode) {
+      getPriceTrackerData();
+    }
+  }, [uprn, postcode, setFullAddress]);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="solar:tag-price-bold"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">What is the price trend?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="solar:tag-price-bold"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            What is the price trend?
+          </h2>
+        </div>
       </CardHeader>
       <CardBody>
-        {chartData.length <= 0 ? (
+        {data.length <= 0 ? (
           <p className="text-default-500">No data available</p>
         ) : (
           <section
@@ -84,7 +113,7 @@ export function PriceTrackerCard({ uprn, data: newData }) {
               <h2 className="text-xl md:w-2/5 text-foreground">
                 Home prices in{" "}
                 <span className="text-primary">
-                  {newData?.location?.townOrCity}
+                  {postcode}
                 </span>{" "}
                 have grown faster.
               </h2>
@@ -96,27 +125,30 @@ export function PriceTrackerCard({ uprn, data: newData }) {
                   <div style={{ minHeight: "215px" }}>
                     <div className="apexcharts-canvas">
                       <PricetrackerChart
-                        data={chartData}
-                        categories={chartCategories}
+                        priceData={data}
                       />
                     </div>
-                  </div> 
+                  </div>
                 </div>
                 <div className="flex justify-between font-light text-foreground">
                   <div>
                     <div className="text-sm">
-                      {newData?.location?.townOrCity} growth Rate
+                      {postcode} growth Rate
                     </div>
                     <div className="text-[16px] text-primary">
-                      <b className="font-medium text-[22px]">...</b> per year
+                      <b className="font-medium text-[22px]">
+                        {growthRate || "..."}%
+                      </b> per year
                     </div>
                   </div>
                   <div className="text-foreground">
                     <div className="text-sm">
-                      {newData?.location?.townOrCity} Rate
+                      {postcode} Rate
                     </div>
                     <div className="text-[16px]">
-                      <b className="font-medium text-[22px]">..</b> per year
+                      <b className="font-medium text-[22px]">
+                        £{ratePerYear || "..."} per year
+                      </b>
                     </div>
                   </div>
                 </div>

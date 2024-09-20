@@ -8,21 +8,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const PricetrackerChart = ({ data, categories }) => {
-  const formattedData = data.map((price, index) => ({
-    name: categories[index],
-    uv: price,
-  }));
+export const PricetrackerChart = ({ priceData }) => {
+  // Format the data
+  const formattedData = priceData
+    .map((item) => ({
+      name: new Date(item._source.deed_date).getFullYear(), // Extract year using Date object
+      price: Number(item._source.price_paid), // Convert price to number
+    }))
+    .sort((a, b) => a.name - b.name); // Sort by year (ascending)
 
   return (
-    <div className="w-full h-auto max-w-4xl p-4 mx-auto bg-white rounded-lg">
+    <div className="w-full h-auto max-w-5xl p-4 mx-auto bg-white rounded-lg">
       <div className="w-full h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={formattedData}
             margin={{
               top: 10,
-              right: 30,
+              right: 80,
               left: 0,
               bottom: 0,
             }}
@@ -49,11 +52,10 @@ export const PricetrackerChart = ({ data, categories }) => {
               }}
               dx={10}
             />
-
             <Tooltip formatter={(value) => `£${value.toLocaleString()}`} />
             <Area
               type="monotone"
-              dataKey="uv"
+              dataKey="price"
               stroke="#00457C"
               fillOpacity={1}
               fill="url(#colorUv)"
