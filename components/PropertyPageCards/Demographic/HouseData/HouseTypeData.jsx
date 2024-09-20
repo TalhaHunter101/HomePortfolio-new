@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Legend,
+  Cell,
 } from "recharts";
 
 function HouseTypeData({ housingData, city }) {
@@ -55,8 +56,35 @@ function HouseTypeData({ housingData, city }) {
     }
   }, [housingData]);
 
+  const COLORS = [
+    "#6A0DAD", "#FFA07A", "#20B2AA", "#FF6347", "#FFD700",
+    "#00BFFF", "#FF69B4", "#8A2BE2", "#32CD32"
+  ];
+
+  const CustomLegend = () => {
+    return (
+      <div className="custom-legend">
+        {chartData.map((entry, index) => (
+          <div key={`item-${index}`} className="legend-item flex items-center mb-2">
+            <span
+              className="legend-color mr-2"
+              style={{
+                display: "inline-block",
+                width: "14px",
+                height: "14px",
+                backgroundColor: COLORS[index % COLORS.length],
+                borderRadius: "50%",
+              }}
+            />
+            <span className="text-gray-700 text-sm">{entry.name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <Card style={{ width: '100%', height: 800 }}>
+    <div style={{ width: '100%', height: '100%', overflowY: 'auto' }}>
       <div className="bg-white p-6 rounded-lg w-full">
         <div className="flex items-center mb-4">
           <Icon
@@ -96,45 +124,62 @@ function HouseTypeData({ housingData, city }) {
 
           {/* Right section */}
           <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col text-center">
-              <span>Total Population</span>
-              <span className="font-semibold text-3xl">23k</span>
-            </div>
-            <div className="flex flex-col text-center">
-              <span>Median Age</span>
-              <span className="font-semibold text-3xl">38</span>
-            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col text-center">
+                <span>Total Population</span>
+                <span className="font-semibold text-3xl">23k</span>
+              </div>
+              <div className="flex flex-col text-center">
+                <span>Median Age</span>
+                <span className="font-semibold text-3xl">38</span>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-14">
-            <div className="flex flex-col text-center">
-              <span>Average HH Income</span>
-              <span className="font-semibold text-3xl">£88,189</span>
-            </div>
-            <div className="flex flex-col text-center">
-              <span>Single Family Household</span>
-              <span className="font-semibold text-3xl">26%</span>
-            </div>
+              <div className="flex flex-col text-center">
+                <span>Average HH Income</span>
+                <span className="font-semibold text-3xl">£88,189</span>
+              </div>
+              <div className="flex flex-col text-center">
+                <span>Single Family Household</span>
+                <span className="font-semibold text-3xl">26%</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <ResponsiveContainer>
-        <BarChart
-          layout="horizontal"
-          data={chartData}
-          margin={{ top: 25, right: 10, left: 10, bottom: 25 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <YAxis type="number" allowDecimals={false} />
-          <XAxis dataKey="name" type="category" interval={0} width={100} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="count" fill="#8884d8" barSize={40} />
-        </BarChart>
-      </ResponsiveContainer>
-    </Card>
+      <div className="flex w-full h-96 mt-8">
+        {/* Custom Legend Section */}
+        <div className="legend-container w-1/4 p-4">
+          <CustomLegend />
+        </div>
+
+        {/* Bar Chart Section */}
+        <div className="chart-container w-3/4">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              layout="horizontal"
+              data={chartData}
+              margin={{ top: 25, right: 10, left: 10, bottom: 25 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <YAxis type="number" allowDecimals={false} />
+              <XAxis dataKey="name" type="category" interval={0} width={100} />
+              <Tooltip />
+              <Legend content={<div />} /> {/* Empty legend to avoid default legend */}
+              <Bar dataKey="count" fill="#8884d8" barSize={40}>
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </div>
   );
 }
 

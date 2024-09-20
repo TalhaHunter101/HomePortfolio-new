@@ -47,16 +47,16 @@ function Peoplegender({ PeopleGenderData,city }) {
 
   return (
     <div className="" style={{ minHeight: "150px" }}>
-      <div className=" text-foreground px-4 relative h-full w-full overflow-hidden flex-1">
+      <div className="  px-4 relative h-full w-full overflow-hidden flex-1">
         <div className="bg-white   w-full">
           <div className="flex items-center mb-4">
             <Icon
-              icon="icons8:gender"
+              icon="game-icons:relationship-bounds"
               width={24}
               className="text-gray-700 mr-2"
             />
             <h2 className="text-xl font-semibold text-gray-700">
-              Peoplegender
+              Marital and civil partnership
             </h2>
           </div>
 

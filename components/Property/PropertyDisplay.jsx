@@ -356,7 +356,7 @@ function PropertyDisplay({ listingData, params }) {
         </div>
 
         {/* {/ main div /} */}
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 p-4 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4  px-6 ml-10 w-full">
           <div className="lg:col-span-7 max-w-screen md:block">
 
             {mainImages && <MainCard images={mainImages} />}
@@ -407,7 +407,7 @@ function PropertyDisplay({ listingData, params }) {
                 </span> */}
               </p>
             </div>
-            <div className="mb-4 flex items-center">
+            <div className="mb-4 pl-6 flex items-center">
               <div className="flex-1 text-left">
                 <h3 className="font-bold text-4xl">
                   £{formattedPrice}
@@ -438,12 +438,12 @@ function PropertyDisplay({ listingData, params }) {
               </div>
             </div>
             <div>
-              <p className="text-sm font-bold">
+              <p className="text-sm pl-6 font-bold">
                 {listingData?.title} 
                 {/* | on [
                 {listingData?.adTargeting?.branchName}] */}
               </p>
-              <div className="pr-4 pt-4">
+              <div className="pr-4 pl-6 pt-4">
                 <Button
                   size="lg"
                   className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
@@ -451,7 +451,7 @@ function PropertyDisplay({ listingData, params }) {
                   Contact agent
                 </Button>
               </div>
-              <div className="p-4">
+              <div className="p-6">
                 
                 {/* Conditional Rendering of Content */}
                 <div dangerouslySetInnerHTML={{ __html: listingData?.detailedDescription }}  style={{ maxHeight: isExpanded ? 'none' : '100px', overflow: 'hidden' }} />
@@ -471,6 +471,7 @@ function PropertyDisplay({ listingData, params }) {
 
                 {element.subElements.map((subElement, subIndex) => (
                   <div
+                    className="pl-1"
                     key={subIndex}
                     id={subElement.id}
                     onMouseEnter={() => handleMouseEnter(subElement.id)}
