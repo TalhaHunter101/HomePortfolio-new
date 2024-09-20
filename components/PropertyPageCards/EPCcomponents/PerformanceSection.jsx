@@ -3,9 +3,9 @@ import React from "react";
 
 export function PerformanceSection({ recData }) {
   return (
-    <div className="w-1/2 pl-4 flex flex-col justify-start">
+    <div className="overflow-y-auto " style={{ maxHeight: "300px" }}>
+      {" "}
       <h3 className="font-semibold mb-2">Performance</h3>
-
       {recData && recData.length > 0 ? (
         recData.map((item, index) => (
           <div key={index} className="flex flex-col">
