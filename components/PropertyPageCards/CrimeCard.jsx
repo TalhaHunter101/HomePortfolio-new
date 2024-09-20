@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 // import { StatusCard } from "./CrimeComponents/Status";
 import Carousel from "./CrimeComponents/GraphCarousal";
+import { Icon } from "@iconify/react";
 
 const statusData = [
   { label: "Approved", count: 27, iconColor: "bg-green-500" },
@@ -47,10 +48,31 @@ export function CrimeCard({ postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="game-icons:crime-scene-tape"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">Crime Rates in this area?</h2>
+  </div>
+      </CardHeader>
 
 
       {crimeData.length === 0 ? (
-        <div>No data available</div>
+        
+        <CardBody className="flex flex-col items-center justify-center">
+          
+        <Image 
+          src="/undraw_no_data_re_kwbl (1).svg" 
+          alt="No data found" 
+          className="w-40 h-40 mb-4" 
+        />
+        <div className="text-gray-500 text-lg">No data available</div>
+      </CardBody>
       ) : (
         <CardBody>
           <div className="flex flex-col  rounded-md">

@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { StatusCard } from "./PlanningComponents/Status";
 import Carousel from "./PlanningComponents/GraphCarousal";
 import { ConstraintsList } from "./PlanningComponents/ConstraintList";
 import FloatingCard from "./PlanningComponents/FloatingCard";
 import { PlanningApplicationMapStatic } from "../Maps";
+import { Icon } from "@iconify/react";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
@@ -81,10 +82,28 @@ export function PlanningCard({ postcode }) {
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
-      <CardHeader></CardHeader>
+      <CardHeader>
+      <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="mdi:planner"
+        width={16} // Adjust the icon size to fit well within the circle
+        className="text-purple-700" // Adjust the icon color if needed
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">Planning Applications here?</h2>
+  </div>
+      </CardHeader>
 
       {planningData.length === 0 ? (
-        <p>No data available</p>
+        <CardBody className="flex flex-col items-center justify-center">
+        <Image 
+          src="/undraw_no_data_re_kwbl (1).svg" 
+          alt="No data found" 
+          className="w-40 h-40 mb-4" 
+        />
+        <div className="text-gray-500 text-lg">No data available</div>
+      </CardBody>
       ) : (
         <CardBody>
           <div className="flex flex-col border border-subtle-border rounded-md">
