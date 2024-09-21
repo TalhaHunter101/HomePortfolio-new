@@ -53,7 +53,7 @@ function HouseTenure({ tenureData, city }) {
 
   return (
    
-      <><div className="bg-white p-6 rounded-lg w-full">
+      <><div className="bg-white p-2  rounded-lg w-full">
       <div className="flex items-center mb-4">
         <Icon
           icon="fluent:person-key-20-filled"
@@ -113,13 +113,23 @@ function HouseTenure({ tenureData, city }) {
           </div>
         </div>
       </div>
-    </div><ResponsiveContainer width="100%" height={400}>
+    </div>
+    
+    <div className="flex flex-col gap-4 mt-8">
+
+    <ResponsiveContainer width="100%" height={250}>
         <PieChart>
-          <Legend
+        <Legend
             layout="vertical"
             verticalAlign="middle"
             align="left"
-            wrapperStyle={{ paddingLeft: 20 }} />
+            wrapperStyle={{ 
+              paddingLeft: 60, 
+              paddingTop: 20, 
+              paddingBottom: 20, 
+              marginLeft: 10 
+            }} 
+          />
           <Tooltip />
           <Pie
             data={chartData}
@@ -127,7 +137,7 @@ function HouseTenure({ tenureData, city }) {
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={150}
+            outerRadius={100}
             fill="#82ca9d"
             label
           >
@@ -136,7 +146,11 @@ function HouseTenure({ tenureData, city }) {
             ))}
           </Pie>
         </PieChart>
-      </ResponsiveContainer></>
+      </ResponsiveContainer>
+      
+      
+      </div>
+      </>
     
   );
 }

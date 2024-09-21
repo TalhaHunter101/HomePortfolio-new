@@ -107,7 +107,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
         ) : (
           <section
             id="price-tracker"
-            className="max-w-1/2 p-4 w-full font-medium border border-gray-200bg-default-white rounded-lg mx-auto max-w-screen-md lg:max-w-screen-lg"
+            className="max-w-1/2 p-4 w-full font-medium  mx-auto max-w-screen-md lg:max-w-screen-lg"
           >
             <div className="flex flex-col md:flex-row">
               <h2 className="text-xl md:w-2/5 text-foreground">
