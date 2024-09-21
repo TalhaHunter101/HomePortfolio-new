@@ -118,7 +118,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
                 have grown faster.
               </h2>
               <div className="md:w-3/5 flex flex-col md:flex-col-reverse md:pl-4">
-                <div
+                <div 
                   className="w-full mt-6 sm:mt-5 text-foreground"
                   style={{ minHeight: "215px" }}
                 >

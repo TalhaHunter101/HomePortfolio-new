@@ -179,7 +179,7 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-400",
           id: "pricetracker",
           Component: PriceTrackerCard,
-        },
+        }, 
         {
           name: "Market Comparison",
           icon: "mdi:scale-balance", 
