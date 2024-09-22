@@ -12,8 +12,8 @@ export const PricetrackerChart = ({ priceData }) => {
   // Format the data
   const formattedData = priceData
     .map((item) => ({
-      name: new Date(item._source.deed_date).getFullYear(), // Extract year using Date object
-      price: Number(item._source.price_paid), // Convert price to number
+      name: new Date(item._source.deed_date).getFullYear(), 
+      price: Number(item._source.price_paid),
     }))
     .sort((a, b) => a.name - b.name); // Sort by year (ascending)
 
@@ -43,9 +43,9 @@ export const PricetrackerChart = ({ priceData }) => {
               tickLine={false}
               tickFormatter={(value) => {
                 if (value >= 1000000) {
-                  return `£${(value / 1000000).toFixed(2)}M`;
+                  return `£${(value / 1000000).toFixed(0)}M`;
                 } else if (value >= 1000) {
-                  return `£${(value / 1000).toFixed(2)}K`;
+                  return `£${(value / 1000).toFixed(0)}K`;
                 } else {
                   return `£${value}`;
                 }

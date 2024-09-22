@@ -59,7 +59,7 @@ function MarketInfoPage({ city, postcode }) {
       setMergedData(updatedData);
     };
 
-    if (marketInfo?.hits) {
+    if (marketInfo?.hits) { 
       mergeDataWithEPC();
     }
   }, [marketInfo]);

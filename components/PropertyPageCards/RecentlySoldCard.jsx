@@ -113,16 +113,16 @@ export function RecentlySoldCard({ city, postcode }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
       <CardHeader>
-      <div className="flex items-center my-2  ">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="mdi:home-group"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">Recently Sold?</h2>
-  </div>
+        <div className="flex items-center my-2  ">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="mdi:home-group"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">Recently Sold?</h2>
+        </div>
       </CardHeader>
       <CardBody>
         {isDataLoading ? (
@@ -135,7 +135,6 @@ export function RecentlySoldCard({ city, postcode }) {
               <div className="rounded-md">
                 <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
                   <div className="flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-
                     <span>Recently Sold Homes in {city}</span>
                   </div>
                   <div className="grid item-start sm:items-center grid-cols-2">
@@ -176,23 +175,27 @@ export function RecentlySoldCard({ city, postcode }) {
                           {SoldListingData?.hits?.map((item, index) => (
                             <div key={index} className="w-full p-2">
                               <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
-                                {/* <div className="flex-shrink-0">
-                                  <Image
-                                    radius="none"
-                                    src="https://lc.zoocdn.com/9c370f7e2f8484aa78cfec6e7b864b96eff849ca.jpg"
-                                    alt="Property"
-                                    width={100}
-                                    height={100}
-                                    classNames={{
-                                      wrapper: "min-w-full",
-                                    }}
-                                  />
-                                </div> */}
                                 <div className="ml-4">
                                   <h3 className="text-bold text-2xl">
                                     £
-                                    {item?._source?.saleEstimate?.currentPrice ||
-                                      "NA"}
+                                    {(() => {
+                                      const price =
+                                        item?._source?.saleEstimate
+                                          ?.currentPrice;
+                                      if (price == null) return "NA";
+                                      const numericPrice =
+                                        typeof price === "string"
+                                          ? parseFloat(price)
+                                          : price;
+                                      if (isNaN(numericPrice)) return "NA";
+                                      return numericPrice.toLocaleString(
+                                        "en-GB",
+                                        {
+                                          minimumFractionDigits: 0,
+                                          maximumFractionDigits: 0,
+                                        }
+                                      );
+                                    })()}
                                   </h3>
                                   <div className="text-sm uppercase flex text-bold">
                                     <span className="ml-0 text-bold flex justify-center gap-1">
@@ -209,7 +212,8 @@ export function RecentlySoldCard({ city, postcode }) {
                                         width={16}
                                         height={16}
                                       />{" "}
-                                      {item?._source?.attributes?.bathrooms || 0}
+                                      {item?._source?.attributes?.bathrooms ||
+                                        0}
                                     </span>
                                     <span className="ml-2 text-bold flex justify-center gap-1">
                                       <Icon

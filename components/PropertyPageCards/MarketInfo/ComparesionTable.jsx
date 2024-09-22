@@ -49,7 +49,7 @@ function ComparesionTable({ data }) {
     { key: "status", label: "STATUS" },
     { key: "beds", label: "BEDS" },
     { key: "baths", label: "BATHS" },
-    { key: "area", label: "AREA SQFT" },
+    { key: "area", label: "AREA (SQFT)" },
     { key: "epc", label: "EPC CUR. & POT." },
     { key: "type", label: "PROPETY TYPE" },
   ];
@@ -96,12 +96,17 @@ function ComparesionTable({ data }) {
             {item.attributes.bathrooms || "N/A"}
           </div>
         );
-      case "area":
-        return item.epcData && item.epcData.totalFloorArea
-          ? `${convertToSqFt(item.epcData.totalFloorArea)}`
-          : "N/A";
+        case "area":
+          return (
+            <div className="flex items-center">
+              <Icon icon="mdi:ruler" className="mr-2" />
+              {item.epcData && item.epcData.totalFloorArea
+                ? `${convertToSqFt(item.epcData.totalFloorArea)}`
+                : "N/A"}
+            </div>
+          );
       case "epc":
-        return item.epcData ? (
+        return item.epcData?.currentEnergyRating && item.epcData?.currentEnergyEfficiency ? (
           <div className="flex gap-2">
             <Tooltip content="Current Energy Efficiency">
               <Chip color="success" variant="flat">

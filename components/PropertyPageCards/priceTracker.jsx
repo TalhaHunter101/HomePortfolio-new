@@ -42,40 +42,46 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
           },
           body: JSON.stringify({ postcode }),
         });
-
+    
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
-        const reults = await res.json();
-        setData(reults?.hits);
-
-        // Calculate growth rate and rate per year
-        const sortedData = reults?.hits?.map((item) => ({
+    
+        const results = await res.json();
+        setData(results?.hits);
+    
+        // Extract and map the year and price data from results
+        const mappedData = results?.hits?.map((item) => ({
           year: new Date(item._source.deed_date).getFullYear(),
           price: Number(item._source.price_paid),
-        })).sort((a, b) => a.year - b.year);
-
-        if (sortedData.length > 1) {
-          const earliestPrice = sortedData[0].price;
-          const latestPrice = sortedData[sortedData.length - 1].price;
-          const earliestYear = sortedData[0].year;
-          const latestYear = sortedData[sortedData.length - 1].year;
-
-          const growthRateCalc = ((latestPrice - earliestPrice) / earliestPrice) * 100;
-          const ratePerYearCalc = (latestPrice - earliestPrice) / (latestYear - earliestYear);
-
+        }));
+    
+        // Sort the data by year in descending order
+        const sortedData = [...mappedData].sort((a, b) => b.year - a.year);
+    
+        // Ensure we have at least two years of data
+        if (sortedData.length >= 2) {
+          const lastYearData = sortedData[0]; // Latest year data
+          const secondLastYearData = sortedData[1]; // Second latest year data
+    
+          // Calculate growth rate and rate per year
+          const growthRateCalc = ((lastYearData.price - secondLastYearData.price) / secondLastYearData.price) * 100;
+          const ratePerYearCalc = lastYearData.price - secondLastYearData.price; // No decimal points
+    
+          // Set the calculated values to state
           setGrowthRate(growthRateCalc.toFixed(2)); // Format to 2 decimal places
-          setRatePerYear(ratePerYearCalc.toFixed(2)); // Format to 2 decimal places
+          setRatePerYear(Math.floor(ratePerYearCalc)); // No decimal points
         }
-
-        console.log("pricetrack data is", reults);
-
+    
+        console.log("pricetrack data is", results);
+    
       } catch (error) {
         console.error("Error fetching data:", error);
         setData([]);
       }
     };
-
+    
+    
     if (uprn) {
       getHomeThreeYearData();
     }
