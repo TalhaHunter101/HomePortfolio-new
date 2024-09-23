@@ -257,13 +257,13 @@ function PropertyDisplay({ listingData, params }) {
           id: "EvChargingStations",
           Component: EVCard,
         },
-        {
-          name: "Recently Sold homes",
-          icon: "mdi:home-group",
-          bgColor: "bg-purple-600",
-          id: "recentlysold",
-          Component: RecentlySoldCard,
-        },
+        // {
+        //   name: "Recently Sold homes",
+        //   icon: "mdi:home-group",
+        //   bgColor: "bg-purple-600",
+        //   id: "recentlysold",
+        //   Component: RecentlySoldCard,
+        // },
       ],
     },
     {

@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Button, Divider } from "@nextui-org/react";
 import { EnergyPerformanceTable } from "./EPCcomponents/table";
 import { PerformanceSection } from "./EPCcomponents/PerformanceSection";
 import ECPBarChart from "./ECPBarChart";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import { useListingStore } from "@/store/listingStore";
 
 export function EPCCard({ title, price, roi, uprn }) {
@@ -98,35 +98,6 @@ export function EPCCard({ title, price, roi, uprn }) {
   // Carousel data
   const slides = [
     {
-      content: (
-        <div>
-          <h3 className="font-semibold mb-2">Energy Performance Certificate (EPC)</h3>
-          <span className=" text-gray-500 text-xs">
-            This property&apos;s current energy rating is{" "}
-            <strong>{epcData?.CURRENT_ENERGY_RATING}</strong>. It has the potential to be{" "}
-            <strong>{epcData?.POTENTIAL_ENERGY_RATING}</strong>.
-            <svg
-              aria-hidden="true"
-              x="515"
-              y="320"
-              width="50"
-              height="30"
-              className={`rating-current rating-label`}
-            >
-              <polygon
-                points="0,15 15,30 60,30 60,0 15,0 0,15"
-                className={`${currentColour.class}`}
-              ></polygon>
-              <text x="20" y="20" className="govuk-!-font-weight-bold">
-                {epcData?.CURRENT_ENERGY_EFFICIENCY} {epcData?.CURRENT_ENERGY_RATING}
-              </text>
-            </svg>
-          </span>
-          <ECPBarChart data={epcData} setCurrentColour={setCurrentColour} />
-        </div>
-      ),
-    },
-    {
       content: <EnergyPerformanceTable data={breakdownData} />,
     },
     {
@@ -136,11 +107,15 @@ export function EPCCard({ title, price, roi, uprn }) {
 
   // Carousel navigation
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   return (
@@ -150,7 +125,39 @@ export function EPCCard({ title, price, roi, uprn }) {
         {epcData && (
           <div className="overflow-hidden">
             <div className="relative h-full w-full flex-1">
-              {/* Carousel Implementation */}
+              <div className="mx-6">
+                <h3 className="font-semibold mb-2">
+                  Energy Performance Certificate (EPC)
+                </h3>
+                <span className=" text-gray-500 text-xs">
+                  This property&apos;s current energy rating is{" "}
+                  <strong>{epcData?.CURRENT_ENERGY_RATING}</strong>. It has the
+                  potential to be{" "}
+                  <strong>{epcData?.POTENTIAL_ENERGY_RATING}</strong>.
+                  <svg
+                    aria-hidden="true"
+                    x="515"
+                    y="320"
+                    width="50"
+                    height="30"
+                    className={`rating-current rating-label`}
+                  >
+                    <polygon
+                      points="0,15 15,30 60,30 60,0 15,0 0,15"
+                      className={`${currentColour.class}`}
+                    ></polygon>
+                    <text x="20" y="20" className="govuk-!-font-weight-bold">
+                      {epcData?.CURRENT_ENERGY_EFFICIENCY}{" "}
+                      {epcData?.CURRENT_ENERGY_RATING}
+                    </text>
+                  </svg>
+                </span>
+                <ECPBarChart
+                  data={epcData}
+                  setCurrentColour={setCurrentColour}
+                />
+              </div>
+
               <div className="w-full overflow-hidden rounded-lg">
                 <div
                   className="flex transition-transform duration-500 ease-in-out"
@@ -173,7 +180,12 @@ export function EPCCard({ title, price, roi, uprn }) {
                   size="sm"
                   onClick={handlePrevious}
                 >
-                  <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
+                  <Icon
+                    color="gray"
+                    icon="bx:bx-chevron-left"
+                    width={24}
+                    height={24}
+                  />
                   <span className="sr-only">Previous</span>
                 </Button>
                 <Button
@@ -183,7 +195,12 @@ export function EPCCard({ title, price, roi, uprn }) {
                   size="sm"
                   onClick={handleNext}
                 >
-                  <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />
+                  <Icon
+                    color="gray"
+                    icon="bx:bx-chevron-right"
+                    width={24}
+                    height={24}
+                  />
                   <span className="sr-only">Next</span>
                 </Button>
               </div>
