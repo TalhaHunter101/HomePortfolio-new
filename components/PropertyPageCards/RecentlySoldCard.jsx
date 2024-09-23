@@ -170,7 +170,7 @@ export function RecentlySoldCard({ city, postcode }) {
                       </div>
 
                       {/* Carousel section */}
-                      <div className="flex-1 h-full overflow-hidden">
+                      {/* <div className="flex-1 h-full overflow-hidden">
                         <div className="h-full overflow-y-auto">
                           {SoldListingData?.hits?.map((item, index) => (
                             <div key={index} className="w-full p-2">
@@ -197,31 +197,73 @@ export function RecentlySoldCard({ city, postcode }) {
                                       );
                                     })()}
                                   </h3>
-                                  <div className="text-sm uppercase flex text-bold">
-                                    <span className="ml-0 text-bold flex justify-center gap-1">
-                                      <Icon
-                                        icon="mdi:bed-outline"
-                                        width={16}
-                                        height={16}
-                                      />{" "}
+                                  <div className="text-sm  flex text-bold gap-3">
+                                    <span className="text-bold flex flex-col items-center justify-center">
                                       {item?._source?.attributes?.bedrooms || 0}
+                                      <span className="text-[10px]">beds</span>
                                     </span>
-                                    <span className="ml-2 text-bold flex justify-center gap-1">
-                                      <Icon
-                                        icon="bx:bath"
-                                        width={16}
-                                        height={16}
-                                      />{" "}
+                                    <span className="text-bold flex flex-col items-center justify-center">
                                       {item?._source?.attributes?.bathrooms ||
                                         0}
+                                      <span className="text-[10px]">baths</span>
                                     </span>
-                                    <span className="ml-2 text-bold flex justify-center gap-1">
-                                      <Icon
-                                        icon="carbon:area"
-                                        width={16}
-                                        height={16}
-                                      />{" "}
+                                    <span className="text-bold flex flex-col items-center justify-center">
                                       {item?._source?.squareFeet || 1000}
+                                      <span className="text-[10px]">sqft</span>
+                                    </span>
+                                  </div>
+
+                                  <p className="pt-2 text-default-500 text-sm">
+                                    {item?._source?.full_address}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div> */}
+                      {/* End of carousel section */}
+
+                      <div className="flex-1 w-full flex flex-col justify-end h-full">
+                        <div className="flex p-2 flex-col sm:flex-wrap gap-2 flex-1 mt-3 overflow-x-auto overflow-y-hidden snap-x snap-mandatory space-x-2 sm:space-x-0 pr-6 sm:pr-0 ml-2 mb-2 sm:mb-0 sm:-mt-2">
+                          {SoldListingData?.hits?.map((item, index) => (
+                            <div key={index} className="w-full p-2">
+                              <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
+                                <div className="ml-4">
+                                  <h3 className="text-bold text-2xl">
+                                    £
+                                    {(() => {
+                                      const price =
+                                        item?._source?.saleEstimate
+                                          ?.currentPrice;
+                                      if (price == null) return "NA";
+                                      const numericPrice =
+                                        typeof price === "string"
+                                          ? parseFloat(price)
+                                          : price;
+                                      if (isNaN(numericPrice)) return "NA";
+                                      return numericPrice.toLocaleString(
+                                        "en-GB",
+                                        {
+                                          minimumFractionDigits: 0,
+                                          maximumFractionDigits: 0,
+                                        }
+                                      );
+                                    })()}
+                                  </h3>
+                                  <div className="text-sm  flex text-bold gap-3">
+                                    <span className="text-bold flex flex-col items-center justify-center">
+                                      {item?._source?.attributes?.bedrooms || 0}
+                                      <span className="text-[10px]">beds</span>
+                                    </span>
+                                    <span className="text-bold flex flex-col items-center justify-center">
+                                      {item?._source?.attributes?.bathrooms ||
+                                        0}
+                                      <span className="text-[10px]">baths</span>
+                                    </span>
+                                    <span className="text-bold flex flex-col items-center justify-center">
+                                      {item?._source?.squareFeet || 1000}
+                                      <span className="text-[10px]">sqft</span>
                                     </span>
                                   </div>
 
@@ -234,7 +276,6 @@ export function RecentlySoldCard({ city, postcode }) {
                           ))}
                         </div>
                       </div>
-                      {/* End of carousel section */}
                     </div>
                   </div>
                 </div>

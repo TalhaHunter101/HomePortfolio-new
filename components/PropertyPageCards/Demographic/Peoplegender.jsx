@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FamilyCustomBarChart } from "../Charts/FamilyPieChart";
 import { Icon } from "@iconify/react";
 
-function Peoplegender({ PeopleGenderData,city }) {
+function Peoplegender({ PeopleGenderData, city }) {
   const [chartData, setChartData] = useState([]);
   const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
 
@@ -48,7 +48,18 @@ function Peoplegender({ PeopleGenderData,city }) {
   return (
     <div className="" style={{ minHeight: "150px" }}>
       <div className="  px-4 relative h-full w-full overflow-hidden flex-1">
-        <div className="bg-white   w-full">
+        <div className="flex items-center p-2">
+          <Icon
+            icon="game-icons:relationship-bounds"
+            width={24}
+            className="text-gray-700 mr-2"
+          />
+          <h2 className="text-xl font-semibold text-gray-700">
+            Marital and civil partnership
+          </h2>
+        </div>
+
+        {/* <div className="bg-white   w-full">
           <div className="flex items-center mb-4">
             <Icon
               icon="game-icons:relationship-bounds"
@@ -61,7 +72,6 @@ function Peoplegender({ PeopleGenderData,city }) {
           </div>
 
           <div className="flex flex-col lg:flex-row justify-between gap-4">
-          {/* Left section */}
           <div className="lg:w-1/2">
             <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
             <p className="text-gray-600 mb-2">
@@ -87,7 +97,6 @@ function Peoplegender({ PeopleGenderData,city }) {
             </p>
           </div>
 
-          {/* Right section */}
           <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col text-center">
@@ -111,7 +120,7 @@ function Peoplegender({ PeopleGenderData,city }) {
             </div>
           </div>
         </div>
-        </div>
+        </div> */}
         <div className="flex items-center ">
           <div className=" w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
             {/* <div className="text-xs sm:text-lg font-semibold text-default-800 mb-4">

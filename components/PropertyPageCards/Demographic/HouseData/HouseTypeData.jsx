@@ -56,16 +56,16 @@ function HouseTypeData({ housingData, city }) {
     }
   }, [housingData]);
 
-  const COLORS = [
-    "#6A0DAD", "#FFA07A", "#20B2AA", "#FF6347", "#FFD700",
-    "#00BFFF", "#FF69B4", "#8A2BE2", "#32CD32"
-  ];
+  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
 
   const CustomLegend = () => {
     return (
       <div className="custom-legend">
         {chartData.map((entry, index) => (
-          <div key={`item-${index}`} className="legend-item flex items-center mb-2">
+          <div
+            key={`item-${index}`}
+            className="legend-item flex items-center mb-2"
+          >
             <span
               className="legend-color mr-2"
               style={{
@@ -84,8 +84,8 @@ function HouseTypeData({ housingData, city }) {
   };
 
   return (
-    <div style={{ width: '100%', height: '100%', overflowY: 'auto' }}>
-      <div className="bg-white p-6 rounded-lg w-full">
+    <div style={{ width: "100%", height: "100%", overflowY: "auto" }}>
+      {/* <div className="bg-white p-6 rounded-lg w-full">
         <div className="flex items-center mb-4">
           <Icon
             icon="fa6-solid:house-flag"
@@ -96,7 +96,6 @@ function HouseTypeData({ housingData, city }) {
         </div>
 
         <div className="flex flex-col lg:flex-row justify-between gap-8">
-          {/* Left section */}
           <div className="lg:w-1/2">
             <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
             <p className="text-gray-600 mb-2">
@@ -122,7 +121,6 @@ function HouseTypeData({ housingData, city }) {
             </p>
           </div>
 
-          {/* Right section */}
           <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col text-center">
@@ -146,6 +144,15 @@ function HouseTypeData({ housingData, city }) {
             </div>
           </div>
         </div>
+      </div> */}
+
+      <div className="flex items-center p-2">
+        <Icon
+          icon="fa6-solid:house-flag"
+          width={24}
+          className="text-gray-700 mr-2"
+        />
+        <h2 className="text-xl font-semibold text-gray-700">House Type</h2>
       </div>
 
       <div className="flex w-full h-96 mt-8">
@@ -167,7 +174,8 @@ function HouseTypeData({ housingData, city }) {
               <YAxis type="number" allowDecimals={false} />
               <XAxis dataKey="name" type="category" interval={0} width={100} />
               <Tooltip />
-              <Legend content={<div />} /> {/* Empty legend to avoid default legend */}
+              <Legend content={<div />} />{" "}
+              {/* Empty legend to avoid default legend */}
               <Bar dataKey="count" fill="#8884d8" barSize={80}>
                 {chartData.map((entry, index) => (
                   <Cell

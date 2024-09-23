@@ -11,10 +11,9 @@ const Carousel = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const components = [
-    <CrimeReportCard key={0} reportData={data} />,
-    <BadgeCard key={1}  reportData={data}  />,
-    <CrimeTypesChart key={2} reportData={data} />,
-    <CrimeLevelsChart key={3} reportData={data} />,
+    <BadgeCard key={0}  reportData={data}  />,
+    <CrimeTypesChart key={1} reportData={data} />,
+    <CrimeLevelsChart key={2} reportData={data} />,
   ];
 
   const handlePrevious = () => {
