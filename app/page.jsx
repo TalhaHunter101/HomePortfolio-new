@@ -351,64 +351,44 @@ export default function Home() {
   return (
     <>
       <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center ">
-        <div className="relative w-screen justify-center min-h-screen">
-          <div
-            style={{
-              // backgroundImage: `url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")`,
-              backgroundColor: "#fff",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              minHeight: "100vh",
-              width: "100%",
-            }}
-            className="flex items-center justify-start  bg-background"
-          >
-
-
-<div className="overflow-x-clip">
-  <div className="max-w-screen-xl mx-auto px-5">
-  <main className="  place-items-center  h-screen">
-
-  
-
-
-  <div className=" mt-[-10vh] p-8 flex flex-col justify-center items-center h-full w-[100%] min-w-[95vw] ">
-
-  <Chip variant="flat" color="secondary" className="mb-2">
+      <div className="relative w-screen justify-center min-h-screen">
+  <div
+    style={{
+      backgroundColor: "#fff",
+      backgroundImage: `url('/bg-plain-banner.png')`, 
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      minHeight: "100vh",
+      width: "100%",
+    }}
+    className="flex items-center justify-start bg-background"
+  >
+    <div className="overflow-x-clip">
+      <div className="max-w-screen-xl mx-auto px-5">
+        <main className="place-items-center h-screen">
+          <div className="mt-[-10vh] p-8 flex flex-col justify-center items-center h-full w-[100%] min-w-[95vw]">
+            <Chip variant="flat" color="secondary" className="mb-2">
               AI-Powered Property Data Insights
             </Chip>
-    <h1 className="text-xl lg:text-4xl xl:text-4xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
-    Find and analyse any UK property in seconds
-    <br />
-    with HomePortfolio
-    </h1>
-    <p className="text-lg mt-4  text-slate-600 [text-wrap:balance] text-center">
-    Discover, source, analyse and track any property in seconds, all in one place    </p> 
-
-    <div className="mt-6 w-[60vw] flex justify-center gap-3">
-      <AutocompleteSearch properties={properties} />
+            <h1 className="text-xl lg:text-4xl xl:text-4xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center">
+              Find and analyse any UK property in seconds
+              <br />
+              with HomePortfolio
+            </h1>
+            <p className="text-lg mt-4 text-slate-600 [text-wrap:balance] text-center">
+              Discover, source, analyse and track any property in seconds, all in one place
+            </p>
+            <div className="mt-6 w-[60vw] flex justify-center gap-3">
+              <AutocompleteSearch properties={properties} />
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-  </div>
-</main>
-
   </div>
 </div>
 
-
-            {/* <div
-
-              className="w-11/12 lg:w-1/2 z-10 flex flex-col gap-y-8 h-full text-left pl-10">
-              <p className="font-sans-serif  font-bold text-3xl lg:text-6xl md:text-5xl">
-                Find a new home you love
-              </p>
-              <div className="w-full ">
-
-                <AutocompleteSearch properties={properties} />
-              </div>
-            </div> */}
-          </div>
-        </div>
 
 
         <div>
