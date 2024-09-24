@@ -187,8 +187,9 @@ function ShowDataCards({
               )}
               <div
                 className={`grid p-4 grid-cols-1 md:grid-cols-1 ${
-                  showMap ? "2xl:grid-cols-2" : "2xl:grid-cols-4"
-                } gap-4 overflow-y-auto max-h-full`}
+    showMap ? "2xl:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1" 
+    : "2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1"
+  } gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&
                   filter.map((card, index) => (

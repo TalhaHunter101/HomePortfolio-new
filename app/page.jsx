@@ -404,7 +404,7 @@ export default function Home() {
                     </div>
 
                     {/* Second Component */}
-                    <div className="absolute w-[134.05px] top-[15%] right-[10%]">
+                    <div className="absolute w-[134.05px] top-[15%] right-[5%]">
                       <div className="h-[117.73px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                         <div className="self-stretch px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                           <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
@@ -418,7 +418,7 @@ export default function Home() {
                     </div>
 
                     {/* Third Component */}
-                    <div className="absolute w-[134.05px] top-[40%] left-[20%]">
+                    <div className="absolute w-[134.05px] top-[40%] left-[10%]">
                       <div className="h-[118.22px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                         <div className="w-[134.05px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                           <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">

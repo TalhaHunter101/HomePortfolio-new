@@ -179,7 +179,7 @@ const SearchPage = ({ params }) => {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mr-6 ">
           <Beds />
           <Baths />
           <Price />
@@ -188,7 +188,7 @@ const SearchPage = ({ params }) => {
             color="primary"
             radius="sm"
             size="lg"
-            className="w-full max-w-xs m-2 text-white font-semibold"
+            className="w-full max-w-xs m-2  text-white font-semibold"
             auto
             onPress={() => fetchProperties()}
             isLoading={isnewDataLoading}
