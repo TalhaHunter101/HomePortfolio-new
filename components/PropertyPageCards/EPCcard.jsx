@@ -119,7 +119,7 @@ export function EPCCard({ title, price, roi, uprn }) {
   };
 
   return (
-    <Card className="m-4" style={{ maxHeight: "800px", minWidth: "800px" }}>
+    <Card className="m-4" >
       <CardHeader></CardHeader>
       <CardBody>
         {epcData && (

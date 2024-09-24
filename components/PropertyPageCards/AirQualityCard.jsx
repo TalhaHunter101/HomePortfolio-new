@@ -1,6 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, Button, Progress, CardHeader } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  Button,
+  Progress,
+  CardHeader,
+} from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export function AirQualityCard({ latitude, longitude }) {
@@ -52,7 +58,7 @@ export function AirQualityCard({ latitude, longitude }) {
     setCurrentIndex((prevIndex) => (prevIndex === 6 - 1 ? 0 : prevIndex + 1));
   };
 
-   // Fetch air quality data from API
+  // Fetch air quality data from API
   const airQualityDetails = [
     {
       //hardcoded
@@ -130,10 +136,10 @@ export function AirQualityCard({ latitude, longitude }) {
 
   // const DayGrid = () => {
   //   return (
-  //     <div className="flex flex-col space-y-1"> 
+  //     <div className="flex flex-col space-y-1">
   //       {months.map((month, index) => (
   //         <div key={index} className="flex  items-center">
-  //           <span className="w-8 text-xs text-left  mr-2">{month}</span> 
+  //           <span className="w-8 text-xs text-left  mr-2">{month}</span>
   //           <div className="grid grid-flow-col auto-cols-max gap-0.5">
   //             {daysHighlighted[index].map((highlight, dayIndex) => (
   //               <div
@@ -151,16 +157,19 @@ export function AirQualityCard({ latitude, longitude }) {
   return (
     <Card className="m-4 min-h-[250px]">
       <CardHeader>
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="ion:skull"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700"> How is the air quality in your area?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="ion:skull"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            {" "}
+            How is the air quality in your area?
+          </h2>
+        </div>
       </CardHeader>
       <CardBody>
         <div className="bg-white rounded-md">
@@ -187,62 +196,85 @@ export function AirQualityCard({ latitude, longitude }) {
                       key={index}
                       className="flex-shrink-0 w-full flex justify-center"
                     >
-                     
                       {index === 0 ? (
-                        <div className="flex justify-between  rounded-lg shadow-md w-full max-w-6xl">
+                        <div className="flex flex-col md:flex-row justify-between  rounded-lg shadow-md w-full max-w-6xl">
                           <div className="w-3/5 text-left p-8 ">
-                            <h3 className="text-lg font-medium mt-24 mb-2">Average air quality last month</h3>
-                            <h1 className="text-5xl font-semibold mb-4">Good</h1>
+                            <h3 className="text-lg font-medium mt-24 mb-2">
+                              Average air quality last month
+                            </h3>
+                            <h1 className="text-5xl font-semibold mb-4">
+                              Good
+                            </h1>
                             <div className="relative w-full mb-2">
-                             <Progress value={50} color="success" />
+                              <Progress value={50} color="success" />
                               <div className="flex justify-between text-sm mt-2">
                                 <span className="text-green-600">Good</span>
-                                <span className="text-yellow-500">Moderate</span>
+                                <span className="text-yellow-500">
+                                  Moderate
+                                </span>
                                 <span className="text-red-500">Unhealthy</span>
                               </div>
                             </div>
                           </div>
-                          <div className="w-2/5 text-center bg-blue-50 p-5 rounded-lg">
-                            <h3 className="text-lg font-medium mt-10 mb-10">What&#39;s in the air?</h3>
+                          <div className="md:w-2/5 text-center bg-blue-50 p-5 rounded-lg">
+                            <h3 className="text-lg font-medium mt-10 mb-10">
+                              What&#39;s in the air?
+                            </h3>
                             <div className="flex justify-around mb-6">
                               <div className="flex flex-col items-center">
                                 <Icon icon="ion:skull" width={32} height={32} />
                                 <span className="mt-2">CO</span>
                               </div>
                               <div className="flex flex-col items-center">
-                                <Icon icon="twemoji:lungs" width={32} height={32} />
+                                <Icon
+                                  icon="twemoji:lungs"
+                                  width={32}
+                                  height={32}
+                                />
                                 <span className="mt-2">PM2.5</span>
                               </div>
                             </div>
-                            <Button onClick={() => setCurrentIndex(1)} className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg">
-                              Learn more about the air <Icon className="inline" icon="ion:chevron-forward"/>
+                            <Button
+                              onClick={() => setCurrentIndex(1)}
+                              className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+                            >
+                              Learn more about the air{" "}
+                              <Icon
+                                className="inline"
+                                icon="ion:chevron-forward"
+                              />
                             </Button>
                           </div>
                         </div>
                       ) : (
-                        <div className="grid grid-cols-2  gap-2 bg-white p-8 rounded-lg w-full">
-                          <div className="flex flex-col  items-center  p-6 rounded-lg shadow h-full">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white p-8 rounded-lg w-full">
+                          <div className="flex flex-col items-center p-6 rounded-lg shadow h-full">
                             <h3 className="font-semibold text-xl mb-4 mt-16 text-center text-gray-700">
                               {component.title}
                             </h3>
                             <div className="flex justify-center items-center mb-3 p-3 rounded-full bg-gray-100">
-                              <Icon icon={component.icon} width={32} height={32} />
+                              <Icon
+                                icon={component.icon}
+                                width={32}
+                                height={32}
+                              />
                             </div>
                             <p className="text-md text-gray-600 text-center">
                               {component.description}
                             </p>
                           </div>
-                          <div className="flex flex-col items-center  p-6 rounded-lg shadow h-full">
+                          <div className="flex flex-col items-center p-6 rounded-lg shadow h-full">
                             <h3 className="font-semibold text-xl mb-4 mt-10 text-center text-gray-700">
                               {component.label}
                             </h3>
                             <p className="text-2xl font-bold mb-3 text-center text-gray-800">
                               {component.value}
                             </p>
-                            <p className={`text-md font-medium text-center rounded-lg mt-4 p-2 bg-${component.color}-100 text-${component.color}-700`}>
+                            <p
+                              className={`text-md font-medium text-center rounded-lg mt-4 p-2 bg-${component.color}-100 text-${component.color}-700`}
+                            >
                               {component.level}
                             </p>
-                            {/* <DayGrid  /> */}
                           </div>
                         </div>
                       )}
@@ -289,7 +321,6 @@ export function AirQualityCard({ latitude, longitude }) {
           </div>
         </div>
         {/* Adding DayGrid component */}
-        
       </CardBody>
     </Card>
   );
