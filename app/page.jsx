@@ -364,7 +364,7 @@ export default function Home() {
             }}
             className="flex items-center justify-start bg-background"
           >
-            <div className="overflow-x-clip">
+            <div className="">
               <div className="max-w-screen-xl mx-auto px-5">
                 <main className="place-items-center h-screen relative">
                   {/* Main Content */}
