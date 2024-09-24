@@ -39,7 +39,7 @@ function MarketInfoPage({ city, postcode }) {
       console.error("Error fetching EPC data:", error);
       return null;
     }
-  }; 
+  };
 
   useEffect(() => {
     const mergeDataWithEPC = async () => {
@@ -59,64 +59,64 @@ function MarketInfoPage({ city, postcode }) {
       setMergedData(updatedData);
     };
 
-    if (marketInfo?.hits) { 
+    if (marketInfo?.hits) {
       mergeDataWithEPC();
     }
   }, [marketInfo]);
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
+    <Card className="m-4">
       <CardHeader className="">
-        
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="icon-park-outline:market-analysis"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">How is the Market here?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="icon-park-outline:market-analysis"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            How is the Market here?
+          </h2>
+        </div>
       </CardHeader>
       <CardBody>
-        <div className="flex gap-4 mb-4">
-      <h1 className="text-2xl font-bold">Market Information</h1>
-        <h2 className="text-xl font-semibold text-gray-400">
-          Property Count:{" "}
-        </h2>
-        <Chip color="primary">{marketInfo?.totalCount}</Chip>
-        <div className="flex gap-4 mb-4 ml-auto">
-        <Button
-          auto
-          color={activeView === "table" ? "primary" : "default"}
-          onClick={() => setActiveView("table")}
-        >
-          Table View
-        </Button>
-        <Button
-          auto
-          color={activeView === "map" ? "primary" : "default"}
-          onClick={() => setActiveView("map")}
-        >
-          Map View
-        </Button>
-      </div>
-      </div>
-      {/* Buttons for switching views */}
-      
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
+          <h1 className="text-2xl font-bold">Market Information</h1>
+          <h2 className="text-xl font-semibold text-gray-400">
+            Property Count:{" "}
+          </h2>
+          <Chip color="primary">{marketInfo?.totalCount}</Chip>
+          <div className="flex flex-col md:flex-row gap-4 mb-4 md:ml-auto">
+            <Button
+              auto
+              color={activeView === "table" ? "primary" : "default"}
+              onClick={() => setActiveView("table")}
+            >
+              Table View
+            </Button>
+            <Button
+              auto
+              color={activeView === "map" ? "primary" : "default"}
+              onClick={() => setActiveView("map")}
+            >
+              Map View
+            </Button>
+          </div>
+        </div>
+        {/* Buttons for switching views */}
 
-      {/* Conditionally render the table or the map based on active view */}
-      {activeView === "table" && mergedData.length === 0 && (
-        <p>No data available</p>
-      )}
-      {activeView === "table" && mergedData.length > 0 && (
-        <ComparesionTable data={mergedData} />
-      )}
+        {/* Conditionally render the table or the map based on active view */}
+        {activeView === "table" && mergedData.length === 0 && (
+          <p>No data available</p>
+        )}
+        {activeView === "table" && mergedData.length > 0 && (
+          <ComparesionTable data={mergedData} />
+        )}
 
-      {activeView === "map" && (
-        <RecentlySoldCard city={city} postcode={postcode} />
-      )}
+        {activeView === "map" && (
+          <RecentlySoldCard city={city} postcode={postcode} />
+        )}
       </CardBody>
     </Card>
   );

@@ -97,9 +97,9 @@ setRentEstimate(rentEstimate);
             <p>No data available</p>
           </div>
         ) : (
-          <div className="flex gap-2 p-2 flex-row bg-default-background  rounded-md justify-between">
+          <div className="flex flex-col md:flex-row gap-2 p-2  bg-default-background  rounded-md justify-between">
            {/* Left div for Sale Estimate */}
-           <div className="w-1/2 rounded-lg shadow p-6 bg-white">
+           <div className="w-full md:w-1/2 rounded-lg shadow p-6 bg-white">
               <div className="items-center justify-center flex flex-col">
                 <Chip
                   radius="lg"
@@ -167,7 +167,7 @@ setRentEstimate(rentEstimate);
               </div>
             </div>
             {/* Right div for Rent Estimate */}
-            <div className="w-1/2 rounded-lg shadow p-6 bg-white">
+            <div className="w-full md:w-1/2 rounded-lg shadow p-6 bg-white">
               <div className="items-center justify-center flex flex-col">
                 <Chip
                   radius="lg"

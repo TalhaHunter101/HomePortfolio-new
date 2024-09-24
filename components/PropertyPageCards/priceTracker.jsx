@@ -136,7 +136,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between font-light text-foreground">
+                <div className="flex flex-col md:flex-row gap-4 justify-between font-light text-foreground">
                   <div>
                     <div className="text-sm">
                       {postcode} growth Rate

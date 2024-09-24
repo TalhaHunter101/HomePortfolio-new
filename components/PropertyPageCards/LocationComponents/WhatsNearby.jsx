@@ -208,7 +208,7 @@ const haversineDistance = (coords1, coords2) => {
           <Button
             key={amenity.key}
             onClick={() => setSelectedAmenity(amenity.key)}
-            className={`min-w-['120px']  flex items-center w-auto text-sm space-x-2 px-3 py-1 rounded-md shadow-md whitespace-nowrap ${
+            className={`flex items-center w-auto text-sm space-x-2 px-3 py-1 rounded-md shadow-md whitespace-nowrap ${
               selectedAmenity === amenity.key ? amenity.bg_color : "bg-white"
             }`}
             startContent={

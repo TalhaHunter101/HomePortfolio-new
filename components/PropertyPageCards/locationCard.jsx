@@ -55,7 +55,7 @@ export function LocationCard({ data, postcode, schoolData }) {
         <p className="text-xs font-bold mb-3">Location</p> 
         <p className="text-xs">{data?.address}</p>
       </CardHeader>
-      <div className="sticky top-0 bg-white z-10">
+      <div className="sticky top-0 bg-white z-10 ">
         <Tabs
           radius="none"
           fullWidth

@@ -23,24 +23,21 @@ const getItemsData = () => [
     category: "Parks • Lakeview Rd",
     distance: "1.0 miles away",
   },
-  
 ];
 
 export function MarketComparisonCard({ data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { setMarketComp,marketComp } = marketCompStore();
-  const [currentPrice, setCurrentPrice] = useState(0)
-  const [currentSize, setCurrentSize] = useState(0)
-  const { squerfoot,fullAddress } = useListingStore()
-
-
+  const { setMarketComp, marketComp } = marketCompStore();
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentSize, setCurrentSize] = useState(0);
+  const { squerfoot, fullAddress } = useListingStore();
 
   const items = getItemsData();
 
   const nextSlide = () => {
     if (currentIndex < items.length - 1) {
       setCurrentIndex(currentIndex + 1);
-  
+
       if (currentIndex === 0 && !marketComp) {
         setMarketComp(data?.analyticsTaxonomy?.outcode);
       } else if (currentIndex === 1) {
@@ -50,12 +47,11 @@ export function MarketComparisonCard({ data }) {
       }
     }
   };
-  
-  
+
   const prevSlide = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
-  
+
       if (currentIndex === 1) {
         setMarketComp(data?.analyticsTaxonomy?.outcode);
       } else if (currentIndex === 2) {
@@ -64,7 +60,6 @@ export function MarketComparisonCard({ data }) {
         setMarketComp(data?.adTargeting?.countyAreaName);
       }
     }
-   
   };
 
   useEffect(() => {
@@ -77,31 +72,30 @@ export function MarketComparisonCard({ data }) {
     }
     setCurrentPrice(parseInt(data?.analyticsTaxonomy?.price));
     setCurrentSize(data?.analyticsTaxonomy?.sizeSqFeet || squerfoot);
-
   }, [currentIndex, data, setMarketComp, squerfoot]);
-  
+
   return (
-    <Card className="m-4" style={{ minHeight: "150px", minWidth: "800px" }}>
+    <Card className="m-4">
       <CardHeader>
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="mdi:scale-balance"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">How does the market compare here?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="mdi:scale-balance"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            How does the market compare here?
+          </h2>
+        </div>
       </CardHeader>
       <CardBody>
         <div className=" rounded-md ">
-         
-
           {/* Carousel Section */}
           <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
-            <div className="hidden xl:flex h-96">
-              <div className="flex relative overflow-hidden sm:mx-4  ">
+            <div className="flex">
+              <div className="flex flex-col md:flex-row relative overflow-hidden sm:mx-4  ">
                 {/* Map section on the left */}
                 <div className="flex-1 z-40 h-full">
                   <div className="h-full ">
@@ -114,7 +108,7 @@ export function MarketComparisonCard({ data }) {
                 </div>
 
                 {/* Carousel section on the right */}
-                <div className="flex-1 w-1/2  flex flex-col justify-center h-full">
+                <div className="flex-1 md:w-1/2  flex flex-col justify-center h-full">
                   <div className="relative w-full h-full flex items-center">
                     <button
                       onClick={prevSlide}

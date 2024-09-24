@@ -20,7 +20,7 @@ const ComparisonChart = ({ data }) => {
       {/* Circles */}
       <div className="relative w-full h-64">
         {/* First circle (This Home) */}
-        <div className="absolute top-1/2 transform -translate-y-1/2 w-56 h-56 bg-gradient-to-b from-[#4A6FA5] to-[#395a8a] rounded-full flex items-center justify-center text-center text-white font-bold z-10 shadow-2xl">
+        <div className="absolute top-1/2 transform -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#4A6FA5] to-[#395a8a] rounded-full flex items-center justify-center text-center text-white font-bold z-10 shadow-2xl">
           <div>
             <div>This Home</div>
             <div className="text-2xl">
@@ -29,7 +29,7 @@ const ComparisonChart = ({ data }) => {
           </div>
         </div>
         {/* Second circle (Median) */}
-        <div className="absolute left-48 top-1/2 transform -translate-y-1/2 w-48 h-48 bg-gradient-to-b from-[#E0E4E8] to-[#C4C9CD] rounded-full flex justify-center items-center text-center text-gray-800 font-bold z-5 shadow-xl">
+        <div className="absolute left-48 top-1/2 transform -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#E0E4E8] to-[#C4C9CD] rounded-full flex justify-center items-center text-center text-gray-800 font-bold z-5 shadow-xl">
           <div>
             <div>Median</div>
             <div className="text-2xl">{formatPrice(medianPrice)}</div>
