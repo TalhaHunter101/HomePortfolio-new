@@ -386,7 +386,8 @@ export default function Home() {
                   </div>
 
                   {/* New Components replacing Floating Images */}
-                  <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none">
+                  <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden sm:hidden md:hidden lg:flex">
+
                     {/* First Component */}
                     <div className="absolute w-[150px] top-[10%] left-[15%]">
                       <div className="h-[173px] bg-white p-4 rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
