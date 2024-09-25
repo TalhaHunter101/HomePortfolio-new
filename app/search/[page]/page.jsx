@@ -94,7 +94,7 @@ const SearchPage = ({ params }) => {
       bedrooms: selectedBeds,
       bathrooms: selectedBaths,
     };
-
+  
     try {
       const response = await fetch(`/api/search/get-listing-data`, {
         method: "POST",
@@ -108,45 +108,53 @@ const SearchPage = ({ params }) => {
           pageSize,
         }),
       });
-
+  
       const result = await response.json();
       const properties = result?.results || [];
-
-      // Process EPC data if necessary
+  
+      // Handle property fetching and EPC data with error handling per property
       const updatedProperties = await Promise.all(
         properties.map(async (property) => {
-          const uprn = property?._source?.location?.uprn;
-          let epcData = {
-            totalFloorArea: null,
-            fullAddress: null,
-          };
-
-          if (uprn) {
-            epcData = await fetchEPCData(uprn);
+          try {
+            const uprn = property?._source?.location?.uprn;
+            let epcData = {
+              totalFloorArea: null,
+              fullAddress: null,
+            };
+  
+            // If `uprn` exists, fetch EPC data, otherwise keep default values
+            if (uprn) {
+              epcData = await fetchEPCData(uprn);
+            }
+  
+            // Return the updated property data
+            return {
+              ...property,
+              _source: {
+                ...property._source,
+                totalFloorArea: epcData.totalFloorArea,
+                fullAddress: epcData.fullAddress,
+              },
+            };
+          } catch (error) {
+            console.error(`Error fetching EPC data for property with UPRN ${property?._source?.location?.uprn}:`, error);
+  
+            // If there's an error, return the property as it is, without modifying it
+            return property;
           }
-
-          return {
-            ...property,
-            _source: {
-              ...property._source,
-              totalFloorArea: epcData.totalFloorArea,
-              fullAddress: epcData.fullAddress,
-            },
-          };
         })
       );
-
-      // Replace existing listingData with new data
+  
       setListingData(updatedProperties);
       setTotalCount(result?.totalCount || 0);
     } catch (error) {
       console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
-      setIsInitialLoading(false); 
+      setIsInitialLoading(false);
     }
   }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
-
+  
   useEffect(() => {
     // Reset listing data when filters change
     setListingData([]);
@@ -156,6 +164,11 @@ const SearchPage = ({ params }) => {
   useEffect(() => {
     fetchProperties();
   }, [page, currentPage]);
+
+  console.log("listing data", listingData);
+  console.log("totalcount data", totalCount);
+  
+  
 
 
 

@@ -7,6 +7,7 @@ import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
 import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 import AgePopulationData from "./Demographic/AgePopulationData";
+import { Familyinformation } from "./Demographic/Familyinformation";
 
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,7 +16,8 @@ export function FamilyCard({ postcode, city }) {
   const [tenureData, setTenureData] = useState([]);
   const [occupationData, setOccupationData] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState([]);
-  const [agePopulationData, setAgePopulationData] = useState([])
+  const [agePopulationData, setAgePopulationData] = useState([]);
+  
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -97,31 +99,12 @@ export function FamilyCard({ postcode, city }) {
         <div className="flex flex-col lg:flex-row justify-between gap-4">
           {/* Left section */}
           <div className="lg:w-1/2">
-            <p className="text-gray-600 mb-2">
-              The population of {city} is{" "}
-              <span className="font-semibold">{
-                    totalPopulation?._source?.[
-                      "Sex: All persons; measures: Value"
-                    ]
-                  }</span> with{" "}
-              <span className="font-semibold">48%</span> males and{" "}
-              <span className="font-semibold">52%</span> females, and a median
-              age of <span className="font-semibold">38</span>.
-            </p>
-            <p className="text-gray-600 mb-2">
-              <span className="font-semibold">55%</span> of this neighborhood is
-              occupied by families with{" "}
-              <span className="font-semibold">27%</span> single families,{" "}
-              <span className="font-semibold">22%</span> one-person households,
-              and <span className="font-semibold">51%</span> couple families
-              with kids. The average household size in Allandale is{" "}
-              <span className="font-semibold">2.22</span>, and the average
-              family size is <span className="font-semibold">3.04</span>.
-            </p>
-            <p className="text-gray-600">
-              <span className="font-semibold">56%</span> of residents in this
-              neighborhood have a college degree.
-            </p>
+            <Familyinformation
+              postcode={postcode}
+              city={city}
+              housingData={housingData}
+              totalPopulation={totalPopulation}
+            />
           </div>
 
           {/* Right section */}
@@ -167,10 +150,12 @@ export function FamilyCard({ postcode, city }) {
         >
           {/* Slide 1 */}
           <div className="flex-shrink-0 w-full shadow-none">
-          
-            <AgePopulationData AgePopulationData={agePopulationData} city={city} />
+            <AgePopulationData
+              AgePopulationData={agePopulationData}
+              city={city}
+            />
           </div>
-          
+
           <div className="flex-shrink-0 w-full shadow-none">
             <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
           </div>

@@ -137,7 +137,7 @@ function AgePopulationData({ AgePopulationData }) {
 
   return (
     <div>
-      <div className="flex items-center p-2">
+      <div className="flex items-center p-2 ml-5">
         <Icon
           icon="game-icons:relationship-bounds"
           width={24}
@@ -146,7 +146,7 @@ function AgePopulationData({ AgePopulationData }) {
         <h2 className="text-xl font-semibold text-gray-700">Age Data</h2>
       </div>
 
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={formattedData}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -155,7 +155,7 @@ function AgePopulationData({ AgePopulationData }) {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="value" fill="#5AB2F6" />
+          <Bar dataKey="value" fill="#5AB2F6" barSize={20} /> 
         </BarChart>
       </ResponsiveContainer>
     </div>

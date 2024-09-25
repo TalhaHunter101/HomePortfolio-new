@@ -30,7 +30,8 @@ function HouseTenure({ tenureData, city }) {
       };
 
       let ownedCount = 0;
-      let rentedCount = 0;
+      let rentedPrivateCount = 0;
+      let rentedSocialCount = 0;
 
       for (let key in sourceData) {
         if (key.startsWith("Tenure of household:")) {
@@ -42,8 +43,10 @@ function HouseTenure({ tenureData, city }) {
                 const mappedLabel = validTensor[validKey];
                 if (mappedLabel.includes("Owned")) {
                   ownedCount += count;
-                } else if (mappedLabel.includes("Rented")) {
-                  rentedCount += count;
+                } else if (mappedLabel.includes("Rented (private landlord)")) {
+                  rentedPrivateCount += count;
+                } else if (mappedLabel.includes("Rented (social landlord)") || mappedLabel.includes("Rented (council)")) {
+                  rentedSocialCount += count;
                 }
                 break;
               }
@@ -52,15 +55,16 @@ function HouseTenure({ tenureData, city }) {
         }
       }
 
-      // Set the chart data with combined "Owned" and "Rented"
+      // Set the chart data with separate "Owned", "Rented (Private)", and "Rented (Social)"
       setChartData([
         { name: "Owned", count: ownedCount },
-        { name: "Rented (Private & Social)", count: rentedCount },
+        { name: "Rented (Private)", count: rentedPrivateCount },
+        { name: "Rented (Social)", count: rentedSocialCount },
       ]);
     }
   }, [tenureData]);
 
-  const COLORS = ["#1A2B41", "#5AB2F6"];
+  const COLORS = ["#1A2B41", "#5AB2F6", "#FF7043"];
 
   return (
     <>
