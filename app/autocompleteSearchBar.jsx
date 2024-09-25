@@ -129,7 +129,7 @@ export default function AutocompleteSearch({ properties }) {
         className="tab-content-container"
       >
         {selectedTab === "1" ? (
-          <div className="search-container max-w-[90vw] w-full mx-auto p-2">
+          <div className="search-container max-w-[90vw] w-full mx-auto ">
             <div className="input-wrapper flex items-center w-full p-2 border border-gray-300 rounded bg-white">
               {/* <Icon
                 icon="fluent:home-48-filled"
