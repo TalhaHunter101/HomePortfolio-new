@@ -351,7 +351,7 @@ export default function Home() {
   return (
     <>
       <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center ">
-        <div className="relative w-screen justify-center min-h-screen">
+        <div className="relative w-screen justify-center min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh]">
           <div
             style={{
               backgroundColor: "#fff",
@@ -359,28 +359,29 @@ export default function Home() {
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              minHeight: "100vh",
+              // minHeight: "70vh",
               width: "100%",
             }}
-            className="flex items-center justify-start bg-background"
+            className="flex items-center justify-start bg-background min-h-[40vh] md:min-h-[80vh] lg:min-h-[100vh]   "
           >
             <div className="">
               <div className="max-w-screen-xl mx-auto px-5">
                 <main className="place-items-center h-screen relative">
                   {/* Main Content */}
-                  <div className="mt-[-10vh] p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10">
+                  <div className=" p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10">
                     <Chip variant="flat" color="secondary" className="mb-2">
                       AI-Powered Property Data Insights
                     </Chip>
-                    <h1 className="text-xl lg:text-4xl xl:text-4xl font-bold lg:tracking-tight xl:tracking-tighter text-center">
-                      Find and analyse any UK property in seconds
+                    <h1  style={{lineHeight: "1.25"}} className=" leading-6 text-xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center ">
+                      Find and analyse any UK
                       <br />
-                      with HomePortfolio
+                       property in seconds
+                   
                     </h1>
-                    <p className="text-lg mt-4 text-slate-600 text-center">
+                    <p className="mt-4 sm:text-sm md:text-lg lg:text-xl text-slate-600 text-center">
                       Discover, source, analyse and track any property in seconds, all in one place
                     </p>
-                    <div className="mt-6 w-[60vw] flex justify-center gap-3">
+                    <div className="mt-2 sm:w-[90vw] md:[60vw] flex justify-center gap-3">
                       <AutocompleteSearch properties={properties} />
                     </div>
                   </div>
@@ -389,7 +390,7 @@ export default function Home() {
                   <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden sm:hidden md:hidden lg:flex">
 
                     {/* First Component */}
-                    <div className="absolute w-[150px] top-[10%] left-[15%]">
+                    {/* <div className="absolute w-[150px] top-[10%] left-[15%]">
                       <div className="h-[173px] bg-white p-4 rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                         <div className="p-2  bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
                           <div className="text-center text-[#040815] text-[10px] font-bold font-['Plus Jakarta Sans'] leading-[15px]">Flood Risk</div>
@@ -401,7 +402,7 @@ export default function Home() {
                         </div>
                         <img className="w-[75px] h-[87.72px]" src="/flood 987 (1).png" />
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Second Component */}
                     <div className="absolute w-[134.05px] top-[15%] right-[5%]">
@@ -457,7 +458,7 @@ export default function Home() {
                     </div>
 
                     {/* Fourth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px]  top-[75%] right-[1%]">
+                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px]  top-[40%] right-[1%]">
                       <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                         <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                           <div className="self-stretch text-[#212636] text-[8.90px] font-medium  leading-[10.68px]">What’s Nearby?</div>
@@ -471,7 +472,7 @@ export default function Home() {
                     </div>
 
                     {/* Fifth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[75%] left-[10%]">
+                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[20%] left-[15%]">
                       <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                         <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                           <div className="self-stretch text-[#212636] mb-2 text-[8.90px] font-bold  leading-[10.68px]">Mobile and Broadband</div>

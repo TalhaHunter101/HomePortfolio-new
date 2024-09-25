@@ -87,7 +87,7 @@ export function FamilyCard({ postcode, city }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            What are the demographics here?
+            who lives in {city} ?
           </h2>
         </div>
       </CardHeader>
@@ -97,7 +97,6 @@ export function FamilyCard({ postcode, city }) {
         <div className="flex flex-col lg:flex-row justify-between gap-4">
           {/* Left section */}
           <div className="lg:w-1/2">
-            <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
             <p className="text-gray-600 mb-2">
               The population of {city} is{" "}
               <span className="font-semibold">{

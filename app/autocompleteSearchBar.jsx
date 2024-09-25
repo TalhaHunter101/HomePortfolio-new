@@ -129,8 +129,8 @@ export default function AutocompleteSearch({ properties }) {
         className="tab-content-container"
       >
         {selectedTab === "1" ? (
-          <div className="search-container">
-            <div className="input-wrapper large-input">
+          <div className="search-container max-w-[90vw] w-full mx-auto p-2">
+            <div className="input-wrapper flex items-center w-full p-2 border border-gray-300 rounded bg-white">
               {/* <Icon
                 icon="fluent:home-48-filled"
                 width="20"
@@ -140,14 +140,14 @@ export default function AutocompleteSearch({ properties }) {
               /> */}
               <input
                 type="text"
-                placeholder="Search for any address, city, neighbourhood or postcode"
-                className="custom-input"
+                placeholder="Search for any address, city, neighbourhood or postcode"
+                className="custom-input flex-1 p-2 border-none outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Icon icon="akar-icons:search" className="search-icon" />
+              <Icon icon="akar-icons:search" className="search-icon ml-2 cursor-pointer" />
             </div>
-
+          
             {results && (
               <div>
                 <SearchDropdown results={results} isDataLoading={isDataLoading} />
