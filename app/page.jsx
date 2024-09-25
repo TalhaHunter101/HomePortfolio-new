@@ -368,62 +368,74 @@ export default function Home() {
               <div className="max-w-screen-xl mx-auto px-5">
                 <main className="place-items-center h-screen relative">
                   {/* Main Content */}
-                  <div className=" p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10">
+                  <div className="p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10">
                     <Chip variant="flat" color="secondary" className="mb-2">
                       AI-Powered Property Data Insights
                     </Chip>
-                    <h1  style={{lineHeight: "1.25"}} className=" leading-6 text-xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center ">
+                    <h1
+                      style={{ lineHeight: "1.25" }}
+                      className="leading-6 text-xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center z-10"
+                    >
                       Find and analyse any UK
                       <br />
-                       property in seconds
-                   
+                      property in seconds
                     </h1>
-                    <p className="mt-4 sm:text-sm md:text-lg lg:text-xl text-slate-600 text-center">
-                      Discover, source, analyse and track any property in seconds, all in one place
+                    <p className="mt-4 sm:text-sm md:text-lg lg:text-xl text-slate-600 text-center z-10">
+                      Discover, source, analyse and track any property in seconds, all in one
+                      place
                     </p>
-                    <div className="mt-2 sm:w-[90vw] md:[60vw] flex justify-center gap-3">
+                    <div className="mt-2 sm:w-[90vw] md:w-[60vw] lg:w-[60vw] flex justify-center gap-3 z-10">
                       <AutocompleteSearch properties={properties} />
                     </div>
                   </div>
 
-                  {/* New Components replacing Floating Images */}
-                  <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden sm:hidden md:hidden lg:flex">
-
+                  {/* Floating Images */}
+                  <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden sm:hidden md:hidden lg:flex z-0">
                     {/* First Component */}
-                    {/* <div className="absolute w-[150px] top-[10%] left-[15%]">
-                      <div className="h-[173px] bg-white p-4 rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
-                        <div className="p-2  bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
-                          <div className="text-center text-[#040815] text-[10px] font-bold font-['Plus Jakarta Sans'] leading-[15px]">Flood Risk</div>
-                        </div>
-                        <div className="w-[61px] h-5 p-1 bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
-                          <div className="w-[53px] h-[17px] p-2  bg-[#c4f1d4] rounded-[84.46px] justify-center items-center gap-[8.45px] flex">
-                            <div className="text-[#3cc673] text-[11px] font-bold  leading-none">Low</div>
-                          </div>
-                        </div>
-                        <img className="w-[75px] h-[87.72px]" src="/flood 987 (1).png" />
-                      </div>
-                    </div> */}
+                    {/* Uncomment and modify as needed */}
+                    {/* <div className="absolute w-[150px] top-[10%] left-[15%] z-0">
+      <div className="h-[173px] bg-white p-4 rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
+        <div className="p-2 bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
+          <div className="text-center text-[#040815] text-[10px] font-bold font-['Plus Jakarta Sans'] leading-[15px]">Flood Risk</div>
+        </div>
+        <div className="w-[61px] h-5 p-1 bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
+          <div className="w-[53px] h-[17px] p-2 bg-[#c4f1d4] rounded-[84.46px] justify-center items-center gap-[8.45px] flex">
+            <div className="text-[#3cc673] text-[11px] font-bold leading-none">Low</div>
+          </div>
+        </div>
+        <img className="w-[75px] h-[87.72px]" src="/flood 987 (1).png" />
+      </div>
+    </div> */}
 
                     {/* Second Component */}
-                    <div className="absolute w-[134.05px] top-[15%] right-[5%]">
+                    <div className="absolute w-[134.05px] top-[15%] right-[5%] z-0">
                       <div className="h-[117.73px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                         <div className="self-stretch px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                           <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium  leading-[10.68px]">Investment Potential</div>
+                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                              Investment Potential
+                            </div>
                           </div>
                         </div>
                         <div className="w-[134.05px] h-[75.19px] relative">
-                          <img src="/Series=2, Chart type=Line wavy (1).svg" alt="" width={134.05} height={75.19} />
+                          <img
+                            src="/Series=2, Chart type=Line wavy (1).svg"
+                            alt=""
+                            width={134.05}
+                            height={75.19}
+                          />
                         </div>
                       </div>
                     </div>
 
                     {/* Third Component */}
-                    <div className="absolute w-[134.05px] top-[40%] left-[10%]">
+                    <div className="absolute w-[134.05px] top-[40%] left-[10%] z-0">
                       <div className="h-[118.22px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                         <div className="w-[134.05px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                           <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium  leading-[10.68px]">Planning Applications</div>
+                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                              Planning Applications
+                            </div>
                           </div>
                         </div>
                         <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
@@ -438,13 +450,11 @@ export default function Home() {
                               <div className="w-[32.06px] h-[5.34px] bg-[#e8e8ea] rounded" />
                             </div>
                           </div>
-
-
                         </div>
                         <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
                           <div className="w-[15.83px] h-[15.83px] relative" />
                           <div className="w-full flex-row justify-start items-start gap-[3.86px] inline-flex">
-                            <div className="flex-shrink-0 ">
+                            <div className="flex-shrink-0">
                               <img src="/Tool.svg" alt="" />
                             </div>
                             <div className="flex flex-col gap-[3.86px]">
@@ -458,33 +468,46 @@ export default function Home() {
                     </div>
 
                     {/* Fourth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px]  top-[40%] right-[1%]">
+                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[40%] right-[1%] z-0">
                       <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                         <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                          <div className="self-stretch text-[#212636] text-[8.90px] font-medium  leading-[10.68px]">What’s Nearby?</div>
+                          <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                            What’s Nearby?
+                          </div>
                         </div>
                       </div>
                       <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
-                        <img className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10" src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png" />
-                        <img className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10" src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png" />
-                        <img className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10" src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png" />
+                        <img
+                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                          src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png"
+                        />
+                        <img
+                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                          src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png"
+                        />
+                        <img
+                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                          src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png"
+                        />
                       </div>
                     </div>
 
                     {/* Fifth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[20%] left-[15%]">
+                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[20%] left-[15%] z-0">
                       <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
                         <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                          <div className="self-stretch text-[#212636] mb-2 text-[8.90px] font-bold  leading-[10.68px]">Mobile and Broadband</div>
+                          <div className="self-stretch text-[#212636] mb-2 text-[8.90px] font-bold leading-[10.68px]">
+                            Mobile and Broadband
+                          </div>
                         </div>
                       </div>
                       <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
-
                         <img src="/signal-icon-png-15.jpg" alt="" width={80} height={70} />
                       </div>
                     </div>
                   </div>
                 </main>
+
               </div>
             </div>
           </div>
@@ -587,24 +610,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 py-10">
             <div className="grid place-items-center">
-              <picture>
-                <source
-                  srcSet="https://astroship-pro.web3templates.com/_astro/6.Ep0jo6kx_jbH81.avif"
-                  type="image/avif"
-                />
-                <source
-                  srcSet="https://astroship-pro.web3templates.com/_astro/6.Ep0jo6kx_jbH81.avif"
-                  type="image/webp"
-                />
-                <img
-                  src="https://astroship-pro.web3templates.com/_astro/6.Ep0jo6kx_jbH81.avif"
-                  alt="Feature Image"
-                  loading="lazy"
-                  width="730"
-                  height="584"
-                  decoding="async"
-                />
-              </picture>
+              <img src="/second section.png" alt="" />
             </div>
             <div className="grid place-items-center">
               <div className="max-w-lg">
@@ -696,24 +702,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 py-10">
             <div className="grid place-items-center pb-10 md:pb-0 md:order-2">
-              <picture>
-                <source
-                  srcSet="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
-                  type="image/avif"
-                />
-                <source
-                  srcSet="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
-                  type="image/webp"
-                />
-                <img
-                  src="https://astroship-pro.web3templates.com/_astro/2.ldT67BXv_ZIfUrc.avif"
-                  alt="Feature Image"
-                  loading="lazy"
-                  width="1280"
-                  height="800"
-                  decoding="async"
-                />
-              </picture>
+              <img src="/thirdsection.png" alt="" />
             </div>
             <div className="grid place-items-center">
               <div className="max-w-lg">
