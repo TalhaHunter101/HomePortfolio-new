@@ -384,9 +384,10 @@ export default function Home() {
                       Discover, source, analyse and track any property in seconds, all in one
                       place
                     </p>
-                    <div className="mt-2 sm:w-[90vw] md:w-[60vw] lg:w-[60vw] flex justify-center gap-3 z-10">
-                      <AutocompleteSearch properties={properties} />
-                    </div>
+                    <div className="mt-2 w-full sm:max-w-[90vw] md:max-w-[60vw] lg:max-w-[800px] flex justify-center gap-3 z-10">
+  <AutocompleteSearch properties={properties} />
+</div>
+
                   </div>
 
                   {/* Floating Images */}
