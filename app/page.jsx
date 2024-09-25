@@ -598,6 +598,10 @@ export default function Home() {
           </div>
         </div>
 
+
+
+
+
         <div className="flex flex-col  justify-center md:p-8  w-full">
           <div className="w-[100] flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
@@ -611,7 +615,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 py-10">
             <div className="grid place-items-center">
-              <img src="/second section.png" alt="" />
+              <img src="MainPageImg/1stImg.png" alt="" />
             </div>
             <div className="grid place-items-center">
               <div className="max-w-lg">
@@ -792,6 +796,65 @@ export default function Home() {
 
 
         </div>
+
+
+
+        <div className="flex flex-col justify-center md:p-8 mt-12 w-full bg-gray-100 rounded-2xl">
+  {/* Main Container */}
+  <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white rounded-2xl shadow-lg">
+    {/* Left Column: Questions */}
+    <div className="flex flex-col gap-6">
+      <h3 className="text-3xl font-bold text-black">Ask about a home</h3>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">Who lives in this neighbourhood?</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-black rounded-lg border border-black shadow-sm flex items-center">
+        <p className="text-white text-sm font-medium">Who lives in this neighbourhood?</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">What planning applications have been approved? Permit history?</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">How's the air quality?</p>
+      </div>
+    </div>
+    {/* Right Column: Image with Overlapping Card */}
+    <div className="">
+      <img className="w-full h-auto " src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
+  
+    </div>
+  </div>
+
+  <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white rounded-2xl shadow-lg mt-8">
+    {/* Left Column: Neighborhood Questions */}
+    <div className="flex flex-col gap-6">
+      <h3 className="text-3xl font-bold text-black">Look for a home</h3>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">Show me family-friendly neighbourhoods</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-black rounded-lg border border-black shadow-sm flex items-center">
+        <p className="text-white text-sm font-medium">How's the market right now?</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">Is this a good place to live?</p>
+      </div>
+      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
+        <p className="text-black text-sm font-medium">Tell me more about this neighbourhood</p>
+      </div>
+    </div>
+    {/* Right Column: Chart with Overlapping Card */}
+    <div className="relative flex flex-col gap-6">
+      <div className="p-6 flex items-center justify-center">
+        <img className="w-full  rounded-xl" src="/MainPageImg/homeTypeAsset.png" alt="Chart" />
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+
+
+
 
         <div className="mt-24">
           <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
@@ -1239,7 +1302,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="mt-24 max-w-3xl mx-auto flex flex-col items-center justify-center">
+          {/* <div className="mt-24 max-w-3xl mx-auto flex flex-col items-center justify-center">
             <span className="bg-purple-100 border-purple-200 border text-purple-600 rounded-full text-xs font-medium px-3 py-1">
               MORE FEATURES
             </span>
@@ -1249,87 +1312,58 @@ export default function Home() {
             <p className="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">
               Our template covers all things SAAS. If you don't find what you're looking for, contact us and we'll either help you or steer you in the right direction.
             </p>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-8 md:gap-16">
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:document-javascript-24-regular">
-                  <use xlinkHref="#ai:fluent:document-javascript-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Bring Your Own Framework</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:trophy-24-regular">
-                  <use xlinkHref="#ai:fluent:trophy-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">100% Static HTML, No JS</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:box-24-regular">
-                  <use xlinkHref="#ai:fluent:box-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">On-Demand Components</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Need some JS? Astro can automatically hydrate interactive components when they become visible on the page.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:box-multiple-24-regular">
-                  <use xlinkHref="#ai:fluent:box-multiple-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Broad Integration</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Astro supports TypeScript, Scoped CSS, CSS Modules, Sass, Tailwind, Markdown, MDX, and any other npm packages.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:book-search-24-regular">
-                  <use xlinkHref="#ai:fluent:book-search-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">SEO Enabled</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Automatic sitemaps, RSS feeds, pagination and collections take the pain out of SEO and syndication. It just works!
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-              <div className="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" className="text-indigo-500" data-icon="fluent:people-community-24-regular">
-                  <use xlinkHref="#ai:fluent:people-community-24-regular"></use>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Community</h3>
-                <p className="text-slate-500 mt-2 leading-relaxed">
-                  Astro is an open source project powered by hundreds of contributors making thousands of individual contributions.
-                </p>
-              </div>
-            </div>
-          </div>
+          </div> */}
+
+<div className="w-full mx-auto p-8  relative">
+  <div className="flex flex-col items-center gap-8">
+    {/* Title */}
+    <h3 className="text-center text-3xl font-semibold text-black">
+      Insights from data sources you can trust
+    </h3>
+
+    {/* Logos Grid */}
+    <div className="flex flex-wrap justify-center gap-6 px-8">
+      <div className="flex justify-center items-center w-40 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/1.png" alt="Logo 1" />
+      </div>
+      <div className="flex justify-center items-center w-24 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/2.png" alt="Logo 2" />
+      </div>
+      <div className="flex justify-center items-center w-40 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/3.png" alt="Logo 3" />
+      </div>
+      <div className="flex justify-center items-center w-40 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/4.png" alt="Logo 4" />
+      </div>
+      <div className="flex justify-center items-center w-44 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/5.png" alt="Logo 5" />
+      </div>
+      <div className="flex justify-center items-center w-40 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/6.png" alt="Logo 6" />
+      </div>
+      <div className="flex justify-center items-center w-24 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/7.png" alt="Logo 7" />
+      </div>
+      <div className="flex justify-center items-center w-40 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/8.png" alt="Logo 8" />
+      </div>
+      <div className="flex justify-center items-center w-44 h-24">
+        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/9.png" alt="Logo 9" />
+      </div>
+    </div>
+
+    {/* Description */}
+    <p className="text-center text-gray-600 text-xs font-bold uppercase tracking-wide">
+      Access the most accurate and reliable property information from multiple data sources, updated regularly
+    </p>
+  </div>
+
+  {/* Decorative Overlapping Elements */}
+</div>
+
+
+
+     
         </div>
 
         <div className="w-[100vw] bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center">
