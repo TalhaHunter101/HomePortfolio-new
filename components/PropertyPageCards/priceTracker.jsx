@@ -32,7 +32,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
         setData([]);
       }
     };
-
+ 
     const getPriceTrackerData = async () => {
       try {
         const res = await fetch("/api/indevisual/get-price-tracking-data", {

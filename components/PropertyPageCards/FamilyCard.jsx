@@ -6,6 +6,7 @@ import Peoplegender from "./Demographic/Peoplegender";
 import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
 import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
+import AgePopulationData from "./Demographic/AgePopulationData";
 
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,6 +14,8 @@ export function FamilyCard({ postcode, city }) {
   const [housingData, setHousingData] = useState([]);
   const [tenureData, setTenureData] = useState([]);
   const [occupationData, setOccupationData] = useState([]);
+  const [totalPopulation, setTotalPopulation] = useState([]);
+  const [agePopulationData, setAgePopulationData] = useState([])
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -22,6 +25,8 @@ export function FamilyCard({ postcode, city }) {
           "/api/indevisual/demographic/get-house-occupation-data",
           "/api/indevisual/demographic/get-house-tenure-data",
           "/api/indevisual/demographic/get-house-type-data",
+          "/api/indevisual/demographic/get-total-population-data",
+          "/api/indevisual/demographic/get-population-data-by-age",
         ];
 
         const fetchData = endpoints.map((endpoint) =>
@@ -44,12 +49,16 @@ export function FamilyCard({ postcode, city }) {
           fetchedOccupationData,
           fetchedTenureData,
           fetchedHousingData,
+          fetchedTotalPopulationData,
+          fetchedAgePopulationData,
         ] = await Promise.all(fetchData);
 
         setPeopleGenderData(fetchedPeopleGenderData);
         setOccupationData(fetchedOccupationData);
         setTenureData(fetchedTenureData);
         setHousingData(fetchedHousingData);
+        setTotalPopulation(fetchedTotalPopulationData);
+        setAgePopulationData(fetchedAgePopulationData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -58,7 +67,6 @@ export function FamilyCard({ postcode, city }) {
     fetchAllData();
   }, [postcode]);
 
-  // Carousel navigation functions
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
   };
@@ -91,14 +99,20 @@ export function FamilyCard({ postcode, city }) {
           <div className="lg:w-1/2">
             <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
             <p className="text-gray-600 mb-2">
-              The population of {city} is <span className="font-semibold">2,902</span> with{" "}
+              The population of {city} is{" "}
+              <span className="font-semibold">{
+                    totalPopulation?._source?.[
+                      "Sex: All persons; measures: Value"
+                    ]
+                  }</span> with{" "}
               <span className="font-semibold">48%</span> males and{" "}
               <span className="font-semibold">52%</span> females, and a median
               age of <span className="font-semibold">38</span>.
             </p>
             <p className="text-gray-600 mb-2">
               <span className="font-semibold">55%</span> of this neighborhood is
-              occupied by families with <span className="font-semibold">27%</span> single families,{" "}
+              occupied by families with{" "}
+              <span className="font-semibold">27%</span> single families,{" "}
               <span className="font-semibold">22%</span> one-person households,
               and <span className="font-semibold">51%</span> couple families
               with kids. The average household size in Allandale is{" "}
@@ -116,7 +130,13 @@ export function FamilyCard({ postcode, city }) {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col text-center">
                 <span>Total Population</span>
-                <span className="font-semibold text-3xl">23k</span>
+                <span className="font-semibold text-3xl">
+                  {
+                    totalPopulation?._source?.[
+                      "Sex: All persons; measures: Value"
+                    ]
+                  }
+                </span>
               </div>
               <div className="flex flex-col text-center">
                 <span>Median Age</span>
@@ -147,6 +167,11 @@ export function FamilyCard({ postcode, city }) {
           }}
         >
           {/* Slide 1 */}
+          <div className="flex-shrink-0 w-full shadow-none">
+          
+            <AgePopulationData AgePopulationData={agePopulationData} city={city} />
+          </div>
+          
           <div className="flex-shrink-0 w-full shadow-none">
             <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
           </div>
