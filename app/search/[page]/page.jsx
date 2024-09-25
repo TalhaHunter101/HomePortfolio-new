@@ -6,7 +6,6 @@ import ShowDataCards from "@/components/ListingSearch/ShowDataCards";
 import Beds from "@/components/SearchPage/beds";
 import Baths from "@/components/SearchPage/baths";
 import Price from "@/components/SearchPage/price";
-import Filter from "@/components/SearchPage/filter";
 import useStore from "@/store/useStore";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
@@ -23,8 +22,8 @@ const SearchPage = ({ params }) => {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  
   const pageSize = 20;
 
   const {
@@ -71,8 +70,7 @@ const SearchPage = ({ params }) => {
       const postcode = epcData[0]?._source?.POSTCODE || "";
       const town = epcData[0]?._source?.POSTTOWN || "";
 
-      // Combine the addresses to create a full address
-      const fullAddress = [address1, address2, address3,postcode, town]
+      const fullAddress = [address1, address2, address3, postcode, town]
         .filter(Boolean)
         .join(", ");
 
@@ -112,7 +110,6 @@ const SearchPage = ({ params }) => {
       const result = await response.json();
       const properties = result?.results || [];
 
-      // Process EPC data if necessary
       const updatedProperties = await Promise.all(
         properties.map(async (property) => {
           const uprn = property?._source?.location?.uprn;
@@ -136,19 +133,17 @@ const SearchPage = ({ params }) => {
         })
       );
 
-      // Replace existing listingData with new data
       setListingData(updatedProperties);
       setTotalCount(result?.totalCount || 0);
     } catch (error) {
       console.error("Error fetching properties:", error);
     } finally {
       setisnewDataLoading(false);
-      setIsInitialLoading(false); 
+      setIsInitialLoading(false);
     }
   }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
 
   useEffect(() => {
-    // Reset listing data when filters change
     setListingData([]);
     setCurrentPage(1);
   }, [minPrice, maxPrice, selectedBeds, selectedBaths]);
@@ -157,13 +152,12 @@ const SearchPage = ({ params }) => {
     fetchProperties();
   }, [page, currentPage]);
 
-
-
-
   return (
     <main className="flex mt-16 flex-col h-screen">
-      <div className="w-screen fixed flex bg-content1 z-40 justify-between items-center ">
-        <div className="flex items-center p-2 w-full gap-2">
+      {/* Navbar */}
+      <div className="w-screen fixed flex flex-wrap bg-content1 z-40 justify-between items-center p-2">
+        {/* Search Input */}
+        <div className="flex items-center w-full md:w-auto gap-2">
           <Input
             bordered
             type="text"
@@ -172,32 +166,45 @@ const SearchPage = ({ params }) => {
             placeholder={page}
             size="lg"
             className="w-full max-w-md z-40"
-            endContent={
-              <Icon icon="carbon:close-filled" className="text-2xl" />
-            }
-            onChange={handleChange} // debounce to reduce API calls
+            endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
+            onChange={handleChange}
           />
         </div>
 
-        <div className="flex items-center gap-2 mr-6 ">
+        {/* Filters and Buttons */}
+        {/* On large screens */}
+        <div className="hidden lg:flex items-center gap-2 mt-2 md:mt-0">
           <Beds />
           <Baths />
           <Price />
-
           <Button
             color="primary"
             radius="sm"
             size="lg"
-            className="w-full max-w-xs m-2  text-white font-semibold"
+            className="w-full max-w-xs m-2 text-white font-semibold"
             auto
-            onPress={() => fetchProperties()}
+            onClick={() => fetchProperties()}
             isLoading={isnewDataLoading}
           >
             Search
           </Button>
         </div>
 
-        <div className="w-[40vw] mx-3 pt-20 absolute top-2">
+        {/* Hamburger Menu for Small Screens */}
+        <div className="flex lg:hidden items-center gap-2">
+          <button
+            onClick={() => {
+              setIsFiltersOpen(!isFiltersOpen);
+              console.log("Filters Open State:", isFiltersOpen); // Log state
+            }}
+            className="text-3xl p-2"
+          >
+            <Icon icon="mdi:menu" />
+          </button>
+        </div>
+
+        {/* Dropdown */}
+        <div className="w-full md:w-[40vw] mx-3 pt-20 absolute top-2">
           {isDataLoading ? (
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -215,7 +222,7 @@ const SearchPage = ({ params }) => {
               {isDropdownOpen && results && results?.length !== 0 && (
                 <SearchDropdownWithClickOutside
                   results={results}
-                  onClose={() => setIsDropdownOpen(false)} // Handle closing of dropdown
+                  onClose={() => setIsDropdownOpen(false)}
                 />
               )}
             </>
@@ -223,6 +230,31 @@ const SearchPage = ({ params }) => {
         </div>
       </div>
 
+      {/* Filters Section on Small Screens */}
+      {isFiltersOpen && (
+        <div className="flex flex-wrap items-center gap-2 p-4 bg-content1 z-50 fixed top-[72px] w-full lg:hidden">
+          {/* Adjusted 'top' for correct positioning below navbar */}
+          <Beds />
+          <Baths />
+          <Price />
+          <Button
+            color="primary"
+            radius="sm"
+            size="lg"
+            className="w-full max-w-xs m-2 text-white font-semibold"
+            auto
+            onClick={() => {
+              fetchProperties();
+              setIsFiltersOpen(false);
+            }}
+            isLoading={isnewDataLoading}
+          >
+            Search
+          </Button>
+        </div>
+      )}
+
+      {/* Main Content */}
       {isInitialLoading ? (
         <div className="w-screen flex justify-center items-center h-[85vh]">
           <Spinner color="primary" size="lg" />
