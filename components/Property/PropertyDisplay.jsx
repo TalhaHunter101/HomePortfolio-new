@@ -326,7 +326,7 @@ function PropertyDisplay({ listingData, params }) {
   return (
     <>
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-end  w-full">
+        <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
           <div className="flex  space-x-2">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
@@ -361,44 +361,100 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4">
               <p className="font-bold text-md"></p>
             </div>
-            <div className="mb-4 lg:pl-6 flex items-center flex-col lg:flex-row">
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="font-bold text-2xl lg:text-4xl">
-                  £{formattedPrice}
-                </h3>
-                <span className="font-bold text-sm lg:text-base">
-                  {fullAddress || listingData?.address},
-                </span>
-                <span className="font-bold text-gray-400 text-sm lg:text-base">
-                  {" "}
-                  {listingData?.area}
-                </span>
-              </div>
-              <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bedrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">beds</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bathrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">baths</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {formatedSqft || "NA"}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">sqft</p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <p className="text-sm pl-6 font-bold">
+            <div className="p-4 border border-gray-200 rounded-lg shadow-md bg-white md:hidden m-2"> 
+  {/* This container will only be visible on small screens */}
+  <div className="flex items-center justify-between mb-4">
+    {/* Price Section */}
+    <div>
+      <h3 className="text-xl font-semibold text-gray-800">£{formattedPrice}</h3>
+      <span className="text-sm text-gray-600 flex items-center">
+  <Icon icon="mdi:map-marker-outline" className="text-gray-500 mr-1" />
+  {fullAddress || listingData?.address}
+</span>
+    </div>
+    {/* Heart and Share Icons */}
+    
+  </div>
+
+  {/* Property Details Section */}
+  <div className="grid grid-cols-3 gap-4 text-center">
+    <div>
+      <h4 className="text-lg font-semibold">{bedrooms}</h4>
+      <p className="text-xs text-gray-500">Beds</p>
+    </div>
+    <div>
+      <h4 className="text-lg font-semibold">{bathrooms}</h4>
+      <p className="text-xs text-gray-500">Baths</p>
+    </div>
+    <div>
+      <h4 className="text-lg font-semibold">{formatedSqft || "NA"}</h4>
+      <p className="text-xs text-gray-500">Sq Ft</p>
+    </div>
+  </div>
+
+  {/* Additional Information */}
+  <div className="mt-4 flex flex-col space-y-2">
+    {/* <div className="flex items-center">
+      <Icon icon="mdi:home-outline" className="text-gray-500 mr-2" />
+      <span className="text-sm text-gray-700">House for sale</span>
+    </div>
+    <div className="flex items-center">
+      <Icon icon="mdi:map-marker-outline" className="text-gray-500 mr-2" />
+      <span className="text-sm text-gray-700">
+        {listingData?.area || "Area"}
+      </span>
+    </div> */}
+  </div>
+
+  {/* CTA Buttons */}
+  <p className="text-sm  font-bold">
                 {listingData?.title}
               </p>
+</div>
+
+{/* Existing styles for larger screens */}
+<div className="mb-4 lg:pl-6 flex items-center flex-col lg:flex-row hidden md:flex">
+  {/* Original content for larger screens */}
+  <div className="flex-1 text-center lg:text-left">
+    <h3 className="font-bold text-2xl lg:text-4xl">
+      £{formattedPrice}
+    </h3>
+    <span className="text-sm font-bold lg:text-base flex items-center">
+  <Icon icon="mdi:map-marker-outline" className="text-gray-500 mr-1" />
+  {fullAddress || listingData?.address}
+</span>
+    <span className="font-bold text-gray-400 text-sm lg:text-base">
+      {" "}
+      {listingData?.area}
+    </span>
+  </div>
+  <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {bedrooms}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">beds</p>
+    </div>
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {bathrooms}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">baths</p>
+    </div>
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {formatedSqft || "NA"}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">sqft</p>
+    </div>
+  </div>
+</div>
+
+            
+              <p className="text-sm pl-6 font-bold hidden md:block">
+                {listingData?.title}
+              </p>
+              <div className="hidden md:block">
               <div className="pr-4 pl-6 pt-4">
                 <Button
                   size="lg"

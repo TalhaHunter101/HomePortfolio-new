@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Spinner,
-  Pagination, // Import Pagination
+  Pagination,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { SearchMap } from "../Maps/index";
@@ -28,7 +28,6 @@ function ShowDataCards({
   const [toLocation, setToLocation] = useState("");
   const [showMap, setShowMap] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
-  
 
   const sortData = () => {
     const sortedData = [...filter].sort((a, b) => {
@@ -38,17 +37,18 @@ function ShowDataCards({
         return b.minPrice - a.minPrice;
       }
     });
-    setFilter(sortedData); // Update the filtered data with sorted results
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Toggle sort order
+    setFilter(sortedData);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
   useEffect(() => {
     const getPropsData = () => {
       const groupedData = [];
       cardData?.forEach((property) => {
-        const { numBedrooms, numBathrooms, numLivingRooms } =
-          property?._source?.counts;
-        const price = parseInt(property?._source?.analyticsTaxonomy?.priceActual);
+        const { numBedrooms, numBathrooms } = property?._source?.counts;
+        const price = parseInt(
+          property?._source?.analyticsTaxonomy?.priceActual
+        );
         const images = property?._source?.propertyImage;
         const id = property?._source?.listingId;
         const description = property?._source?.summaryDescription;
@@ -72,20 +72,26 @@ function ShowDataCards({
             convertToSquareFeet(property?._source?.totalFloorArea),
           fullAddress: property?._source?.fullAddress,
           address: property?._source?.analyticsTaxonomy?.displayAddress,
-          lng: parseFloat(property?._source?.location?.coordinates?.longitude),
-          lat: parseFloat(property?._source?.location?.coordinates?.latitude),
+          lng: parseFloat(
+            property?._source?.location?.coordinates?.longitude
+          ),
+          lat: parseFloat(
+            property?._source?.location?.coordinates?.latitude
+          ),
           date: property?._source?.publishedOn,
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);
       setToLocation(uniqueDevelopmentData);
-      setFilter(uniqueDevelopmentData); 
+      setFilter(uniqueDevelopmentData);
     };
 
     getPropsData();
   }, [cardData]);
 
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Sort by"]));
+  const [selectedKeys, setSelectedKeys] = React.useState(
+    new Set(["Sort by"])
+  );
 
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -98,98 +104,100 @@ function ShowDataCards({
   };
 
   return (
-    <div className="w-screen flex flex-grow pt-12">
+    <div className="w-screen flex flex-grow pt-16">
       {/* Map Section */}
-      <div className="w-3/5 flex flex-col gap-4 p-4 h-full fixed">
-        {showMap && toLocation && (
-          <motion.div
-            className="w-full h-full"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            <Card className="h-full rounded-none">
-              <SearchMap
-                center={toLocation}
-                hovercard={cardHover}
-                // setfilter={setFilter}
-                height={"100vh"}
-                key={currentPage} // Ensure re-rendering on pagination change
-              />
-            </Card>
-          </motion.div>
-        )}
-      </div>
+      {showMap && (
+        <div className="hidden lg:flex w-full lg:w-3/5 flex-col gap-4 p-4 h-full fixed">
+          {toLocation && (
+            <motion.div
+              className="w-full h-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <Card className="h-full rounded-none">
+                <SearchMap
+                  center={toLocation}
+                  hovercard={cardHover}
+                  height={"100vh"}
+                  key={currentPage}
+                />
+              </Card>
+            </motion.div>
+          )}
+        </div>
+      )}
 
       {/* Card List Section */}
       <motion.div
-        className="w-full"
+        className={`w-full ${showMap ? "lg:ml-[60%]" : ""}`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.6 }}
       >
-        <div className="h-[100vh]">
-          <div
-            className={`${showMap ? "w-[40%]" : "w-full"} flex flex-col p-6 ml-auto`}
-          >
-            <h3 className="text-md uppercase font-bold">
-              {totalcount} Properties
-            </h3>
-
-            <div className="flex space-x-2 p-4">
-              <Button
-                radius="sm"
-                size="lg"
-                className="w-full max-w-xs"
-                auto
-                onClick={() => setShowMap(!showMap)}
-              >
-                {showMap ? "Hide Map" : "Show Map"}
-              </Button>
-              <Dropdown onOpenChange={handleToggle}>
-                <DropdownTrigger>
-                  <Button
-                    endContent={
-                      <Icon
-                        icon={
-                          isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
-                        }
-                      />
-                    }
-                    radius="sm"
-                    size="lg"
-                    className="w-full max-w-xs"
-                  >
-                    {selectedValue}
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  aria-label="Sort by selection"
-                  variant="flat"
-                  disallowEmptySelection
-                  selectionMode="single"
-                  selectedKeys={selectedKeys}
-                  onSelectionChange={setSelectedKeys}
+        <div className="h-full">
+          <div className="flex flex-col p-4">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <h3 className="text-md uppercase font-bold mb-2 md:mb-0">
+                {totalcount} Properties
+              </h3>
+              <div className="flex space-x-2">
+                <Button
+                  radius="sm"
+                  size="lg"
+                  className="w-full max-w-xs"
+                  auto
+                  onClick={() => setShowMap(!showMap)}
                 >
-                  <DropdownItem key="roi">Sort by ROI</DropdownItem>
-                  <DropdownItem key="price">Sort by Price</DropdownItem>
-                  <DropdownItem key="nil">None</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+                  {showMap ? "Hide Map" : "Show Map"}
+                </Button>
+                <Dropdown onOpenChange={handleToggle}>
+                  <DropdownTrigger>
+                    <Button
+                      endContent={
+                        <Icon
+                          icon={
+                            isOpen
+                              ? "ph:caret-up-fill"
+                              : "ph:caret-down-fill"
+                          }
+                        />
+                      }
+                      radius="sm"
+                      size="lg"
+                      className="w-full max-w-xs"
+                    >
+                      {selectedValue}
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownMenu
+                    aria-label="Sort by selection"
+                    variant="flat"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={setSelectedKeys}
+                  >
+                    <DropdownItem key="roi">Sort by ROI</DropdownItem>
+                    <DropdownItem key="price">Sort by Price</DropdownItem>
+                    <DropdownItem key="nil">None</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
             </div>
 
             {/* Cards */}
-            <div className="relative">
+            <div className="relative mt-4">
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
                   <Spinner color="primary" size="lg" />
                 </div>
               )}
               <div
-                className={`grid p-4 grid-cols-1 md:grid-cols-1 ${
-    showMap ? "2xl:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1" 
-    : "2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1"
-  } gap-4 overflow-y-auto max-h-full`}
+                className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-${
+                  showMap ? "1" : "2"
+                } xl:grid-cols-${showMap ? "1" : "3"} gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&
                   filter.map((card, index) => (
@@ -199,7 +207,10 @@ function ShowDataCards({
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                      <SearchCard property={card} setCardHover={setCardHover} />
+                      <SearchCard
+                        property={card}
+                        setCardHover={setCardHover}
+                      />
                     </motion.div>
                   ))}
               </div>
