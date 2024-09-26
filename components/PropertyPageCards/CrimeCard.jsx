@@ -69,6 +69,8 @@ export function CrimeCard({ postcode }) {
 }
 
 export const CrimeReportCard = ({ reportData }) => {
+  const totalCrimes = reportData.length;
+
   // Calculate the crime data dynamically
   const crimeDataMap = reportData.reduce((acc, report) => {
     const crimeType = report._source["Crime type"];
@@ -119,16 +121,16 @@ export const CrimeReportCard = ({ reportData }) => {
           </span>
         </Chip>
         <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
-          4,897 reported crimes
+          {totalCrimes} reported crimes
         </div>
         <p className="text-sm mb-8 text-gray-500 mb-4">
           in this area in the last 12 months.
         </p>
-        <p className="text-sm mt-5 text-gray-600">
+        {/* <p className="text-sm mt-5 text-gray-600">
           If an area has an average crime rating, it means that for every 1,000
           inhabitants, between 140 and 225 residents have been affected by a
           crime.
-        </p>
+        </p> */}
       </div>
 
       {/* Right Section */}
