@@ -137,9 +137,9 @@ export function EPCCard({ title, price, roi, uprn }) {
 
       <CardBody>
         {epcData && (
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col sm:flex-col md:flex-row">
             {/* Chart Section */}
-            <div className="flex-1 md:pr-4">
+            <div className="flex-1 md:pr-4 mb-4 md:mb-0">
               <div className="mx-6">
                 <h3 className="font-semibold mb-2">
                   Energy Performance Certificate (EPC)
