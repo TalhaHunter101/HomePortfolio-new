@@ -121,11 +121,9 @@ function Peoplegender({ PeopleGenderData, city }) {
           </div>
         </div>
         </div> */}
-        <div className="flex items-center ">
-          <div className=" w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
-            {/* <div className="text-xs sm:text-lg font-semibold text-default-800 mb-4">
-              Who lives here?
-            </div> */}
+        <div className="flex items-center justify-center ">
+          {/* <div className=" w-1/2 flex flex-col gap-2 text-xs sm:text-sm">
+           
             {chartData.map((item, index) => (
               <div key={index} className="flex flex-row gap-2 items-center">
                 <div
@@ -137,8 +135,8 @@ function Peoplegender({ PeopleGenderData, city }) {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="w-1/2 h-64 ml-2">
+          </div> */}
+          <div className=" h-64 ml-2">
             <FamilyCustomBarChart data={chartData} />
           </div>
         </div>

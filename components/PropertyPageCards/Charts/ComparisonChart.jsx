@@ -4,8 +4,8 @@ import React from "react";
 
 const ComparisonChart = ({ data }) => {
 
-  const medianPrice = calculateMedian(data?.pricing?.internalValue);
-  const { marketComp } = marketCompStore();
+  const { marketComp, medianPrice } = marketCompStore();
+
 
   return (
     <div className="relative flex flex-col bg-white p-8 h-full w-full">

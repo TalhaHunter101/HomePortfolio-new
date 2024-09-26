@@ -8,9 +8,11 @@ import { Icon } from "@iconify/react";
 function MarketInfoPage({ city, postcode }) {
   const { marketInfo } = marketInfoStore();
   const [mergedData, setMergedData] = useState([]);
-  const [activeView, setActiveView] = useState("table"); // State to track which view is active
+  const [activeView, setActiveView] = useState("table");
+  const [isHidden, setIsHidden] = useState(false);
 
   const fetchEPCData = async (uprn) => {
+    setIsHidden(true);
     try {
       const response = await fetch("/api/indevisual/get-epc-data", {
         method: "POST",
@@ -66,6 +68,9 @@ function MarketInfoPage({ city, postcode }) {
 
   return (
     <Card className="m-4">
+      <div className={`${isHidden ? "hidden" : "block"}`}>
+        <RecentlySoldCard city={city} postcode={postcode} ishideen={true} />
+      </div>
       <CardHeader className="">
         <div className="flex items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
@@ -115,7 +120,7 @@ function MarketInfoPage({ city, postcode }) {
         )}
 
         {activeView === "map" && (
-          <RecentlySoldCard city={city} postcode={postcode} />
+          <RecentlySoldCard city={city} postcode={postcode} ishideen={true} />
         )}
       </CardBody>
     </Card>

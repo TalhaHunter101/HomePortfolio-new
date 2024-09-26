@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { BusMapStatic, TransportMapStatic } from "../Maps";
+import { useListingStore } from "@/store/listingStore";
 
 export function PublicTransportCard({ data, latitude, longitude }) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
   const [busData, setBusData] = useState([]);
   const [busLocations, setBusLocations] = useState([]);
+  const { setWalkScore: setListingWalkScore } = useListingStore();
 
   // Count transports for each type (rail, bus, ferry)
   const transportCounts = data.transports.reduce((acc, transport) => {
@@ -30,10 +32,12 @@ export function PublicTransportCard({ data, latitude, longitude }) {
           transport.poiType.includes(selectedType)
         );
 
-  const center = [{
-    lat: latitude,
-    lng: longitude,
-  }];
+  const center = [
+    {
+      lat: latitude,
+      lng: longitude,
+    },
+  ];
 
   useEffect(() => {
     const getWalkScore = async () => {
@@ -51,6 +55,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
         if (res.ok) {
           const data = await res.json();
           setWalkScore(data[0]?._source?.walk_score);
+          setListingWalkScore(data[0]?._source?.walk_score);
         }
       } catch (error) {
         console.log(error);
@@ -96,38 +101,38 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-  <div className="flex w-full justify-between my-2">
-    {/* Left Section: Icon and Question */}
-    <div className="flex items-center space-x-2">
-      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full">
-        <Icon
-          icon="mdi:bus"
-          width={16} // Adjust the icon size to fit well within the circle
-          className="text-purple-700" // Adjust the icon color if needed
-        />
-      </div>
-      <h2 className="text-xl font-bold text-gray-700">
-        What are my public transportation options?
-      </h2>
-    </div>
+        <div className="flex w-full justify-between my-2">
+          {/* Left Section: Icon and Question */}
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full">
+              <Icon
+                icon="mdi:bus"
+                width={16} // Adjust the icon size to fit well within the circle
+                className="text-purple-700" // Adjust the icon color if needed
+              />
+            </div>
+            <h2 className="text-xl font-bold text-gray-700">
+              What are my public transportation options?
+            </h2>
+          </div>
 
-    {/* Right Section: Walk Score Info */}
-    <div className="flex flex-col items-center pr-2">
-      <div className="text-xs  md:text-sm capitalize text-foreground">
-        <a
-          href="https://www.walkscore.com/how-it-works/"
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-        >
-          Walk Score<sup>®</sup>
-        </a>
-      </div>
-      <div className="text-xl text-muted-foreground font-medium">
-        {walkScore || "N/A"}
-      </div>
-    </div>
-  </div>
-</CardHeader>
+          {/* Right Section: Walk Score Info */}
+          <div className="flex flex-col items-center pr-2">
+            <div className="text-xs  md:text-sm capitalize text-foreground">
+              <a
+                href="https://www.walkscore.com/how-it-works/"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+              >
+                Walk Score<sup>®</sup>
+              </a>
+            </div>
+            <div className="text-xl text-muted-foreground font-medium">
+              {walkScore || "N/A"}
+            </div>
+          </div>
+        </div>
+      </CardHeader>
 
       <CardBody>
         <div className="rounded-md">

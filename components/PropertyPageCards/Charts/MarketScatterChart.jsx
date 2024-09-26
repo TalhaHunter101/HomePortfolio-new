@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import {
   ScatterChart,
@@ -8,12 +7,19 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  defs,
-  linearGradient,
-  stop,
 } from "recharts";
 import { CardBody } from "@nextui-org/react";
+import { marketCompStore } from "@/store/listingStore";
 
+// Helper function to calculate the median
+const calculateMedian = (values) => {
+  if (values.length === 0) return 0;
+  values.sort((a, b) => a - b);
+  const half = Math.floor(values.length / 2);
+
+  if (values.length % 2) return values[half];
+  return (values[half - 1] + values[half]) / 2.0;
+};
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -21,7 +27,9 @@ const CustomTooltip = ({ active, payload }) => {
     return (
       <div className="custom-tooltip bg-white p-2 border border-gray-300 rounded">
         <p className="label text-gray-700">{`Home Size: ${x} sqft`}</p>
-        <p className="intro text-gray-700">{`Listing Price: £${(y / 1000).toFixed(0)}K`}</p>
+        <p className="intro text-gray-700">{`Listing Price: £${(
+          y / 1000
+        ).toFixed(0)}K`}</p>
       </div>
     );
   }
@@ -29,12 +37,12 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export const ScatterChartComponent = ({ data, text, price,currentSize }) => { 
-  console.log("currentSize is",currentSize);
-  
+export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);
   const [scatterData, setScatterData] = useState([]);
+
+  const { setMedianPrice } = marketCompStore(); // Zustand store
 
   useEffect(() => {
     const getMarketComparisonData = async () => {
@@ -65,10 +73,16 @@ export const ScatterChartComponent = ({ data, text, price,currentSize }) => {
           setSizePerSqFeet(sizesqfeet);
           setPrices(prices);
 
+          // Calculate and store the median price
+          const median = calculateMedian(prices);
+          setMedianPrice(median); // Set in Zustand store
+
+          // Prepare scatter data
           const scatterData = sizesqfeet.map((size, index) => ({
             x: size,
             y: prices[index],
           }));
+
           scatterData.sort((a, b) => {
             if (a.x === b.x) {
               return a.y - b.y;
@@ -78,9 +92,9 @@ export const ScatterChartComponent = ({ data, text, price,currentSize }) => {
 
           if (price) {
             scatterData.push({
-              x: parseInt(currentSize) || 0, 
-              y: price, 
-              isCurrentListing: true 
+              x: parseInt(currentSize) || 0,
+              y: price,
+              isCurrentListing: true,
             });
           }
 
@@ -92,7 +106,7 @@ export const ScatterChartComponent = ({ data, text, price,currentSize }) => {
     };
 
     getMarketComparisonData();
-  }, [data, price, currentSize]);
+  }, [data, price, currentSize, setMedianPrice]);
 
   return (
     <CardBody className="w-full flex flex-col justify-between bg-white rounded-lg">
@@ -113,25 +127,6 @@ export const ScatterChartComponent = ({ data, text, price,currentSize }) => {
               left: 20,
             }}
           >
-            {/* Define a gradient for the 3D bubble effect */}
-            <defs>
-              <linearGradient
-                id="bubbleGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
-                <stop
-                  offset="0%"
-                  style={{ stopColor: "#38bdf8", stopOpacity: 1 }}
-                />
-                <stop
-                  offset="100%"
-                  style={{ stopColor: "#0ea5e9", stopOpacity: 0.8 }}
-                />
-              </linearGradient>
-            </defs>
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
@@ -175,31 +170,23 @@ export const ScatterChartComponent = ({ data, text, price,currentSize }) => {
             <Tooltip
               cursor={{ strokeDasharray: "3 3" }}
               content={<CustomTooltip />}
-              contentStyle={{
-                backgroundColor: "#ffffff",
-                borderColor: "#e5e7eb",
-              }}
-              labelStyle={{ color: "#374151" }}
-              itemStyle={{ color: "#374151" }}
             />
             <Scatter
               name="Glen Park"
-              data={scatterData.filter(item => !item.isCurrentListing)} // Normal scatter points
-              fill="url(#bubbleGradient)"
+              data={scatterData.filter((item) => !item.isCurrentListing)}
+              fill="#0ea5e9"
               shape="circle"
               stroke="#0ea5e9"
               strokeWidth={1}
-              legendType="circle"
               isAnimationActive
             />
             <Scatter
               name="Current Listing"
-              data={scatterData.filter(item => item.isCurrentListing)} // Green dot for the current listing
+              data={scatterData.filter((item) => item.isCurrentListing)}
               fill="green"
               shape="circle"
               stroke="green"
               strokeWidth={2}
-              legendType="circle"
               isAnimationActive
             />
           </ScatterChart>

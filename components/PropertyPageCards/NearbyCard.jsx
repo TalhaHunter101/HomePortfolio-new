@@ -89,19 +89,18 @@ const amenities = [
 // Dummy items for fallback when there's no fetched data
 const getItemsData = () => [
   {
-    name: "Rocky Pointe Natural Park",
-    category: "Parks • Kuehner Dr",
-    distance: "0.2 miles away",
-  },
-  {
-    name: "Sunset Valley Trail",
-    category: "Trails • Oak St",
-    distance: "0.5 miles away",
+    name: "No Data",
   },
 ];
 
 // Fetching nearby locations (mockup function using Overpass API)
-async function getNearbyLocations(lat, lon, amenity = "restaurant", radius = 5000, limit = 10) {
+async function getNearbyLocations(
+  lat,
+  lon,
+  amenity = "restaurant",
+  radius = 5000,
+  limit = 10
+) {
   const overpassUrl = "https://overpass-api.de/api/interpreter";
   const overpassQuery = `
       [out:json];
@@ -127,7 +126,6 @@ async function getNearbyLocations(lat, lon, amenity = "restaurant", radius = 500
     });
 
     const jsonData = await response.json();
-    console.log("Fetched data from Overpass API:", jsonData); // Debug the response
 
     return jsonData.elements
       .filter((element) => element.tags && element.tags.amenity)
@@ -148,7 +146,7 @@ async function getNearbyLocations(lat, lon, amenity = "restaurant", radius = 500
           category: element.tags.amenity || "Unknown",
           lat, // Ensure lat/lon are captured correctly
           lon,
-          distance: `${Math.random().toFixed(2) * 2} miles away`, // Mock distance
+          // distance: `${Math.random().toFixed(2) * 2} miles away`, // Mock distance
         };
       });
   } catch (error) {
@@ -157,7 +155,6 @@ async function getNearbyLocations(lat, lon, amenity = "restaurant", radius = 500
   }
 }
 
-
 export function NearbyCard({ data }) {
   const [locations, setLocations] = useState([]); // Dynamic locations state
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
@@ -165,7 +162,6 @@ export function NearbyCard({ data }) {
     lat: data?.location?.coordinates?.latitude,
     lng: data?.location?.coordinates?.longitude,
   });
-
 
   useEffect(() => {
     const center = {
@@ -181,42 +177,51 @@ export function NearbyCard({ data }) {
     data?.location?.coordinates?.longitude,
   ]);
 
-  const items = locations.length ? locations : getItemsData(); // Use dynamic data if available
+  const items = locations.length ? locations : getItemsData();
+
+  const nearestGrocery = items.find((item) => item.category === "supermarket");
+
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-  <div className="flex  w-full items-center  justify-between">
-    {/* Left Section: Icon and Question */}
-    <div className="flex items-center">
-      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-        <Icon
-          icon="mdi:map"
-          width={16} // Adjust the icon size to fit well within the circle
-          className="text-purple-700" // Adjust the icon color if needed
-        />
-      </div>
-      <h2 className="text-xl font-bold text-gray-700">What’s nearby 6677 Charing Street?</h2>
-    </div>
+        <div className="flex  w-full items-center  justify-between">
+          {/* Left Section: Icon and Question */}
+          <div className="flex items-center">
+            <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+              <Icon
+                icon="mdi:map"
+                width={16} // Adjust the icon size to fit well within the circle
+                className="text-purple-700" // Adjust the icon color if needed
+              />
+            </div>
+            <h2 className="text-xl font-bold text-gray-700">
+              What’s nearby 6677 Charing Street?
+            </h2>
+          </div>
 
-    {/* Right Section: Address Info */}
-    <div className="relative mt-2 pr-2 sm:pr-10 md:pr-2 z-10 max-w-md grid grid-cols-1 items-start sm:items-center text-right">
-      <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-        <div className="text-xs md:text-sm capitalize text-foreground">
-          Nearest grocery
+          {/* Right Section: Address Info */}
+          <div className="relative mt-2 pr-2 sm:pr-10 md:pr-2 z-10 max-w-md grid grid-cols-1 items-start sm:items-center text-right">
+            <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
+              <div className="text-xs md:text-sm capitalize text-foreground">
+                Nearest grocery
+              </div>
+              {nearestGrocery ? (
+                <div className="text-base md:text-base text-foreground font-medium">
+                  {nearestGrocery.name} <br />
+                  <span>(Approx. distance: {Math.random().toFixed(2)} miles)</span>
+                </div>
+              ) : (
+                <div className="text-base md:text-base text-foreground font-medium">
+                  No nearby grocery found
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="text-base md:text-base text-foreground font-medium">
-          Old Susana Postal Express <br />
-          <span>(2,109 ft)</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</CardHeader>
+      </CardHeader>
 
       <CardBody>
-        
-
         <div className="rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
           <section id="whats-nearby" className="mb-5 sm:mb-6">
             <div className="mx-auto w-full max-w-screen md:max-w-screen-md lg:max-w-screen-lg">
@@ -279,7 +284,11 @@ export function NearbyCard({ data }) {
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
                               <Icon
-                                icon="mdi:map-marker"
+                                icon={
+                                  amenities.find(
+                                    (amenity) => amenity.key === item.category
+                                  )?.icon || "mdi:map-marker"
+                                }
                                 className="inline-block text-4xl text-green-800 mr-5 xs:mr-8"
                               />
                             </div>
@@ -288,7 +297,7 @@ export function NearbyCard({ data }) {
                                 {item.name}
                               </li>
                               <li>{item.category}</li>
-                              <li>{item.distance}</li>
+                              {/* <li>{item.distance}</li> */}
                             </ul>
                           </div>
                         </div>

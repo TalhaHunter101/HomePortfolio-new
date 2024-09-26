@@ -854,7 +854,7 @@ export default function PropertyPage({ params }) {
       )}
 
       {/* <PropertyDisplay listingData={listingDatasa} params={params} /> */}
-      <Footer />
+      <Footer /> 
     </>
   );
 }

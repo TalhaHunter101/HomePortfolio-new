@@ -1,10 +1,12 @@
-"use client";
 import React from "react";
 import { Card, Chip, Text } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export const CrimeReportCard = ({ reportData }) => {
-  // Calculate the crime data dynamically
+  // Calculate total crimes in the last 12 months
+  const totalCrimes = reportData.length;
+
+  // Calculate the crime data dynamically (for the right section)
   const crimeDataMap = reportData.reduce((acc, report) => {
     const crimeType = report._source["Crime type"];
     if (!acc[crimeType]) {
@@ -47,27 +49,29 @@ export const CrimeReportCard = ({ reportData }) => {
   return (
     <div className="flex w-full justify-between">
       {/* Left Section */}
-      <div className="w-1/2 p-6 bg-white rounded-lg  flex flex-col">
-        <Chip className="bg-yellow-200 rounded-full mb-5  px-3 py-1 inline-block mb-2">
+      <div className="w-1/2 p-6 bg-white rounded-lg flex flex-col">
+        <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block mb-2">
           <span className="text-sm font-medium pb-5 text-gray-700">
             Average crime
           </span>
         </Chip>
+
+        {/* Dynamically updated total crime count */}
         <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
-          4,897 reported crimes
+          {totalCrimes.toLocaleString()} reported crimes
         </div>
         <p className="text-sm mb-8 text-gray-500 mb-4">
           in this area in the last 12 months.
         </p>
-        <p className="text-sm mt-5 text-gray-600">
+        {/* <p className="text-sm mt-5 text-gray-600">
           If an area has an average crime rating, it means that for every 1,000
           inhabitants, between 140 and 225 residents have been affected by a
           crime.
-        </p>
+        </p> */}
       </div>
 
       {/* Right Section (Crimes List) */}
-      <div className="w-1/2 p-6 bg-white rounded-lg ">
+      <div className="w-1/2 p-6 bg-white rounded-lg">
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
           <h1 className="text-lg font-semibold text-gray-800 mb-1">
             Top Reported Crimes
@@ -78,7 +82,7 @@ export const CrimeReportCard = ({ reportData }) => {
         </div>
 
         {/* Scrollable crimes list */}
-        <div className="mt-4 space-y-3 max-h-60 overflow-y-auto ">
+        <div className="mt-4 space-y-3 max-h-60 overflow-y-auto">
           {crimeData.map((crime, index) => (
             <div
               key={index}

@@ -8,6 +8,7 @@ import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 import AgePopulationData from "./Demographic/AgePopulationData";
 import { Familyinformation } from "./Demographic/Familyinformation";
+import { useListingStore } from "@/store/listingStore";
 
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,7 +18,7 @@ export function FamilyCard({ postcode, city }) {
   const [occupationData, setOccupationData] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState([]);
   const [agePopulationData, setAgePopulationData] = useState([]);
-  
+  const { walkScore } = useListingStore();
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -93,6 +94,73 @@ export function FamilyCard({ postcode, city }) {
           </h2>
         </div>
       </CardHeader>
+      <div className="p-6  rounded-lg">
+        <h1 className="text-xl font-bold mb-4">
+          Is {city}, A Good Place To Live?
+        </h1>
+
+        <div className="space-y-6">
+          {/* Highlights Section */}
+          <div className="border-b pb-6">
+            <h2 className="text-lg font-semibold mb-2">{city}</h2>
+            <div className="grid grid-cols-2 gap-4 text-gray-600">
+              <div>
+                <p className="text-2xl font-bold">
+                  {" "}
+                  {
+                    totalPopulation?._source?.[
+                      "Sex: All persons; measures: Value"
+                    ]
+                  }
+                </p>
+                <p>Total Population</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{walkScore}</p>
+                <p>Walk Score</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">£810,174</p>
+                <p>Average Home Price</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">£1,342</p>
+                <p>Median Rent</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Neighbours Section */}
+          <div>
+            <h2 className="text-lg font-semibold mb-2">
+              Who are your M15 4QS neighbours
+            </h2>
+            <p className="text-sm text-gray-500 mb-4">
+              The demographics of a place can be a fair indicator of how
+              neighborly a place is. 42% of the households in Allandale are
+              renter-occupied.
+            </p>
+            <div className="grid grid-cols-2 gap-4 text-gray-600">
+              <div>
+                <p className="text-2xl font-bold">54%</p>
+                <p>College Degree</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">58%</p>
+                <p>Full time Employment</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">42%</p>
+                <p>Renters</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold">58%</p>
+                <p>Owners</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Static demographic section */}
       <div className="bg-white w-full mx-7">

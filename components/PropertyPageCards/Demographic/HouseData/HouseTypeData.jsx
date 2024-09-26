@@ -155,11 +155,11 @@ function HouseTypeData({ housingData, city }) {
         <h2 className="text-xl font-semibold text-gray-700">House Type</h2>
       </div>
 
-      <div className="flex w-full h-96 mt-8">
+      <div className="flex w-full h-96 mt-8 justify-center">
         {/* Custom Legend Section */}
-        <div className="legend-container w-1/4 p-4 pt-16">
+        {/* <div className="legend-container w-1/4 p-4 pt-16">
           <CustomLegend />
-        </div>
+        </div> */}
 
         {/* Bar Chart Section */}
         <div className="chart-container w-3/4">
