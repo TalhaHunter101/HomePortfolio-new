@@ -251,7 +251,7 @@ export function NearbyCard({ data }) {
             <div className="xl:flex h-96">
               <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
                 {/* Map section on the left */}
-                <div className="flex-1 h-full">
+                <div className="flex-1 h-full hidden md:block">
                   <div className="h-full w-full">
                     <div className="w-full h-full border-1 maplibregl-map mapboxgl-map">
                       <div>

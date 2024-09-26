@@ -110,9 +110,9 @@ export const CrimeReportCard = ({ reportData }) => {
   const formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
 
   return (
-    <div className="flex w-full justify-between">
-      
-      <div className="w-1/2 p-6 bg-white rounded-lg flex flex-col justify-center">
+    <div className="flex flex-col lg:flex-row w-full justify-between">
+      {/* Left Section */}
+      <div className="lg:w-1/2 w-full p-6 bg-white rounded-lg flex flex-col justify-center mb-6 lg:mb-0">
         <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block mb-2">
           <span className="text-sm font-medium pb-5 text-gray-700">
             Average crime
@@ -131,12 +131,9 @@ export const CrimeReportCard = ({ reportData }) => {
         </p>
       </div>
 
-     
-      <div className="w-1/2  bg-white rounded-lg ">
-        
-        <div className="">
-          <Carousel data={reportData} />
-        </div>
+      {/* Right Section */}
+      <div className="lg:w-1/2 w-full bg-white rounded-lg">
+        <Carousel data={reportData} />
       </div>
     </div>
   );

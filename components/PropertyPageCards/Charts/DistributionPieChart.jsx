@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 
 // CustomLegend component with merged logic
 const CustomLegend = ({ data, colors }) => (
-  <ul className="p-0 text-xs m-0 text-center  list-none" style={{ marginTop: "-20px" }}>
+  <ul className="p-0 text-xs m-0 text-center list-none lg:text-sm" style={{ marginTop: "-20px" }}>
     {data.map((entry, index) => (
       <li key={`item-${index}`} className="inline-block mr-2.5">
         <Icon
@@ -20,7 +20,6 @@ const CustomLegend = ({ data, colors }) => (
   </ul>
 );
 
-
 function mapPropertyType(type) {
   const flatTypes = ["flat", "studio", "maisonette", "park_home"];
   const semiDetachedTypes = ["semi_detached", "semi_detached_bungalow", "link_detached"];
@@ -35,23 +34,14 @@ function mapPropertyType(type) {
   return type || "Unknown"; // Fallback to "Unknown" or original type if not matched
 }
 
-
-// Main component
 export const DistributionPieChart = ({ main_data, setbarchart }) => {
-  
   const [data01, setData01] = useState([]);
   const [data02, setData02] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [activePie, setActivePie] = useState(null);
   const [activeDataSet, setActiveDataSet] = useState(null);
 
-  const COLORS = [
-    "#9333ea",
-    "#db2777",
-    "#4f46e5",
-    "#4b5563",
-    // "#c084fc"
-  ];
+  const COLORS = ["#9333ea", "#db2777", "#4f46e5", "#4b5563"];
 
   useEffect(() => {
     if (main_data) {
@@ -67,20 +57,18 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   function formatData(data) {
     const propertyTypeCount = data.reduce((acc, item) => {
       const propertyType = mapPropertyType(item._source.analyticsTaxonomy?.propertyType);
-      
       // Only count property types that are in the allowed list
       if (["Flat", "Detached", "Semi-detached", "Terraced"].includes(propertyType)) {
         acc[propertyType] = (acc[propertyType] || 0) + 1;
       }
       return acc;
     }, {});
-  
+
     return Object.keys(propertyTypeCount).map((key) => ({
       name: key,
       value: propertyTypeCount[key],
     }));
   }
-  
 
   // Format data02 by bedrooms
   function formatDataByBedrooms(data) {
@@ -88,7 +76,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
     data.forEach((item) => {
       const propertyType = mapPropertyType(item._source.analyticsTaxonomy?.propertyType);
       const bedrooms = item._source.analyticsTaxonomy?.bedsMax;
-  
+
       // Only include property types in the allowed list
       if (propertyType && bedrooms && ["Flat", "Detached", "Semi-detached", "Terraced"].includes(propertyType)) {
         if (!propertyTypeByBedrooms[bedrooms]) {
@@ -98,7 +86,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
           (propertyTypeByBedrooms[bedrooms][propertyType] || 0) + 1;
       }
     });
-  
+
     const formattedData = [];
     Object.keys(propertyTypeByBedrooms).forEach((bedrooms) => {
       const propertyTypes = propertyTypeByBedrooms[bedrooms];
@@ -109,7 +97,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
         });
       });
     });
-  
+
     return formattedData;
   }
 
@@ -125,10 +113,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
       const typeB = b.name.split("~").slice(0, -1).join("~");
 
       if (typeA !== typeB) {
-        return (
-          (propertyTypeIndex[typeA] ?? Infinity) -
-          (propertyTypeIndex[typeB] ?? Infinity)
-        );
+        return (propertyTypeIndex[typeA] ?? Infinity) - (propertyTypeIndex[typeB] ?? Infinity);
       }
 
       const numberA = parseInt(a.name.split("~").pop());
@@ -254,8 +239,13 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
     );
   };
 
+  // Define responsive radius sizes based on screen width
+  const isLargeScreen = typeof window !== 'undefined' && window.innerWidth >= 1024;
+  const innerRadius = isLargeScreen ? 40 : 30;
+  const outerRadius = isLargeScreen ? 150 : 80;
+
   return (
-    <div style={{ width: "100%", height: 500 }}>
+    <div className="lg:w-full lg:h-full h-96 w-60 mx-auto">
       <ResponsiveContainer>
         <PieChart>
           <Pie
@@ -264,8 +254,8 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             data={data01}
             cx="50%"
             cy="50%"
-            innerRadius={40}
-            outerRadius={150}
+            innerRadius={innerRadius}
+            outerRadius={outerRadius}
             fill="#8884d8"
             dataKey="value"
             onMouseEnter={onPieEnter("outer")}
@@ -278,31 +268,10 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
               />
             ))}
           </Pie>
-
-          {/* <Pie
-            activeIndex={activeDataSet === "inner" ? activeIndex : -1}
-            activeShape={renderActiveShape}
-            data={data02}
-            cx="50%"
-            cy="50%"
-            innerRadius={40}
-            outerRadius={120}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={onPieEnter("inner")}
-            onMouseLeave={() => setActiveIndex(-1)}
-          >
-            {data02.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie> */}
         </PieChart>
       </ResponsiveContainer>
-      
-      <CustomLegend  data={data01} colors={COLORS} />
+
+      <CustomLegend data={data01} colors={COLORS} />
     </div>
   );
 };

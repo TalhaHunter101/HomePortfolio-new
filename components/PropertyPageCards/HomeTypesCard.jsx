@@ -105,7 +105,7 @@ export function HomeTypesCard({ city }) {
                     </ul>
                   </div>
 
-                  <div className="grid relative md:pt-12/16 pt-15/16">
+                  <div className="grid relative  md:pt-12/16 pt-15/16">
                     <DistributionPieChart
                       main_data={data}
                       setbarchart={setbarchart}
