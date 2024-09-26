@@ -2,14 +2,12 @@ import { Icon } from "@iconify/react";
 import { Card } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import {
-  BarChart,
-  Bar,
+  PieChart,
+  Pie,
   Tooltip,
   ResponsiveContainer,
   Legend,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Cell,
 } from "recharts";
 
 function HouseTenure({ tenureData, city }) {
@@ -79,14 +77,34 @@ function HouseTenure({ tenureData, city }) {
 
       <div className="flex flex-col gap-4 mt-8">
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="count"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={100} // Set outer radius to control the size of the pie
+              fill="#8884d8"
+              label
+              startAngle={360}
+              endAngle={0}
+              style={{
+                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+              }}
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                  stroke="#fff"
+                  strokeWidth={1} // Adds a white border between segments
+                />
+              ))}
+            </Pie>
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#5AB2F6" />
-          </BarChart>
+          </PieChart>
         </ResponsiveContainer>
       </div>
     </>
