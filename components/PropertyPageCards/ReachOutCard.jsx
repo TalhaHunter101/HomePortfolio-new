@@ -49,7 +49,7 @@ export function ReachOutCard({  }) {
             <div className="col-span-6 md:col-span-3">
               <textarea
                 rows="4"
-                placeholder="Ask Question ..."
+                placeholder="Address"
                 className="w-full px-4 py-2 border bg-default-100 border-default-300 rounded-md focus:outline-none focus:border-blue-500"
               ></textarea>
               <button className="w-full transition-all duration-300 ease-in-out border-2 border-primary hover:bg-white hover:text-primary bg-primary px-3 py-1.5 text-white rounded-md">

@@ -96,8 +96,8 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-  <div className="flex w-full justify-between my-2">
-    {/* Left Section: Icon and Question */}
+  <div className="w-full my-2">
+    {/* Icon and Question */}
     <div className="flex items-center space-x-2">
       <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full">
         <Icon
@@ -111,9 +111,9 @@ export function PublicTransportCard({ data, latitude, longitude }) {
       </h2>
     </div>
 
-    {/* Right Section: Walk Score Info */}
-    <div className="flex flex-col items-center pr-2">
-      <div className="text-xs  md:text-sm capitalize text-foreground">
+    {/* Walk Score Info */}
+    <div className="flex justify-center ml-24 mt-2">
+      <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
         <a
           href="https://www.walkscore.com/how-it-works/"
           target="_blank"
@@ -121,13 +121,16 @@ export function PublicTransportCard({ data, latitude, longitude }) {
         >
           Walk Score<sup>®</sup>
         </a>
-      </div>
-      <div className="text-xl text-muted-foreground font-medium">
-        {walkScore || "N/A"}
+        &nbsp;
+        <div className="text-2xl font-bold">
+          {walkScore || "N/A"}<Icon icon="ion:walk" className="inline mb-2"  />
+          </div>
+        
       </div>
     </div>
   </div>
 </CardHeader>
+
 
       <CardBody>
         <div className="rounded-md">
@@ -156,7 +159,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
             </div>
           </div> */}
 
-          <div className="hidden xl:flex h-96 mt-10">
+          <div className="hidden xl:flex h-96 ">
             <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
               <div className="flex-1 h-full">
                 <div className="h-full w-full border-1 maplibregl-map mapboxgl-map">

@@ -283,13 +283,13 @@ function PropertyDisplay({ listingData, params }) {
           id: "noiselevels",
           Component: NoiseLevelCard,
         },
-        {
-          name: "Will I like my neighbors?",
-          icon: "mdi:account-group",
-          bgColor: "bg-red-500",
-          id: "neighbors",
-          Component: NeighbourCard,
-        },
+        // {
+        //   name: "Will I like my neighbors?",
+        //   icon: "mdi:account-group",
+        //   bgColor: "bg-red-500",
+        //   id: "neighbors",
+        //   Component: NeighbourCard,
+        // },
         {
           name: "Energy Performance Certificate",
           icon: "mdi:account-group",

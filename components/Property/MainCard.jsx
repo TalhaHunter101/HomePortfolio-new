@@ -22,22 +22,22 @@ const MainCard = ({ images }) => {
 
   const [isLiked, setIsLiked] = useState(false);
   const handleIconClick = () => {
-    isLiked ? setIsLiked(false) : setIsLiked(true);
+    setIsLiked((prev) => !prev);
   };
   return (
-    <Card className="w-full h-full p-0 overflow-hidden rounded-md relative">
-      <div className="relative">
+    <Card className="w-full h-full md:h-[416px] sm:h-[300px] h-[250px] p-0 overflow-hidden rounded-md relative">
+      <div className="relative h-full">
         <div
-          className="flex transition-transform duration-500 ease-in-out"
+          className="flex transition-transform duration-500 ease-in-out h-full"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images && images.map((image, index) => (
-            <div key={index} className="flex-shrink-0 w-full">
+            <div key={index} className="flex-shrink-0 w-full h-full">
               <Image
                 src={image?.original ? image?.original : image}
                 alt={`Image ${index + 1}`}
                 width="100%"
-                height={416}
+                height="100%"
                 className="object-cover w-full h-full"
                 radius="none"
               />
@@ -47,30 +47,30 @@ const MainCard = ({ images }) => {
 
         {/* Mobile icons */}
         <div className="absolute top-4 right-4 flex space-x-4 md:hidden">
-        <Button
-    isIconOnly
-    variant="solid"
-    size="sm"
-    className="bg-white rounded-full shadow-md p-2"
-    onClick={handleIconClick}
-    auto
-  >
-    <Icon
-      icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-      className={`text-3xl ${isLiked ? "text-red-500" : "text-black"}`}
-    />
-  </Button>
+          <Button
+            isIconOnly
+            variant="solid"
+            size="sm"
+            className="bg-white rounded-full shadow-md p-2"
+            onClick={handleIconClick}
+            auto
+          >
+            <Icon
+              icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
+              className={`text-3xl ${isLiked ? "text-red-500" : "text-black"}`}
+            />
+          </Button>
 
-  {/* Share Button */}
-  <Button
-    isIconOnly
-    variant="solid"
-    size="sm"
-    className="bg-white rounded-full shadow-md p-2"
-    auto
-  >
-    <Icon icon="mdi:share-outline" className="text-xl text-black" />
-  </Button>
+          {/* Share Button */}
+          <Button
+            isIconOnly
+            variant="solid"
+            size="sm"
+            className="bg-white rounded-full shadow-md p-2"
+            auto
+          >
+            <Icon icon="mdi:share-outline" className="text-xl text-black" />
+          </Button>
         </div>
 
         {/* Navigation Buttons */}
