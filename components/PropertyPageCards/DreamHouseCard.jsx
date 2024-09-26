@@ -101,7 +101,7 @@ export function DreamHouseCard({  pricePaidData }) {
           <span className="text-sm">
             Last month on average, Single Family homes sold for{" "}
             <span className="font-medium inline-block text-base text-green-600">
-              $207K
+              £207K
             </span>{" "}
             more than Condos.
           </span>
