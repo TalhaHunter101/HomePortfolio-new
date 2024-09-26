@@ -8,31 +8,29 @@ const ComparisonChart = ({ data }) => {
 
 
   return (
-    <div className="relative flex flex-col bg-white p-8 h-full w-full">
+    <div className="relative flex flex-col bg-white p-8 h-full w-full max-w-md md:max-w-full">
       {/* Heading */}
       <div className="text-lg font-semibold text-gray-800 mb-4">
         <span className="text-black">This Home</span> vs{" "}
-        <span className="text-gray-400">
-          {marketComp}
-        </span>
+        <span className="text-gray-400">{marketComp}</span>
       </div>
 
       {/* Circles */}
-      <div className="relative w-full h-64">
+      <div className="relative w-full h-64 flex justify-center md:justify-start">
         {/* First circle (This Home) */}
-        <div className="absolute top-1/2 transform -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#4A6FA5] to-[#395a8a] rounded-full flex items-center justify-center text-center text-white font-bold z-10 shadow-2xl">
+        <div className="absolute top-1/2 transform -translate-y-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#4A6FA5] to-[#395a8a] rounded-full flex items-center justify-center text-center text-white font-bold z-10 shadow-2xl">
           <div>
             <div>This Home</div>
-            <div className="text-2xl">
+            <div className="text-xl sm:text-2xl">
               {formatPrice(data?.pricing?.internalValue)}
             </div>
           </div>
         </div>
         {/* Second circle (Median) */}
-        <div className="absolute left-48 top-1/2 transform -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#E0E4E8] to-[#C4C9CD] rounded-full flex justify-center items-center text-center text-gray-800 font-bold z-5 shadow-xl">
+        <div className="absolute left-36 sm:left-48 md:left-48 top-1/2 transform -translate-y-1/2 w-28 h-28 sm:w-36 sm:h-36 md:w-56 md:h-56 bg-gradient-to-b from-[#E0E4E8] to-[#C4C9CD] rounded-full flex justify-center items-center text-center text-gray-800 font-bold z-5 shadow-xl">
           <div>
             <div>Median</div>
-            <div className="text-2xl">{formatPrice(medianPrice)}</div>
+            <div className="text-xl sm:text-2xl">{formatPrice(medianPrice)}</div>
           </div>
         </div>
       </div>

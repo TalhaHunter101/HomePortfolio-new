@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader, Button, Divider } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
 import { EnergyPerformanceTable } from "./EPCcomponents/table";
 import { PerformanceSection } from "./EPCcomponents/PerformanceSection";
 import ECPBarChart from "./ECPBarChart";
@@ -119,12 +119,27 @@ export function EPCCard({ title, price, roi, uprn }) {
   };
 
   return (
-    <Card className="m-4" >
-      <CardHeader></CardHeader>
+    <Card className="m-4">
+      <CardHeader>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="mdi:account-group"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            Energy Performance in this area?
+          </h2>
+        </div>
+      </CardHeader>
+
       <CardBody>
         {epcData && (
-          <div className="overflow-hidden">
-            <div className="relative h-full w-full flex-1">
+          <div className="flex flex-col sm:flex-col md:flex-row">
+            {/* Chart Section */}
+            <div className="flex-1 md:pr-4 mb-4 md:mb-0">
               <div className="mx-6">
                 <h3 className="font-semibold mb-2">
                   Energy Performance Certificate (EPC)
@@ -157,7 +172,10 @@ export function EPCCard({ title, price, roi, uprn }) {
                   setCurrentColour={setCurrentColour}
                 />
               </div>
+            </div>
 
+            {/* Carousel Section */}
+            <div className="flex-1 relative">
               <div className="w-full overflow-hidden rounded-lg">
                 <div
                   className="flex transition-transform duration-500 ease-in-out"

@@ -10,6 +10,9 @@ import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 import { CrimeCard } from "../PropertyPageCards/CrimeCard";
 import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
+import MainCard from "../Property/MainCard";
+import ThumbnailCard from "../Property/ThumbnailCard";
+// Assuming this is where your ThumbnailCard is located
 
 function PropertyDisplay({ listingData, params }) {
   console.log("listingData", listingData);
@@ -30,7 +33,6 @@ function PropertyDisplay({ listingData, params }) {
   const builtYear = 1962; // Hardcoded year built
   const newData = {
     counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
-    // analyticsTaxonomy: { sizeSqFeet: 1050 },
     analyticsTaxonomy: listingData?.analyticsTaxonomy,
   };
 
@@ -44,6 +46,22 @@ function PropertyDisplay({ listingData, params }) {
       },
     },
   };
+
+  // Dummy data for images
+  const mainImages = [
+    "https://lc.zoocdn.com/2d792e1a98ef15571de593c32265cae6c5b7810d.jpg",
+    "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
+    "https://lc.zoocdn.com/33af57fb01f4c76627939ad4fa9603eb16e493d2.jpg",
+    "https://lc.zoocdn.com/1a1a9416471a880bc713c96323ba08970dddf238.jpg",
+    "https://lc.zoocdn.com/16d1fba8f64291bb2158f07c1f751773cebaf0fc.jpg",
+  ];
+  const thumbnailImages = [
+    "https://lc.zoocdn.com/2d792e1a98ef15571de593c32265cae6c5b7810d.jpg",
+    "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
+    "https://lc.zoocdn.com/33af57fb01f4c76627939ad4fa9603eb16e493d2.jpg",
+    "https://lc.zoocdn.com/1a1a9416471a880bc713c96323ba08970dddf238.jpg",
+
+  ];
 
   useEffect(() => {
     const getSchoolData = async () => {
@@ -97,9 +115,22 @@ function PropertyDisplay({ listingData, params }) {
 
   return (
     <>
-      <div className="max-w-full mx-auto mt-48 px-4">
+      <div className="max-w-full mx-auto mt-24 px-4">
+        {/* Top Image Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-6 w-full">
+          <div className="lg:col-span-7">
+            {mainImages && <MainCard images={mainImages} />}
+          </div>
+          <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
+            {thumbnailImages &&
+              thumbnailImages?.map((imageUrl, index) => (
+                <ThumbnailCard key={index} imageUrl={imageUrl} />
+              ))}
+          </div>
+        </div>
+
         {/* Property Details Header */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mt-6">
           <div className="mb-2">
             <Chip
               startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
@@ -128,14 +159,14 @@ function PropertyDisplay({ listingData, params }) {
           />
         </div>
 
-        {/*  rent estimate */}
+        {/* Rent Estimate */}
         <div className="mt-6 text-center">
           <h4 className="text-xl font-bold">
             Current Rent Estimate: £{rentEstimate}
           </h4>
         </div>
 
-        {/*  LocationCard */}
+        {/* LocationCard */}
         <div className="mt-6 w-full">
           <LocationCard
             data={locationData}
@@ -167,9 +198,7 @@ function PropertyDisplay({ listingData, params }) {
         </div>
         
         <div className="mt-6 w-full">
-          <EPCCard
-            uprn={uprn}
-          />
+          <EPCCard uprn={uprn} />
         </div>
       </div>
     </>

@@ -11,7 +11,8 @@ const Carousel = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const components = [
-    <BadgeCard key={0}  reportData={data}  />,
+    <CrimeReportCard key={0} reportData={data} />,
+    <BadgeCard key={1}  reportData={data}  />,
     <CrimeTypesChart key={1} reportData={data} />,
     <CrimeLevelsChart key={2} reportData={data} />,
   ];
@@ -29,8 +30,8 @@ const Carousel = ({ data }) => {
   };
 
   return (
-    <div className="py-7 text-foreground relative h-full w-full overflow-hidden flex-1">
-      <div className="mt-4 relative">
+    <div className=" text-foreground relative h-full w-full overflow-hidden flex-1">
+      <div className="relative">
         <div className="w-full overflow-hidden rounded-lg">
           <div
             className="flex transition-transform duration-500 ease-in-out"

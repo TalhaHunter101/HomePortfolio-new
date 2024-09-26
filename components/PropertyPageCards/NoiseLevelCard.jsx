@@ -1,22 +1,27 @@
 'use client';
 import React from 'react';
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { Icon } from '@iconify/react';
 
-export function NoiseLevelCard  ({ })  {
+export function NoiseLevelCard  ({city })  {
   return (
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
-        
+      <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
+            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-400">
+             <Icon icon="mdi:volume-high" />
+            </div>
+            <span>How are the noise levels in {city}?</span>
+          </h2>
       </CardHeader>
-      <CardBody>
+      {/* <CardBody>
         <div className=' bg-default-background   rounded-md '>
         <div className=" bg-default-white   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
           <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
             <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-400">
              <Icon icon="mdi:volume-high" />
             </div>
-            <span>How are the noise levels in East Simi Valley?</span>
+            <span>How are the noise levels in {city}?</span>
           </h2>
           <div className="sentences leading-6 w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 text-foreground grid item-start sm:items-center grid-cols-2">
             <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
@@ -84,6 +89,16 @@ export function NoiseLevelCard  ({ })  {
           </section>
         </div>
         </div>
+      </CardBody> */}
+      <CardBody>
+      <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
       </CardBody>
     </Card>
   );

@@ -49,8 +49,8 @@ export const CrimeReportCard = ({ reportData }) => {
   return (
     <div className="flex w-full justify-between">
       {/* Left Section */}
-      <div className="w-1/2 p-6 bg-white rounded-lg flex flex-col">
-        <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block mb-2">
+      {/* <div className="w-1/2 p-6 bg-white rounded-lg  flex flex-col">
+        <Chip className="bg-yellow-200 rounded-full mb-5  px-3 py-1 inline-block mb-2">
           <span className="text-sm font-medium pb-5 text-gray-700">
             Average crime
           </span>
@@ -67,11 +67,11 @@ export const CrimeReportCard = ({ reportData }) => {
           If an area has an average crime rating, it means that for every 1,000
           inhabitants, between 140 and 225 residents have been affected by a
           crime.
-        </p> */}
-      </div>
+        </p>
+      </div> */}
 
       {/* Right Section (Crimes List) */}
-      <div className="w-1/2 p-6 bg-white rounded-lg">
+      <div className="w-full p-6 bg-white rounded-lg ">
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
           <h1 className="text-lg font-semibold text-gray-800 mb-1">
             Top Reported Crimes
