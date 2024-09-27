@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardBody, Chip } from "@nextui-org/react";
 import { formatDateNew } from "@/utils/Helper";
+import Link from "next/link";
 
 export default function FloatingCard({ data }) {
   console.log("Planning data", data);
@@ -35,19 +36,19 @@ export default function FloatingCard({ data }) {
                           item?._source?.other_fields?.decision
                         )
                       ? "bg-yellow-400"
-                      : "bg-gray-400" 
+                      : "bg-gray-400"
                   } text-white text-xs font-bold px-2 py-1  mr-2`}
                 >
                   {item?._source?.other_fields?.decision}
                 </Chip>
 
                 <span className="font-semibold">
-                  {item?._source?.other_fields?.applicant_name}
+                  <a href={item?._source?.other_fields?.source_url}>
+                    {item?._source?.other_fields?.applicant_name}
+                  </a>
                 </span>
               </div>
-              <p className="text-sm text-gray-600">
-                {item?._source?.address}
-              </p>
+              <p className="text-sm text-gray-600">{item?._source?.address}</p>
             </div>
           ))}
       </CardBody>

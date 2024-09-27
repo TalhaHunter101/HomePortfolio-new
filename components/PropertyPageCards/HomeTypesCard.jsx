@@ -98,12 +98,7 @@ export function HomeTypesCard({ city }) {
                 </div>
 
                 <div className="grid relative md:pt-12/16 pt-15/16">
-                  <div className="block lg:hidden absolute top-0 right-0 text-sm">
-                    <ul>
-                      <li className="text-zdsecondary-1000">Houses</li>
-                      <li className="text-zdsecondary-400">3297 homes</li>
-                    </ul>
-                  </div>
+                 
 
                   <div className="grid relative  md:pt-12/16 pt-15/16">
                     <DistributionPieChart

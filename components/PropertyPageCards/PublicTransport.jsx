@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { BusMapStatic, TransportMapStatic } from "../Maps";
+import { useListingStore } from "@/store/listingStore";
 
 export function PublicTransportCard({ data, latitude, longitude }) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
   const [busData, setBusData] = useState([]);
   const [busLocations, setBusLocations] = useState([]);
+  const { setWalkScore: setListingWalkScore } = useListingStore();
 
   // Count transports for each type (rail, bus, ferry)
   const transportCounts = data.transports.reduce((acc, transport) => {
@@ -30,10 +32,12 @@ export function PublicTransportCard({ data, latitude, longitude }) {
           transport.poiType.includes(selectedType)
         );
 
-  const center = [{
-    lat: latitude,
-    lng: longitude,
-  }];
+  const center = [
+    {
+      lat: latitude,
+      lng: longitude,
+    },
+  ];
 
   useEffect(() => {
     const getWalkScore = async () => {
@@ -51,6 +55,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
         if (res.ok) {
           const data = await res.json();
           setWalkScore(data[0]?._source?.walk_score);
+          setListingWalkScore(data[0]?._source?.walk_score);
         }
       } catch (error) {
         console.log(error);

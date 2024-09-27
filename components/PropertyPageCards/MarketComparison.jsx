@@ -81,8 +81,8 @@ export function MarketComparisonCard({ data }) {
           <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
             <Icon
               icon="mdi:scale-balance"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
+              width={16} 
+              className="text-purple-700" 
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">

@@ -35,6 +35,7 @@ function mapPropertyType(type) {
 }
 
 export const DistributionPieChart = ({ main_data, setbarchart }) => {
+  
   const [data01, setData01] = useState([]);
   const [data02, setData02] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);

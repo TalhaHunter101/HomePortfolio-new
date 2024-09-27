@@ -2,23 +2,24 @@
 import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { formatCurrency, timeAgo } from "@/utils/Helper";
 
-export function BasicInfoCard({ title, content, data }) {
-  console.log("data........", data);
-
+export function BasicInfoCard({ title, content, data, price, area }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="mdi:home-outline"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">What are the home highlights here?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="mdi:home-outline"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            What are the home highlights here?
+          </h2>
+        </div>
       </CardHeader>
       <CardBody>
         <div class=" p-4 bg-default-white  rounded-md ">
@@ -138,7 +139,9 @@ export function BasicInfoCard({ title, content, data }) {
                 </svg>
                 <span>Price/Sqft :</span>
               </div>
-              <p class="text-sm underline text-secNew  p-2">NA</p>
+              <p class="text-sm underline text-secNew  p-2">
+                {formatCurrency(parseInt(price) / parseInt(area))}
+              </p>
             </div>
             <div class="flex items-center">
               <div class="flex items-center text-sm text-gray-500 gap-x-3">
@@ -172,7 +175,9 @@ export function BasicInfoCard({ title, content, data }) {
                 </svg>
                 <span>Time on HomePortfolio:</span>
               </div>
-              <p class="text-sm text-primaryfonts ">N/A</p>
+              <p class="text-sm text-primaryfonts">
+                  {timeAgo( data?.publishedOn)}
+              </p>
             </div>
           </div>
           <h3 class="mt-10 text-xl font-semibold text-black ">
@@ -196,7 +201,7 @@ export function BasicInfoCard({ title, content, data }) {
                   {data?.analyticsTaxonomy?.propertyType}
                 </p>
               </div>
-             
+
               <div class="grid grid-cols-2 ">
                 <p>Virtual Tour</p>
                 <p class="underline cursor-pointer text-primary">
@@ -216,9 +221,7 @@ export function BasicInfoCard({ title, content, data }) {
               <div class="grid grid-cols-2 ">
                 <p>Floor Size</p>
                 <p class=" text-primaryfonts">
-                  {data?.analyticsTaxonomy?.floorArea
-                    ? data?.analyticsTaxonomy?.floorArea.value
-                    : "NA"}{" "}
+                  {area}
                   sqft.
                 </p>
               </div>
@@ -228,15 +231,16 @@ export function BasicInfoCard({ title, content, data }) {
                 <p>Year Built</p>
                 <p class=" text-primaryfonts">2005</p>
               </div>
-             
-             
+
               <div class="grid grid-cols-2 ">
                 <p>County</p>
                 <p class="  ">{data?.analyticsTaxonomy?.postTownName}</p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Time On HomePortfolio</p>
-                <p class=" text-primaryfonts">3 days</p>
+                <p class=" text-primaryfonts">
+                  {timeAgo(data?.publishedOn)}
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>City</p>

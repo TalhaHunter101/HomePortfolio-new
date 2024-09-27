@@ -56,7 +56,6 @@ export function PriceHistory({  data }) {
                 <div className="col-span-3">
                   First Published
                   <br />
-                  {/* <span className="subText">CRMLS #224003119</span> */}
                 </div>
                 <div className="col-span-2">
                   {data?.priceHistory?.firstPublished?.priceLabel}

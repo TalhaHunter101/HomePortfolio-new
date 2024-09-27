@@ -76,9 +76,9 @@ export const DreamHouseLineChart = ({ type = "line", data }) => {
       >
         <CartesianGrid  vertical={false} strokeDasharray="3 3" />
         <XAxis className='text-xs ' dataKey="name" />
-        <YAxis className='text-xs' tickFormatter={(value) => `$${value}K`} />
+        <YAxis className='text-xs' tickFormatter={(value) => `£${value}K`} />
         <Tooltip
-          formatter={(value) => `$${value}K`}
+          formatter={(value) => `£${value}K`}
           labelFormatter={(label) => `Month: ${label}`}
         />
         <Legend className='text-xs' />

@@ -10,13 +10,13 @@ import { Icon } from "@iconify/react";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
-  return data.filter((item) => decisions.includes(item?._source?.other_fields?.decision)).length;
+  return data.filter((item) =>
+    decisions.includes(item?._source?.other_fields?.decision)
+  ).length;
 };
 
 export function PlanningCard({ postcode }) {
   const [planningData, setPlanningData] = useState([]);
-
-  // Define the status categories and their corresponding decision values
   const statusData = [
     {
       label: "Approved",
@@ -83,27 +83,29 @@ export function PlanningCard({ postcode }) {
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
-      <div className="flex items-center my-2">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-      <Icon
-        icon="mdi:planner"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="text-purple-700" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">Planning Applications here?</h2>
-  </div>
+        <div className="flex items-center my-2">
+          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <Icon
+              icon="mdi:planner"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="text-purple-700" // Adjust the icon color if needed
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            What are the Planning application in {postcode}?
+          </h2>
+        </div>
       </CardHeader>
 
       {planningData.length === 0 ? (
         <CardBody className="flex flex-col items-center justify-center">
-        <Image 
-          src="/undraw_no_data_re_kwbl (1).svg" 
-          alt="No data found" 
-          className="w-40 h-40 mb-4" 
-        />
-        <div className="text-gray-500 text-lg">No data available</div>
-      </CardBody>
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
       ) : (
         <CardBody>
           <div className="flex flex-col border border-subtle-border rounded-md">

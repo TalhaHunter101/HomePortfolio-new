@@ -1,10 +1,12 @@
-"use client";
 import React from "react";
 import { Card, Chip, Text } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export const CrimeReportCard = ({ reportData }) => {
-  // Calculate the crime data dynamically
+  // Calculate total crimes in the last 12 months
+  const totalCrimes = reportData.length;
+
+  // Calculate the crime data dynamically (for the right section)
   const crimeDataMap = reportData.reduce((acc, report) => {
     const crimeType = report._source["Crime type"];
     if (!acc[crimeType]) {
@@ -53,13 +55,15 @@ export const CrimeReportCard = ({ reportData }) => {
             Average crime
           </span>
         </Chip>
-        <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
-          4,897 reported crimes
+
+        {/* Dynamically updated total crime count */}
+        {/* <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
+          {totalCrimes.toLocaleString()} reported crimes
         </div>
         <p className="text-sm mb-8 text-gray-500 mb-4">
           in this area in the last 12 months.
-        </p>
-        <p className="text-sm mt-5 text-gray-600">
+        </p> */}
+        {/* <p className="text-sm mt-5 text-gray-600">
           If an area has an average crime rating, it means that for every 1,000
           inhabitants, between 140 and 225 residents have been affected by a
           crime.
@@ -78,7 +82,7 @@ export const CrimeReportCard = ({ reportData }) => {
         </div>
 
         {/* Scrollable crimes list */}
-        <div className="mt-4 space-y-3 max-h-60 overflow-y-auto ">
+        <div className="mt-4 space-y-3 max-h-60 overflow-y-auto">
           {crimeData.map((crime, index) => (
             <div
               key={index}

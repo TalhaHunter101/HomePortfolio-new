@@ -8,6 +8,12 @@ import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 import AgePopulationData from "./Demographic/AgePopulationData";
 import { Familyinformation } from "./Demographic/Familyinformation";
+import {
+  marketCompStore,
+  useDemographicStore,
+  useListingStore,
+} from "@/store/listingStore";
+import { formatCurrency } from "@/utils/Helper";
 
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,7 +23,11 @@ export function FamilyCard({ postcode, city }) {
   const [occupationData, setOccupationData] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState([]);
   const [agePopulationData, setAgePopulationData] = useState([]);
-  
+  const [educationData, setEducationData] = useState([]);
+  const { walkScore } = useListingStore();
+  const { medianPrice } = marketCompStore();
+  const { singleFamilyHouseholds, setEducationData: setSingleEducationData } =
+    useDemographicStore();
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -29,6 +39,7 @@ export function FamilyCard({ postcode, city }) {
           "/api/indevisual/demographic/get-house-type-data",
           "/api/indevisual/demographic/get-total-population-data",
           "/api/indevisual/demographic/get-population-data-by-age",
+          "/api/indevisual/demographic/get-education-data",
         ];
 
         const fetchData = endpoints.map((endpoint) =>
@@ -53,6 +64,7 @@ export function FamilyCard({ postcode, city }) {
           fetchedHousingData,
           fetchedTotalPopulationData,
           fetchedAgePopulationData,
+          fetchedEducationData,
         ] = await Promise.all(fetchData);
 
         setPeopleGenderData(fetchedPeopleGenderData);
@@ -61,20 +73,27 @@ export function FamilyCard({ postcode, city }) {
         setHousingData(fetchedHousingData);
         setTotalPopulation(fetchedTotalPopulationData);
         setAgePopulationData(fetchedAgePopulationData);
+        setEducationData(fetchedEducationData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchAllData();
-  }, [postcode]);
+  }, [postcode, setSingleEducationData]);
+
+  useEffect(() => {
+    if (educationData) {
+      setSingleEducationData(educationData);
+    }
+  }, [educationData, setSingleEducationData]);
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 4 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 4 ? 0 : prevIndex + 1));
   };
 
   return (
@@ -84,12 +103,12 @@ export function FamilyCard({ postcode, city }) {
           <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
             <Icon
               icon="mdi:account-group"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
+              width={16}
+              className="text-purple-700"
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            who lives in {city} ?
+          Can I raise a family in {postcode} ?
           </h2>
         </div>
       </CardHeader>
@@ -128,11 +147,15 @@ export function FamilyCard({ postcode, city }) {
             <div className="grid grid-cols-2 gap-4 mt-14">
               <div className="flex flex-col text-center">
                 <span>Average HH Income</span>
-                <span className="font-semibold text-3xl">£88,189</span>
+                <span className="font-semibold text-3xl">
+                  £{formatCurrency(medianPrice)}
+                </span>
               </div>
               <div className="flex flex-col text-center">
                 <span>Single Family Household</span>
-                <span className="font-semibold text-3xl">26%</span>
+                <span className="font-semibold text-3xl">
+                  {singleFamilyHouseholds}
+                </span>
               </div>
             </div>
           </div>
