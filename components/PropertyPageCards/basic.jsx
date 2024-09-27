@@ -238,7 +238,9 @@ export function BasicInfoCard({ title, content, data, price, area }) {
               </div>
               <div class="grid grid-cols-2 ">
                 <p>Time On HomePortfolio</p>
-                <p class=" text-primaryfonts">3 days</p>
+                <p class=" text-primaryfonts">
+                  {timeAgo(data?.publishedOn)}
+                </p>
               </div>
               <div class="grid grid-cols-2 ">
                 <p>City</p>

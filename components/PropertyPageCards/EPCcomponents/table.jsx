@@ -6,7 +6,30 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Chip,
 } from "@nextui-org/react";
+
+
+const getChipColor = (rating) => {
+  switch (rating) {
+    case "Poor":
+      return "red";
+    case "Very Poor":
+      return "red";
+    case "Average":
+      return "orange";
+    case "N/A":
+      return "gray";
+    case "Good":
+      return "blue";
+    case "Low":
+      return "purple";
+    case "Very Good":
+      return "green";
+    default:
+      return "black"; // default color if none of the conditions match
+  }
+};
 
 export function EnergyPerformanceTable({ data }) {
   return (
@@ -24,7 +47,19 @@ export function EnergyPerformanceTable({ data }) {
               <TableRow key={index}>
                 <TableCell >{row.feature}</TableCell>
                 <TableCell>{row.description}</TableCell>
-                <TableCell>{row.rating}</TableCell>
+                <TableCell>
+                  
+                  <Chip
+                    style={{
+                      backgroundColor: getChipColor(row.rating),
+                      color: "white", // text color for better readability
+                    }}
+                    >
+                      {row.rating}
+                    </Chip>
+
+
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
