@@ -108,7 +108,7 @@ export function FamilyCard({ postcode, city }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            who lives in {postcode} ?
+          Can I raise a family in {postcode} ?
           </h2>
         </div>
       </CardHeader>

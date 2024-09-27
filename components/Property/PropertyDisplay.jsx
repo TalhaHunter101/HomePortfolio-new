@@ -39,6 +39,7 @@ import { formatCurrency } from "@/utils/Helper";
 import { useListingStore } from "@/store/listingStore";
 import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 import DataShows from "../PropertyPageCards/DataShows";
+import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -232,6 +233,14 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-purple-300",
           id: "goodplace",
           Component: DataShows,
+        },
+        
+        {
+          name: "Who are your Neighbors?",
+          icon: "mdi:human-child",
+          bgColor: "bg-purple-300",
+          id: "neighbors",
+          Component: DataNeighbour,
         },
         
         {
