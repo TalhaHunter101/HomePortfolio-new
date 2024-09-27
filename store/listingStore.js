@@ -25,3 +25,13 @@ export const marketInfoStore = create((set) => ({
   setMarketInfo: (marketInfo) => set({ marketInfo }),
   resetMarketInfo: () => set({ marketInfo: [] }),
 }));
+
+export const useDemographicStore = create((set) => ({
+  singleFamilyHouseholds: null,
+  populationData: null,
+  educationData: null,
+
+  setSingleFamilyHouseholds: (value) => set({ singleFamilyHouseholds: value }),
+  setPopulationData: (value) => set({ populationData: value }),
+  setEducationData: (value) => set({ educationData: value }),
+}));

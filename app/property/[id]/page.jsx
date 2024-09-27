@@ -842,7 +842,7 @@ export default function PropertyPage({ params }) {
       resetMarketInfo();
     };
   }, [params.id, resetMarketInfo]) ;
-
+ 
   return (
     <>
       {isDataLoading ? (

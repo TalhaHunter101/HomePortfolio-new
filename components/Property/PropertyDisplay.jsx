@@ -38,6 +38,7 @@ import { RentHomeValCard } from "../PropertyPageCards/RentHomeValCard";
 import { formatCurrency } from "@/utils/Helper";
 import { useListingStore } from "@/store/listingStore";
 import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
+import DataShows from "../PropertyPageCards/DataShows";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -224,6 +225,15 @@ function PropertyDisplay({ listingData, params }) {
           id: "schools",
           Component: SchoolsCard,
         },
+
+        {
+          name: "Good Place To Live",
+          icon: "mdi:human-child",
+          bgColor: "bg-purple-300",
+          id: "goodplace",
+          Component: DataShows,
+        },
+        
         {
           name: "Can I raise a family here?",
           icon: "mdi:human-child",

@@ -8,7 +8,12 @@ import HouseTenure from "./Demographic/HouseData/HouseTenure";
 import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 import AgePopulationData from "./Demographic/AgePopulationData";
 import { Familyinformation } from "./Demographic/Familyinformation";
-import { useListingStore } from "@/store/listingStore";
+import {
+  marketCompStore,
+  useDemographicStore,
+  useListingStore,
+} from "@/store/listingStore";
+import { formatCurrency } from "@/utils/Helper";
 
 export function FamilyCard({ postcode, city }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,7 +23,11 @@ export function FamilyCard({ postcode, city }) {
   const [occupationData, setOccupationData] = useState([]);
   const [totalPopulation, setTotalPopulation] = useState([]);
   const [agePopulationData, setAgePopulationData] = useState([]);
+  const [educationData, setEducationData] = useState([]);
   const { walkScore } = useListingStore();
+  const { medianPrice } = marketCompStore();
+  const { singleFamilyHouseholds, setEducationData: setSingleEducationData } =
+    useDemographicStore();
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -30,6 +39,7 @@ export function FamilyCard({ postcode, city }) {
           "/api/indevisual/demographic/get-house-type-data",
           "/api/indevisual/demographic/get-total-population-data",
           "/api/indevisual/demographic/get-population-data-by-age",
+          "/api/indevisual/demographic/get-education-data",
         ];
 
         const fetchData = endpoints.map((endpoint) =>
@@ -54,6 +64,7 @@ export function FamilyCard({ postcode, city }) {
           fetchedHousingData,
           fetchedTotalPopulationData,
           fetchedAgePopulationData,
+          fetchedEducationData,
         ] = await Promise.all(fetchData);
 
         setPeopleGenderData(fetchedPeopleGenderData);
@@ -62,20 +73,27 @@ export function FamilyCard({ postcode, city }) {
         setHousingData(fetchedHousingData);
         setTotalPopulation(fetchedTotalPopulationData);
         setAgePopulationData(fetchedAgePopulationData);
+        setEducationData(fetchedEducationData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchAllData();
-  }, [postcode]);
+  }, [postcode, setSingleEducationData]);
+
+  useEffect(() => {
+    if (educationData) {
+      setSingleEducationData(educationData);
+    }
+  }, [educationData, setSingleEducationData]);
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 4 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 4 ? 0 : prevIndex + 1));
   };
 
   return (
@@ -85,82 +103,15 @@ export function FamilyCard({ postcode, city }) {
           <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
             <Icon
               icon="mdi:account-group"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
+              width={16}
+              className="text-purple-700"
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            who lives in {city} ?
+            who lives in {postcode} ?
           </h2>
         </div>
       </CardHeader>
-      <div className="p-6  rounded-lg">
-        <h1 className="text-xl font-bold mb-4">
-          Is {city}, A Good Place To Live?
-        </h1>
-
-        <div className="space-y-6">
-          {/* Highlights Section */}
-          <div className="border-b pb-6">
-            <h2 className="text-lg font-semibold mb-2">{city}</h2>
-            <div className="grid grid-cols-2 gap-4 text-gray-600">
-              <div>
-                <p className="text-2xl font-bold">
-                  {" "}
-                  {
-                    totalPopulation?._source?.[
-                      "Sex: All persons; measures: Value"
-                    ]
-                  }
-                </p>
-                <p>Total Population</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">{walkScore}</p>
-                <p>Walk Score</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">£810,174</p>
-                <p>Average Home Price</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">£1,342</p>
-                <p>Median Rent</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Neighbours Section */}
-          <div>
-            <h2 className="text-lg font-semibold mb-2">
-              Who are your M15 4QS neighbours
-            </h2>
-            <p className="text-sm text-gray-500 mb-4">
-              The demographics of a place can be a fair indicator of how
-              neighborly a place is. 42% of the households in Allandale are
-              renter-occupied.
-            </p>
-            <div className="grid grid-cols-2 gap-4 text-gray-600">
-              <div>
-                <p className="text-2xl font-bold">54%</p>
-                <p>College Degree</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">58%</p>
-                <p>Full time Employment</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">42%</p>
-                <p>Renters</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">58%</p>
-                <p>Owners</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Static demographic section */}
       <div className="bg-white w-full mx-7">
@@ -196,11 +147,15 @@ export function FamilyCard({ postcode, city }) {
             <div className="grid grid-cols-2 gap-4 mt-14">
               <div className="flex flex-col text-center">
                 <span>Average HH Income</span>
-                <span className="font-semibold text-3xl">£88,189</span>
+                <span className="font-semibold text-3xl">
+                  £{formatCurrency(medianPrice)}
+                </span>
               </div>
               <div className="flex flex-col text-center">
                 <span>Single Family Household</span>
-                <span className="font-semibold text-3xl">26%</span>
+                <span className="font-semibold text-3xl">
+                  {singleFamilyHouseholds}
+                </span>
               </div>
             </div>
           </div>
