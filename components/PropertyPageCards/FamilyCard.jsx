@@ -127,11 +127,11 @@ export function FamilyCard({ postcode, city }) {
           </div>
 
           {/* Right section */}
-          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
+          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl px-2">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col text-center">
-                <span>Total Population</span>
-                <span className="font-semibold text-3xl">
+                <span className="text-sm text-gray-400">Total Population</span>
+                <span className="font-semibold text-3xl text-blue-300">
                   {
                     totalPopulation?._source?.[
                       "Sex: All persons; measures: Value"
@@ -140,20 +140,20 @@ export function FamilyCard({ postcode, city }) {
                 </span>
               </div>
               <div className="flex flex-col text-center">
-                <span>Median Age</span>
-                <span className="font-semibold text-3xl">38</span>
+                <span className="text-sm text-gray-400">Median Age</span>
+                <span className="font-semibold text-3xl text-blue-300">38</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-14">
               <div className="flex flex-col text-center">
-                <span>Average HH Income</span>
-                <span className="font-semibold text-3xl">
+                <span className="text-sm text-gray-400">Average HH Income</span>
+                <span className="font-semibold text-3xl text-blue-300">
                   £{formatCurrency(medianPrice)}
                 </span>
               </div>
               <div className="flex flex-col text-center">
-                <span>Single Family Household</span>
-                <span className="font-semibold text-3xl">
+                <span className="text-sm text-gray-400">Single Family Household</span>
+                <span className="font-semibold text-3xl text-blue-300">
                   {singleFamilyHouseholds}
                 </span>
               </div>

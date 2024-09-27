@@ -39,13 +39,13 @@ import {
           <div className="flex items-center my-2">
             <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
               <Icon
-                icon="mdi:account-group"
+                icon="mdi:person-details"
                 width={16}
                 className="text-purple-700"
               />
             </div>
             <h2 className="text-xl font-bold text-gray-700">
-            Who are your {postcode} neighbours
+            Who are your {postcode} neighbours?
             </h2>
           </div>
         </CardHeader>
@@ -57,32 +57,36 @@ import {
   
             {/* Neighbours Section */}
             <div>
-              <h2 className="text-lg font-semibold mb-2">
-                Who are your {postcode} neighbours
-              </h2>
+              {/* <h2 className="text-lg font-semibold mb-2">
+              <Icon icon="mdi:person-details" width={40} height={30} className="inline " />   Who are your {postcode} neighbours
+              </h2> */}
               <p className="text-sm text-gray-500 mb-4">
                 The demographics of a place can be a fair indicator of how
                 neighborly a place is. 42% of the households in Allandale are
                 renter-occupied.
               </p>
-              <div className="grid grid-cols-2 gap-4 text-gray-600">
+              <div className="grid grid-cols-2 gap-6 text-gray-600">
                 <div>
-                  <p className="text-2xl font-bold">
+                <p className="text-sm font-medium text-gray-500 mb-1 ">College Degree</p>
+                  <p className="text-4xl font-medium text-blue-300 ">
                     {calculateCollegeDegreePercentage()}%
                   </p>
-                  <p>College Degree</p>
+                  
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">58%</p>
-                  <p>Full time Employment</p>
+                <p className="text-sm font-medium text-gray-500 mb-1 ">Full time Employment</p>
+                  <p className="text-4xl font-medium text-blue-300">58%</p>
+                  
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">42%</p>
-                  <p>Renters</p>
+                <p className="text-sm font-medium text-gray-500 mb-1 ">Renters</p>
+                  <p className="text-4xl font-medium text-blue-300">42%</p>
+                  
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">58%</p>
-                  <p>Owners</p>
+                <p className="text-sm font-medium text-gray-500 mb-1 ">Owners</p>
+                  <p className="text-4xl font-medium text-blue-300">58%</p>
+                  
                 </div>
               </div>
             </div>

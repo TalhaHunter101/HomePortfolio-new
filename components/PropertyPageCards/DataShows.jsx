@@ -45,7 +45,7 @@ function DataShows({ postcode }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Is {postcode} A Good Place To Live?
+            Is {postcode}, A Good Place To Live?
           </h2>
         </div>
       </CardHeader>
@@ -54,25 +54,46 @@ function DataShows({ postcode }) {
         <div className="space-y-6">
           {/* Highlights Section */}
           <div className="border-b pb-6">
-            <h2 className="text-lg font-semibold mb-2">{postcode}</h2>
-            <div className="grid grid-cols-2 gap-4 text-gray-600">
+            <h2 className="text-lg font-semibold mb-2"><Icon icon="mdi:stars" width="38" height="30" className="inline " /> {postcode}: Higlights</h2>
+            <div className="grid grid-cols-2 gap-4 text-gray-600 pt-4">
               <div>
-                <p className="text-2xl font-bold">{populationData}</p>
-                <p>Total Population</p>
+              <p className="text-sm font-medium text-gray-500 mb-1 ">Total Population</p>
+                <p className="text-4xl font-medium text-blue-300 ">{populationData} 
+                  <Icon
+              icon="mdi:account-group"
+             height={48}
+              className="inline pb-2"
+            /></p>
+                
               </div>
               <div>
-                <p className="text-2xl font-bold">{walkScore}</p>
-                <p>Walk Score</p>
+              <p className="text-sm font-medium text-gray-500 mb-1 ">Walk Score</p>
+                <p className="text-4xl font-medium text-blue-300 ">{walkScore}   <Icon
+              icon="fa-solid:walking"
+             height={48}
+              className="inline pb-2"
+            /></p>
+                
               </div>
               <div>
-                <p className="text-2xl font-bold">
-                  £{formatCurrency(medianPrice)}
+              <p className="text-sm font-medium text-gray-500 mb-1 ">Average Home Price</p>
+                <p className="text-4xl font-medium text-blue-300 ">
+                  £{formatCurrency(medianPrice)}   <Icon
+              icon="f7:house-fill"
+             height={40}
+              className="inline pb-2"
+            />
                 </p>
-                <p>Average Home Price</p>
+                
               </div>
               <div>
-                <p className="text-2xl font-bold">£1,342</p>
-                <p>Median Rent</p>
+              <p className="text-sm font-medium text-gray-500 mb-1 ">Median Rent</p>
+                <p className="text-4xl font-medium text-blue-300 ">£1,342   <Icon
+              icon="mage:building-b"
+             height={48}
+              className="inline pb-2"
+            /></p>
+                
               </div>
             </div>
           </div>
