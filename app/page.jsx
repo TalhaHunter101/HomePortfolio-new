@@ -2,7 +2,7 @@
 'use client';
 
 import React from "react";
-import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image, Chip } from "@nextui-org/react";
+import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image, Chip, Spacer } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -385,8 +385,8 @@ export default function Home() {
                       place
                     </p>
                     <div className="mt-2 w-full sm:max-w-[90vw] md:max-w-[60vw] lg:max-w-[800px] flex justify-center gap-3 z-10">
-  <AutocompleteSearch properties={properties} />
-</div>
+                      <AutocompleteSearch properties={properties} />
+                    </div>
 
                   </div>
 
@@ -799,58 +799,147 @@ export default function Home() {
 
 
 
-        <div className="flex flex-col justify-center md:p-8 mt-12 w-full bg-gray-100 rounded-2xl">
-  {/* Main Container */}
-  <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white rounded-2xl shadow-lg">
-    {/* Left Column: Questions */}
-    <div className="flex flex-col gap-6">
-      <h3 className="text-3xl font-bold text-black">Ask about a home</h3>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">Who lives in this neighbourhood?</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-black rounded-lg border border-black shadow-sm flex items-center">
-        <p className="text-white text-sm font-medium">Who lives in this neighbourhood?</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">What planning applications have been approved? Permit history?</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">How's the air quality?</p>
-      </div>
-    </div>
-    {/* Right Column: Image with Overlapping Card */}
-    <div className="">
-      <img className="w-full h-auto " src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
-  
-    </div>
-  </div>
+        <div className="flex flex-col justify-center mt-12 w-full px-8 rounded-2xl">
+          {/* Main Container */}
+          <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white">
+            {/* Left Column: Questions */}
+            <div className="flex flex-col gap-6 pl-12">
+              <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
+                Ask about a home
+              </span>
+              <ul className="grid mt-6 text-left gap-y-4">
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <symbol id="ai:ph:check-circle-fill">
+                      <path
+                        fill="currentColor"
+                        d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m45.66 85.66l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32"
+                      />
+                    </symbol>
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">
+                    Who lives in this neighbourhood?
+                  </span>
+                </li>
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">
+                    What planning applications have been approved? Permit history?
+                  </span>
+                </li>
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">
+                    How's the air quality?
+                  </span>
+                </li>
+              </ul>
+            </div>
 
-  <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white rounded-2xl shadow-lg mt-8">
-    {/* Left Column: Neighborhood Questions */}
-    <div className="flex flex-col gap-6">
-      <h3 className="text-3xl font-bold text-black">Look for a home</h3>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">Show me family-friendly neighbourhoods</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-black rounded-lg border border-black shadow-sm flex items-center">
-        <p className="text-white text-sm font-medium">How's the market right now?</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">Is this a good place to live?</p>
-      </div>
-      <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center">
-        <p className="text-black text-sm font-medium">Tell me more about this neighbourhood</p>
-      </div>
-    </div>
-    {/* Right Column: Chart with Overlapping Card */}
-    <div className="relative flex flex-col gap-6">
-      <div className="p-6 flex items-center justify-center">
-        <img className="w-full  rounded-xl" src="/MainPageImg/homeTypeAsset.png" alt="Chart" />
-      </div>
-   
-    </div>
-  </div>
-</div>
+
+            {/* Right Column: Image with Overlapping Card */}
+            <div className="">
+              <img className="w-full h-auto " src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
+
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white mt-8">
+            {/* Right Column: Neighborhood Questions */}
+            <div className="relative flex flex-col gap-6">
+              <div className="p-6 flex items-center justify-center">
+                <img className="w-full rounded-xl" src="/MainPageImg/homeTypeAsset.png" alt="Chart" />
+              </div>
+            </div>
+
+            {/* Left Column: Chart with Overlapping Card */}
+            <div className="flex flex-col gap-6 pl-12">
+              <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
+                Look for a home
+              </span>
+              <ul className="grid mt-6 text-left gap-y-4">
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <symbol id="ai:ph:check-circle-fill">
+                      <path
+                        fill="currentColor"
+                        d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m45.66 85.66l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32"
+                      />
+                    </symbol>
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">Show me family-friendly neighbourhoods</span>
+                </li>
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">How's the market right now?</span>
+                </li>
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">Is this a good place to live?</span>
+                </li>
+                <li className="flex items-center gap-3 text-neutral-800">
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 256 256"
+                    className="w-5 h-5"
+                    data-icon="ph:check-circle-fill"
+                  >
+                    <use xlinkHref="#ai:ph:check-circle-fill"></use>
+                  </svg>
+                  <span className="text-sm">Tell me more about this neighbourhood</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
 
 
 
@@ -865,305 +954,156 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="overflow-hidden max-w-[100vw]   mt-10 relative">
-          <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-indigo-100 right-1/3 -top-10"></div>
-          <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-purple-100 right-1/3 translate-x-2/3 top-10"></div>
-          <div className="relative md:flex gap-10 overflow-hidden py-5 group">
-            <div className="md:motion-safe:animate-marquee w-auto py-5 overflow-x-auto flex flex-nowrap min-w-full shrink-0 items-stretch gap-10 snap-x snap-mandatory px-5">
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has transformed the way we manage our projects. Its well-designed interface and powerful features make it a must-have tool for any startup. We've seen a great increase in our productivity and collaboration.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="John Doe"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">John Doe</h2>
-                    <p className="text-sm text-slate-600">CEO at TechCorp</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  As a marketing professional, I love using Astroship to streamline our marketing campaigns. The automation features and data analytics help us make data-driven decisions and optimize our business strategies.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Jane Smith"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
-                    <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has revolutionized the way we handle customer support. The ticketing system and knowledge base have significantly reduced response times, leading to happier customers. Thanks to this incredible tool.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Mike Johnson"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
-                    <p className="text-sm text-slate-600">CTO at CloudNine</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has simplified our employee management processes. From onboarding to performance evaluations, everything is now seamlessly organized in one place. It's made my job much more manageable and enjoyable!
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Emily Brown"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
-                    <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Our sales team swears by Astroship's CRM capabilities. The lead tracking and pipeline management tools have resulted in a significant boost in sales. It's a versatile platform that has truly optimized our sales processes.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="David Lee"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">David Lee</h2>
-                    <p className="text-sm text-slate-600">Sales Director at Linkify</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has been a lifesaver for our finance department. Its robust accounting features and automated invoicing have saved us countless hours of manual work. It's the perfect financial companion for any business!
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Sarah Martinez"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
-                    <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="overflow-hidden max-w-[100vw] mt-10 relative">
+ 
+  <div class="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-indigo-100 right-1/3 -top-10"></div>
+  <div class="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-purple-100 right-1/3 translate-x-2/3 top-10"></div>
+  
+ 
+  <div class="relative flex gap-10 overflow-hidden py-5 group">
+    <div class="w-full py-5 overflow-x-auto flex flex-nowrap min-w-full shrink-0 items-stretch gap-10 snap-x snap-mandatory px-5 scrollbar-hide">
 
-            <div className="md:motion-safe:animate-marquee hidden md:motion-reduce:hidden md:flex min-w-full shrink-0 items-center gap-10">
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has transformed the way we manage our projects. Its well-designed interface and powerful features make it a must-have tool for any startup. We've seen a great increase in our productivity and collaboration.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="John Doe"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">John Doe</h2>
-                    <p className="text-sm text-slate-600">CEO at TechCorp</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  As a marketing professional, I love using Astroship to streamline our marketing campaigns. The automation features and data analytics help us make data-driven decisions and optimize our business strategies.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Jane Smith"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
-                    <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has revolutionized the way we handle customer support. The ticketing system and knowledge base have significantly reduced response times, leading to happier customers. Thanks to this incredible tool.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Mike Johnson"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
-                    <p className="text-sm text-slate-600">CTO at CloudNine</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has simplified our employee management processes. From onboarding to performance evaluations, everything is now seamlessly organized in one place. It's made my job much more manageable and enjoyable!
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Emily Brown"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
-                    <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Our sales team swears by Astroship's CRM capabilities. The lead tracking and pipeline management tools have resulted in a significant boost in sales. It's a versatile platform that has truly optimized our sales processes.
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="David Lee"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">David Lee</h2>
-                    <p className="text-sm text-slate-600">Sales Director at Linkify</p>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
-                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
-                  Astroship has been a lifesaver for our finance department. Its robust accounting features and automated invoicing have saved us countless hours of manual work. It's the perfect financial companion for any business!
-                </blockquote>
-                <div className="flex items-center gap-3 mt-10">
-                  <div className="shrink-0">
-                    <picture>
-                      <img
-                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
-                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
-                        alt="Sarah Martinez"
-                        loading="lazy"
-                        width="48"
-                        height="48"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
-                    <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+     
+      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start shrink-0">
+        <img
+          src="/starynights.png"
+          alt="Starry skies"
+          class="w-full h-48 object-cover rounded-t-2xl"
+        />
+        <div class="pb-4 flex flex-col text-center">
+          <p class="text-xl font-bold">Starry skies</p>
+          <p>
+            Filter by homes with excellent dark <br /> skies at night
+            <a href="#" class="text-indigo-600">Explore starry skies</a>
+          </p>
         </div>
+      </div>
+
+    
+      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start shrink-0">
+        <img
+          src="/noise 985.png"
+          alt="Noise Level"
+          class="w-full h-48 object-cover rounded-t-2xl"
+        />
+        <div class="pb-4  flex flex-col text-center">
+          <p class="text-xl font-bold">Noise Level</p>
+          <p>
+            Learn how loud your future neighbor <br /> will sound
+            <a href="#" class="text-indigo-600">Find a quiet house</a>
+          </p>
+        </div>
+      </div>
+
+      {/* <!-- Card 3 --> */}
+      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[416.81px] h-[284px] max-w-md flex flex-col justify-between snap-start shrink-0 p-4">
+  {/* <!-- Top Section --> */}
+  <div class="w-full h-[180px] flex items-center justify-center relative">
+    {/* <!-- Home Icon --> */}
+    <div class="w-[70px] h-[70px] bg-black/70 rounded-full flex items-center justify-center shadow-lg">
+      <div class="w-[35px] h-[35px] bg-black rounded-full flex items-center justify-center">
+        <img class="w-[18px] h-[18px]" src="/elements.svg" alt="Home Icon" />
+      </div>
+    </div>
+    {/* <!-- Charging Station Icons --> */}
+    <div class="absolute top-[20px] left-[60px] w-[50px] h-[50px] bg-white/40 rounded-full flex items-center justify-center shadow-lg">
+      <img class="w-[24px] h-[24px]" src="/Group 33708.svg" alt="Charging Icon" />
+    </div>
+    <div class="absolute top-[20px] right-[60px] w-[50px] h-[50px] bg-white/40 rounded-full flex items-center justify-center shadow-lg">
+      <img class="w-[24px] h-[24px]" src="/Group 33708.svg" alt="Charging Icon" />
+    </div>
+    <div class="absolute bottom-[20px] left-[90px] w-[50px] h-[50px] bg-white/40 rounded-full flex items-center justify-center shadow-lg">
+      <img class="w-[24px] h-[24px]" src="/Group 33708.svg" alt="Charging Icon" />
+    </div>
+    <div class="absolute bottom-[20px] right-[90px] w-[50px] h-[50px] bg-white/40 rounded-full flex items-center justify-center shadow-lg">
+      <img class="w-[24px] h-[24px]" src="/Group 33708.svg" alt="Charging Icon" />
+    </div>
+  </div>
+  
+  {/* <!-- Bottom Section --> */}
+  <div class="w-full h-[80px]  rounded-xl  flex flex-col items-center justify-center pt-2 px-4 ">
+    <div class="text-center text-[#040815] text-lg font-semibold leading-tight mb-1">EV Friendly neighborhood</div>
+    <div class="text-center">
+      <span class="text-[#191d23] text-sm font-medium">Find homes nearby electric charging <br/>stations </span>
+      <span class="text-[#191d23] text-xs font-normal underline cursor-pointer">Find EV-friendly homes</span>
+    </div>
+  </div>
+</div>
+
+
+
+      {/* <!-- Card 4 --> */}
+      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start shrink-0">
+   
+    {/* <!-- Additional Sections Start --> */}
+    <div class="w-full flex justify-center items-start gap-4 p-2">
+        {/* <!-- Column 1 --> */}
+        <div class="flex flex-col gap-2">
+            {/* <!-- Investment Potential --> */}
+            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                <div class="text-sm font-medium">Investment Potential</div>
+                <div class="mt-4 h-10">
+                <img
+                            src="/Series=2, Chart type=Line wavy (1).svg"
+                            alt=""
+                            width={134.05}
+                            height={75.19}
+                          />
+                </div>
+            </div>
+            {/* <!-- Planning Applications --> */}
+            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                <div class="text-sm font-medium">Planning Applications</div>
+                <div class="mt-2">
+                    <div class="flex items-center gap-2">
+                      <img src="/Tool.svg" alt="" />  <div class="h-1 w-full bg-gray-200 rounded"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                    <img src="/Tool.svg" alt="" /> <div class="h-1 w-full bg-gray-200 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* <!-- Column 2 --> */}
+        <div class="flex flex-col items-center gap-4">
+            {/* <!-- Flood Risk --> */}
+            <div class="bg-white rounded-xl shadow border border-black/10 p-4 w-40 flex flex-col items-center">
+                <div class="bg-white rounded-full p-2 text-center font-bold">Flood Risk</div>
+                <div class="mt-2 bg-green-200 text-green-600 text-sm font-bold px-4 py-1 rounded-full">Low</div>
+                <img src="/flood 987 (1).png" alt="Flood Risk" class="mt-4 w-20 h-24 object-cover" />
+            </div>
+        </div>
+        {/* <!-- Column 3 --> */}
+        <div class="flex flex-col gap-4">
+            {/* <!-- What’s Nearby --> */}
+            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                <div class="text-sm font-medium">What’s Nearby?</div>
+                <div class="flex items-center justify-around mt-4">
+                    <img src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png" alt="Nearby 1" class="w-6 h-6 rounded-full border border-gray-200" />
+                    <img src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png" alt="Nearby 2" class="w-6 h-6 rounded-full border border-gray-200" />
+                    <img src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png" alt="Nearby 3" class="w-6 h-6 rounded-full border border-gray-200" />
+                </div>
+            </div>
+            {/* <!-- Mobile and Broadband --> */}
+            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                <div class="text-xs font-medium">Mobile and Broadband</div>
+                <div class="flex items-center justify-start h-14 ">
+                    <img src="/signal-icon-png-15.jpg" alt=""  />
+                </div>
+            </div>
+        </div>
+    </div>
+    {/* <!-- Additional Sections End --> */}
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
         <div className="max-w-screen-xl mx-auto px-5">
@@ -1314,56 +1254,56 @@ export default function Home() {
             </p>
           </div> */}
 
-<div className="w-full mx-auto p-8  relative">
-  <div className="flex flex-col items-center gap-8">
-    {/* Title */}
-    <h3 className="text-center text-3xl font-semibold text-black">
-      Insights from data sources you can trust
-    </h3>
+          <div className="w-full mx-auto p-8  relative">
+            <div className="flex flex-col items-center gap-8">
+              {/* Title */}
+              <h3 className="text-center text-3xl font-semibold text-black">
+                Insights from data sources you can trust
+              </h3>
 
-    {/* Logos Grid */}
-    <div className="flex flex-wrap justify-center gap-6 px-8">
-      <div className="flex justify-center items-center w-40 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/1.png" alt="Logo 1" />
-      </div>
-      <div className="flex justify-center items-center w-24 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/2.png" alt="Logo 2" />
-      </div>
-      <div className="flex justify-center items-center w-40 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/3.png" alt="Logo 3" />
-      </div>
-      <div className="flex justify-center items-center w-40 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/4.png" alt="Logo 4" />
-      </div>
-      <div className="flex justify-center items-center w-44 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/5.png" alt="Logo 5" />
-      </div>
-      <div className="flex justify-center items-center w-40 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/6.png" alt="Logo 6" />
-      </div>
-      <div className="flex justify-center items-center w-24 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/7.png" alt="Logo 7" />
-      </div>
-      <div className="flex justify-center items-center w-40 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/8.png" alt="Logo 8" />
-      </div>
-      <div className="flex justify-center items-center w-44 h-24">
-        <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/9.png" alt="Logo 9" />
-      </div>
-    </div>
+              {/* Logos Grid */}
+              <div className="flex flex-wrap justify-center gap-6 px-8">
+                <div className="flex justify-center items-center w-40 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/1.png" alt="Logo 1" />
+                </div>
+                <div className="flex justify-center items-center w-24 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/2.png" alt="Logo 2" />
+                </div>
+                <div className="flex justify-center items-center w-40 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/3.png" alt="Logo 3" />
+                </div>
+                <div className="flex justify-center items-center w-40 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/4.png" alt="Logo 4" />
+                </div>
+                <div className="flex justify-center items-center w-44 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/5.png" alt="Logo 5" />
+                </div>
+                <div className="flex justify-center items-center w-40 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/6.png" alt="Logo 6" />
+                </div>
+                <div className="flex justify-center items-center w-24 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/7.png" alt="Logo 7" />
+                </div>
+                <div className="flex justify-center items-center w-40 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/8.png" alt="Logo 8" />
+                </div>
+                <div className="flex justify-center items-center w-44 h-24">
+                  <img className="max-w-full h-auto" src="/MainPageImg/partnersLogos/9.png" alt="Logo 9" />
+                </div>
+              </div>
 
-    {/* Description */}
-    <p className="text-center text-gray-600 text-xs font-bold uppercase tracking-wide">
-      Access the most accurate and reliable property information from multiple data sources, updated regularly
-    </p>
-  </div>
+              {/* Description */}
+              <p className="text-center text-gray-600 text-xs font-bold uppercase tracking-wide">
+                Access the most accurate and reliable property information from multiple data sources, updated regularly
+              </p>
+            </div>
 
-  {/* Decorative Overlapping Elements */}
-</div>
+            {/* Decorative Overlapping Elements */}
+          </div>
 
 
 
-     
+
         </div>
 
         <div className="w-[100vw] bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center">
