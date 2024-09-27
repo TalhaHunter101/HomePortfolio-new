@@ -9,7 +9,7 @@ export async function POST(request) {
     const data = await marketComparision(query);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.log("error", error);
+    console.log("error is", error);
     return NextResponse.json("Error", { status: 500 });
   }
 }
