@@ -131,7 +131,7 @@ export function FamilyCard({ postcode, city }) {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Total Population</span>
-                <span className="font-semibold text-3xl text-blue-300">
+                <span className="font-semibold text-3xl text-purple-300">
                   {
                     totalPopulation?._source?.[
                       "Sex: All persons; measures: Value"
@@ -141,19 +141,19 @@ export function FamilyCard({ postcode, city }) {
               </div>
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Median Age</span>
-                <span className="font-semibold text-3xl text-blue-300">38</span>
+                <span className="font-semibold text-3xl text-purple-300">38</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-14">
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Average HH Income</span>
-                <span className="font-semibold text-3xl text-blue-300">
+                <span className="font-semibold text-3xl text-purple-300">
                   £{formatCurrency(medianPrice)}
                 </span>
               </div>
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Single Family Household</span>
-                <span className="font-semibold text-3xl text-blue-300">
+                <span className="font-semibold text-3xl text-purple-300">
                   {singleFamilyHouseholds}
                 </span>
               </div>
