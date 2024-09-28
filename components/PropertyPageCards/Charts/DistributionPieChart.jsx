@@ -246,7 +246,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const outerRadius = isLargeScreen ? 150 : 80;
 
   return (
-    <div className="lg:w-full lg:h-full h-96 w-60 mx-auto">
+    <div className="h-96">
       <ResponsiveContainer>
         <PieChart>
           <Pie

@@ -178,8 +178,10 @@ export function NearbyCard({ data }) {
   ]);
 
   const items = locations.length ? locations : getItemsData();
+  console.log("itemsi",items);
+  
 
-  const nearestGrocery = items.find((item) => item.category === "supermarket");
+  const nearestGrocery = items.find((item) => item.category === "restaurant");
 
 
   return (
@@ -204,12 +206,11 @@ export function NearbyCard({ data }) {
           <div className="relative mt-2 pr-2 sm:pr-10 md:pr-2 z-10 max-w-md grid grid-cols-1 items-start sm:items-center text-right">
             <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
               <div className="text-xs md:text-sm capitalize text-foreground">
-                Nearest grocery
+                Nearest Restaurants
               </div>
               {nearestGrocery ? (
                 <div className="text-base md:text-base text-foreground font-medium">
                   {nearestGrocery.name} <br />
-                  <span>(Approx. distance: {Math.random().toFixed(2)} miles)</span>
                 </div>
               ) : (
                 <div className="text-base md:text-base text-foreground font-medium">

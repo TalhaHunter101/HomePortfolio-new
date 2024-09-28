@@ -8,10 +8,11 @@ import { Icon } from "@iconify/react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import React from "react";
 
-function DataShows({ postcode }) {
+function DataShows({ postcode, rentData }) {
   const { populationData, educationData } = useDemographicStore();
   const { walkScore } = useListingStore();
   const { medianPrice } = marketCompStore();
+
 
   const calculateCollegeDegreePercentage = () => {
     if (educationData?._source) {
@@ -54,52 +55,72 @@ function DataShows({ postcode }) {
         <div className="space-y-6">
           {/* Highlights Section */}
           <div className="border-b pb-6">
-            <h2 className="text-lg font-semibold mb-2"><Icon icon="mdi:stars" width="38" height="30" className="inline " /> {postcode}: Higlights</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              <Icon
+                icon="mdi:stars"
+                width="38"
+                height="30"
+                className="inline "
+              />{" "}
+              {postcode}: Higlights
+            </h2>
             <div className="grid grid-cols-2 gap-4 text-gray-600 pt-4">
               <div>
-              <p className="text-sm font-medium text-gray-500 mb-1 ">Total Population</p>
-                <p className="text-4xl font-medium text-purple-300 ">{populationData} 
-                  <Icon
-              icon="mdi:account-group"
-             height={48}
-              className="inline pb-2"
-            /></p>
-                
-              </div>
-              <div>
-              <p className="text-sm font-medium text-gray-500 mb-1 ">Walk Score</p>
-                <p className="text-4xl font-medium text-purple-300 ">{walkScore}   <Icon
-              icon="fa-solid:walking"
-             height={48}
-              className="inline pb-2"
-            /></p>
-                
-              </div>
-              <div>
-              <p className="text-sm font-medium text-gray-500 mb-1 ">Average Home Price</p>
-                <p className="text-4xl font-medium text-purple-300 ">
-                  £{formatCurrency(medianPrice)}   <Icon
-              icon="f7:house-fill"
-             height={40}
-              className="inline pb-2"
-            />
+                <p className="text-sm font-medium text-gray-500 mb-1 ">
+                  Total Population
                 </p>
-                
+                <p className="text-4xl font-medium text-purple-300 ">
+                  {populationData}
+                  <Icon
+                    icon="mdi:account-group"
+                    height={48}
+                    className="inline pb-2"
+                  />
+                </p>
               </div>
               <div>
-              <p className="text-sm font-medium text-gray-500 mb-1 ">Median Rent</p>
-                <p className="text-4xl font-medium text-purple-300 ">£1,342   <Icon
-              icon="mage:building-b"
-             height={48}
-              className="inline pb-2"
-            /></p>
-                
+                <p className="text-sm font-medium text-gray-500 mb-1 ">
+                  Walk Score
+                </p>
+                <p className="text-4xl font-medium text-purple-300 ">
+                  {walkScore}{" "}
+                  <Icon
+                    icon="fa-solid:walking"
+                    height={48}
+                    className="inline pb-2"
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-1 ">
+                  Average Home Price
+                </p>
+                <p className="text-4xl font-medium text-purple-300 ">
+                  £{formatCurrency(medianPrice)}{" "}
+                  <Icon
+                    icon="f7:house-fill"
+                    height={40}
+                    className="inline pb-2"
+                  />
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-1 ">
+                  Median Rent
+                </p>
+                <p className="text-4xl font-medium text-purple-300 ">
+                {rentData[0]?._source?.median_rent.replace("pcm", "").trim()}
+                  <Icon
+                    icon="mage:building-b"
+                    height={48}
+                    className="inline pb-2"
+                  />
+                </p>
               </div>
             </div>
           </div>
 
           {/* Neighbours Section */}
-        
         </div>
       </div>
     </Card>

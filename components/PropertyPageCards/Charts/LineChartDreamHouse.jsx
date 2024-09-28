@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import {
   LineChart,
@@ -12,59 +10,87 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export const DreamHouseLineChart = ({ type = "line", data }) => {
+export const DreamHouseLineChart = ({ data }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
+
     if (!data || data.length === 0) {
+      console.log("No data available");
       return;
     }
 
     const aggregateData = (rawData) => {
-      rawData.sort((a, b) => new Date(a._source.deed_date) - new Date(b._source.deed_date));
+      const currentYear = new Date().getFullYear();
+      const oneYearAgo = currentYear - 1;
 
-      const totalPoints = 20;
-      const chunkSize = Math.ceil(rawData.length / totalPoints);
-      const aggregated = [];
+      const filteredData = rawData.filter(item => {
+        const itemYear = parseInt(item._source.deed_date.split('-')[0]);
+        return itemYear >= oneYearAgo;
+      });
 
-      for (let i = 0; i < rawData.length; i += chunkSize) {
-        const chunk = rawData.slice(i, i + chunkSize);
-        const chunkData = { S: [], D: [], F: [], date: new Date(chunk[0]._source.deed_date) };
+      const monthlyData = filteredData.reduce((acc, item) => {
+        const [year, month] = item._source.deed_date.split('-');
+        const key = `${year}-${month}`;
+        const price = parseInt(item._source.price_paid);
+        const type = item._source.property_type;
 
-        chunk.forEach(item => {
-          const price_paid = parseInt(item._source.price_paid);
-          const property_type = item._source.property_type;
+        if (!acc[key]) {
+          acc[key] = { S: [], D: [], F: [], T: [], date: new Date(year, month - 1) };
+        }
 
-          if (['S', 'D', 'F'].includes(property_type)) {
-            chunkData[property_type].push(price_paid);
-          }
-        });
+        if (['S', 'D', 'F', 'T'].includes(type)) {
+          acc[key][type].push(price);
+        }
 
-        aggregated.push({
-          date: chunkData.date,
-          S: chunkData.S.length ? Math.round(chunkData.S.reduce((a, b) => a + b, 0) / chunkData.S.length) : null,
-          D: chunkData.D.length ? Math.round(chunkData.D.reduce((a, b) => a + b, 0) / chunkData.D.length) : null,
-          F: chunkData.F.length ? Math.round(chunkData.F.reduce((a, b) => a + b, 0) / chunkData.F.length) : null,
-        });
-      }
+        return acc;
+      }, {});
 
-      return aggregated;
+      return Object.entries(monthlyData).map(([key, value]) => ({
+        date: value.date,
+        S: value.S.length ? Math.round(value.S.reduce((a, b) => a + b, 0) / value.S.length) : null,
+        D: value.D.length ? Math.round(value.D.reduce((a, b) => a + b, 0) / value.D.length) : null,
+        F: value.F.length ? Math.round(value.F.reduce((a, b) => a + b, 0) / value.F.length) : null,
+        T: value.T.length ? Math.round(value.T.reduce((a, b) => a + b, 0) / value.T.length) : null,
+      })).sort((a, b) => a.date - b.date);
     };
 
     const aggregatedData = aggregateData(data);
 
+    console.log("Final aggregated data:", aggregatedData);
+
     const formattedData = aggregatedData.map(item => ({
-      name: item.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+      name: item.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }),
       Detached: item.D,
       SemiDetached: item.S,
+      Terraced: item.T,
       Flat: item.F,
     }));
+
+    console.log("Formatted chart data:", formattedData);
 
     setChartData(formattedData);
   }, [data]);
 
+  // Function to format numbers with suffixes k, M, B
+  const formatNumber = (num) => {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1) + 'B';
+    } else if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'k';
+    } else {
+      return num;
+    }
+  };
+
+  if (chartData.length === 0) {
+    return <div>No data available for the chart</div>;
+  }
+
   return (
-    <ResponsiveContainer className="text-xs    " width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={300}>
       <LineChart
         data={chartData}
         margin={{
@@ -74,16 +100,17 @@ export const DreamHouseLineChart = ({ type = "line", data }) => {
           bottom: 0,
         }}
       >
-        <CartesianGrid  vertical={false} strokeDasharray="3 3" />
-        <XAxis className='text-xs ' dataKey="name" />
-        <YAxis className='text-xs' tickFormatter={(value) => `£${value}K`} />
+        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis tickFormatter={(value) => `£${formatNumber(value)}`} />
         <Tooltip
-          formatter={(value) => `£${value}K`}
+          formatter={(value) => `£${formatNumber(value)}`}
           labelFormatter={(label) => `Month: ${label}`}
         />
-        <Legend className='text-xs' />
+        <Legend />
         <Line type="monotone" dataKey="Detached" stroke="#9333ea" activeDot={{ r: 8 }} />
         <Line type="monotone" dataKey="SemiDetached" stroke="#2563eb" />
+        <Line type="monotone" dataKey="Terraced" stroke="#16a34a" />
         <Line type="monotone" dataKey="Flat" stroke="#4b4b4b" />
       </LineChart>
     </ResponsiveContainer>

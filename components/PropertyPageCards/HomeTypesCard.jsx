@@ -69,7 +69,7 @@ export function HomeTypesCard({ city }) {
   }, [city]);
 
   return (
-    <Card className="m-4" style={{ maxHeight: "900px" }}>
+    <Card className="m-4 h-[70vh]" >
       <CardHeader>
         <div className="flex items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
@@ -97,16 +97,16 @@ export function HomeTypesCard({ city }) {
                   Home Types Distribution
                 </div>
 
-                <div className="grid relative md:pt-12/16 pt-15/16">
+                {/* <div className="grid relative md:pt-12/16 pt-15/16"> */}
                  
 
-                  <div className="grid relative  md:pt-12/16 pt-15/16">
+                  {/* <div className="grid relative  md:pt-12/16 pt-15/16"> */}
                     <DistributionPieChart
                       main_data={data}
                       setbarchart={setbarchart}
                     />
-                  </div>
-                </div>
+                  {/* </div> */}
+                {/* </div> */}
               </div>
 
               {/* Home Price Distribution Section */}

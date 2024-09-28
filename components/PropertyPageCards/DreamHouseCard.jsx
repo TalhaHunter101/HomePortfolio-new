@@ -1,100 +1,104 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader, Button } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { DreamHouseLineChart } from "./Charts/LineChartDreamHouse";
-import { FilterButton } from "./DreamhouseComponents/Filter";
-import { DropdownButton } from "./DreamhouseComponents/DateFilter";
 import { Icon } from "@iconify/react";
 
 const calculateStats = (data, propertyType) => {
+
+
   if (!data || data.length === 0) {
     console.log(`No data available for property type: ${propertyType}`);
     return null;
   }
 
+  const currentYear = new Date().getFullYear();
+  const oneYearAgo = currentYear - 1;
+
+
   const prices = data
     .filter(
-      (item) =>
-        item._source?.property_type === propertyType &&
-        item._source?.price_paid &&
-        item._source?.deed_date
+      (item) => {
+        const itemYear = parseInt(item._source.deed_date.split('-')[0]);
+        const isIncluded = 
+          item._source?.property_type === propertyType &&
+          item._source?.price_paid &&
+          item._source?.deed_date &&
+          itemYear >= oneYearAgo;
+        return isIncluded;
+      }
     )
     .map((item) => ({
       price_paid: parseInt(item._source.price_paid),
       deed_date: new Date(item._source.deed_date),
     }))
-    .sort((a, b) => a.deed_date - b.deed_date);
+    .sort((a, b) => b.deed_date - a.deed_date);
+
 
   if (prices.length === 0) {
     console.log(`No valid prices found for property type: ${propertyType}`);
     return null;
   }
-  const median = prices[Math.floor(prices.length / 2)].price_paid;
-  const minPrice = prices[0].price_paid;
-  const maxPrice = prices[prices.length - 1].price_paid;
 
-  // Calculate percentage change in 12 months
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-  const pricesOneYearAgo = prices.filter((item) => item.deed_date < oneYearAgo);
-  const medianOneYearAgo =
-    pricesOneYearAgo[Math.floor(pricesOneYearAgo.length / 2)]?.price_paid;
+  const median = prices[Math.floor(prices.length / 2)].price_paid;
+  const minPrice = Math.min(...prices.map(p => p.price_paid));
+  const maxPrice = Math.max(...prices.map(p => p.price_paid));
+
+  // Calculate percentage change in 3 months
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+  const recentPrices = prices.filter((item) => item.deed_date >= threeMonthsAgo);
+  const olderPrices = prices.filter((item) => item.deed_date < threeMonthsAgo);
+
+
 
   let percentageChange = null;
-  if (medianOneYearAgo) {
-    percentageChange = ((median - medianOneYearAgo) / medianOneYearAgo) * 100;
+  if (recentPrices.length > 0 && olderPrices.length > 0) {
+    const recentMedian = recentPrices[Math.floor(recentPrices.length / 2)].price_paid;
+    const olderMedian = olderPrices[Math.floor(olderPrices.length / 2)].price_paid;
+    percentageChange = ((recentMedian - olderMedian) / olderMedian) * 100;
   }
 
-  return {
+  const result = {
     median,
     minPrice,
     maxPrice,
     percentageChange,
   };
+
+  return result;
 };
 
-export function DreamHouseCard({  pricePaidData }) {
+export function DreamHouseCard({ pricePaidData }) {
   const [detachedStats, setDetachedStats] = useState(null);
   const [semiDetachedStats, setSemiDetachedStats] = useState(null);
   const [flatStats, setFlatStats] = useState(null);
-  let type = "";
+  const [terracedStats, setTerracedStats] = useState(null);
 
   useEffect(() => {
     if (pricePaidData) {
-      setDetachedStats(calculateStats(pricePaidData, "S"));
-      setSemiDetachedStats(calculateStats(pricePaidData, "D"));
+      setDetachedStats(calculateStats(pricePaidData, "D"));
+      setSemiDetachedStats(calculateStats(pricePaidData, "S"));
       setFlatStats(calculateStats(pricePaidData, "F"));
+      setTerracedStats(calculateStats(pricePaidData, "T"));
     }
   }, [pricePaidData]);
   return (
-    <Card className="m-4" >
+    <Card className="m-4">
       <CardHeader>
-      <div className="flex items-center my-2 ">
-    <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
-      <Icon
-        icon="fluent-mdl2:insights"
-        width={16} // Adjust the icon size to fit well within the circle
-        className="" // Adjust the icon color if needed
-      />
-    </div>
-    <h2 className="text-xl font-bold text-gray-700">Gain insight into current & past market trends</h2>
-  </div>
-
-        {/* <div className="flex w-full justify-between items-center">
-          
-          <div>
-            
-            <span className="text-md p-1 font-semibold text-default-500">
-              Gain insight into current & past market trends
-            </span>sss
+        <div className="flex items-center my-2 ">
+          <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
+            <Icon
+              icon="fluent-mdl2:insights"
+              width={16} // Adjust the icon size to fit well within the circle
+              className="" // Adjust the icon color if needed
+            />
           </div>
+          <h2 className="text-xl font-bold text-gray-700">
+            Gain insight into current & past market trends
+          </h2>
+        </div>
 
-         
-          <div className="flex mt-5  justify-end gap-2">
-            <FilterButton />
-            <DropdownButton />
-          </div>
-        </div> */}
       </CardHeader>
       <CardBody>
         <div className="p-2 rounded-md">
@@ -119,9 +123,7 @@ export function DreamHouseCard({  pricePaidData }) {
 
           <div className="flex justify-between flex-col  lg:flex-row gap-8 mt-4">
             <div className="lg:w-7/12 mt-28 ">
-              <DreamHouseLineChart  type={type}
-           
-            data={pricePaidData} />
+              <DreamHouseLineChart  data={pricePaidData} />
             </div>
 
             <div className="lg:w-5/12 py-3 hidden md:block ">
@@ -181,17 +183,17 @@ export function DreamHouseCard({  pricePaidData }) {
                       <li>
                         Median Sale Price (last month):{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{semiDetachedStats.median.toLocaleString()}
+                          £{semiDetachedStats.median.toLocaleString()}
                         </span>
                       </li>
                       <li>
                         Sale price range:{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{semiDetachedStats.minPrice.toLocaleString()}
+                          £{semiDetachedStats.minPrice.toLocaleString()}
                         </span>{" "}
                         to{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{semiDetachedStats.maxPrice.toLocaleString()}
+                          £{semiDetachedStats.maxPrice.toLocaleString()}
                         </span>
                       </li>
 
@@ -217,28 +219,25 @@ export function DreamHouseCard({  pricePaidData }) {
                   </div>
                 )}
 
-
                 {flatStats && (
                   <div className="grid gap-y-1">
-                    <div className="font-medium text-gray-600">
-                      Flat
-                    </div>
+                    <div className="font-medium text-gray-600">Flat</div>
 
                     <ul className="grid gap-2 list-disc pt-2 pl-6">
                       <li>
                         Median Sale Price (last month):{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{flatStats.median.toLocaleString()}
+                          £{flatStats.median.toLocaleString()}
                         </span>
                       </li>
                       <li>
                         Sale price range:{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{flatStats.minPrice.toLocaleString()}
+                          £{flatStats.minPrice.toLocaleString()}
                         </span>{" "}
                         to{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                        £{flatStats.maxPrice.toLocaleString()}
+                          £{flatStats.maxPrice.toLocaleString()}
                         </span>
                       </li>
 
@@ -263,9 +262,6 @@ export function DreamHouseCard({  pricePaidData }) {
                     </ul>
                   </div>
                 )}
-
-
-                
               </div>
             </div>
           </div>
