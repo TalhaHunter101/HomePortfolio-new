@@ -70,11 +70,13 @@ function Peoplegender({ PeopleGenderData, city }) {
     <div className="">
       <div className="px-4 relative h-full w-full overflow-hidden flex-1">
         <div className="flex items-center p-2">
+        <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2 ml-1">
           <Icon
-            icon="game-icons:relationship-bounds"
+            icon="mdi:gender-male-female"
             width={24}
-            className="text-gray-700 mr-2"
+            className="text-gray-700"
           />
+        </div>
           <h2 className="text-xl font-semibold text-gray-700">
             Marital and civil partnership
           </h2>

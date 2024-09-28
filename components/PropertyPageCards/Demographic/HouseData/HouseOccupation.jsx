@@ -56,8 +56,14 @@ function HouseOccupation({ occupationData, city }) {
 
   return (
     <>
-      <div className="flex items-center p-2">
-        <Icon icon="tdesign:member" width={24} className="text-gray-700 mr-2" />
+      <div className="flex items-center p-2 ml-4">
+      <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
+          <Icon
+            icon="tdesign:member"
+            width={24}
+            className="text-gray-700"
+          />
+        </div>
         <h2 className="text-xl font-semibold text-gray-700">
           House Occupation
         </h2>

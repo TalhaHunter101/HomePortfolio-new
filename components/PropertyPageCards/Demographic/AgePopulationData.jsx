@@ -49,11 +49,13 @@ function AgePopulationData({ AgePopulationData }) {
     <div className="flex items-start p-4">
       {/* Age Data on the Left */}
       <div className="flex items-center p-2">
-        <Icon
-          icon="game-icons:relationship-bounds"
-          width={24}
-          className="text-gray-700 mr-2"
-        />
+      <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2 ml-1">
+          <Icon
+            icon="game-icons:ages"
+            width={24}
+            className="text-gray-700"
+          />
+        </div>
         <h2 className="text-xl font-semibold text-gray-700">Age Data</h2>
       </div>
       

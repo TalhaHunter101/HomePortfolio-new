@@ -146,12 +146,14 @@ function HouseTypeData({ housingData, city }) {
         </div>
       </div> */}
 
-      <div className="flex items-center p-2">
-        <Icon
-          icon="fa6-solid:house-flag"
-          width={24}
-          className="text-gray-700 mr-2"
-        />
+      <div className="flex items-center p-2 ml-5">
+      <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2">
+          <Icon
+            icon="fa6-solid:house-flag"
+            width={24}
+            className="text-gray-700"
+          />
+        </div>
         <h2 className="text-xl font-semibold text-gray-700">House Type</h2>
       </div>
 
