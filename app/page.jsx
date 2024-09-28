@@ -350,8 +350,8 @@ export default function Home() {
 
   return (
     <>
-      <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center ">
-        <div className="relative w-screen justify-center min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh]">
+      <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center px-4 sm:px-6">
+        <div className="relative w-screen justify-center min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] px-4 sm:px-6">
           <div
             style={{
               backgroundColor: "#fff",
@@ -359,206 +359,164 @@ export default function Home() {
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              // minHeight: "70vh",
               width: "100%",
             }}
-            className="flex items-center justify-start bg-background min-h-[40vh] md:min-h-[80vh] lg:min-h-[100vh]   "
+            className="flex items-center justify-center bg-background min-h-[40vh] md:min-h-[80vh] lg:min-h-[100vh] px-4 sm:px-6"
           >
-            <div className="">
-              <div className="max-w-screen-xl mx-auto px-5">
-                <main className="place-items-center h-screen relative">
-                  {/* Main Content */}
-                  <div className="p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10">
-                    <Chip variant="flat" color="secondary" className="mb-2">
-                      AI-Powered Property Data Insights
-                    </Chip>
-                    <h1
-                      style={{ lineHeight: "1.25" }}
-                      className="leading-6 text-xl md:text-3xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center z-10"
-                    >
-                      Find and analyse any UK
-                      <br />
-                      property in seconds
-                    </h1>
-                    <p className="mt-4 sm:text-sm md:text-lg lg:text-xl text-slate-600 text-center z-10">
-                      Discover, source, analyse and track any property in seconds, all in one
-                      place
-                    </p>
-                    <div className="mt-2 w-full sm:max-w-[90vw] md:max-w-[60vw] lg:max-w-[800px] flex justify-center gap-3 z-10">
-                      <AutocompleteSearch properties={properties} />
-                    </div>
+            <div className="flex flex-col justify-center items-center w-full max-w-screen-xl mx-auto px-5">
+              <div className="place-items-center h-auto relative p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10 px-4 sm:px-6">
+                <Chip variant="flat" color="secondary" className="mb-2">
+                  AI-Powered Property Data Insights
+                </Chip>
+                <h1
+                  style={{ lineHeight: "1.25" }}
+                  className="leading-6 text-lg md:text-3xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center z-10"
+                >
+                  Find and analyse any UK
+                  <br />
+                  property in seconds
+                </h1>
+                <p className="mt-4 text-sm md:text-lg lg:text-xl text-slate-600 text-center z-10">
+                  Discover, source, analyse and track any property in seconds, all in one place
+                </p>
+                <div className="mt-2 w-full sm:max-w-[90vw] md:max-w-[60vw] lg:max-w-[800px] flex justify-center gap-3 z-10">
+                  <AutocompleteSearch properties={properties} />
+                </div>
+              </div>
 
+              {/* Floating Images for Large Screens */}
+              <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden lg:flex z-0">
+                <div className="absolute w-[134.05px] top-[15%] right-[5%] z-0">
+                  <div className="h-[117.73px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
+                    <div className="self-stretch px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                          Investment Potential
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-[134.05px] h-[75.19px] relative">
+                      <img
+                        src="/Series=2, Chart type=Line wavy (1).svg"
+                        alt=""
+                        width={134.05}
+                        height={75.19}
+                      />
+                    </div>
                   </div>
+                </div>
 
-                  {/* Floating Images */}
-                  <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden sm:hidden md:hidden lg:flex z-0">
-                    {/* First Component */}
-                    {/* Uncomment and modify as needed */}
-                    {/* <div className="absolute w-[150px] top-[10%] left-[15%] z-0">
-      <div className="h-[173px] bg-white p-4 rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
-        <div className="p-2 bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
-          <div className="text-center text-[#040815] text-[10px] font-bold font-['Plus Jakarta Sans'] leading-[15px]">Flood Risk</div>
-        </div>
-        <div className="w-[61px] h-5 p-1 bg-white rounded-[34.63px] justify-start items-center gap-1 inline-flex">
-          <div className="w-[53px] h-[17px] p-2 bg-[#c4f1d4] rounded-[84.46px] justify-center items-center gap-[8.45px] flex">
-            <div className="text-[#3cc673] text-[11px] font-bold leading-none">Low</div>
-          </div>
-        </div>
-        <img className="w-[75px] h-[87.72px]" src="/flood 987 (1).png" />
-      </div>
-    </div> */}
-
-                    {/* Second Component */}
-                    <div className="absolute w-[134.05px] top-[15%] right-[5%] z-0">
-                      <div className="h-[117.73px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
-                        <div className="self-stretch px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
-                          <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
-                              Investment Potential
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-[134.05px] h-[75.19px] relative">
-                          <img
-                            src="/Series=2, Chart type=Line wavy (1).svg"
-                            alt=""
-                            width={134.05}
-                            height={75.19}
-                          />
+                <div className="absolute w-[134.05px] top-[40%] left-[10%] z-0">
+                  <div className="h-[118.22px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
+                    <div className="w-[134.05px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
+                      <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                        <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                          Planning Applications
                         </div>
                       </div>
                     </div>
-
-                    {/* Third Component */}
-                    <div className="absolute w-[134.05px] top-[40%] left-[10%] z-0">
-                      <div className="h-[118.22px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
-                        <div className="w-[134.05px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
-                          <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                            <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
-                              Planning Applications
-                            </div>
-                          </div>
+                    <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
+                      <div className="w-[15.83px] h-[15.83px] relative" />
+                      <div className="w-full flex-row justify-start items-start gap-[3.86px] inline-flex">
+                        <div className="flex-shrink-0">
+                          <img src="/Tool.svg" alt="" />
                         </div>
-                        <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
-                          <div className="w-[15.83px] h-[15.83px] relative" />
-                          <div className="w-full flex-row justify-start items-start gap-[3.86px] inline-flex">
-                            <div className="flex-shrink-0">
-                              <img src="/Tool.svg" alt="" />
-                            </div>
-                            <div className="flex flex-col gap-[3.86px]">
-                              <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                              <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                              <div className="w-[32.06px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
-                          <div className="w-[15.83px] h-[15.83px] relative" />
-                          <div className="w-full flex-row justify-start items-start gap-[3.86px] inline-flex">
-                            <div className="flex-shrink-0">
-                              <img src="/Tool.svg" alt="" />
-                            </div>
-                            <div className="flex flex-col gap-[3.86px]">
-                              <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                              <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                              <div className="w-[32.06px] h-[5.34px] bg-[#e8e8ea] rounded" />
-                            </div>
-                          </div>
+                        <div className="flex flex-col gap-[3.86px]">
+                          <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
+                          <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
+                          <div className="w-[32.06px] h-[5.34px] bg-[#e8e8ea] rounded" />
                         </div>
                       </div>
                     </div>
-
-                    {/* Fourth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[40%] right-[1%] z-0">
-                      <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
-                        <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                          <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
-                            What’s Nearby?
-                          </div>
+                    <div className="w-[134.05px] px-[11.87px] py-[7.91px] justify-start items-center gap-[13.36px] inline-flex">
+                      <div className="w-[15.83px] h-[15.83px] relative" />
+                      <div className="w-full flex-row justify-start items-start gap-[3.86px] inline-flex">
+                        <div className="flex-shrink-0">
+                          <img src="/Tool.svg" alt="" />
                         </div>
-                      </div>
-                      <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
-                        <img
-                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
-                          src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png"
-                        />
-                        <img
-                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
-                          src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png"
-                        />
-                        <img
-                          className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
-                          src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Fifth Component */}
-                    <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[20%] left-[15%] z-0">
-                      <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
-                        <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                          <div className="self-stretch text-[#212636] mb-2 text-[8.90px] font-bold leading-[10.68px]">
-                            Mobile and Broadband
-                          </div>
+                        <div className="flex flex-col gap-[3.86px]">
+                          <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
+                          <div className="w-[57.44px] h-[5.34px] bg-[#e8e8ea] rounded" />
+                          <div className="w-[32.06px] h-[5.34px] bg-[#e8e8ea] rounded" />
                         </div>
-                      </div>
-                      <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
-                        <img src="/signal-icon-png-15.jpg" alt="" width={80} height={70} />
                       </div>
                     </div>
                   </div>
-                </main>
+                </div>
 
+                <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[40%] right-[1%] z-0">
+                  <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
+                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                      <div className="self-stretch text-[#212636] text-[8.90px] font-medium leading-[10.68px]">
+                        What’s Nearby?
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
+                    <img
+                      className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                      src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png"
+                    />
+                    <img
+                      className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                      src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png"
+                    />
+                    <img
+                      className="w-[25.22px] h-[25.22px] rounded-[66.37px] border border-black/10"
+                      src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png"
+                    />
+                  </div>
+                </div>
+
+                <div className="absolute bg-white shadow-lg rounded-lg w-[134.05px] top-[20%] left-[15%] z-0">
+                  <div className="w-[134.05px] h-[34.74px] px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
+                    <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                      <div className="self-stretch text-[#212636] mb-2 text-[8.90px] font-bold leading-[10.68px]">
+                        Mobile and Broadband
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-[134.05px] h-12 px-[11.87px] py-[7.91px] justify-center items-center gap-[16.82px] inline-flex">
+                    <img src="/signal-icon-png-15.jpg" alt="" width={80} height={70} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-
-
-
-     
-
-
-
-
-
-        <div className="flex flex-col  justify-center md:p-8  w-full">
-          <div className="w-[100] flex items-center justify-center p-5">
+        <div className="flex flex-col justify-center md:p-8 w-full px-4 sm:px-6">
+          <div className="w-full flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
               Two-Col Features
             </Chip>
           </div>
           <div className="w-full justify-center">
-            <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">Supercharge Your Workflows</h2>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <p className="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.</p>
+            <h2 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+              Supercharge Your Workflows
+            </h2>
+            <p className="text-md mt-4 text-slate-600 text-center">
+              Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.
+            </p>
           </div>
-          <div className="grid md:grid-cols-2 py-10">
-            <div className="grid place-items-center">
+          <div className="grid md:grid-cols-2 py-10 justify-center items-center">
+            <div className="flex justify-center items-center">
               <img src="MainPageImg/1stImg.png" alt="" />
             </div>
-            <div className="grid place-items-center">
+            <div className="flex justify-center items-center">
               <div className="max-w-lg">
                 <span className="bg-purple-100 border-purple-200 border text-purple-600 -ml-px rounded-full text-xs font-medium px-3 py-1">
                   Simplified Decision Making
                 </span>
-                <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">
+                <h3 className="text-2xl font-medium mt-4">
                   Extensive Property Data Insights at Your Fingertips
                 </h3>
-                <p className="mt-4 text-slate-600 [text-wrap:balance]">
-                  Make informed decisions with our AI-powered platform. Get real-time insights,
-                  predictive analytics, and smart data visualization to maximize your ROI
+                <p className="mt-4 text-slate-600">
+                  Make informed decisions with our AI-powered platform. Get real-time insights, predictive analytics, and smart data visualization to maximize your ROI.
                 </p>
                 <ul className="grid mt-6 text-left gap-y-4">
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <symbol id="ai:ph:check-circle-fill">
                         <path
                           fill="currentColor"
@@ -567,37 +525,19 @@ export default function Home() {
                       </symbol>
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
-                    <span className="text-sm">
-                      Real-time Property Insights and Analytics
-                    </span>
+                    <span className="text-sm">Real-time Property Insights and Analytics</span>
                   </li>
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
-                    <span className="text-sm">
-                      Predictive Analytics and Forecasting
-                    </span>
+                    <span className="text-sm">Predictive Analytics and Forecasting</span>
                   </li>
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
-                    <span className="text-sm">
-                      Real-time Data Visualization
-                    </span>
+                    <span className="text-sm">Real-time Data Visualization</span>
                   </li>
                 </ul>
                 <div className="flex items-center gap-4 mt-6">
@@ -630,7 +570,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 py-10">
+          <div className="grid md:grid-cols-2 py-10 justify-center items-center">
             <div className="grid place-items-center pb-10">
               <img src="/thirdsection.png" alt="" />
             </div>
@@ -639,51 +579,28 @@ export default function Home() {
                 <span className="bg-purple-100 border-purple-200 border text-purple-600 -ml-px rounded-full text-xs font-medium px-3 py-1">
                   ROI and Investment Analysis
                 </span>
-                <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">
+                <h3 className="text-2xl font-medium mt-4">
                   Supercharge Your Investment Decisions with AI-driven Insights
                 </h3>
-                <p className="mt-4 text-slate-600 [text-wrap:balance]">
-                  Make informed investment decisions with our AI-powered platform. Get
-                  real-time insights, predictive analytics, and smart data visualization
-                  to maximize your ROI
+                <p className="mt-4 text-slate-600">
+                  Make informed investment decisions with our AI-powered platform. Get real-time
+                  insights, predictive analytics, and smart data visualization to maximize your ROI.
                 </p>
                 <ul className="grid mt-6 text-left gap-y-4">
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
-                    <span className="text-sm">
-                      Real-time Investment Insights and Analytics
-                    </span>
+                    <span className="text-sm">Real-time Investment Insights and Analytics</span>
                   </li>
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
-                    <span className="text-sm">
-                      Predictive Analytics and Forecasting
-                    </span>
+                    <span className="text-sm">Predictive Analytics and Forecasting</span>
                   </li>
                   <li className="flex items-center gap-3 text-neutral-800">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 256 256"
-                      className="w-5 h-5"
-                      data-icon="ph:check-circle-fill"
-                    >
+                    <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                       <use xlinkHref="#ai:ph:check-circle-fill"></use>
                     </svg>
                     <span className="text-sm">Real-time Data Visualization</span>
@@ -718,36 +635,20 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-
-
-
-
-
         </div>
 
-
-
-        <div className="flex flex-col justify-center mt-12 w-full px-8 rounded-2xl">
-          {/* Main Container */}
-          <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white">
-            {/* Left Column: Questions */}
-            <div className="flex flex-col gap-6 pl-12">
+        <div className="flex flex-col justify-center mt-12 w-full px-2 sm:px-2 lg:px-8 rounded-2xl">
+          <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 p-4 sm:p-6 lg:p-8 bg-white justify-center items-center">
+            <div className="flex flex-col gap-4 sm:gap-6 sm:pl-4 lg:pl-12">
               <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
                 Ask about a home
               </span>
-              <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">
-                  Ask any Questions  related to any property with the help of AI
-                </h3>
-              <ul className="grid mt-6 text-left gap-y-4">
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+              <h3 className="text-2xl font-medium mt-4">
+                Ask any Questions related to any property with the help of AI
+              </h3>
+              <ul className="grid mt-6 text-left gap-y-2 sm:gap-y-4">
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <symbol id="ai:ph:check-circle-fill">
                       <path
                         fill="currentColor"
@@ -756,74 +657,47 @@ export default function Home() {
                     </symbol>
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
-                  <span className="text-sm">
-                    Who lives in this neighbourhood?
-                  </span>
+                  <span className="text-sm sm:text-xs">Who lives in this neighbourhood?</span>
                 </li>
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5 flex-shrink-0">
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
-                  <span className="text-sm">
+                  <span className="text-sm sm:text-xs flex-grow">
                     What planning applications have been approved? Permit history?
                   </span>
                 </li>
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
-                  <span className="text-sm">
-                    How's the air quality?
-                  </span>
+                  <span className="text-sm sm:text-xs">How's the air quality?</span>
                 </li>
               </ul>
             </div>
 
-
-            {/* Right Column: Image with Overlapping Card */}
-            <div className="">
-              <img className="w-full h-auto " src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
-
+            <div className="flex justify-center items-center">
+              <img className="w-full h-auto" src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 p-8 bg-white mt-8">
-            {/* Right Column: Neighborhood Questions */}
-            <div className="relative flex flex-col gap-6">
-              <div className="p-6 flex items-center justify-center">
+          <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 p-4 sm:p-6 lg:p-8 bg-white mt-8 justify-center items-center">
+            <div className="relative flex flex-col gap-4 sm:gap-6">
+              <div className="p-4 sm:p-6 flex items-center justify-center">
                 <img className="w-full rounded-xl" src="/MainPageImg/homeTypeAsset.png" alt="Chart" />
               </div>
             </div>
 
-            {/* Left Column: Chart with Overlapping Card */}
-            <div className="flex flex-col gap-6 pl-12">
+            <div className="flex flex-col gap-4 sm:gap-6 sm:pl-4 lg:pl-12">
               <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
                 Look for a home
               </span>
-              <h3 className="text-2xl font-medium mt-4 [text-wrap:balance]">
+              <h3 className="text-2xl font-medium mt-4">
                 Find the perfect home with our AI-powered search engine and data insights
-                </h3>
-              <ul className="grid mt-6 text-left gap-y-4">
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+              </h3>
+              <ul className="grid mt-6 text-left gap-y-2 sm:gap-y-4">
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <symbol id="ai:ph:check-circle-fill">
                       <path
                         fill="currentColor"
@@ -834,38 +708,20 @@ export default function Home() {
                   </svg>
                   <span className="text-sm">Show me family-friendly neighbourhoods</span>
                 </li>
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
                   <span className="text-sm">How's the market right now?</span>
                 </li>
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
                   <span className="text-sm">Is this a good place to live?</span>
                 </li>
-                <li className="flex items-center gap-3 text-neutral-800">
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 256 256"
-                    className="w-5 h-5"
-                    data-icon="ph:check-circle-fill"
-                  >
+                <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
+                  <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
                     <use xlinkHref="#ai:ph:check-circle-fill"></use>
                   </svg>
                   <span className="text-sm">Tell me more about this neighbourhood</span>
@@ -873,14 +729,10 @@ export default function Home() {
               </ul>
             </div>
           </div>
-
         </div>
 
 
-
-
-<div>
-<div className="mt-24">
+        <div className="mt-24">
           <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
             Interactive <span className="text-indigo-600">Visualizations</span>
           </h2>
@@ -889,122 +741,124 @@ export default function Home() {
           </p>
         </div>
 
- 
-
- 
-    <div class="grid col-span-1 grid-cols-1 lg:grid-cols-2 gap-8 mt-8 justify-items-center">
-      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
-        <img
-          src="/mapImgs/map1.png"
-          alt="Flood Risks"
-          class="w-full h-48 object-cover rounded-t-2xl"
-        />
-        <div class="pb-1 flex flex-col text-center">
-          <p class="text-xl font-bold">Flood Risks</p>
-          <p>
-          Find out how your future neighbourhood is at risks of flooding from rivers and seas
-          </p>
-        </div>
-      </div>
-    
-      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
-        <img
-          src="/mapImgs/noise.png"
-          alt="Noise Level"
-          class="w-full h-48 object-cover rounded-t-2xl"
-        />
-        <div class="pb-1 flex flex-col text-center">
-          <p class="text-xl font-bold">Noise Level</p>
-          <p>
-          Learn How Loud your future neighbourhood 
-          will sound. 
-          </p>
-        </div>
-      </div>
-    
-      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0 ">
-      <img
-          src="/mapImgs/map2.png"
-          alt="Noise Level"
-          class="w-full h-48 object-cover rounded-t-2xl"
-        />
-        <div class="w-full h-[80px] rounded-xl flex flex-col items-center justify-center pt-2 px-4">
-          <div class="text-center text-[#040815] text-lg font-semibold leading-tight mb-1">EV Friendly neighborhood</div>
-          <div class="text-center">
-            <span class="text-[#191d23] text-sm font-medium">Find homes nearby of electric charging 
-            stations  </span>
-     
+        <div className="grid col-span-1 grid-cols-1 lg:grid-cols-2 gap-8 mt-8 justify-items-center">
+          <div className="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
+            <img
+              src="/mapImgs/map1.png"
+              alt="Flood Risks"
+              className="w-full h-48 object-cover rounded-t-2xl"
+            />
+            <div className="pb-1 flex flex-col text-center">
+              <p className="text-xl font-bold">Flood Risks</p>
+              <p>Find out how your future neighbourhood is at risks of flooding from rivers and seas</p>
+            </div>
           </div>
-        </div>
-      </div>
-    
-      <div class="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
-        <div class="w-full flex justify-center items-start gap-4 p-2">
-          <div class="flex flex-col gap-2">
-            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
-              <div class="text-sm font-medium">Investment Potential</div>
-              <div class="mt-4 h-10">
-                <img
-                  src="/Series=2, Chart type=Line wavy (1).svg"
-                  alt=""
-                  width={134.05}
-                  height={75.19}
-                />
+
+          <div className="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
+            <img
+              src="/mapImgs/noise.png"
+              alt="Noise Level"
+              className="w-full h-48 object-cover rounded-t-2xl"
+            />
+            <div className="pb-1 flex flex-col text-center">
+              <p className="text-xl font-bold">Noise Level</p>
+              <p>Learn How Loud your future neighbourhood will sound.</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
+            <img
+              src="/mapImgs/map2.png"
+              alt="EV Friendly Neighborhood"
+              className="w-full h-48 object-cover rounded-t-2xl"
+            />
+            <div className="w-full h-[80px] rounded-xl flex flex-col items-center justify-center pt-2 px-4">
+              <div className="text-center text-[#040815] text-lg font-semibold leading-tight mb-1">
+                EV Friendly neighborhood
+              </div>
+              <div className="text-center">
+                <span className="text-[#191d23] text-sm font-medium">
+                  Find homes nearby of electric charging stations
+                </span>
               </div>
             </div>
-            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
-              <div class="text-sm font-medium">Planning Applications</div>
-              <div class="mt-2">
-                <div class="flex items-center gap-2">
-                  <img src="/Tool.svg" alt="" />  <div class="h-1 w-full bg-gray-200 rounded"></div>
+          </div>
+
+          <div className="rounded-2xl relative bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md h-[350px] flex flex-col justify-between snap-start shrink-0">
+            <div className="w-full flex justify-center items-start gap-4 p-2">
+              <div className="flex flex-col gap-2">
+                <div className="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                  <div className="text-sm font-medium">Investment Potential</div>
+                  <div className="mt-4 h-10">
+                    <img
+                      src="/Series=2, Chart type=Line wavy (1).svg"
+                      alt=""
+                      width={134.05}
+                      height={75.19}
+                    />
+                  </div>
                 </div>
-                <div class="flex items-center gap-2 mt-2">
-                  <img src="/Tool.svg" alt="" /> <div class="h-1 w-full bg-gray-200 rounded"></div>
+                <div className="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                  <div className="text-sm font-medium">Planning Applications</div>
+                  <div className="mt-2">
+                    <div className="flex items-center gap-2">
+                      <img src="/Tool.svg" alt="" />
+                      <div className="h-1 w-full bg-gray-200 rounded"></div>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <img src="/Tool.svg" alt="" />
+                      <div className="h-1 w-full bg-gray-200 rounded"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="flex flex-col items-center gap-4">
-            <div class="bg-white rounded-xl shadow border border-black/10 p-4 w-40 flex flex-col items-center">
-              <div class="bg-white rounded-full p-2 text-center font-bold">Flood Risk</div>
-              <div class="mt-2 bg-green-200 text-green-600 text-sm font-bold px-4 py-1 rounded-full">Low</div>
-              <img src="/flood 987 (1).png" alt="Flood Risk" class="mt-4 w-20 h-24 object-cover" />
-            </div>
-          </div>
-          <div class="flex flex-col gap-4">
-            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
-              <div class="text-sm font-medium">What’s Nearby?</div>
-              <div class="flex items-center justify-around mt-4">
-                <img src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png" alt="Nearby 1" class="w-6 h-6 rounded-full border border-gray-200" />
-                <img src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png" alt="Nearby 2" class="w-6 h-6 rounded-full border border-gray-200" />
-                <img src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png" alt="Nearby 3" class="w-6 h-6 rounded-full border border-gray-200" />
+              <div className="flex flex-col items-center gap-4">
+                <div className="bg-white rounded-xl shadow border border-black/10 p-4 w-40 flex flex-col items-center">
+                  <div className="bg-white rounded-full p-2 text-center font-bold">Flood Risk</div>
+                  <div className="mt-2 bg-green-200 text-green-600 text-sm font-bold px-4 py-1 rounded-full">
+                    Low
+                  </div>
+                  <img
+                    src="/flood 987 (1).png"
+                    alt="Flood Risk"
+                    className="mt-4 w-20 h-24 object-cover"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
-              <div class="text-xs font-medium">Mobile and Broadband</div>
-              <div class="flex items-center justify-start h-14">
-                <img src="/signal-icon-png-15.jpg" alt="" />
+              <div className="flex flex-col gap-4">
+                <div className="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                  <div className="text-sm font-medium">What’s Nearby?</div>
+                  <div className="flex items-center justify-around mt-4">
+                    <img
+                      src="/{11C21EFE-754A-483E-9649-CFBF04D4B9A8}.png"
+                      alt="Nearby 1"
+                      className="w-6 h-6 rounded-full border border-gray-200"
+                    />
+                    <img
+                      src="/{AF5AEBF0-9B52-49F8-BD62-0249B925C52B}.png"
+                      alt="Nearby 2"
+                      className="w-6 h-6 rounded-full border border-gray-200"
+                    />
+                    <img
+                      src="/{DEDFAD32-DA7B-4016-9CBD-D17D56F97A38}.png"
+                      alt="Nearby 3"
+                      className="w-6 h-6 rounded-full border border-gray-200"
+                    />
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl shadow border border-black/10 flex flex-col p-4">
+                  <div className="text-xs font-medium">Mobile and Broadband</div>
+                  <div className="flex items-center justify-start h-14">
+                    <img src="/signal-icon-png-15.jpg" alt="" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-
-</div>
-    
-
-
-
-
-
- 
 
         <div className="w-[100vw] bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center">
-          <h2 className="text-white text-4xl md:text-6xl tracking-tight">
-            Build faster websites.
-          </h2>
+          <h2 className="text-white text-4xl md:text-6xl tracking-tight">Build faster websites.</h2>
           <p className="text-white/70 mt-4 text-lg md:text-xl">
             Pull content from anywhere and serve it fast with Astro's next-gen island architecture.
           </p>
@@ -1018,11 +872,12 @@ export default function Home() {
           </div>
         </div>
 
-
-
-
         <Footer />
       </main>
+
+
+
+
     </>
   );
 }

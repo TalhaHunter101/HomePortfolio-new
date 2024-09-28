@@ -101,7 +101,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-  <div className="w-full my-2">
+  <div className="w-full ">
     {/* Icon and Question */}
     <div className="flex items-center space-x-2 justify-between">
       <div className="flex ">
@@ -118,8 +118,8 @@ export function PublicTransportCard({ data, latitude, longitude }) {
       </div>
   
          {/* Walk Score Info */}
-    <div className="p-4 text-purple-300 w-[30vw]">
-      <div className="text-xs text-gray-500  md:text-sm capitalize text-foreground text-center">
+    <div className="px-4 text-purple-300">
+      <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
         <a
           href="https://walkradius.com"
           target="_blank"
@@ -143,6 +143,9 @@ export function PublicTransportCard({ data, latitude, longitude }) {
 
       <CardBody>
         <div className="rounded-md">
+        <div className="  z-10 shadow text-gray-500 font-medium bg-purple-100 text-xs sm:text-sm p-4 rounded-lg mb-3">
+        Planning your public transport route effectively can save time and hassle. Knowing the types of connections available, the frequency of services, and the estimated travel time can help you avoid unnecessary delays and ensure a smooth journey.
+            </div>
           {/* <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
             <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
               <div className="h-6 w-6 lg:w-8 lg:h-8 px-2 flex justify-center items-center mr-1 rounded-full bg-purple-400">
