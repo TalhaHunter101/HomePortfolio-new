@@ -69,8 +69,8 @@ function ComparesionTable({ data }) {
           </Tooltip>
         );
       case "soldDate":
-        return item.saleEstimates && item.saleEstimates[0]
-          ? formatDate(item.saleEstimates[0].ingestedAt)
+        return item.history.historicSales[0] && item.history.historicSales[0]
+          ? formatDate(item.history.historicSales[0]?.date)
           : "N/A";
       case "soldPrice":
         return item.saleEstimate
