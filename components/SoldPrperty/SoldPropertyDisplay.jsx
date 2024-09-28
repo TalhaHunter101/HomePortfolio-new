@@ -12,42 +12,39 @@ import { AirQualityCard } from "../PropertyPageCards/AirQualityCard";
 import { EPCCard } from "../PropertyPageCards/EPCcard";
 import MainCard from "../Property/MainCard";
 import ThumbnailCard from "../Property/ThumbnailCard";
-// Assuming this is where your ThumbnailCard is located
 
 function PropertyDisplay({ listingData, params }) {
-  console.log("listingData", listingData);
   const [rentEstimate, setRentEstimate] = useState(0);
   const [schoolData, setSchoolData] = useState([]);
+  const [pricePaidData, setPricePaidData] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state to manage UI while fetching
 
   const uprn = params?.uprn || "123456";
-
-  // Hardcoded values for demonstration
-  const fullAdress = listingData?.full_address;
+  const fullAdress = listingData?.full_address || "N.A";
   const formattedPrice =
     listingData?.history?.historicSales[0]?.price ||
-    listingData?.saleEstimate?.currentPrice;
-
-  const bedrooms = listingData?.attributes?.bedrooms || null;
-  const bathrooms = listingData?.attributes?.bathrooms || null;
-  const squareFeet = listingData?.analyticsTaxonomy?.sizeSqFeet || null;
-  const builtYear = 1962; // Hardcoded year built
+    listingData?.saleEstimate?.currentPrice ||
+    "N.A";
+  const bedrooms = listingData?.attributes?.bedrooms || "N.A";
+  const bathrooms = listingData?.attributes?.bathrooms || "N.A";
+  const squareFeet = listingData?.analyticsTaxonomy?.sizeSqFeet || "N.A";
+  const builtYear = listingData?.attributes?.builtYear || "N.A";
+  const postcode = listingData?.ref_postcode || "N.A";
   const newData = {
     counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
     analyticsTaxonomy: listingData?.analyticsTaxonomy,
   };
 
-  const [pricePaidData, setPricePaidData] = useState([]);
   const locationData = {
     address: fullAdress,
     location: {
       coordinates: {
-        latitude: listingData?.address?.latitude,
-        longitude: listingData?.address?.longitude,
+        latitude: listingData?.address?.latitude || 0,
+        longitude: listingData?.address?.longitude || 0,
       },
     },
   };
 
-  // Dummy data for images
   const mainImages = [
     "https://lc.zoocdn.com/2d792e1a98ef15571de593c32265cae6c5b7810d.jpg",
     "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
@@ -60,58 +57,58 @@ function PropertyDisplay({ listingData, params }) {
     "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
     "https://lc.zoocdn.com/33af57fb01f4c76627939ad4fa9603eb16e493d2.jpg",
     "https://lc.zoocdn.com/1a1a9416471a880bc713c96323ba08970dddf238.jpg",
-
   ];
 
   useEffect(() => {
     const getSchoolData = async () => {
       try {
-        const response = await fetch(
-          `/api/indevisual/get-schools-by-postcode`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ postcode: listingData?.ref_postcode }),
-          }
-        );
+        const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ postcode }),
+        });
 
         if (response.ok) {
           const result = await response.json();
           setSchoolData(result);
         }
       } catch (error) {
-        console.log("error is", error);
+        console.error("Error fetching school data:", error);
       }
     };
 
     const getPricePaidData = async () => {
       try {
-        const result = await fetch("/api/indevisual/get-price-paid", {
+        const response = await fetch("/api/indevisual/get-price-paid", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            city: listingData?.analyticsTaxonomy?.postTownName,
+            city: listingData?.analyticsTaxonomy?.postTownName || "N.A",
           }),
         });
 
-        if (result.ok) {
-          const resultData = await result.json();
+        if (response.ok) {
+          const resultData = await response.json();
           setPricePaidData(resultData);
         }
       } catch (error) {
-        console.log("error is", error);
+        console.error("Error fetching price paid data:", error);
       }
     };
 
-    getSchoolData();
-    getPricePaidData();
-  }, [listingData]);
+    const fetchData = async () => {
+      setLoading(true);
+      await getSchoolData();
+      await getPricePaidData();
+      setLoading(false);
+    };
 
-  const postcode = listingData?.ref_postcode;
+    fetchData();
+  }, [listingData, postcode]);
 
   return (
     <>
@@ -122,31 +119,46 @@ function PropertyDisplay({ listingData, params }) {
             {mainImages && <MainCard images={mainImages} />}
           </div>
           <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
-            {thumbnailImages &&
-              thumbnailImages?.map((imageUrl, index) => (
-                <ThumbnailCard key={index} imageUrl={imageUrl} />
-              ))}
+            {thumbnailImages?.map((imageUrl, index) => (
+              <ThumbnailCard key={index} imageUrl={imageUrl} />
+            ))}
           </div>
         </div>
 
         {/* Property Details Header */}
-        <div className="flex flex-col items-center text-center mt-6">
-          <div className="mb-2">
-            <Chip
-              startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
-              radius="lg"
-              variant="bordered"
-              color="warning"
-              size="sm"
-            >
-              Currently Off-Market
-            </Chip>
+        <div className="p-4 flex flex-col lg:flex-row justify-between w-full mt-6">
+          <div className="flex-1">
+            <div className="mb-4 text-center lg:text-left">
+              <Chip
+                startContent={<Icon icon="mdi:checkbox-marked-circle-outline" />}
+                radius="lg"
+                variant="bordered"
+                color="warning"
+                size="sm"
+                className="mb-2"
+              >
+                Currently Off-Market
+              </Chip>
+              <h3 className="font-bold text-2xl">{fullAdress}</h3>
+              <div className="text-gray-500 text-sm mt-1">
+                Single Family | Built {builtYear}
+              </div>
+            </div>
           </div>
-          <h3 className="font-bold text-2xl">{fullAdress}</h3>
-          {/* <h3 className="font-bold text-2xl">£{formattedPrice}</h3> */}
-          <div className="text-gray-500 text-sm mt-1">
-            Single Family | {bedrooms || "N.A"} Beds | {bathrooms || "N.A"} Bath
-            | {squareFeet || "N.A"} sq.ft. | Built {builtYear || "N.A"}
+
+          <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
+            <div className="text-center">
+              <h3 className="font-semibold text-2xl lg:text-4xl">{bedrooms}</h3>
+              <p className="text-xs lg:text-sm text-gray-600">Beds</p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-2xl lg:text-4xl">{bathrooms}</h3>
+              <p className="text-xs lg:text-sm text-gray-600">Baths</p>
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-2xl lg:text-4xl">{squareFeet}</h3>
+              <p className="text-xs lg:text-sm text-gray-600">Sq Ft</p>
+            </div>
           </div>
         </div>
 
@@ -160,11 +172,7 @@ function PropertyDisplay({ listingData, params }) {
         </div>
 
         {/* Rent Estimate */}
-        <div className="mt-6 text-center">
-          <h4 className="text-xl font-bold">
-            Current Rent Estimate: £{rentEstimate}
-          </h4>
-        </div>
+        
 
         {/* LocationCard */}
         <div className="mt-6 w-full">
@@ -180,7 +188,7 @@ function PropertyDisplay({ listingData, params }) {
         </div>
 
         <div className="mt-6 w-full">
-          <FamilyCard postcode={postcode} city={""} />
+          <FamilyCard postcode={postcode} city={listingData?.analyticsTaxonomy?.postTownName || "N.A"} />
         </div>
 
         <div className="mt-6 w-full">
@@ -192,8 +200,8 @@ function PropertyDisplay({ listingData, params }) {
         </div>
         <div className="mt-6 w-full">
           <AirQualityCard
-            latitude={listingData?.address?.latitude}
-            longitude={listingData?.address?.longitude}
+            latitude={listingData?.address?.latitude || 0}
+            longitude={listingData?.address?.longitude || 0}
           />
         </div>
         
