@@ -67,6 +67,7 @@ function PropertyDisplay({ listingData, params }) {
   const [schoolData, setSchoolData] = useState([]);
   const [pricePaidData, setPricePaidData] = useState([]);
   const [rentEstimate, setRentEstimate] = useState(0);
+  const [rentData, setRentData] = useState([]);
 
   const formatedSqft = formatCurrency(
     listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
@@ -114,8 +115,28 @@ function PropertyDisplay({ listingData, params }) {
       } catch (error) {}
     };
 
+    const getRentData = async () => {
+      try {
+        const result = await fetch("/api/indevisual/get-rent-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            outcode: listingData?.analyticsTaxonomy?.outcode,
+          }),
+        });
+
+        if (result.ok) {
+          const resultData = await result.json();
+          setRentData(resultData);
+        }
+      } catch (error) {}
+    };
+
     getSchoolData();
     getPricePaidData();
+    getRentData();
   }, [listingData]);
 
   const navElements = [
@@ -559,6 +580,7 @@ function PropertyDisplay({ listingData, params }) {
                       price={price}
                       area={formatedSqft || "NA"}
                       address={fullAddress || listingData?.address}
+                      rentData={rentData}
                     />
                   </div>
                 ))}
