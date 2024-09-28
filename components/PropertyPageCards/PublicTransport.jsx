@@ -103,21 +103,22 @@ export function PublicTransportCard({ data, latitude, longitude }) {
       <CardHeader>
   <div className="w-full my-2">
     {/* Icon and Question */}
-    <div className="flex items-center space-x-2">
-      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full">
+    <div className="flex items-center space-x-2 justify-between">
+      <div className="flex ">
+      <span className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
         <Icon
           icon="mdi:bus"
           width={16} // Adjust the icon size to fit well within the circle
           className="text-purple-700" // Adjust the icon color if needed
         />
-      </div>
-      <h2 className="text-xl font-bold text-gray-700">
+      </span>
+      <span className="text-xl font-bold text-gray-700">
         What are my public transportation options?
-      </h2>
-    </div>
-
-    {/* Walk Score Info */}
-    <div className="flex justify-center ml-24 mt-2">
+      </span>
+      </div>
+  
+         {/* Walk Score Info */}
+    <div className="p-4 text-purple-300">
       <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
         <a
           href="https://www.walkscore.com/how-it-works/"
@@ -133,6 +134,9 @@ export function PublicTransportCard({ data, latitude, longitude }) {
         
       </div>
     </div>
+    </div>
+
+ 
   </div>
 </CardHeader>
 

@@ -58,7 +58,7 @@ function DataShows({ postcode }) {
             <div className="grid grid-cols-2 gap-4 text-gray-600 pt-4">
               <div>
               <p className="text-sm font-medium text-gray-500 mb-1 ">Total Population</p>
-                <p className="text-4xl font-medium text-blue-300 ">{populationData} 
+                <p className="text-4xl font-medium text-purple-300 ">{populationData} 
                   <Icon
               icon="mdi:account-group"
              height={48}
@@ -68,7 +68,7 @@ function DataShows({ postcode }) {
               </div>
               <div>
               <p className="text-sm font-medium text-gray-500 mb-1 ">Walk Score</p>
-                <p className="text-4xl font-medium text-blue-300 ">{walkScore}   <Icon
+                <p className="text-4xl font-medium text-purple-300 ">{walkScore}   <Icon
               icon="fa-solid:walking"
              height={48}
               className="inline pb-2"
@@ -77,7 +77,7 @@ function DataShows({ postcode }) {
               </div>
               <div>
               <p className="text-sm font-medium text-gray-500 mb-1 ">Average Home Price</p>
-                <p className="text-4xl font-medium text-blue-300 ">
+                <p className="text-4xl font-medium text-purple-300 ">
                   £{formatCurrency(medianPrice)}   <Icon
               icon="f7:house-fill"
              height={40}
@@ -88,7 +88,7 @@ function DataShows({ postcode }) {
               </div>
               <div>
               <p className="text-sm font-medium text-gray-500 mb-1 ">Median Rent</p>
-                <p className="text-4xl font-medium text-blue-300 ">£1,342   <Icon
+                <p className="text-4xl font-medium text-purple-300 ">£1,342   <Icon
               icon="mage:building-b"
              height={48}
               className="inline pb-2"

@@ -68,24 +68,24 @@ import {
               <div className="grid grid-cols-2 gap-6 text-gray-600">
                 <div>
                 <p className="text-sm font-medium text-gray-500 mb-1 ">College Degree</p>
-                  <p className="text-4xl font-medium text-blue-300 ">
+                  <p className="text-4xl font-medium text-purple-300 ">
                     {calculateCollegeDegreePercentage()}%
                   </p>
                   
                 </div>
                 <div>
                 <p className="text-sm font-medium text-gray-500 mb-1 ">Full time Employment</p>
-                  <p className="text-4xl font-medium text-blue-300">58%</p>
+                  <p className="text-4xl font-medium text-purple-300">58%</p>
                   
                 </div>
                 <div>
                 <p className="text-sm font-medium text-gray-500 mb-1 ">Renters</p>
-                  <p className="text-4xl font-medium text-blue-300">42%</p>
+                  <p className="text-4xl font-medium text-purple-300">42%</p>
                   
                 </div>
                 <div>
                 <p className="text-sm font-medium text-gray-500 mb-1 ">Owners</p>
-                  <p className="text-4xl font-medium text-blue-300">58%</p>
+                  <p className="text-4xl font-medium text-purple-300">58%</p>
                   
                 </div>
               </div>
