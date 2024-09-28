@@ -118,7 +118,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
       </div>
   
          {/* Walk Score Info */}
-    <div className="px-4 text-purple-300">
+    <div className="px-4 text-purple-300 w-[30vw]">
       <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
         <a
           href="https://walkradius.com"
