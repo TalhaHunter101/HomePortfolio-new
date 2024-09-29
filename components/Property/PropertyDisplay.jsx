@@ -249,7 +249,7 @@ function PropertyDisplay({ listingData, params }) {
         },
 
         {
-          name: "Good Place To Live",
+          name: "All about the Home",
           icon: "mdi:human-child",
           bgColor: "bg-purple-300",
           id: "goodplace",
@@ -257,7 +257,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         
         {
-          name: "Who are your Neighbors?",
+          name: "Around the Neighborhood",
           icon: "mdi:human-child",
           bgColor: "bg-purple-300",
           id: "neighbors",
@@ -265,7 +265,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         
         {
-          name: "Can I raise a family here?",
+          name: "Financials",
           icon: "mdi:human-child",
           bgColor: "bg-purple-300",
           id: "family",
