@@ -5,7 +5,6 @@ import { Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 import { AcmeIcon } from "./acme";
-import ThemeSwitch from "./theme-switch";
 
 const footerNavigation = {
   services: [
@@ -53,11 +52,7 @@ const footerNavigation = {
       href: "#",
       icon: (props) => <Icon {...props} icon="fontisto:twitter" />,
     },
-    {
-      name: "GitHub",
-      href: "#",
-      icon: (props) => <Icon {...props} icon="fontisto:github" />,
-    },
+ 
   ],
 };
 
@@ -118,7 +113,7 @@ export default function Footer() {
         <Divider className="mt-16 sm:mt-20 lg:mt-24" />
         <div className="flex flex-wrap justify-between gap-2 pt-8">
           <p className="text-small text-default-400">&copy; 2024 HomePortfolio All rights reserved.</p>
-          <ThemeSwitch />
+          {/* <ThemeSwitch /> */}
         </div>
       </div>
     </footer>
