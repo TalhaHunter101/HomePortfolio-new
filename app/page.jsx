@@ -13,6 +13,7 @@ import PlaceCard from "@/components/cards/PlaceCard";
 import SearchInput from "@/components/Homepage/SearchInput";
 import Footer from "@/components/common/Footer/Footer";
 import CardsScroll from "@/components/Homepage/CardScroll";
+import ScrollingBanner from "@/components/carousel/scrolling-banner";
 
 
 
@@ -345,6 +346,33 @@ let properties = [
 ]
 
 
+let DataSources = [
+  {
+    image: '/MainPageImg/partnersLogos/1.png',
+
+  },{
+    image: '/MainPageImg/partnersLogos/2.png',
+  },
+  {
+    image: '/MainPageImg/partnersLogos/3.png',
+  },
+  {
+    image: '/MainPageImg/partnersLogos/4.png',
+  },{
+    image: '/MainPageImg/partnersLogos/5.png',
+  },{
+    image: '/MainPageImg/partnersLogos/6.png',
+  },{
+    image: '/MainPageImg/partnersLogos/7.png',
+  },{
+    image: '/MainPageImg/partnersLogos/8.png',
+  },{
+    image: '/MainPageImg/partnersLogos/9.png',
+  }
+]
+
+
+
 export default function Home() {
   const [SelectedQuestionKey, setSelectedQuestionKey] = React.useState(null);
 
@@ -385,7 +413,7 @@ export default function Home() {
               </div>
 
               {/* Floating Images for Large Screens */}
-              <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden lg:flex z-0">
+              {/* <div className="absolute top-0 left-0 w-full h-full flex flex-wrap items-center justify-center pointer-events-none hidden lg:flex z-0">
                 <div className="absolute w-[134.05px] top-[15%] right-[5%] z-0">
                   <div className="h-[117.73px] bg-white rounded-lg shadow-lg border border-black/10 flex-col justify-start items-start inline-flex">
                     <div className="self-stretch px-[11.87px] pt-[15.83px] pb-[7.91px] justify-start items-center inline-flex">
@@ -480,7 +508,7 @@ export default function Home() {
                     <img src="/signal-icon-png-15.jpg" alt="" width={80} height={70} />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -677,7 +705,7 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center items-center">
-              <img className="w-full h-auto" src="/MainPageImg/mapwithDemoData.png" alt="Placeholder" />
+              <img className="w-full h-auto" src="/MainPageImg/4cardsImage.png" alt="Placeholder" />
             </div>
           </div>
 
@@ -730,6 +758,319 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+
+
+
+        <div className="mt-24">
+          <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+            Client <span className="text-indigo-600">Testimonials</span>
+          </h2>
+          <p className="text-lg mt-4 text-slate-600 text-center">
+            HomePortFolio has helped thousands of customers find their dream homes. Here's what they have to say about us.
+          </p>
+        </div>
+
+        <div className="overflow-hidden max-w-[100vw]   mt-10 relative">
+          <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-indigo-100 right-1/3 -top-10"></div>
+          <div className="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-purple-100 right-1/3 translate-x-2/3 top-10"></div>
+          <div className="relative md:flex gap-10 overflow-hidden py-5 group">
+            <div className="md:motion-safe:animate-marquee w-auto py-5 overflow-x-auto flex flex-nowrap min-w-full shrink-0 items-stretch gap-10 snap-x snap-mandatory px-5">
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has transformed the way we manage our projects. Its well-designed interface and powerful features make it a must-have tool for any startup. We've seen a great increase in our productivity and collaboration.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="John Doe"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">John Doe</h2>
+                    <p className="text-sm text-slate-600">CEO at TechCorp</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  As a marketing professional, I love using Astroship to streamline our marketing campaigns. The automation features and data analytics help us make data-driven decisions and optimize our business strategies.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Jane Smith"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
+                    <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has revolutionized the way we handle customer support. The ticketing system and knowledge base have significantly reduced response times, leading to happier customers. Thanks to this incredible tool.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Mike Johnson"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
+                    <p className="text-sm text-slate-600">CTO at CloudNine</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has simplified our employee management processes. From onboarding to performance evaluations, everything is now seamlessly organized in one place. It's made my job much more manageable and enjoyable!
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Emily Brown"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
+                    <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Our sales team swears by Astroship's CRM capabilities. The lead tracking and pipeline management tools have resulted in a significant boost in sales. It's a versatile platform that has truly optimized our sales processes.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="David Lee"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">David Lee</h2>
+                    <p className="text-sm text-slate-600">Sales Director at Linkify</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has been a lifesaver for our finance department. Its robust accounting features and automated invoicing have saved us countless hours of manual work. It's the perfect financial companion for any business!
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Sarah Martinez"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
+                    <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="md:motion-safe:animate-marquee hidden md:motion-reduce:hidden md:flex min-w-full shrink-0 items-center gap-10">
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has transformed the way we manage our projects. Its well-designed interface and powerful features make it a must-have tool for any startup. We've seen a great increase in our productivity and collaboration.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="John Doe"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">John Doe</h2>
+                    <p className="text-sm text-slate-600">CEO at TechCorp</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  As a marketing professional, I love using Astroship to streamline our marketing campaigns. The automation features and data analytics help us make data-driven decisions and optimize our business strategies.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Jane Smith"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
+                    <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has revolutionized the way we handle customer support. The ticketing system and knowledge base have significantly reduced response times, leading to happier customers. Thanks to this incredible tool.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Mike Johnson"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
+                    <p className="text-sm text-slate-600">CTO at CloudNine</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has simplified our employee management processes. From onboarding to performance evaluations, everything is now seamlessly organized in one place. It's made my job much more manageable and enjoyable!
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Emily Brown"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
+                    <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Our sales team swears by Astroship's CRM capabilities. The lead tracking and pipeline management tools have resulted in a significant boost in sales. It's a versatile platform that has truly optimized our sales processes.
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="David Lee"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">David Lee</h2>
+                    <p className="text-sm text-slate-600">Sales Director at Linkify</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl relative p-8 bg-gray-50/60 backdrop-blur-md transition-all ring-1 ring-gray-200/50 shadow hover:shadow-lg w-[calc(100vw-5.75rem)] max-w-md flex flex-col justify-between snap-start snap-always shrink-0 first-of-type:scroll-m-10 scroll-m-5">
+                <blockquote className="text-lg md:text-xl [text-wrap:balance]">
+                  Astroship has been a lifesaver for our finance department. Its robust accounting features and automated invoicing have saved us countless hours of manual work. It's the perfect financial companion for any business!
+                </blockquote>
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="shrink-0">
+                    <picture>
+                      <img
+                        src="https://astroship-pro.web3templates.com/_astro/photo-1624298357597-fd92dfbec01d_oY7qp.avif"
+                        className="rounded-full w-12 h-12 object-cover bg-slate-100"
+                        alt="Sarah Martinez"
+                        loading="lazy"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
+                    <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
 
         <div className="mt-24">
@@ -856,6 +1197,30 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+
+        <div className="mt-24">
+          <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+            Our <span className="text-indigo-600">Data Souces</span>
+          </h2>
+          <p className="text-lg mt-4 text-slate-600 text-center">
+            We pull data from the best sources to provide you with the most accurate and up-to-date information.
+          </p>
+        </div>
+        <section className="mx-auto  w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
+      <ScrollingBanner shouldPauseOnHover gap="40px">
+      
+      {
+        DataSources.map((source, index) => (
+          <div key={index} className="flex flex-col items-center justify-center">
+              <img src={source.image} alt="partner" className="w-auto h-20" />
+          </div>
+        ))
+      }
+      </ScrollingBanner>
+    </section>
+
+
 
         <div className="w-[100vw] bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center">
           <h2 className="text-white text-4xl md:text-6xl tracking-tight">Build faster websites.</h2>
