@@ -190,7 +190,7 @@ export function NearbyCard({ data }) {
         <div className="flex  w-full items-center  justify-between">
           {/* Left Section: Icon and Question */}
           <div className="flex items-center">
-            <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+            <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
               <Icon
                 icon="mdi:map"
                 width={16} // Adjust the icon size to fit well within the circle

@@ -56,7 +56,7 @@ export function EVCard({ price, roi, postTownName }) {
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1066px" }}>
       <CardHeader>
       <div className="flex items-center my-2  ">
-    <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+    <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
       <Icon
         icon="mdi:ev-station"
         width={16} // Adjust the icon size to fit well within the circle

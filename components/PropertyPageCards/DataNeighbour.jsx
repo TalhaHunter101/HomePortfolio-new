@@ -97,19 +97,19 @@ function DataNeighbour({ postcode }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <div className="flex items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-            <Icon
-              icon="mdi:person-details"
-              width={16}
-              className="text-purple-700"
-            />
-          </div>
-          <h2 className="text-xl font-bold text-gray-700">
-            Who are your {postcode} neighbours?
-          </h2>
-        </div>
-      </CardHeader>
+  <div className="flex items-center my-2">
+    <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
+      <Icon
+        icon="mdi:person-details"
+        width={16}
+        className="text-purple-700"
+      />
+    </div>
+    <h2 className="text-xl font-bold text-gray-700">
+      Who are your {postcode} neighbours?
+    </h2>
+  </div>
+</CardHeader>
 
       <div className="p-6 rounded-lg">
         <div className="space-y-6">

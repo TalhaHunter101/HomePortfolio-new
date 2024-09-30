@@ -8,7 +8,7 @@ export function NoiseLevelCard  ({city })  {
     <Card className="m-4" style={{ minHeight: '150px' }}>
       <CardHeader>
       <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-            <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-red-400">
+            <div className="w-8 h-8 aspect-square flex justify-center items-center mr-1 rounded-full bg-red-400">
              <Icon icon="mdi:volume-high" />
             </div>
             <span>How are the noise levels in {city}?</span>
