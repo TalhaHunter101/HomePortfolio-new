@@ -44,38 +44,12 @@ export function SchoolsCard({ schoolData, data, address }) {
       </CardHeader>
       <CardBody>
         <div className="rounded-md ">
-          {/* <div className=" items-center   p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden data-report-preview scroll-m-6 lg:scroll-m-8 bg-background text-foreground rounded-t-lg">
-            <h2 className="w-full  pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize space-x-2 text-foreground mb-2 sm:mb-4 text-lg">
-              <div className="h-6 w-6 lg:w-8 lg:h-8 flex justify-center items-center mr-1 rounded-full bg-purple-200">
-                <Icon icon="mdi:school" />
-              </div>
-              <span>How Are the Schools in East Simi Valley?</span>
-            </h2>
-            <div className="sentences leading-6 w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 text-foreground grid item-start sm:items-center grid-cols-2">
-              <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-                <div className="text-xs md:text-sm capitalize text-foreground">
-                  Simi Valley Avg
-                </div>
-                <div className="text-xl text-foreground font-medium">5/10</div>
-              </div>
-              <div className="flex flex-col items-center mb-2 pr-2 text-center justify-between">
-                <div className="text-xs md:text-sm capitalize text-foreground">
-                  Nearby Avg
-                </div>
-                <div className="text-xl text-muted-foreground font-medium">
-                  5/10
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          {/* map and tabs */}
-          <div className="hidden xl:flex h-96 mt-10">
-            <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
-              {/* Map section on the left */}
+         
+          <div className="flex md:h-96 mt-10">
+            <div className="flex flex-col-reverse md:flex-row relative overflow-hidden sm:mx-4 gap-2 w-full">
               <div className="flex-1 h-full">
-                <div className="h-full w-full">
-                  <div className="w-full h-full border-1 maplibregl-map mapboxgl-map">
+                <div className="h-2/3 md:h-full w-full">
+                  <div className="w-full hidden md:block h-full border-1 maplibregl-map mapboxgl-map">
                     <div className="">
                       <SchoolMapStatic center={center} />
                     </div>
@@ -83,8 +57,7 @@ export function SchoolsCard({ schoolData, data, address }) {
                 </div>
               </div>
 
-              {/* Buttons and other content on the right */}
-              <div className="flex-1 w-1/2 flex flex-col justify-end h-full">
+              <div className="w-full md:flex-1 md:w-1/2 flex flex-col justify-end h-full">
                 <div className="ml-2 shadow-md z-50 p-2 mb-2">
                   <div className="flex gap-2 flex-wrap   pb-2 " slot="tabs">
                     <Button
@@ -183,7 +156,7 @@ export function SchoolsCard({ schoolData, data, address }) {
                     </Button>
                   </div>
                 </div>
-                <div className="flex-1 w-1/2 overflow-y-scroll  scrollbar    snap-mandatory space-x-2  ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
+                <div className="flex-1 w-full  overflow-y-scroll  scrollbar  snap-mandatory space-x-2  ml-2 mb-2 sm:w-full sm:flex-wrap sm:flex-col sm:space-x-0 sm:pr-0 sm:mb-0 sm:-mt-2">
                   <div className="flex flex-row sm:flex-col">
                     {schoolData &&
                     schoolData

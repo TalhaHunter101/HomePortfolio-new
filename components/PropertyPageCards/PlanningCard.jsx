@@ -7,6 +7,7 @@ import { ConstraintsList } from "./PlanningComponents/ConstraintList";
 import FloatingCard from "./PlanningComponents/FloatingCard";
 import { PlanningApplicationMapStatic } from "../Maps";
 import { Icon } from "@iconify/react";
+import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
@@ -80,6 +81,10 @@ export function PlanningCard({ postcode }) {
     if (postcode) getPlanningData(postcode);
   }, [postcode]);
 
+
+  console.log("planningData is",planningData);
+  
+
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
@@ -111,7 +116,7 @@ export function PlanningCard({ postcode }) {
           <div className="flex flex-col border border-subtle-border rounded-md">
             {/* Status Cards */}
             <div className="flex p-2 justify-between ">
-              {statusData.map((status, index) => (
+              {/* {statusData.map((status, index) => (
                 <StatusCard
                   key={index}
                   label={status.label}
@@ -119,7 +124,9 @@ export function PlanningCard({ postcode }) {
                   iconColor={status.iconColor}
                   icon={status.icon}
                 />
-              ))}
+              ))} */}
+
+              <PlanningApplicationsTable planningData={planningData} />
             </div>
             <div className="">
               <Carousel data={planningData} />
