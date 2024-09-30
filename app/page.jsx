@@ -1261,7 +1261,7 @@ export default function Home() {
         <Icon icon="carbon:chart-bar" className="text-indigo-600 text-3xl mr-4" />
         <p className="text-2xl font-bold">167+</p>
       </div>
-      <p className="text-lg">Datapoints</p>
+      <p className="text-lg">DataPoints</p>
     </div>
   </div>
 </div>
