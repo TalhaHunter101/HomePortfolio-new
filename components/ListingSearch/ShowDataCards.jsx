@@ -138,7 +138,7 @@ function ShowDataCards({
         <div className="h-full">
           <div className="flex flex-col p-4">
             {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-center hidden md:block">
               <h3 className="text-md uppercase font-bold mb-2 md:mb-0">
                 {totalcount} Properties
               </h3>

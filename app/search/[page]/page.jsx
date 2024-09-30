@@ -200,17 +200,17 @@ const SearchPage = ({ params }) => {
         </div>
 
         {/* Hamburger Menu for Small Screens */}
-        <div className="flex lg:hidden items-center gap-2">
+        {/* <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => {
               setIsFiltersOpen(!isFiltersOpen);
-              console.log("Filters Open State:", isFiltersOpen); // Log state
+              console.log("Filters Open State:", isFiltersOpen); 
             }}
             className="text-3xl p-2"
           >
             <Icon icon="mdi:menu" />
           </button>
-        </div>
+        </div> */}
 
         {/* Dropdown */}
         <div className="w-full md:w-[40vw] mx-3 pt-20 absolute top-2">
