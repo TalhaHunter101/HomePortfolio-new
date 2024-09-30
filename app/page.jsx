@@ -700,6 +700,8 @@ export default function Home() {
           </div>
         </div>
 
+
+
         <div className="flex flex-col justify-center mt-12 w-full px-2 sm:px-2 lg:px-8 rounded-2xl">
           <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 p-4 sm:p-6 lg:p-8 bg-white justify-center items-center">
             <div className="flex flex-col gap-4 sm:gap-6 sm:pl-4 lg:pl-12">
