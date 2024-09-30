@@ -167,6 +167,65 @@ function PropertyDisplay({ listingData, params }) {
         },
       ],
     },
+  
+    {
+      name: "Around the Neighborhood",
+      id: "around-neighborhood",
+      subElements: [
+        {
+          name: "How are the Schools?",
+          icon: "mdi:school",
+          bgColor: "bg-purple-200",
+          id: "schools",
+          Component: SchoolsCard,
+        },
+
+        {
+          name: "All about the Home",
+          icon: "mdi:human-child",
+          bgColor: "bg-purple-300",
+          id: "goodplace",
+          Component: DataShows,
+        },
+        
+        {
+          name: "Around the Neighborhood",
+          icon: "mdi:human-child",
+          bgColor: "bg-purple-300",
+          id: "neighbors",
+          Component: DataNeighbour,
+        },
+        
+        {
+          name: "Financials",
+          icon: "mdi:human-child",
+          bgColor: "bg-purple-300",
+          id: "family",
+          Component: FamilyCard,
+        },
+        {
+          name: "What's nearby?",
+          icon: "mdi:map",
+          bgColor: "bg-purple-400",
+          id: "nearby",
+          Component: NearbyCard,
+        },
+        {
+          name: "Public Transport",
+          icon: "mdi:bus",
+          bgColor: "bg-purple-500",
+          id: "publictransport",
+          Component: PublicTransportCard,
+        },
+        {
+          name: "EV Charging Stations",
+          icon: "mdi:ev-station",
+          bgColor: "bg-purple-500",
+          id: "EvChargingStations",
+          Component: EVCard,
+        },
+      ],
+    },
     {
       name: "Financials",
       id: "financials",
@@ -233,64 +292,6 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-green-500",
           id: "calculateyourdreamhouse",
           Component: Calculation,
-        },
-      ],
-    },
-    {
-      name: "Around the Neighborhood",
-      id: "around-neighborhood",
-      subElements: [
-        {
-          name: "How are the Schools?",
-          icon: "mdi:school",
-          bgColor: "bg-purple-200",
-          id: "schools",
-          Component: SchoolsCard,
-        },
-
-        {
-          name: "All about the Home",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "goodplace",
-          Component: DataShows,
-        },
-        
-        {
-          name: "Around the Neighborhood",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "neighbors",
-          Component: DataNeighbour,
-        },
-        
-        {
-          name: "Financials",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "family",
-          Component: FamilyCard,
-        },
-        {
-          name: "What's nearby?",
-          icon: "mdi:map",
-          bgColor: "bg-purple-400",
-          id: "nearby",
-          Component: NearbyCard,
-        },
-        {
-          name: "Public Transport",
-          icon: "mdi:bus",
-          bgColor: "bg-purple-500",
-          id: "publictransport",
-          Component: PublicTransportCard,
-        },
-        {
-          name: "EV Charging Stations",
-          icon: "mdi:ev-station",
-          bgColor: "bg-purple-500",
-          id: "EvChargingStations",
-          Component: EVCard,
         },
       ],
     },
