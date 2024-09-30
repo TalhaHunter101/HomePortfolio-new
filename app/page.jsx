@@ -2,7 +2,7 @@
 'use client';
 
 import React from "react";
-import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image, Chip, Spacer } from "@nextui-org/react";
+import { Button, Input, Card, CardHeader, CardBody, CardFooter, Image, Chip, Spacer, image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -361,13 +361,48 @@ let DataSources = [
   },{
     image: '/MainPageImg/partnersLogos/5.png',
   },{
-    image: '/MainPageImg/partnersLogos/6.png',
-  },{
     image: '/MainPageImg/partnersLogos/7.png',
   },{
     image: '/MainPageImg/partnersLogos/8.png',
   },{
     image: '/MainPageImg/partnersLogos/9.png',
+  },
+  {
+    image: '/MainPageImg/partnersLogos/Department_for_Education.svg.png',
+  },
+  
+  {
+    image: '/MainPageImg/partnersLogos/DLUHC.png',
+  },{
+    image: '/MainPageImg/partnersLogos/environment-agency-logo.png',
+  },{
+    image: '/MainPageImg/partnersLogos/g-map.png.webp',
+  },
+  {
+    image: '/MainPageImg/partnersLogos/govuk.png.webp',
+  },{
+    image: '/MainPageImg/partnersLogos/HM-Revenue-and-Customs-HMRC-Logo-2005-2013.png',
+  },
+  {
+    image:'/MainPageImg/partnersLogos/img-logo-ofsted.webp'
+  },
+  {
+    image: '/MainPageImg/partnersLogos/ofcom.png.webp'
+  },{
+    image: 'MainPageImg/partnersLogos/office-for-national-statistics-logo-vector.png.webp'
+  },
+  {
+    image: '/MainPageImg/partnersLogos/Ofsted-logo.webp'
+  },{
+    image: '/MainPageImg/partnersLogos/ons-logo.svg'
+  },{ 
+    image: '/MainPageImg/partnersLogos/OS_guidelines_OS-API-logo.png'
+  },{
+    image:'/MainPageImg/partnersLogos/police-uk.svg'
+  },{
+    image: '/MainPageImg/partnersLogos/regis-school-ofsted.png'
+  },{
+    image: '/MainPageImg/partnersLogos/ValuationOffice-300x159.png.webp'
   }
 ]
 
@@ -1207,18 +1242,26 @@ export default function Home() {
             We pull data from the best sources to provide you with the most accurate and up-to-date information.
           </p>
         </div>
-        <section className="mx-auto  w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
-      <ScrollingBanner shouldPauseOnHover gap="40px">
-      
-      {
-        DataSources.map((source, index) => (
-          <div key={index} className="flex flex-col items-center justify-center">
-              <img src={source.image} alt="partner" className="w-auto h-20" />
-          </div>
-        ))
-      }
-      </ScrollingBanner>
-    </section>
+       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
+  <ScrollingBanner shouldPauseOnHover gap="40px">
+    {DataSources.map((source, index) => (
+      <div
+        key={index}
+        className="flex flex-col items-center justify-center w-auto h-auto"
+        style={{ minWidth: '150px' }} // Ensures a minimum width for the image container
+      >
+        <img
+          src={source.image}
+          alt="partner"
+          className="h-20 w-auto max-h-20 object-contain"
+          style={{ maxWidth: '100%' }} // Limits the width to prevent squeezing
+        />
+      </div>
+    ))}
+  </ScrollingBanner>
+</section>
+
+
 
 
 
