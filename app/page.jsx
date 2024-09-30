@@ -1222,6 +1222,54 @@ export default function Home() {
 
 
 
+    
+
+
+
+<div className="mt-8">
+  <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 text-center">
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="flex items-center justify-center mb-4">
+        <Icon icon="carbon:home" className="text-indigo-600 text-3xl mr-4" />
+        <p className="text-2xl font-bold">30M+</p>
+      </div>
+      <p className="text-lg">Residential Properties</p>
+    </div>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="flex items-center justify-center mb-4">
+        <Icon icon="material-symbols:update" className="text-indigo-600 text-3xl mr-4" />
+        <p className="text-2xl font-bold">10K+</p>
+      </div>
+      <p className="text-lg">Property records updated everyday</p>
+    </div>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="flex items-center justify-center mb-4">
+        <Icon icon="carbon:location" className="text-indigo-600 text-3xl mr-4" />
+        <p className="text-2xl font-bold">2M+</p>
+      </div>
+      <p className="text-lg">Postcodes available for market research</p>
+    </div>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="flex items-center justify-center mb-4">
+        <Icon icon="mdi:deal-outline" className="text-indigo-600 text-3xl mr-4" />
+        <p className="text-2xl font-bold">1M+</p>
+      </div>
+      <p className="text-lg">Market deals</p>
+    </div>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="flex items-center justify-center mb-4">
+        <Icon icon="carbon:chart-bar" className="text-indigo-600 text-3xl mr-4" />
+        <p className="text-2xl font-bold">167+</p>
+      </div>
+      <p className="text-lg">Datapoints</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+{/* 
         <div className="w-[100vw] bg-gradient-to-bl from-indigo-900 to-indigo-700 p-8 md:px-20 md:py-20 mt-20 flex flex-col items-center text-center">
           <h2 className="text-white text-4xl md:text-6xl tracking-tight">Build faster websites.</h2>
           <p className="text-white/70 mt-4 text-lg md:text-xl">
@@ -1235,7 +1283,7 @@ export default function Home() {
               Sign up for a 14-day Trial
             </a>
           </div>
-        </div>
+        </div> */}
 
         <Footer />
       </main>

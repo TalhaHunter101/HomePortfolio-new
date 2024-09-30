@@ -13,21 +13,7 @@ function InvestorReturnCal({propertyPrice}) {
           Input a purchase price to calculate returns:
         </p>
 
-        {/* <div className="flex gap-2 mb-6">
-          <Input
-            type="number"
-            value={propertyPrice}
-            onChange={(e) => setPurchasePrice(e.target.value)}
-            labelPlacement="outside"
-            startContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">£</span>
-              </div>
-            }
-          />
-          <Button color="secondary">Calculate</Button>
-        </div> */}
-
+       
         <div className="grid grid-cols-4 gap-4 text-center">
           <div>
             <p className="text-gray-600">ROI</p>
