@@ -701,7 +701,7 @@ OFF Market
                                         className="flex items-center space-x-4 w-full text-md font-semibold"
                                       >
                                         <div
-                                          className={`rounded-full h-6 w-6 flex items-center justify-center text-black ${subElement.bgColor}`}
+                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
                                         >
                                           <Icon icon={subElement.icon} />
                                         </div>

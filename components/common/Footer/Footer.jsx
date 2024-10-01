@@ -14,26 +14,26 @@ const footerNavigation = {
     { name: "Market Research", href: "#" },
   ],
 
-  supportOptions: [
-    { name: "Pricing Plans", href: "#" },
-    { name: "User Guides", href: "#" },
-    { name: "Tutorials", href: "#" },
-    { name: "Service Status", href: "#" },
+  Platform: [
+    { name: "Search Listings", href: "#" },
+    { name: "Search Schools", href: "#" },
+    { name: "Sold Prices", href: "#" },
+    { name: "My HomePortfolio", href: "#" },
   ],
 
-  aboutUs: [
-    { name: "Our Story", href: "#" },
-    { name: "Latest News", href: "#" },
-    { name: "Career Opportunities", href: "#" },
-    { name: "Media Enquiries", href: "#" },
-    { name: "Collaborations", href: "#" },
+  Resources: [
+    { name: "Home Buying Guides", href: "#" },
+    { name: "Neighborhood Guides", href: "#" },
+    { name: "Property Market Analysis", href: "#" },
+    { name: "Property Valuation", href: "#" },
+    { name: "Property Data API", href: "#" },
   ],
 
-  legal: [
-    { name: "Claim", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "User Agreement", href: "#" },
+  Company: [
+    { name: "About Us", href: "#" },
+    { name: "Our Blog", href: "#" },
+    { name: "Contact Us", href: "#" },
+    
   ],
 
   social: [
@@ -52,6 +52,11 @@ const footerNavigation = {
       href: "#",
       icon: (props) => <Icon {...props} icon="fontisto:twitter" />,
     },
+    {
+      name: "Youtube",
+      href: "#",
+      icon: (props) => <Icon {...props} icon="mingcute:youtube-fill" width={20} height={24} />,
+    }
  
   ],
 };
@@ -62,7 +67,7 @@ export default function Footer() {
       <div>
         <h3 className="text-small font-semibold text-default-600">{title}</h3>
         <ul className="mt-6 space-y-4">
-          {items.map((item) => (
+          {items?.map((item) => (
             <li key={item.name}>
               <Link className="text-default-400" href={item.href} size="sm">
                 {item.name}
@@ -85,8 +90,7 @@ export default function Footer() {
               <span className="text-medium font-medium">HomePortfolio</span>
             </div>
             <p className="text-sm text-default-500">
-              We are a team of professionals who are passionate about creating the best user experience
-              for our customers.
+              We provide comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free
             </p>
             <div className="flex space-x-6">
               {footerNavigation.social.map((item) => (
@@ -97,18 +101,24 @@ export default function Footer() {
               ))}
             </div>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>{renderList({ title: "Services", items: footerNavigation.services })}</div>
-              <div className="mt-10 md:mt-0">
-                {renderList({ title: "Support", items: footerNavigation.supportOptions })}</div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>{renderList({ title: "About Us", items: footerNavigation.aboutUs })}</div>
-              <div className="mt-10 md:mt-0">
-                {renderList({ title: "Legal", items: footerNavigation.legal })}</div>
-            </div>
-          </div>
+          <div className="mt-16 lg:ml-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-2 xl:mt-0">
+  {/* Platform Section */}
+  <div>
+    {renderList({ title: "Platform", items: footerNavigation.Platform })}
+  </div>
+
+  {/* Resources Section */}
+  <div>
+    {renderList({ title: "Resources", items: footerNavigation.Resources })}
+  </div>
+
+  {/* Company Section */}
+  <div>
+    {renderList({ title: "Company", items: footerNavigation.Company })}
+  </div>
+</div>
+
+
         </div>
         <Divider className="mt-16 sm:mt-20 lg:mt-24" />
         <div className="flex flex-wrap justify-between gap-2 pt-8">

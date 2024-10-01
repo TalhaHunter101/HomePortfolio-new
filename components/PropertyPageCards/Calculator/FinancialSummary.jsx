@@ -42,30 +42,31 @@ export default function FinancialSummary() {
 
   return (
     <div className="mt-4 mx-4">
-      <div className="flex py-2 justify-between items-center">
-        <span className="text-lg font-bold text-purple-900">
-          Total Cash Invested
-        </span>
-        <span className="text-lg font-bold text-black">
-          £{totalInvestment.toLocaleString('en-GB')}
-        </span>
-      </div>
-      <div className="flex py-2 justify-between items-center mt-2 my-4">
-        <span className="text-lg font-bold text-purple-900">
-          Net Operating Income
-        </span>
-        <span className="text-lg font-bold text-black">
-          £{netOperatingIncomeAnnual.toLocaleString('en-GB')}/yr &#x2022; £{netOperatingIncomeMonthly.toLocaleString('en-GB')}/mo
-        </span>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-lg font-bold text-purple-900">
-          Leveraged Net Cash Flow
-        </span>
-        <span className="text-lg font-bold text-black">
-          £{leveragedNetCashFlowAnnual.toLocaleString('en-GB')}/yr &#x2022; £{leveragedNetCashFlowMonthly.toLocaleString('en-GB')}/mo
-        </span>
-      </div>
-    </div>
+  <div className="flex flex-col sm:flex-row py-2 justify-between items-center">
+    <span className="text-lg font-bold text-purple-900">
+      Total Cash Invested
+    </span>
+    <span className="text-lg font-bold text-black">
+      £{totalInvestment.toLocaleString('en-GB')}
+    </span>
+  </div>
+  <div className="flex flex-col sm:flex-row py-2 justify-between items-center mt-2 my-4">
+    <span className="text-lg font-bold text-purple-900">
+      Net Operating Income
+    </span>
+    <span className="text-lg font-bold text-black">
+      £{netOperatingIncomeAnnual.toLocaleString('en-GB')}/yr &#x2022; £{netOperatingIncomeMonthly.toLocaleString('en-GB')}/mo
+    </span>
+  </div>
+  <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+    <span className="text-lg font-bold text-purple-900">
+      Leveraged Net Cash Flow
+    </span>
+    <span className="text-lg font-bold text-black">
+      £{leveragedNetCashFlowAnnual.toLocaleString('en-GB')}/yr &#x2022; £{leveragedNetCashFlowMonthly.toLocaleString('en-GB')}/mo
+    </span>
+  </div>
+</div>
+
   );
 }

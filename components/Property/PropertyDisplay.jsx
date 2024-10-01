@@ -182,7 +182,7 @@ function PropertyDisplay({ listingData, params }) {
 
         {
           name: "All about the Home",
-          icon: "mdi:human-child",
+          icon: "mdi:account-group",
           bgColor: "bg-purple-300",
           id: "goodplace",
           Component: DataShows,
@@ -190,15 +190,15 @@ function PropertyDisplay({ listingData, params }) {
         
         {
           name: "Around the Neighborhood",
-          icon: "mdi:human-child",
+          icon: "mdi:person-details",
           bgColor: "bg-purple-300",
           id: "neighbors",
           Component: DataNeighbour,
         },
         
         {
-          name: "Financials",
-          icon: "mdi:human-child",
+          name: "Can I raise a family here?",
+          icon: "mdi:account-group",
           bgColor: "bg-purple-300",
           id: "family",
           Component: FamilyCard,
@@ -232,7 +232,7 @@ function PropertyDisplay({ listingData, params }) {
       subElements: [
         {
           name: "Rent & Home Valuation",
-          icon: "mdi:currency-usd",
+          icon: "hugeicons:chart-evaluation",
           bgColor: "bg-green-200",
           id: "renthomevaluation",
           Component: RentHomeValCard,
@@ -253,7 +253,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Price tracker",
-          icon: "mdi:currency-usd",
+          icon: "solar:tag-price-bold",
           bgColor: "bg-green-400",
           id: "pricetracker",
           Component: PriceTrackerCard,
@@ -267,28 +267,28 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Market Info",
-          icon: "mdi:scale-balance",
+          icon: "icon-park-outline:market-analysis",
           bgColor: "bg-green-500",
           id: "marketinfo",
           Component: MarketInfoPage,
         },
         {
           name: "Know your Home Options",
-          icon: "mdi:scale-balance",
+          icon: "carbon:home",
           bgColor: "bg-green-500",
           id: "knowyourhometypes",
           Component: HomeTypesCard,
         },
         {
           name: "right time to buy?",
-          icon: "mdi:scale-balance",
+          icon: "fluent:data-trending-16-filled",
           bgColor: "bg-green-500",
           id: "dreamhouse",
           Component: DreamHouseCard,
         },
         {
           name: "Calculate potential returns",
-          icon: "mdi:scale-balance",
+          icon: "solar:calculator-minimalistic-bold",
           bgColor: "bg-green-500",
           id: "calculateyourdreamhouse",
           Component: Calculation,
@@ -301,7 +301,7 @@ function PropertyDisplay({ listingData, params }) {
       subElements: [
         {
           name: "Planning Applications",
-          icon: "mdi:shield-alert",
+          icon: "mdi:planner",
           bgColor: "bg-red-200",
           id: "Planning",
           Component: PlanningCard,
@@ -646,7 +646,7 @@ function PropertyDisplay({ listingData, params }) {
                                         className="flex items-center space-x-4 w-full text-md font-semibold"
                                       >
                                         <div
-                                          className={`rounded-full h-6 w-6 flex items-center justify-center text-black ${subElement.bgColor}`}
+                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
                                         >
                                           <Icon icon={subElement.icon} />
                                         </div>
