@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import MainCard from "../Property/MainCard";
 // import ThumbnailCard from "./ThumbnailCard";
@@ -485,6 +485,11 @@ function PropertyDisplay({ listingData, params }) {
                 <ThumbnailCard key={index} imageUrl={imageUrl} />
               ))}
           </div>
+        </div>
+        <div className="flex justify-start px-6 gap=4 w-full">
+          <Chip color="warning" className="mt-4 text-white font-semibold">
+OFF Market          
+  </Chip>
         </div>
 
         {/* lower div */}

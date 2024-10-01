@@ -116,7 +116,7 @@ export function PlanningCard({ postcode }) {
           <div className="flex flex-col border border-subtle-border rounded-md">
             {/* Status Cards */}
             <div className="flex p-2 justify-between ">
-              {/* {statusData.map((status, index) => (
+              {statusData.map((status, index) => (
                 <StatusCard
                   key={index}
                   label={status.label}
@@ -124,12 +124,13 @@ export function PlanningCard({ postcode }) {
                   iconColor={status.iconColor}
                   icon={status.icon}
                 />
-              ))} */}
+              ))}
 
-              <PlanningApplicationsTable planningData={planningData} />
             </div>
-            <div className="">
-              <Carousel data={planningData} />
+            <div className="p-2">
+            <PlanningApplicationsTable planningData={planningData} />
+
+              {/* <Carousel data={planningData} /> */}
             </div>
             <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">

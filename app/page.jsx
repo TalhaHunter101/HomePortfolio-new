@@ -631,7 +631,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex justify-center items-center">
-              <img src="MainPageImg/1stImg.png" alt="" className="max-w-screen" />
+              <img src="MainPageImg/1stImgNew.png" alt="" className="max-w-screen" />
             </div>
            
           </div>
