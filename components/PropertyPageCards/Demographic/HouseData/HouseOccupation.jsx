@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import { Card } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import {
   PieChart,
@@ -52,104 +51,60 @@ function HouseOccupation({ occupationData, city }) {
   }, [occupationData]);
 
   // Pastel colors for pie chart
-  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"]
+  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
 
   return (
     <>
-      <div className="flex items-center p-2 ml-4">
-      <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
-          <Icon
-            icon="tdesign:member"
-            width={24}
-            className="text-gray-700"
-          />
+      <div className="flex items-center p-2 sm:ml-4">
+        <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
+          <Icon icon="tdesign:member" width={24} className="text-gray-700" />
         </div>
-        <h2 className="text-xl font-semibold text-gray-700">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
           House Occupation
         </h2>
       </div>
-      {/* <div className="flex flex-col lg:flex-row justify-between gap-8 p-2">
-        <div className="lg:w-1/2">
-          <h3 className="text-lg font-semibold mb-2">Who lives in {city}?</h3>
-          <p className="text-gray-600 mb-2">
-            The population of {city} is
-            <span className="font-semibold">2,902</span> with{" "}
-            <span className="font-semibold">48%</span> males and{" "}
-            <span className="font-semibold">52%</span> females, and a median age
-            of <span className="font-semibold">38</span>.
-          </p>
-          <p className="text-gray-600 mb-2">
-            <span className="font-semibold">55%</span> of this neighborhood is
-            occupied by families with <span className="font-semibold">27%</span>{" "}
-            single families, <span className="font-semibold">22%</span>{" "}
-            one-person household, and <span className="font-semibold">51%</span>{" "}
-            couple families with kids. The average household size in Allandale
-            is <span className="font-semibold">2.22</span>, and the average
-            family size is <span className="font-semibold">3.04</span>.
-          </p>
-          <p className="text-gray-600">
-            <span className="font-semibold">56%</span> of residents in this
-            neighborhood have a college degree.
-          </p>
-        </div>
 
-        <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col text-center">
-              <span>Total Population</span>
-              <span className="font-semibold text-3xl">23k</span>
-            </div>
-            <div className="flex flex-col text-center">
-              <span>Median Age</span>
-              <span className="font-semibold text-3xl">38</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4 mt-14">
-            <div className="flex flex-col text-center">
-              <span>Average HH Income</span>
-              <span className="font-semibold text-3xl">£88,189</span>
-            </div>
-            <div className="flex flex-col text-center">
-              <span>Single Family Household</span>
-              <span className="font-semibold text-3xl">26%</span>
-            </div>
-          </div>
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-4 mt-4">
+        <div className="w-full lg:w-1/2">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="count"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#82ca9d"
+                label
+              >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
-      </div> */}
-      <div className="flex flex-col gap-4 mt-8">
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Legend
-              layout="vertical"
-              verticalAlign="middle"
-              align="left"
-              wrapperStyle={{
-                paddingLeft: 60,
-                paddingTop: 20,
-                paddingBottom: 20,
-                marginLeft: 10,
-              }}
-            />
-            <Tooltip />
-            <Pie
-              data={chartData}
-              dataKey="count"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#82ca9d"
-              label
-            >
-              {chartData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        <div className="w-full lg:w-1/2">
+          <ul className="flex flex-wrap justify-center lg:justify-start">
+            {chartData.map((entry, index) => (
+              <li
+                key={`legend-item-${index}`}
+                className="flex items-center m-2"
+              >
+                <span
+                  className="inline-block w-3 h-3 mr-2"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                ></span>
+                <span className="text-sm text-gray-700">{entry.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );

@@ -548,6 +548,8 @@ export default function Home() {
           </div>
         </div>
 
+
+        <div className="w-full sm:w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12 mx-auto px-5">
         <div className="flex flex-col justify-center md:p-8 w-full px-4 sm:px-6">
           <div className="w-full flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
@@ -563,10 +565,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid md:grid-cols-2 py-10 justify-center items-center">
-            <div className="flex justify-center items-center">
-              <img src="MainPageImg/1stImg.png" alt="" />
-            </div>
-            <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center">
               <div className="max-w-lg">
                 <span className="bg-purple-100 border-purple-200 border text-purple-600 -ml-px rounded-full text-xs font-medium px-3 py-1">
                   Simplified Decision Making
@@ -631,6 +630,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <div className="flex justify-center items-center">
+              <img src="MainPageImg/1stImg.png" alt="" className="max-w-screen" />
+            </div>
+           
           </div>
 
           <div className="grid md:grid-cols-2 py-10 justify-center items-center">
@@ -1263,6 +1266,7 @@ export default function Home() {
   </ScrollingBanner>
 </section>
 
+</div>
 
 
 

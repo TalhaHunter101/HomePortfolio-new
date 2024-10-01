@@ -95,7 +95,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
         <div className="flex items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+          <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
               icon="solar:tag-price-bold"
               width={16} // Adjust the icon size to fit well within the circle

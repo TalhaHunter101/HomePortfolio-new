@@ -171,27 +171,27 @@ export function FamilyCard({ postcode, city }) {
   };
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px" }}>
+    <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
         <div className="flex items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+          <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
               icon="mdi:account-group"
               width={16}
               className="text-purple-700"
             />
           </div>
-          <h2 className="text-xl font-bold text-gray-700">
-            Can I raise a family in {postcode} ?
+          <h2 className="text-lg sm:text-xl font-bold text-gray-700">
+            Can I raise a family in {postcode}?
           </h2>
         </div>
       </CardHeader>
 
       {/* Static demographic section */}
-      <div className="bg-white w-full mx-7">
+      <div className="bg-white w-full px-4 sm:px-7">
         <div className="flex flex-col lg:flex-row justify-between gap-4">
           {/* Left section */}
-          <div className="lg:w-1/2">
+          <div className="w-full lg:w-1/2">
             <Familyinformation
               postcode={postcode}
               city={city}
@@ -203,11 +203,11 @@ export function FamilyCard({ postcode, city }) {
           </div>
 
           {/* Right section */}
-          <div className="lg:w-1/2 flex flex-col gap-4 text-gray-700 text-xl px-2">
-            <div className="grid grid-cols-2 gap-4">
+          <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Total Population</span>
-                <span className="font-semibold text-3xl text-purple-300">
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                   {
                     totalPopulation?._source?.[
                       "Sex: All persons; measures: Value"
@@ -217,15 +217,15 @@ export function FamilyCard({ postcode, city }) {
               </div>
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Median Age</span>
-                <span className="font-semibold text-3xl text-purple-300">
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                   {medianAge || "N/A"}
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-14">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Average HH Income</span>
-                <span className="font-semibold text-3xl text-purple-300">
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                   £{formatCurrency(peopleGenderData?.averageIncome) || "N/A"}
                 </span>
               </div>
@@ -233,7 +233,7 @@ export function FamilyCard({ postcode, city }) {
                 <span className="text-sm text-gray-400">
                   Single Family Household
                 </span>
-                <span className="font-semibold text-3xl text-purple-300">
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                   {singleFamilyHouseholds}
                 </span>
               </div>
@@ -243,7 +243,7 @@ export function FamilyCard({ postcode, city }) {
       </div>
 
       {/* Carousel Section */}
-      <div className="relative w-full shadow-none  overflow-hidden mt-8">
+      <div className="relative w-full shadow-none overflow-hidden mt-8">
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{

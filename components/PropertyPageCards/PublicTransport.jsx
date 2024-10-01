@@ -105,7 +105,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
     {/* Icon and Question */}
     <div className="flex items-center space-x-2 justify-between">
       <div className="flex ">
-      <span className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+      <span className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
         <Icon
           icon="mdi:bus"
           width={16} // Adjust the icon size to fit well within the circle
@@ -119,7 +119,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   
          {/* Walk Score Info */}
     <div className="px-4 text-purple-300 w-[30vw]">
-      <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
+      <div className="text-xs text-gray-500 md:text-sm  capitalize text-foreground text-center">
         <a
           href="https://walkradius.com"
           target="_blank"

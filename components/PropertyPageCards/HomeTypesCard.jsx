@@ -72,7 +72,7 @@ export function HomeTypesCard({ city }) {
     <Card className="m-4 h-[70vh]" >
       <CardHeader>
         <div className="flex items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-green-400 rounded-full mr-2">
+          <div className="flex items-center justify-center w-8 h-8 aspect-square bg-green-400 rounded-full mr-2">
             <Icon
               icon="carbon:home"
               width={16} // Adjust the icon size to fit well within the circle
