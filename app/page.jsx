@@ -414,7 +414,7 @@ export default function Home() {
   return (
     <>
       <main className="max-w-[100vw] mt-16 mx-auto flex flex-col items-center justify-center px-4 sm:px-6">
-        <div className="relative w-screen justify-center min-h-[40vh] md:min-h-[60vh] lg:min-h-[60vh] px-4 sm:px-6">
+        <div className="relative w-screen justify-center min-h-[40vh] md:min-h-[80vh] lg:min-h-[50vh] xl:min-h-[40vh] px-4 sm:px-6">
           <div
             style={{
               backgroundColor: "#fff",
@@ -424,7 +424,7 @@ export default function Home() {
               backgroundRepeat: "no-repeat",
               width: "100%",
             }}
-            className="flex items-center justify-center bg-background min-h-[40vh] md:min-h-[80vh] lg:min-h-[100vh] px-4 sm:px-6"
+            className="flex items-center justify-center pt-8 bg-background min-h-[40vh] md:min-h-[80vh] lg:min-h-[50vh] xl:min-h-[40vh]   px-4 sm:px-6"
           >
             <div className="flex flex-col justify-center items-center w-full max-w-screen-xl mx-auto px-5">
               <div className="place-items-center h-auto relative p-8 flex flex-col justify-center items-center h-full w-full min-w-[95vw] z-10 px-4 sm:px-6">
