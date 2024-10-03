@@ -5,6 +5,7 @@ import pb from '@/lib/pocketbase';
 import { Button, Card, Image } from '@nextui-org/react';
 import ProfileModal from '../../../components/profile/modal'; // Import the modal component
 import { useDisclosure } from "@nextui-org/react";
+import { Icon } from '@iconify/react';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -64,9 +65,16 @@ export default function ProfilePage() {
             {user.name || 'Anonymous'} <span className="text-purple-500">({user.username})</span>
           </h2>
 
+          {/* verified */}
+         
+
           {/* Email */}
           <p className="text-gray-600">{user.email}</p>
-
+          {user.verified ? (
+            <p className="text-green-500"> <Icon icon="octicon:verified-16" className="inline" /> Verified</p>
+          ) : (
+            <p className="text-red-500"><Icon icon="octicon:unverified-16" className="inline" /> Not Verified</p>
+          )}
           {/* Update Button to trigger the modal */}
           <div className="flex justify-center">
   <Button size='' className="bg-purple-600   justify-center hover:bg-purple-700 text-white py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" onPress={onOpen}>
