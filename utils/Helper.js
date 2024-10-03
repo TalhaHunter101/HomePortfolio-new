@@ -1,0 +1,128 @@
+export function areAllArraysEmpty(data) {
+  for (const key in data) {
+    if (Array.isArray(data[key]) && data[key].length > 0) {
+      return false;
+    } else if (typeof data[key] === "object" && !Array.isArray(data[key])) {
+      if (!areAllArraysEmpty(data[key])) {
+        return false;
+      }
+    }
+  }
+  return true; // All arrays are empty
+}
+
+export function formatPrice(price) {
+  if (!price) return "N/A";
+  if (price >= 1e9) {
+    return (price / 1e9).toFixed(1) + "B";
+  } else if (price >= 1e6) {
+    return (price / 1e6).toFixed(1) + "M";
+  } else if (price >= 1e3) {
+    return (price / 1e3).toFixed(1) + "K";
+  } else {
+    return price.toString();
+  }
+}
+
+export function formatDate(dateString) {
+  if (!dateString) return;
+  const date = new Date(dateString);
+
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  return date.toLocaleDateString("en-GB", options);
+}
+
+
+export  const calculateMedian = (arr) => {
+  const mid = Math?.floor(arr?.length / 2);
+  if (arr?.length % 2 === 0) {
+    return (arr?.[mid - 1] + arr?.[mid]) / 2;
+  } else {
+    return arr?.[mid];
+  }
+};
+
+export const smallString = (str, num) => {
+  if (str?.length > num) {
+    return str?.slice(0, num) + "...";
+  } else {
+    return str;
+  }
+};
+
+export const formatDateNew = (dateString) =>{
+  if (!dateString) return;
+  const options = { day: '2-digit', month: 'short', year: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', options).replace(/ /g, ' ');
+}
+
+
+export function formatCurrency(amount) {
+ 
+  if (amount === null || amount === undefined || amount === '') {
+    return 'Invalid number';
+  }
+
+  
+  const numberAmount = Number(amount);
+
+ 
+  if (isNaN(numberAmount)) {
+    return 'Invalid number';
+  }
+
+  
+  return numberAmount.toLocaleString('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}
+
+export function formatNumberWithCommas(number) {
+  if (!number) return "";
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+// export function RemoveDecimal(number) {
+//   return number.toFixed(0);
+// }
+
+
+export const convertToSquareFeet = (squareMeters) => {
+  const conversionFactor = 10.7639;
+  const metersValue = parseFloat(squareMeters); // Convert string to a number
+  if (isNaN(metersValue)) {
+    return null; // Handle invalid input
+  }
+  return (metersValue * conversionFactor).toFixed(0); // Round to the nearest whole number
+};
+
+
+export function timeAgo(dateString) {
+  if (!dateString) return;
+  const date = new Date(dateString);
+  const now = new Date();
+
+  const seconds = Math.floor((now - date) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (years > 0) {
+    return years === 1 ? "1 year ago" : `${years} years ago`;
+  } else if (months > 0) {
+    return months === 1 ? "1 month ago" : `${months} months ago`;
+  } else if (days > 0) {
+    return days === 1 ? "1 day ago" : `${days} days ago`;
+  } else if (hours > 0) {
+    return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
+  } else if (minutes > 0) {
+    return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
+  } else {
+    return seconds === 1 ? "1 second ago" : `${seconds} seconds ago`;
+  }
+}

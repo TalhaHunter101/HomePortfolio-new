@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+::-webkit-scrollbar {
+    width: 2px; 
+    height: 8px; 
+    display: none;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 6px; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
+  .band-a {
+    fill: #00c781;
+  }
+  .band-b {
+    fill: #19b459;
+  }
+  .band-c {
+    fill: #8dce46;
+  }
+  .band-d {
+    fill: #ffd500;
+  }
+  .band-e {
+    fill: #fcaa65;
+  }
+  .band-f {
+    fill: #ef8023;
+  }
+  .band-g {
+    fill: #e9153b;
+  }
+  .band-a-score {
+    fill: #64c7a4;
+  }
+  .band-b-score {
+    fill: #72ca8b;
+  }
+  .band-c-score {
+    fill: #b4df86;
+  }
+  .band-d-score {
+    fill: #ffe666;
+  }
+  .band-e-score {
+    fill: #fdc79b;
+  }
+  .band-f-score {
+    fill: #f4ac71;
+  }
+  .band-g-score {
+    fill: #f2738a;
+  }
+  
