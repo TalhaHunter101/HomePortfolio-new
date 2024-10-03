@@ -102,7 +102,7 @@ export default function AutocompleteSearch({ properties }) {
     <div className="mt-4 p-4 rounded-lg w-full overflow-hidden">
      
       <div className="tabs-container flex justify-center ">
-        <div className="tabs-wrapper">
+        {/* <div className="tabs-wrapper">
           <button
             onClick={() => setSelectedTab("1")}
             className={`tab-button ${selectedTab === "1" ? "active-tab" : ""}`}
@@ -115,7 +115,7 @@ export default function AutocompleteSearch({ properties }) {
           >
             Instant Home Valuation
           </button>
-        </div>
+        </div> */}
       </div>
 
       

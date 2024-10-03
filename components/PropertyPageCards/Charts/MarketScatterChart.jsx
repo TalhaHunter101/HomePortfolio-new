@@ -11,14 +11,18 @@ import {
 import { CardBody } from "@nextui-org/react";
 import { marketCompStore } from "@/store/listingStore";
 
-// Helper function to calculate the median
+// Helper function to calculate the median for the top 3 values
 const calculateMedian = (values) => {
   if (values.length === 0) return 0;
-  values.sort((a, b) => a - b);
-  const half = Math.floor(values.length / 2);
 
-  if (values.length % 2) return values[half];
-  return (values[half - 1] + values[half]) / 2.0;
+  // Sort values in ascending order and take only the top 3
+  values.sort((a, b) => a - b);
+  const top3Values = values.slice(0, 3); // Extract top 3 values
+
+  const half = Math.floor(top3Values.length / 2);
+
+  if (top3Values.length % 2) return top3Values[half];
+  return (top3Values[half - 1] + top3Values[half]) / 2.0;
 };
 
 const CustomTooltip = ({ active, payload }) => {
@@ -64,6 +68,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
             const size = item._source?.analyticsTaxonomy?.sizeSqFeet;
             const price = item._source.pricing?.internalValue;
 
+            // Ensure the price and size are valid
             if (size !== "" && price !== undefined) {
               sizesqfeet.push(size);
               prices.push(price);
@@ -73,7 +78,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
           setSizePerSqFeet(sizesqfeet);
           setPrices(prices);
 
-          // Calculate and store the median price
+          // Calculate the median using the top 3 prices
           const median = calculateMedian(prices);
           setMedianPrice(median); // Set in Zustand store
 
