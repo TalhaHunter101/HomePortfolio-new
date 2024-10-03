@@ -13,32 +13,67 @@ export default function Component() {
   const [loading, setLoading] = useState(false);
   const router = useRouter(); 
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+
   const toggleVisibility = () => setIsVisible(!isVisible);
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
 
-  async function handleSignup(formData, setLoading, router) {
-    setLoading(true);
-    const response = await signup(formData);
-    setLoading(false);
+  // async function handleSignup(formData, setLoading, router) {
+  //   setLoading(true);
+  //   const response = await signup(formData);
+  //   setLoading(false);
     
-    if (!response.success) {
-      if (response.errors) {
-        response.errors.forEach((error) => toast.error(error));
-      } else if (response.message) {
-        toast.error(response.message);
-      }
-    } else {
-      toast.success('Registration successful!');
-      router.push('/'); // Redirect on successful signup
+  //   if (!response.success) {
+  //     if (response.errors) {
+  //       response.errors.forEach((error) => toast.error(error));
+  //     } else if (response.message) {
+  //       toast.error(response.message);
+  //     }
+  //   } else {
+  //     toast.success('Registration successful!');
+  //     router.push('/'); // Redirect on successful signup
+  //   }
+  // }
+
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.currentTarget);
+  //   await handleSignup(formData, setLoading, router); 
+  // };
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password, passwordConfirm }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            setSuccess('User registered successfully');
+        } else {
+            setError(data.message);
+        }
+    } catch (err) {
+        setError('An error occurred');
     }
-  }
+};
 
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    await handleSignup(formData, setLoading, router); 
-  };
 
   return (
     <div className="flex h-full mt-16 w-full flex-col items-center justify-center">
@@ -54,6 +89,7 @@ export default function Component() {
             placeholder="Enter your email"
             type="email"
             variant="bordered"
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             isRequired
@@ -76,6 +112,7 @@ export default function Component() {
             name="password"
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
             variant="bordered"
           />
           <Input
@@ -99,6 +136,7 @@ export default function Component() {
             name="confirmPassword"
             placeholder="Confirm your password"
             type={isConfirmVisible ? "text" : "password"}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
             variant="bordered"
           />
           <Checkbox isRequired className="py-4" size="sm">

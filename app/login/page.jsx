@@ -5,20 +5,9 @@ import {Button, Input, Checkbox, Link, Divider} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 import { login } from "./action";
 import toast, { Toaster } from "react-hot-toast";
+import pb from "@/lib/pocketbase";
+import { loginWithPassword } from "@/utils/pocketbase/helper";
 
-// import {AcmeIcon} from "./acme";
-
-
-
-async function handleLogin(formData) {
-  const response = await login(formData);
-  if (!response.success) {
-    toast.error(response.message);
-  } else {
-    toast.success(response.message);
-    window.location.href = '/dashboard';
-  }
-}
 
 
 export default function Component() {
@@ -27,6 +16,9 @@ export default function Component() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
 
 
 
@@ -34,9 +26,54 @@ export default function Component() {
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  
   setLoading(true);
-  const formData = new FormData(event.currentTarget);
-  await handleLogin(formData);
+
+ await loginWithPassword({email, password}).then((response) => {
+  if (!response.success) {
+    console.error('Error:', response);
+    toast.error(response.message);
+    return;
+  }
+  toast.success('Login successful!');
+  document.cookie = `pb_auth=${response.token}; path=/`;
+    // pb.authStore.save(response.token);
+
+  // Redirect to dashboard
+  window.location.href = '/dashboard'
+}).catch((error) => {
+  console.error('Error:', error);
+  toast.error('An error occurred. Please try again later.');
+})
+
+  setLoading(false);
+
+
+  // fetch('/api/auth/login', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({ email, password }),
+  // }).then(async (res) => {
+  //   const data = await res.json();
+  //   if (!res.ok) {
+  //     console.error('Error:', data);
+  //     toast.error(data.message);
+  //     return;
+  //   }
+  //   toast.success('Login successful!');
+  //   document.cookie = `pb_auth=${data.token}; path=/`;
+  //    pb.authStore.save(data.token);
+
+  //   // Redirect to dashboard
+  //   window.location.href = '/dashboard'
+  // }).catch((error) => {
+  //   console.error('Error:', error);
+  //   toast.error('An error occurred. Please try again later.');
+  // }
+  // );
+
   setLoading(false);
 };
 
@@ -52,6 +89,7 @@ const handleSubmit = async (event) => {
             placeholder="Enter your email"
             type="email"
             variant="bordered"
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <Input
@@ -75,6 +113,7 @@ const handleSubmit = async (event) => {
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
             variant="bordered"
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <div className="flex items-center justify-between px-1 py-2">
