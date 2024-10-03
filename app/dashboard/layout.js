@@ -30,9 +30,9 @@ export default function Layout({ children }) {
            {children} 
 
            <div className="mt-24">
-            {
-              JSON.stringify(user)
-            }
+              {/* {
+                JSON.stringify(user)
+              } */}
            </div>
      </>
   );
