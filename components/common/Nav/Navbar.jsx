@@ -63,16 +63,16 @@ export default function NavBar() {
           <p className="font-bold text-inherit">HomePortfolio</p>
           </Link>
         </NavbarBrand>
-        <DropDown>
+        {/* <DropDown>
 <NavbarItem key="item">
     <div className="">Features</div>
   </NavbarItem>
-</DropDown>
-        <NavbarItem>
+</DropDown> */}
+        {/* <NavbarItem>
           <Link color="foreground" href="#" >
             Best Places
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" href="/home-valuation">
            Home valuation
