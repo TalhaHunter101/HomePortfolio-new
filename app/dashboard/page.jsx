@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { storeUsersData } from "@/store/authStore";
+import pb from "@/lib/pocketbase";
 
 export default function Page() {
   const [favorites, setFavorites] = useState([]);
@@ -16,19 +17,28 @@ export default function Page() {
           return;
         }
 
-        // Fetch the user's favorite property IDs
-        const apiUrl = new URL(
-          "http://127.0.0.1:8090/api/collections/favorite/records"
-        );
-        apiUrl.searchParams.append("filter", `userid=${usersData.email}`);
-        apiUrl.searchParams.append("fields", "id,property_id");
 
-        const response = await fetch(apiUrl.toString());
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setFavorites(data.items);
+
+        let favorites = await  pb.collection("favorite").getFullList({
+          filter: pb.filter("userId ?= {:id}", { id: usersData.id }),
+          expand: "userId",
+        })
+
+     
+
+        // // Fetch the user's favorite property IDs
+        // const apiUrl = new URL(
+        //   "http://127.0.0.1:8090/api/collections/favorite/records"
+        // );
+        // apiUrl.searchParams.append("filter", `userid=${usersData.id}`);
+        // apiUrl.searchParams.append("fields", "id,property_id");
+
+        // const response = await fetch(apiUrl.toString());
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! status: ${response.status}`);
+        // }
+        // const data = await response.json();
+        setFavorites(favorites.items);
 
         // Extract property IDs from favorites
         const propertyIds = data.items.map((favorite) => favorite.property_id);
