@@ -362,10 +362,56 @@ function PropertyDisplay({ listingData, params }) {
   };
 
   const [isLiked, setIsLiked] = useState(false);
+  const { usersData } = storeUsersData();
 
-  const handleIconClick = () => {
+
+  const handleLikeToggle = async () => {
     setIsLiked(!isLiked);
+  
+    // Ensure the user is logged in before making the request
+    if (!usersData || !usersData.id) {
+      alert("Please log in to add favorites.");
+      return;
+    }
+  
+    // Retrieve the PocketBase auth token from localStorage
+    const authData = localStorage.getItem("pocketbase_auth");
+    const parsedAuthData = authData ? JSON.parse(authData) : null;
+    const token = parsedAuthData?.token;
+  
+    if (!token) {
+      alert("You need to log in to save favorites.");
+      return;
+    }
+  
+    // Prepare the data to send to PocketBase
+    const favoriteData = {
+      userId: usersData.id, // Assuming `id` is the user's identifier
+      property_id: property.id, // Property ID to be favorited
+    };
+  
+    try {
+      const response = await fetch("http://127.0.0.1:8090/api/collections/favorite/records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Include the token in the headers
+        },
+        body: JSON.stringify(favoriteData),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      alert("Property added to your favorites!");
+    } catch (error) {
+      console.error("Failed to add favorite:", error);
+      alert("Failed to add favorite. Please try again.");
+    }
   };
+
 
   return (
     <>
@@ -374,7 +420,7 @@ function PropertyDisplay({ listingData, params }) {
           <div className="flex  space-x-2">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={handleIconClick}
+              onClick={handleLikeToggle}
               className={`text-2xl mt-3 cursor-pointer ${
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}

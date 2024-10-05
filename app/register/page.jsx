@@ -68,7 +68,7 @@ export default function Component() {
             setSuccess('User registered successfully');
         } else {
             setError(data.message);
-        }
+        } 
     } catch (err) {
         setError('An error occurred');
     }
