@@ -9,6 +9,9 @@ export default function Page() {
   const { usersData } = storeUsersData();
 
   useEffect(() => {
+
+    if(typeof window === "undefined") return;
+
     const fetchUserFavorites = async () => {
       try {
         // Ensure the user is authenticated

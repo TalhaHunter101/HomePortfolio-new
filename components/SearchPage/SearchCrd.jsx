@@ -35,13 +35,16 @@ const SearchCard = ({ property, setCardHover }) => {
     }
   
     // Retrieve the PocketBase auth token from localStorage
-    const authData = localStorage.getItem("pocketbase_auth");
-    const parsedAuthData = authData ? JSON.parse(authData) : null;
-    const token = parsedAuthData?.token;
-  
-    if (!token) {
-      alert("You need to log in to save favorites.");
-      return;
+    if (typeof window !== 'undefined') {
+      // Retrieve the PocketBase auth token from localStorage
+      const authData = localStorage?.getItem("pocketbase_auth");
+      const parsedAuthData = authData ? JSON.parse(authData) : null;
+      const token = parsedAuthData?.token;
+    
+      if (!token) {
+        alert("You need to log in to save favorites.");
+        return;
+      }
     }
   
     // Prepare the data to send to PocketBase
