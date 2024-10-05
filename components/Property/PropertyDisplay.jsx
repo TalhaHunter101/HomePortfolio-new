@@ -40,6 +40,7 @@ import { useListingStore } from "@/store/listingStore";
 import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 import DataShows from "../PropertyPageCards/DataShows";
 import DataNeighbour from "../PropertyPageCards/DataNeighbour";
+import { storeUsersData } from "@/store/authStore";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;

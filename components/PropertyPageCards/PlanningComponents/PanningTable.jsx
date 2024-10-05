@@ -34,7 +34,7 @@ const PlanningApplicationsTable = ({ planningData }) => {
       case "status":
         return (
           <Chip color={statusColorMap[source?.other_fields?.decision] || "default"} variant="flat">
-            {source?.other_fields?.decision}
+            {source?.other_fields?.decision || "Others"}
           </Chip>
         );
       case "address":

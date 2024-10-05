@@ -29,6 +29,7 @@ export function PlanningCard({ postcode }) {
         "Approve",
         "Approval",
         "Approve with Conditions",
+        "Application Granted",
       ]),
       iconColor: "text-green-500",
       icon: "mdi:check-circle",
