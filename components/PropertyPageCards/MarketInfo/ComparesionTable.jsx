@@ -13,16 +13,19 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button
+  Button,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 function ComparesionTable({ data }) {
-  const [sortDescriptor, setSortDescriptor] = useState({});
+  const [sortDescriptor, setSortDescriptor] = useState({
+    column: null,
+    direction: null,
+  });
   const [filters, setFilters] = useState({
     soldPrice: null,
     beds: null,
-    baths: null
+    baths: null,
   });
 
   const formatDate = (dateString) => {
@@ -51,9 +54,22 @@ function ComparesionTable({ data }) {
     { key: "baths", label: "BATHS" },
     { key: "area", label: "AREA (SQFT)" },
     { key: "epc", label: "EPC CUR. & POT." },
-    { key: "type", label: "PROPETY TYPE" },
+    { key: "type", label: "PROPERTY TYPE" },
   ];
 
+  // Determine the EPC color based on the EPC score
+  const getEpcColor = (score) => {
+    if (score >= 92) return "bg-green-700"; // Dark Green
+    if (score >= 81 && score <= 91) return "bg-green-500"; // Green
+    if (score >= 69 && score <= 80) return "bg-green-300"; // Light Green
+    if (score >= 55 && score <= 68) return "bg-yellow-300"; // Yellow
+    if (score >= 39 && score <= 54) return "bg-orange-400"; // Orange
+    if (score >= 21 && score <= 38) return "bg-orange-600"; // Dark Orange
+    if (score >= 1 && score <= 20) return "bg-red-500"; // Red
+    return "bg-gray-300"; // Default color if no EPC data is available
+  };
+
+  // Render cell content for each column
   const renderCell = (item, columnKey) => {
     switch (columnKey) {
       case "address":
@@ -69,7 +85,7 @@ function ComparesionTable({ data }) {
           </Tooltip>
         );
       case "soldDate":
-        return item.history.historicSales[0] && item.history.historicSales[0]
+        return item.history?.historicSales[0]
           ? formatDate(item.history.historicSales[0]?.date)
           : "N/A";
       case "soldPrice":
@@ -96,49 +112,51 @@ function ComparesionTable({ data }) {
             {item.attributes.bathrooms || "N/A"}
           </div>
         );
-        case "area":
-          return (
-            <div className="flex items-center">
-              <Icon icon="mdi:ruler" className="mr-2" />
-              {item.epcData && item.epcData.totalFloorArea
-                ? `${convertToSqFt(item.epcData.totalFloorArea)}`
-                : "N/A"}
-            </div>
-          );
+      case "area":
+        return (
+          <div className="flex items-center">
+            <Icon icon="mdi:ruler" className="mr-2" />
+            {item.epcData?.totalFloorArea
+              ? `${convertToSqFt(item.epcData.totalFloorArea)}`
+              : "N/A"}
+          </div>
+        );
       case "epc":
-        return item.epcData?.currentEnergyRating && item.epcData?.currentEnergyEfficiency ? (
+        const currentScore = item.epcData?.currentEnergyEfficiency;
+        return currentScore ? (
           <div className="flex gap-2">
             <Tooltip content="Current Energy Efficiency">
-              <Chip color="success" variant="flat">
-                {item.epcData.currentEnergyRating} { item.epcData.currentEnergyEfficiency}
+              <Chip
+                className={`${getEpcColor(currentScore)} text-white`}
+                variant="flat"
+              >
+                {item.epcData.currentEnergyRating} {currentScore}
               </Chip>
             </Tooltip>
-           
           </div>
         ) : (
           "N/A"
         );
-        case "type":
-          return (
-            <p>
-              {item.attributes.propertyType || "N/A"}
-            </p>
-          );
+      case "type":
+        return <p>{item.attributes.propertyType || "N/A"}</p>;
       default:
         return "N/A";
     }
   };
 
   const filteredAndSortedData = useMemo(() => {
+    // Avoid recalculating unless data, filters, or sortDescriptor change
     return [...data]
-      .filter(item => {
+      .filter((item) => {
         if (filters.soldPrice && item.saleEstimate) {
           const price = parseInt(item.saleEstimate.lowerPrice);
-          const [min, max] = filters.soldPrice.split('-').map(Number);
+          const [min, max] = filters.soldPrice.split("-").map(Number);
           if (price < min || price > max) return false;
         }
-        if (filters.beds && item.attributes.bedrooms !== filters.beds) return false;
-        if (filters.baths && item.attributes.bathrooms !== filters.baths) return false;
+        if (filters.beds && item.attributes.bedrooms !== filters.beds)
+          return false;
+        if (filters.baths && item.attributes.bathrooms !== filters.baths)
+          return false;
         return true;
       })
       .sort((a, b) => {
@@ -148,12 +166,20 @@ function ComparesionTable({ data }) {
 
         switch (sortDescriptor.column) {
           case "soldDate":
-            aValue = a.saleEstimates && a.saleEstimates[0] ? new Date(a.saleEstimates[0].ingestedAt) : new Date(0);
-            bValue = b.saleEstimates && b.saleEstimates[0] ? new Date(b.saleEstimates[0].ingestedAt) : new Date(0);
+            aValue = a.history?.historicSales[0]?.date
+              ? new Date(a.history.historicSales[0].date)
+              : new Date(0);
+            bValue = b.history?.historicSales[0]?.date
+              ? new Date(b.history.historicSales[0].date)
+              : new Date(0);
             break;
           case "soldPrice":
-            aValue = a.saleEstimate ? parseInt(a.saleEstimate.lowerPrice) : 0;
-            bValue = b.saleEstimate ? parseInt(b.saleEstimate.lowerPrice) : 0;
+            aValue = a.saleEstimate
+              ? parseInt(a.saleEstimate.lowerPrice)
+              : 0;
+            bValue = b.saleEstimate
+              ? parseInt(b.saleEstimate.lowerPrice)
+              : 0;
             break;
           case "beds":
             aValue = a.attributes.bedrooms || 0;
@@ -168,20 +194,24 @@ function ComparesionTable({ data }) {
         }
 
         if (aValue === bValue) return 0;
-        if (sortDescriptor.direction === "ascending") {
-          return aValue > bValue ? 1 : -1;
-        } else {
-          return aValue < bValue ? 1 : -1;
-        }
+        return sortDescriptor.direction === "ascending"
+          ? aValue - bValue
+          : bValue - aValue;
       });
   }, [data, sortDescriptor, filters]);
 
+  // Only call setSortDescriptor if the sort has changed
   const onSortChange = (descriptor) => {
-    setSortDescriptor(descriptor);
+    if (
+      descriptor.column !== sortDescriptor.column ||
+      descriptor.direction !== sortDescriptor.direction
+    ) {
+      setSortDescriptor(descriptor);
+    }
   };
 
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const priceRanges = [
@@ -202,7 +232,7 @@ function ComparesionTable({ data }) {
           {filters[key] ? `${label}: ${filters[key]}` : label}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu 
+      <DropdownMenu
         aria-label={`${label} filter options`}
         onAction={(selectedKey) => handleFilterChange(key, selectedKey)}
       >
@@ -219,7 +249,7 @@ function ComparesionTable({ data }) {
   return (
     <div>
       <div className="flex gap-4 mb-4">
-        
+        {/* Add filter dropdowns here */}
       </div>
       <Table
         aria-label="Property listings table"
@@ -233,15 +263,17 @@ function ComparesionTable({ data }) {
       >
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn 
-              key={column.key} 
-              allowsSorting={["soldDate", "soldPrice", "beds", "baths"].includes(column.key)}
+            <TableColumn
+              key={column.key}
+              allowsSorting={["soldDate", "soldPrice", "beds", "baths"].includes(
+                column.key
+              )}
             >
               {column.label}
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={filteredAndSortedData} className="h-[50vh] overflow-y-auto">
+        <TableBody items={filteredAndSortedData}>
           {(item) => (
             <TableRow key={item.uprn}>
               {(columnKey) => (
