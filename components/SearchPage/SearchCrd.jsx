@@ -5,6 +5,7 @@ import Link from "next/link";
 import { formatCurrency, timeAgo } from "@/utils/Helper";
 import { storeUsersData } from "@/store/authStore";
 import pb from "@/lib/pocketbase";
+import toast from "react-hot-toast";
 
 const SearchCard = ({ property, setCardHover }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,33 +47,21 @@ const SearchCard = ({ property, setCardHover }) => {
         return;
       }
     }
-  
-    // Prepare the data to send to PocketBase
-    const favoriteData = {
-      userId: usersData.id, // Assuming `id` is the user's identifier
-      property_id: property.id, // Property ID to be favorited
-    };
-  
-    try {
-      const response = await fetch("http://127.0.0.1:8090/api/collections/favorite/records", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Include the token in the headers
-        },
-        body: JSON.stringify(favoriteData),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-  
-      const result = await response.json();
-      alert("Property added to your favorites!");
-    } catch (error) {
-      console.error("Failed to add favorite:", error);
-      alert("Failed to add favorite. Please try again.");
+
+
+    pb.collection("favorite").create({
+      property_id: property.id,
+      userId: usersData.id,
+    }).then((res) => {
+      console.log(res);
+      toast.success("Property added to favorites");
     }
+    ).catch((err) => {
+      console.log(err);
+      toast.error("Error adding property to favorites");
+    });
+  
+
   };
   
 
