@@ -511,45 +511,45 @@ function PropertyDisplay({ listingData, params }) {
             </div>
 
             {/* Existing styles for larger screens */}
-            <div className="mb-4 lg:pl-6 flex items-center flex-col lg:flex-row hidden md:flex">
-              {/* Original content for larger screens */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="font-bold text-2xl lg:text-4xl">
-                  £{formattedPrice}
-                </h3>
-                <span className="text-sm font-bold lg:text-base flex items-center">
-                  <Icon
-                    icon="mdi:map-marker-outline"
-                    className="text-gray-500 mr-1"
-                  />
-                  {fullAddress || listingData?.address}
-                </span>
-                <span className="font-bold text-gray-400 text-sm lg:text-base">
-                  {" "}
-                  {listingData?.area}
-                </span>
-              </div>
-              <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bedrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">beds</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bathrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">baths</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {formatedSqft || "NA"}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">sqft</p>
-                </div>
-              </div>
-            </div>
+            <div className="mb-4 md:pl-6 flex items-center flex-row hidden md:flex">
+  {/* Content for md and lg screens */}
+  <div className="flex-1 text-center md:text-left">
+    <h3 className="font-bold text-2xl lg:text-4xl">
+      £{formattedPrice}
+    </h3>
+    <span className="text-sm font-bold lg:text-base flex items-center">
+      <Icon
+        icon="mdi:map-marker-outline"
+        className="text-gray-500 mr-1"
+      />
+      {fullAddress || listingData?.address}
+    </span>
+    <span className="font-bold text-gray-400 text-sm lg:text-base">
+      {" "}
+      {listingData?.area}
+    </span>
+  </div>
+  <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {bedrooms}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">beds</p>
+    </div>
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {bathrooms}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">baths</p>
+    </div>
+    <div>
+      <h3 className="font-semibold text-2xl lg:text-4xl">
+        {formatedSqft || "NA"}
+      </h3>
+      <p className="text-xs lg:text-sm text-gray-600">sqft</p>
+    </div>
+  </div>
+</div>
 
             <p className="text-sm pl-6 font-bold hidden md:block">
               {listingData?.title}
