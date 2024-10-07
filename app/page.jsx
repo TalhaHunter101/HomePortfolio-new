@@ -553,7 +553,7 @@ export default function Home() {
         <div className="flex flex-col justify-center md:p-8 w-full px-4 sm:px-6">
           <div className="w-full flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
-            Solutions designed for you
+            SOLUTIONS designed for you
 
             </Chip>
           </div>
