@@ -10,14 +10,31 @@ import {
 } from "@nextui-org/react";
 
 const statusColorMap = {
-  Undecided: "warning",
-  Conditions: "success",
-  Pending: "warning",
+  // Success status
+  "Application Permitted": "success",
+  "Grant": "success",
+  "Granted": "success",
+  "Approved": "success",
+  "Approve": "success",
+  "Approval": "success",
+  "Approve with Conditions": "success",
+  "Application Granted": "success",
+  "Conditions": "success",
+  
+  // Warning status
+  "Undecided": "warning",
+  "Pending": "warning",
+  "Withdrawn": "warning",
+  
+  // Danger status
+  "Refuse": "danger",
+  "Refused": "danger",
+  "Rejected": "danger"
 };
+
 
 const PlanningApplicationsTable = ({ planningData }) => {
 
-    console.log("planningData data jnxccjd",planningData);
     
   const columns = [
     { name: "STATUS", uid: "status" },
@@ -33,8 +50,8 @@ const PlanningApplicationsTable = ({ planningData }) => {
     switch (columnKey) {
       case "status":
         return (
-          <Chip color={statusColorMap[source?.other_fields?.decision] || "default"} variant="flat">
-            {source?.other_fields?.decision}
+          <Chip color={statusColorMap[source?.other_fields?.decision] || "warning"} variant="flat">
+            {source?.other_fields?.decision || "Others"}
           </Chip>
         );
       case "address":

@@ -3,14 +3,16 @@
 import React,{useState} from "react";
 import {Button, Input, Checkbox, Link, Divider} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
-import { login } from "./action";
 import toast, { Toaster } from "react-hot-toast";
 import pb from "@/lib/pocketbase";
-import { loginWithPassword } from "@/utils/pocketbase/helper";
+import { useRouter } from "next/navigation";
 
 
 
 export default function Component() {
+
+  const router = useRouter();
+
   const [isVisible, setIsVisible] = React.useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -29,22 +31,21 @@ const handleSubmit = async (event) => {
   
   setLoading(true);
 
- await loginWithPassword({email, password}).then((response) => {
-  if (!response.success) {
-    console.error('Error:', response);
-    toast.error(response.message);
-    return;
-  }
+  const response = await pb.collection('users').authWithPassword(email, password);
+
+  if (response.token) {
+ 
   toast.success('Login successful!');
-  document.cookie = `pb_auth=${response.token}; path=/`;
-    // pb.authStore.save(response.token);
+  console.log('User:', pb.authStore.model)
 
   // Redirect to dashboard
-  window.location.href = '/dashboard'
-}).catch((error) => {
-  console.error('Error:', error);
-  toast.error('An error occurred. Please try again later.');
-})
+  router.push('/dashboard')
+
+
+  } else {
+    toast.error(response.message);
+  }
+
 
   setLoading(false);
 

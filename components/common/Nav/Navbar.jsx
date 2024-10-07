@@ -1,10 +1,12 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem, Button} from "@nextui-org/react";
 import DropDown from "./DropDown"
 import Link from "next/link";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 import { usePathname } from "next/navigation";
+import { storeUsersData } from "@/store/authStore";
+import pb from "@/lib/pocketbase";
 
 
 
@@ -17,8 +19,35 @@ import { usePathname } from "next/navigation";
 
 export default function NavBar() {
 
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
 
+
+  useEffect(() => {
+
+    if(typeof window !== 'undefined') {
+
+    pb.authStore.model ? setIsLoggedin(true) : setIsLoggedin(false);
+    }
+
+    }, []);
+
+
+
+
+    const handleLOgout = () => {
+
+      pb.authStore.clear();
+      setIsLoggedin(false);
+
+
+      localStorage.removeItem("pocketbase_auth");
+
+    }
+
+
+
+  
   let pathname = usePathname();
 
 
@@ -63,16 +92,16 @@ export default function NavBar() {
           <p className="font-bold text-inherit">HomePortfolio</p>
           </Link>
         </NavbarBrand>
-        <DropDown>
+        {/* <DropDown>
 <NavbarItem key="item">
     <div className="">Features</div>
   </NavbarItem>
-</DropDown>
-        <NavbarItem>
+</DropDown> */}
+        {/* <NavbarItem>
           <Link color="foreground" href="#" >
             Best Places
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
           <Link color="foreground" href="/home-valuation">
            Home valuation
@@ -89,20 +118,42 @@ export default function NavBar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-4" justify="end">
 
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="/login">Login</Link>
-        </NavbarItem>
+  {
+    isLoggedin ? (
+      <>
+    <NavbarItem>
+      <Link color="foreground" href="/dashboard">
+        Dashboard
+      </Link>
+    </NavbarItem>
+    <NavbarItem>
+      <Button color="danger" 
+      onClick={handleLOgout}
+      >
+        Logout
+      </Button>
+    </NavbarItem>
+    </>
+    ) : (
+      <>
+    <NavbarItem>
+      <Link color="foreground" href="/login">
+        Login
+      </Link>
+    </NavbarItem>
+    <NavbarItem>
+      <Link color="foreground" href="/signup">
+        Signup
+      </Link>
+    </NavbarItem>
+    </>
 
+    )
+  }
 
-
-        <NavbarItem>
-          <Button as={Link} color="secondary" className="font-semibold text-white" href="/register">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
+  </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (

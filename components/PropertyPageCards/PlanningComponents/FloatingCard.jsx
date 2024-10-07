@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardBody, Chip } from "@nextui-org/react";
 import { formatDateNew } from "@/utils/Helper";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 
 export default function FloatingCard({ data }) {
   console.log("Planning data", data);
@@ -44,7 +45,7 @@ export default function FloatingCard({ data }) {
 
                 <span className="font-semibold">
                   <a href={item?._source?.other_fields?.source_url}>
-                    {item?._source?.other_fields?.applicant_name}
+                    <Icon  icon="iconamoon:link-external-thin" />
                   </a>
                 </span>
               </div>

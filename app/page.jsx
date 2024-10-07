@@ -1241,7 +1241,7 @@ export default function Home() {
 
         <div className="mt-24">
           <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
-            Our <span className="text-indigo-600">Data Souces</span>
+            Our <span className="text-indigo-600">Data Sources</span>
           </h2>
           <p className="text-lg mt-4 text-slate-600 text-center">
             We pull data from the best sources to provide you with the most accurate and up-to-date information.
@@ -1275,44 +1275,133 @@ export default function Home() {
 
 
 
-<div className="mt-8">
-  <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 text-center">
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:home" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">30M+</p>
+<div className="mt-1 bg-gradient-radial from-indigo-100 right-1/3 py-16 w-full">
+  {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
+  Card 1
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:home" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">Residential Properties</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">30M+</p>
     </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="material-symbols:update" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">10K+</p>
+    <p className="text-md text-gray-500">Residential Properties</p>
+  </div>
+
+  Card 2
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="material-symbols:update" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">Property records updated everyday</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">10K+</p>
     </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:location" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">2M+</p>
+    <p className="text-md text-gray-500">Property records updated everyday</p>
+  </div>
+
+  Card 3
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:location" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">Postcodes available for market research</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">2M+</p>
     </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="mdi:deal-outline" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">1M+</p>
+    <p className="text-md text-gray-500">Postcodes available for market research</p>
+  </div>
+
+  Card 4
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="mdi:deal-outline" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">Market deals</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">1M+</p>
     </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:chart-bar" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">167+</p>
+    <p className="text-md text-gray-500">Market deals</p>
+  </div>
+
+  Card 5
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:chart-bar" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">DataPoints</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">167+</p>
+    </div>
+    <p className="text-md text-gray-500">DataPoints</p>
+  </div>
+</div> */}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
+  {/* <!-- Card 1 --> */}
+  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
+    <div class="flex items-center">
+      <div class="flex items-center justify-center  rounded-full p-2">
+        <Icon icon="carbon:home" className="text-indigo-600 font-bold text-2xl" height={40} width={40}></Icon>
+      </div>
+      <div class="ml-3 text-left">
+        <p class="text-xl font-semibold text-gray-700">30M+</p>
+        <p class="text-md text-gray-500">Residential Properties</p>
+      </div>
     </div>
   </div>
+
+  {/* <!-- Card 2 --> */}
+  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
+    <div class="flex items-center">
+      <div class="flex items-center justify-center  rounded-full p-2">
+        <Icon icon="material-symbols:update" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
+      </div>
+      <div class="ml-3 text-left">
+        <p class="text-xl font-semibold text-gray-700">10K+</p>
+        <p class="text-md text-gray-500">Property records updated everyday</p>
+      </div>
+    </div>
+  </div>
+
+  {/* <!-- Card 3 --> */}
+  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
+    <div class="flex items-center">
+      <div class="flex items-center justify-center  rounded-full p-2">
+        <Icon icon="carbon:location" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
+      </div>
+      <div class="ml-3 text-left">
+        <p class="text-xl font-semibold text-gray-700">2M+</p>
+        <p class="text-md text-gray-500">Postcodes available for market research</p>
+      </div>
+    </div>
+  </div>
+
+  {/* <!-- Card 4 --> */}
+  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
+    <div class="flex items-center">
+      <div class="flex items-center justify-center rounded-full p-2">
+        <Icon icon="mdi:deal-outline" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
+      </div>
+      <div class="ml-3 text-left">
+        <p class="text-xl font-semibold text-gray-700">1M+</p>
+        <p class="text-md text-gray-500">Market deals</p>
+      </div>
+    </div>
+  </div>
+
+  {/* <!-- Card 5 --> */}
+  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
+    <div class="flex items-center">
+      <div class="flex items-center justify-center  rounded-full p-2">
+        <Icon icon="carbon:chart-bar" class="text-indigo-600 text-2xl " height={40} width={40}></Icon>
+      </div>
+      <div class="ml-3 text-left">
+        <p class="text-xl font-semibold text-gray-700">167+</p>
+        <p class="text-md text-gray-500">DataPoints</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 </div>
 
 

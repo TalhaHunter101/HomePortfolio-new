@@ -3,20 +3,22 @@ import { Button, Card, CardBody, Image, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { formatCurrency, timeAgo } from "@/utils/Helper";
+import { storeUsersData } from "@/store/authStore";
+import pb from "@/lib/pocketbase";
+import toast from "react-hot-toast";
 
 const SearchCard = ({ property, setCardHover }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const maxPrice = property?.maxPrice;
   const humanReadablePrice = formatCurrency(maxPrice);
-  console.log("date is prorjor",property?.date);
-  
+  const { usersData } = storeUsersData();
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? property.images.length - 1 : prevIndex - 1
     );
-  };
+  };  
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -24,9 +26,44 @@ const SearchCard = ({ property, setCardHover }) => {
     );
   };
 
-  const handleLikeToggle = () => {
+  const handleLikeToggle = async () => {
     setIsLiked(!isLiked);
+  
+    // Ensure the user is logged in before making the request
+    if (!usersData || !usersData.id) {
+      alert("Please log in to add favorites.");
+      return;
+    }
+  
+    // Retrieve the PocketBase auth token from localStorage
+    if (typeof window !== 'undefined') {
+      // Retrieve the PocketBase auth token from localStorage
+      const authData = localStorage?.getItem("pocketbase_auth");
+      const parsedAuthData = authData ? JSON.parse(authData) : null;
+      const token = parsedAuthData?.token;
+    
+      if (!token) {
+        alert("You need to log in to save favorites.");
+        return;
+      }
+    }
+
+
+    pb.collection("favorite").create({
+      property_id: property.id,
+      userId: usersData.id,
+    }).then((res) => {
+      console.log(res);
+      toast.success("Property added to favorites");
+    }
+    ).catch((err) => {
+      console.log(err);
+      toast.error("Error adding property to favorites");
+    });
+  
+
   };
+  
 
   return (
     <Card
@@ -49,7 +86,9 @@ const SearchCard = ({ property, setCardHover }) => {
               style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickability
             />
           </div>
-          <div className="absolute top-2 left-2 z-10 bg-[#fdfdfdb5] px-2 rounded-md">listed {timeAgo(property?.date)}</div>
+          <div className="absolute top-2 left-2 z-10 bg-[#fdfdfdb5] px-2 rounded-md">
+            listed {timeAgo(property?.date)}
+          </div>
           <div className="absolute right-0 bottom-0 z-10">
             <Image
               alt="Property"
@@ -144,7 +183,9 @@ const SearchCard = ({ property, setCardHover }) => {
               </div>
               <div className="">
                 <h3 className="font-semibold text-xl">
-                  { property?.areaSize !== null && formatCurrency(property?.areaSize) || "NA"}
+                  {(property?.areaSize !== null &&
+                    formatCurrency(property?.areaSize)) ||
+                    "NA"}
                 </h3>
                 <p className="text-sm text-gray-600">sqft</p>
               </div>
