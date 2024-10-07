@@ -140,7 +140,7 @@ export default function AutocompleteSearch({ properties }) {
               /> */}
               <input
                 type="text"
-                placeholder="Search for any address, city, neighbourhood or postcode"
+                placeholder="Search by location or address"
                 className="custom-input flex-1 p-2 border-none outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

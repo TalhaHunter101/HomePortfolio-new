@@ -553,15 +553,17 @@ export default function Home() {
         <div className="flex flex-col justify-center md:p-8 w-full px-4 sm:px-6">
           <div className="w-full flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
-              Two-Col Features
+            Solutions designed for you
+
             </Chip>
           </div>
           <div className="w-full justify-center">
-            <h2 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
-              Supercharge Your Workflows
-            </h2>
+            <h3 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+            Turn property data into opportunities with a solution designed to fit your needs.
+
+            </h3>
             <p className="text-md mt-4 text-slate-600 text-center">
-              Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.
+            Make better, faster decisions with the best property data. Research and analyse any property market with HomePortfolio. Easily identify & evaluate your next property investment opportunities and engage, convert, and retain your customers.
             </p>
           </div>
           <div className="grid md:grid-cols-2 py-10 justify-center items-center">
