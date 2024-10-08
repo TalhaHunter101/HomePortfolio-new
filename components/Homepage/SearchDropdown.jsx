@@ -253,7 +253,7 @@ function SearchDropdown({ results, isDataLoading }) {
                   <div>
                     {results?.address.map((item, i) => (
                       <Link key={i} 
-                      href={item?.is_property ? `/property/${item?.listingId}` : `/uprn/${item?.address.uprn}`}
+                      href={item?.is_property ? `/property/${item?.listingId}` : `/uprn/${item?.address?.uprn}`}
                  
                       >
                         <div className="flex my-3 cursor-pointer">
