@@ -45,7 +45,7 @@ export default function Beds() {
               selectedKey={selectedBeds}
               onSelectionChange={setSelectedBeds}
             >
-              <Tab key="all" title="any" />
+              <Tab key="any" title="any" />
               <Tab key="1" title="1+" />
               <Tab key="2" title="2+" />
               <Tab key="3" title="3+" />

@@ -159,7 +159,7 @@ const SearchPage = ({ params }) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [page, currentPage]);
+  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, fetchProperties]);
 
   return (
     <main className="flex mt-16 flex-col h-screen">
