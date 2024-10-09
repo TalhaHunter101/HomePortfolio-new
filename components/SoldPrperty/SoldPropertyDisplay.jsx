@@ -43,7 +43,7 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import ThumbnailCard from "../Property/ThumbnailCard";
 
 function PropertyDisplay({ listingData, params }) {
-  console.log('listingggggggggggg',listingData);
+
   // const price = listingData?.pricing?.internalValue;
   // const formattedPrice = formatCurrency(price);
   // const { squerfoot, fullAddress } = useListingStore();
@@ -71,6 +71,16 @@ function PropertyDisplay({ listingData, params }) {
         longitude: listingData?.address?.longitude || 0,
       },
     },
+    analyticsTaxonomy: {
+      outcode: listingData?.address?.outcode,
+    },
+    adTargeting: {
+      location: listingData?.address?.postcode,
+      countyAreaName: listingData?.address?.country,
+    },
+    pricing: {
+      internalValue: formattedPrice,
+    }
   };
 
   const mainImages = [
@@ -138,7 +148,6 @@ function PropertyDisplay({ listingData, params }) {
   //   fetchData();
   // }, [listingData, postcode]);
 
-  
   // const bedrooms =
   //   listingData?.attributes?.bedrooms ||
   //   listingData?.counts?.numBedrooms ||
@@ -344,7 +353,7 @@ function PropertyDisplay({ listingData, params }) {
         //   id: "goodplace",
         //   Component: DataShows,
         // },
-        
+
         {
           name: "Around the Neighborhood",
           icon: "mdi:human-child",
@@ -352,7 +361,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "neighbors",
           Component: DataNeighbour,
         },
-        
+
         {
           name: "Financials",
           icon: "mdi:human-child",
@@ -488,8 +497,8 @@ function PropertyDisplay({ listingData, params }) {
         </div>
         <div className="flex justify-start px-6 gap=4 w-full">
           <Chip color="warning" className="mt-4 text-white font-semibold">
-OFF Market          
-  </Chip>
+            OFF Market
+          </Chip>
         </div>
 
         {/* lower div */}
@@ -597,7 +606,6 @@ OFF Market
             {/* <p className="text-sm pl-6 font-bold hidden md:block">
               {listingData?.title}
             </p> */}
-           
 
             {navElements.map((element, index) => (
               <React.Fragment key={index}>
@@ -630,13 +638,13 @@ OFF Market
                       // longitude={listingData?.address?.longitude || 0}
                       price={formattedPrice || "NA"}
                       area={listingData?.area || "NA"}
-                      address={fullAdress }
+                      address={fullAdress}
                       uprn={uprn}
-            // data={newData}
-            data={locationData}
-            postcode={postcode}
-            schoolData={schoolData}
-            // setRentEstimate={setRentEstimate}
+                      // data={newData}
+                      data={locationData}
+                      postcode={postcode}
+                      schoolData={schoolData}
+                      // setRentEstimate={setRentEstimate}
                     />
                   </div>
                 ))}

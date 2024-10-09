@@ -8,24 +8,25 @@ import { Spinner } from "@nextui-org/react";
 import { marketInfoStore } from "@/store/listingStore";
 
 export default function PropertyPage({ params }) {
-  
-  console.log('paramsss', params)
 
   const [listingData, setlistingData] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { resetMarketInfo } = marketInfoStore();
 
+  console.log("params is", params);
+
   useEffect(() => {
     const fetchDatabyListId = async () => {
       try {
+        const uprn = params.uprn.split('%3D')[1];
         setIsDataLoading(true);
         const response = await fetch("/api/uprn/get-house-data", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ uprn : params.uprn }),
-        })
+          body: JSON.stringify({ uprn: uprn }),
+        });
 
         if (response.ok) {
           const data = await response.json();

@@ -43,6 +43,8 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import { storeUsersData } from "@/store/authStore";
 
 function PropertyDisplay({ listingData, params }) {
+  console.log("listingData is",listingData);
+  
   const price = listingData?.pricing?.internalValue;
   const formattedPrice = formatCurrency(price);
   const { squerfoot, fullAddress } = useListingStore();

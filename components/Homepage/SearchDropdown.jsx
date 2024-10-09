@@ -156,9 +156,7 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )} */}
 
-
-
-{results?.posttown?.length > 0 && (
+              {results?.posttown?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Places
@@ -173,12 +171,9 @@ function SearchDropdown({ results, isDataLoading }) {
                       //   )}`}
                       // >
                       <Link
-                      key={i}
-                      href={`/search/${item?.replace(
-                        /\s+/g,
-                        "-"
-                      )}`}
-                    >
+                        key={i}
+                        href={`/search/${item?.replace(/\s+/g, "-")}`}
+                      >
                         <div className="flex my-3 cursor-pointer">
                           <Image
                             src="/icons/location.svg"
@@ -188,9 +183,7 @@ function SearchDropdown({ results, isDataLoading }) {
                             className="mx-2"
                           />
                           <div>
-                            <p className="text-sm text-primaryfonts">
-                              {item}
-                            </p>
+                            <p className="text-sm text-primaryfonts">{item}</p>
                           </div>
                         </div>
                       </Link>
@@ -198,7 +191,6 @@ function SearchDropdown({ results, isDataLoading }) {
                   </div>
                 </div>
               )}
-
 
               {results?.postcode?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
@@ -216,13 +208,9 @@ function SearchDropdown({ results, isDataLoading }) {
                       // >
 
                       <Link
-                      key={i}
-                      href={`/search/${item?.replace(
-                        /\s+/g,
-                        "-"
-                      )}`}
-                    >
-
+                        key={i}
+                        href={`/search/${item?.replace(/\s+/g, "-")}`}
+                      >
                         <div className="flex my-3 cursor-pointer">
                           <Image
                             src="/icons/location.svg"
@@ -232,9 +220,7 @@ function SearchDropdown({ results, isDataLoading }) {
                             className="mx-2"
                           />
                           <div>
-                            <p className="text-sm text-primaryfonts">
-                              {item}
-                            </p>
+                            <p className="text-sm text-primaryfonts">{item}</p>
                           </div>
                         </div>
                       </Link>
@@ -243,8 +229,6 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
-            
-
               {results?.address?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
@@ -252,9 +236,16 @@ function SearchDropdown({ results, isDataLoading }) {
                   </p>
                   <div>
                     {results?.address.map((item, i) => (
-                      <Link key={i} 
-                      href={item?.is_property ? `/property/${item?.listingId}` : `/uprn/${item?.address?.uprn}`}
-                 
+                      <Link
+                        key={i}
+                        href={{
+                          pathname: item?.is_property
+                            ? `/property/${item?.listingId}`
+                            : `/uprn/${item?.full_address.replace(
+                                /\s+/g,
+                                "-"
+                              )}?uprn=${item?.address?.uprn}`,
+                        }}
                       >
                         <div className="flex my-3 cursor-pointer">
                           <Icon
@@ -266,8 +257,8 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                            {/* {item?.SUB_BUILDING_NAME} {item?.BUILDING_NAME} {item?.BUILDING_NUMBER} {item?.THOROUGHFARE} */}
-                            {item?.full_address}
+                              {/* {item?.SUB_BUILDING_NAME} {item?.BUILDING_NAME} {item?.BUILDING_NUMBER} {item?.THOROUGHFARE} */}
+                              {item?.full_address}
                             </p>
                           </div>
                         </div>
@@ -276,14 +267,6 @@ function SearchDropdown({ results, isDataLoading }) {
                   </div>
                 </div>
               )}
-
-
-
-            
-              
-
-
-              
             </div>
           </div>
         </Card>
