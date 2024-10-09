@@ -41,10 +41,10 @@ import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 import DataShows from "../PropertyPageCards/DataShows";
 import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import { storeUsersData } from "@/store/authStore";
+import pb from "@/lib/pocketbase";
+import toast, { Toaster } from "react-hot-toast";
 
-function PropertyDisplay({ listingData, params }) {
-  console.log("listingData is",listingData);
-  
+function PropertyDisplay({ listingData, params }) {  
   const price = listingData?.pricing?.internalValue;
   const formattedPrice = formatCurrency(price);
   const { squerfoot, fullAddress } = useListingStore();
@@ -366,61 +366,84 @@ function PropertyDisplay({ listingData, params }) {
 
   const [isLiked, setIsLiked] = useState(false);
   const { usersData } = storeUsersData();
+  const checkIfLiked = async () => {
+    if (!usersData || !usersData.id) return; // Ensure the user is logged in
 
+    try {
+      // Retrieve the user's favorites collection
+      const response = await pb.collection("favorite").getList(1, 1, {
+        filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
+      });
+
+      // Check if the property is found in the user's favorites
+      if (response.items.length > 0) {
+        setIsLiked(true); // Property is already liked
+      } else {
+        setIsLiked(false); // Property is not liked yet
+      }
+    } catch (error) {
+      console.log("Error checking liked property:", error);
+    }
+  };
+
+  // Call the check function on page load
+  useEffect(() => {
+    checkIfLiked();
+  }, [listingData, usersData]);
 
   const handleLikeToggle = async () => {
-      setIsLiked(!isLiked);
+    if (!usersData || !usersData.id) {
+      alert("Please log in to add or remove favorites.");
+      return;
+    }
   
-      // Ensure the user is logged in before making the request
-      if (!usersData || !usersData.id) {
-        alert("Please log in to add favorites.");
+    // Retrieve the PocketBase auth token from localStorage
+    if (typeof window !== 'undefined') {
+      const authData = localStorage?.getItem("pocketbase_auth");
+      const parsedAuthData = authData ? JSON.parse(authData) : null;
+      const token = parsedAuthData?.token;
+  
+      if (!token) {
+        alert("You need to log in to save favorites.");
         return;
       }
+    }
   
-      // Check if running on the client side
-      if (typeof window !== 'undefined') {
-        // Retrieve the PocketBase auth token from localStorage
-        const authData = localStorage?.getItem("pocketbase_auth");
-        const parsedAuthData = authData ? JSON.parse(authData) : null;
-        const token = parsedAuthData?.token;
-  
-        if (!token) {
-          alert("You need to log in to save favorites.");
-          return;
-        }
-      }
-  
-      // Prepare the data to send to PocketBase
-      const favoriteData = {
-        userId: usersData.id, // Assuming `id` is the user's identifier
-        property_id: property.id, // Property ID to be favorited
-      };
-  
-      try {
-        const response = await fetch("http://127.0.0.1:8090/api/collections/favorite/records", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Include the token in the headers
-          },
-          body: JSON.stringify(favoriteData),
+    try {
+      if (isLiked) {
+        // If the property is already liked, remove it from favorites
+        const result = await pb.collection("favorite").getList(1, 1, {
+          filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
         });
   
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+        if (result.items.length > 0) {
+          // Remove the favorite entry
+          await pb.collection("favorite").delete(result.items[0].id);
+          toast.success("Property removed from favorites");
+        } else {
+          toast.error("Error: favorite entry not found.");
         }
-  
-        const result = await response.json();
-        alert("Property added to your favorites!");
-      } catch (error) {
-        console.error("Failed to add favorite:", error);
-        alert("Failed to add favorite. Please try again.");
+      } else {
+        // If the property is not liked, add it to favorites
+        await pb.collection("favorite").create({
+          property_id: listingData.listingId,
+          userId: usersData.id,
+        });
+        toast.success("Property added to favorites");
       }
-    };
-
+  
+      // Toggle the `isLiked` state
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      toast.error("Error updating favorites");
+    }
+  };
+  
 
   return (
     <>
+    <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
         <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
           <div className="flex  space-x-2">

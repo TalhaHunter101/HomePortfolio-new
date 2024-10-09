@@ -14,6 +14,7 @@ import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { convertToSquareFeet } from "@/utils/Helper";
+import pb from "@/lib/pocketbase";
 
 function ShowDataCards({
   cardData,
@@ -28,6 +29,30 @@ function ShowDataCards({
   const [toLocation, setToLocation] = useState("");
   const [showMap, setShowMap] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [likedProperties, setLikedProperties] = useState([]);
+
+
+  useEffect(() => {
+    const fetchLikedProperties = async () => {
+      try {
+        const userData = JSON.parse(localStorage?.getItem("pocketbase_auth"));
+        if (userData && userData?.token) {
+          // Disable auto-cancellation for this request by setting autoCancel to false
+          const response = await pb.collection("favorite").getFullList({
+            filter: `userId='${userData.model.id}'`,
+            $autoCancel: false, // This prevents the request from being cancelled
+          });
+          const likedPropertyIds = response.map((fav) => fav.property_id);
+          setLikedProperties(likedPropertyIds);
+        }
+      } catch (error) {
+        console.error("Error fetching liked properties:", error);
+      }
+    };
+    fetchLikedProperties();
+  }, []);
+  
+  
 
   const sortData = () => {
     const sortedData = [...filter].sort((a, b) => {
@@ -210,6 +235,7 @@ function ShowDataCards({
                       <SearchCard
                         property={card}
                         setCardHover={setCardHover}
+                        isLiked={likedProperties.includes(card.id)}
                       />
                     </motion.div>
                   ))}
