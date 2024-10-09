@@ -13,7 +13,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   const { setWalkScore: setListingWalkScore } = useListingStore();
 
   // Count transports for each type (rail, bus, ferry)
-  const transportCounts = data.transports.reduce((acc, transport) => {
+  const transportCounts = data?.transports?.reduce((acc, transport) => {
     const { poiType } = transport;
     const key = poiType.includes("rail")
       ? "rail"
@@ -28,8 +28,8 @@ export function PublicTransportCard({ data, latitude, longitude }) {
   const filteredTransports =
     selectedType === "bus"
       ? busData
-      : data.transports.filter((transport) =>
-          transport.poiType.includes(selectedType)
+      : data?.transports?.filter((transport) =>
+          transport?.poiType?.includes(selectedType)
         );
 
   const center = [
@@ -78,7 +78,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
           setBusData(busData);
 
           // Extract latitude and longitude from bus coordinates
-          const busLocations = busData.map((bus) => ({
+          const busLocations = busData?.map((bus) => ({
             lat: bus.coordinates[1],
             lng: bus.coordinates[0],
           }));
@@ -196,7 +196,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
                     onClick={() => setSelectedType("rail")}
                   >
                     <Icon icon="mdi:train" width="1em" height="1em" />
-                    <div>Rail ({transportCounts.rail || 0})</div>
+                    <div>Rail ({transportCounts?.rail || 0})</div>
                   </button>
                   <button
                     className={`flex space-x-2 items-center rounded-md px-4 py-2 ${
@@ -207,7 +207,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
                     onClick={() => setSelectedType("bus")}
                   >
                     <Icon icon="mdi:bus" width="1em" height="1em" />
-                    <div>Bus ({transportCounts.bus || busData.length})</div>
+                    <div>Bus ({transportCounts?.bus || busData?.length})</div>
                   </button>
                   <button
                     className={`flex space-x-2 items-center rounded-md px-4 py-2 ${
@@ -218,12 +218,12 @@ export function PublicTransportCard({ data, latitude, longitude }) {
                     onClick={() => setSelectedType("ferry")}
                   >
                     <Icon icon="mdi:ferry" width="1em" height="1em" />
-                    <div>Ferry ({transportCounts.ferry || 0})</div>
+                    <div>Ferry ({transportCounts?.ferry || 0})</div>
                   </button>
                 </div>
 
                 <div className="sm:flex-col sm:flex-wrap flex-1 flex flex-row scrollbar-none overflow overflow-y-hidden snap-mandatory space-x-2 sm:space-x-0 pr-6 sm:pr-0 ml-2 mb-2 sm:mb-0 sm:-mt-2">
-                  {filteredTransports.map((transport, index) => (
+                  {filteredTransports?.map((transport, index) => (
                     <div
                       key={index}
                       className="flex-shrink-0 w-full h-auto snap-start map-list-item"

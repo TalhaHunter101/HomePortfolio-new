@@ -3,6 +3,7 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { PricetrackerChart } from "./Charts/pricetrckerChart";
 import { useListingStore } from "@/store/listingStore";
 import { Icon } from "@iconify/react";
+import { formatCurrency } from "@/utils/Helper";
 
 export function PriceTrackerCard({ uprn, data: newData, postcode }) {
   const [data, setData] = useState([]);
@@ -153,7 +154,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
                     </div>
                     <div className="text-[16px]">
                       <b className="font-medium text-[22px]">
-                        £{ratePerYear || "..."} per year
+                        £{formatCurrency(ratePerYear)  || "..."} per year
                       </b>
                     </div>
                   </div>

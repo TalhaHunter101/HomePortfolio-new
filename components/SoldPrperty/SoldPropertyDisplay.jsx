@@ -45,11 +45,12 @@ import ThumbnailCard from "../Property/ThumbnailCard";
 function PropertyDisplay({ listingData, params }) {
 
   // const price = listingData?.pricing?.internalValue;
-  // const formattedPrice = formatCurrency(price);
+
   // const { squerfoot, fullAddress } = useListingStore();
-  const uprn = params?.uprn || "123456";
+  // const uprn = params?.uprn || "123456";
+  const uprn = params.uprn.split('%3D')[1];
   const fullAdress = listingData?.full_address || "N.A";
-  const formattedPrice =
+  const price =
     listingData?.history?.historicSales[0]?.price ||
     listingData?.saleEstimate?.currentPrice ||
     "N.A";
@@ -58,10 +59,10 @@ function PropertyDisplay({ listingData, params }) {
   const squareFeet = listingData?.analyticsTaxonomy?.sizeSqFeet || "N.A";
   const builtYear = listingData?.attributes?.builtYear || "N.A";
   const postcode = listingData?.ref_postcode || "N.A";
-  const newData = {
-    counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
-    analyticsTaxonomy: listingData?.analyticsTaxonomy,
-  };
+  // const newData = {
+  //   counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
+  //   analyticsTaxonomy: listingData?.analyticsTaxonomy,
+  // };
 
   const locationData = {
     address: fullAdress,
@@ -79,10 +80,11 @@ function PropertyDisplay({ listingData, params }) {
       countyAreaName: listingData?.address?.country,
     },
     pricing: {
-      internalValue: formattedPrice,
+      internalValue: price,
     }
   };
 
+  const formattedPrice = formatCurrency(price);
   const mainImages = [
     "https://lc.zoocdn.com/2d792e1a98ef15571de593c32265cae6c5b7810d.jpg",
     "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
@@ -96,26 +98,19 @@ function PropertyDisplay({ listingData, params }) {
     "https://lc.zoocdn.com/33af57fb01f4c76627939ad4fa9603eb16e493d2.jpg",
     "https://lc.zoocdn.com/1a1a9416471a880bc713c96323ba08970dddf238.jpg",
   ];
+  const newData = {
+    counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
 
-  // useEffect(() => {
-  //   const getSchoolData = async () => {
-  //     try {
-  //       const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ postcode }),
-  //       });
+    analyticsTaxonomy: listingData?.analyticsTaxonomy,
+  };
+  console.log('listingData', listingData);
 
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setSchoolData(result);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching school data:", error);
-  //     }
-  //   };
+
+  // getSchoolData();
+  // getPricePaidData();
+
+
+
 
   //   const getPricePaidData = async () => {
   //     try {
@@ -148,14 +143,7 @@ function PropertyDisplay({ listingData, params }) {
   //   fetchData();
   // }, [listingData, postcode]);
 
-  // const bedrooms =
-  //   listingData?.attributes?.bedrooms ||
-  //   listingData?.counts?.numBedrooms ||
-  //   null;
-  // const bathrooms =
-  //   listingData?.attributes?.bathrooms ||
-  //   listingData?.counts?.numBathrooms ||
-  //   null;
+
 
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
@@ -166,75 +154,87 @@ function PropertyDisplay({ listingData, params }) {
   const [pricePaidData, setPricePaidData] = useState([]);
   const [rentEstimate, setRentEstimate] = useState(0);
   const [rentData, setRentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // const formatedSqft = formatCurrency(
   //   listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
   // );
 
-  // useEffect(() => {
-  //   const getSchoolData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `/api/indevisual/get-schools-by-postcode`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({ postcode: listingData?.ref_postcode }),
-  //         }
-  //       );
+  useEffect(() => {
+    const getSchoolData = async () => {
+      if (!listingData?.ref_postcode) return; // Ensure there's a valid postcode before making the API call
 
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setSchoolData(result);
-  //       }
-  //     } catch (error) {
-  //       console.log("error is", error);
+      try {
+        const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ postcode: listingData.ref_postcode }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setSchoolData(result);
+        }
+      } catch (error) {
+        console.error("Error fetching school data:", error);
+      }
+    };
+
+    getSchoolData();
+  }, [listingData?.ref_postcode]);
+
+
+  // const getPricePaidData = async () => {
+  //   try {
+  //     const result = await fetch("/api/indevisual/get-price-paid", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         city: listingData?.analyticsTaxonomy?.postTownName,
+  //       }),
+  //     });
+
+  //     if (result.ok) {
+  //       const resultData = await result.json();
+  //       setPricePaidData(resultData);
   //     }
-  //   };
+  //   } catch (error) {}
+  // };
 
-  //   const getPricePaidData = async () => {
-  //     try {
-  //       const result = await fetch("/api/indevisual/get-price-paid", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           city: listingData?.analyticsTaxonomy?.postTownName,
-  //         }),
-  //       });
 
-  //       if (result.ok) {
-  //         const resultData = await result.json();
-  //         setPricePaidData(resultData);
-  //       }
-  //     } catch (error) {}
-  //   };
+  const getRentData = async () => {
+    try {
+      setIsLoading(true); // Start loading state
+      const result = await fetch("/api/indevisual/get-rent-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          outcode: listingData?.ref_postcode?.split(" ")[0],
+        }),
+      });
 
-  //   const getRentData = async () => {
-  //     try {
-  //       const result = await fetch("/api/indevisual/get-rent-data", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           outcode: listingData?.analyticsTaxonomy?.outcode,
-  //         }),
-  //       });
+      if (result.ok) {
+        const resultData = await result.json();
+        setRentData(resultData);
+      }
+    } catch (error) {
+      console.error("Error fetching rent data:", error);
+    } finally {
+      setIsLoading(false); // End loading state
+    }
+  };
 
-  //       if (result.ok) {
-  //         const resultData = await result.json();
-  //         setRentData(resultData);
-  //       }
-  //     } catch (error) {}
-  //   };
-
-  //   getSchoolData();
-  //   getPricePaidData();
-  //   getRentData();
+  useEffect(() => {
+    if (listingData?.ref_postcode) {
+      getRentData();
+    }
+  }, [listingData?.ref_postcode]);
   // }, [listingData]);
 
   const navElements = [
@@ -265,17 +265,76 @@ function PropertyDisplay({ listingData, params }) {
         },
       ],
     },
+
+    {
+      name: "Around the Neighborhood",
+      id: "around-neighborhood",
+      subElements: [
+        {
+          name: "How are the Schools?",
+          icon: "mdi:school",
+          bgColor: "bg-purple-200",
+          id: "schools",
+          Component: SchoolsCard,
+        },
+
+        {
+          name: "All about the Home",
+          icon: "mdi:account-group",
+          bgColor: "bg-purple-300",
+          id: "goodplace",
+          Component: DataShows,
+        },
+
+        {
+          name: "Around the Neighborhood",
+          icon: "mdi:person-details",
+          bgColor: "bg-purple-300",
+          id: "neighbors",
+          Component: DataNeighbour,
+        },
+
+        {
+          name: "Can I raise a family here?",
+          icon: "mdi:account-group",
+          bgColor: "bg-purple-300",
+          id: "family",
+          Component: FamilyCard,
+        },
+        {
+          name: "What's nearby?",
+          icon: "mdi:map",
+          bgColor: "bg-purple-400",
+          id: "nearby",
+          Component: NearbyCard,
+        },
+        {
+          name: "Public Transport",
+          icon: "mdi:bus",
+          bgColor: "bg-purple-500",
+          id: "publictransport",
+          Component: PublicTransportCard,
+        },
+        {
+          name: "EV Charging Stations",
+          icon: "mdi:ev-station",
+          bgColor: "bg-purple-500",
+          id: "EvChargingStations",
+          Component: EVCard,
+        },
+      ],
+    },
     {
       name: "Financials",
       id: "financials",
       subElements: [
-        // {
-        //   name: "Rent & Home Valuation",
-        //   icon: "mdi:currency-usd",
-        //   bgColor: "bg-green-200",
-        //   id: "renthomevaluation",
-        //   Component: RentHomeValCard,
-        // },
+        {
+          name: "Rent & Home Valuation",
+          icon: "hugeicons:chart-evaluation",
+          bgColor: "bg-green-200",
+          id: "renthomevaluation",
+          Component: RentHomeValCard,
+        },
         {
           name: "Price history",
           icon: "mdi:history",
@@ -292,7 +351,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Price tracker",
-          icon: "mdi:currency-usd",
+          icon: "solar:tag-price-bold",
           bgColor: "bg-green-400",
           id: "pricetracker",
           Component: PriceTrackerCard,
@@ -306,89 +365,31 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Market Info",
-          icon: "mdi:scale-balance",
+          icon: "icon-park-outline:market-analysis",
           bgColor: "bg-green-500",
           id: "marketinfo",
           Component: MarketInfoPage,
         },
         {
           name: "Know your Home Options",
-          icon: "mdi:scale-balance",
+          icon: "carbon:home",
           bgColor: "bg-green-500",
           id: "knowyourhometypes",
           Component: HomeTypesCard,
         },
         {
           name: "right time to buy?",
-          icon: "mdi:scale-balance",
+          icon: "fluent:data-trending-16-filled",
           bgColor: "bg-green-500",
           id: "dreamhouse",
           Component: DreamHouseCard,
         },
         {
           name: "Calculate potential returns",
-          icon: "mdi:scale-balance",
+          icon: "solar:calculator-minimalistic-bold",
           bgColor: "bg-green-500",
           id: "calculateyourdreamhouse",
           Component: Calculation,
-        },
-      ],
-    },
-    {
-      name: "Around the Neighborhood",
-      id: "around-neighborhood",
-      subElements: [
-        {
-          name: "How are the Schools?",
-          icon: "mdi:school",
-          bgColor: "bg-purple-200",
-          id: "schools",
-          Component: SchoolsCard,
-        },
-
-        // {
-        //   name: "All about the Home",
-        //   icon: "mdi:human-child",
-        //   bgColor: "bg-purple-300",
-        //   id: "goodplace",
-        //   Component: DataShows,
-        // },
-
-        {
-          name: "Around the Neighborhood",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "neighbors",
-          Component: DataNeighbour,
-        },
-
-        {
-          name: "Financials",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "family",
-          Component: FamilyCard,
-        },
-        {
-          name: "What's nearby?",
-          icon: "mdi:map",
-          bgColor: "bg-purple-400",
-          id: "nearby",
-          Component: NearbyCard,
-        },
-        // {
-        //   name: "Public Transport",
-        //   icon: "mdi:bus",
-        //   bgColor: "bg-purple-500",
-        //   id: "publictransport",
-        //   Component: PublicTransportCard,
-        // },
-        {
-          name: "EV Charging Stations",
-          icon: "mdi:ev-station",
-          bgColor: "bg-purple-500",
-          id: "EvChargingStations",
-          Component: EVCard,
         },
       ],
     },
@@ -398,7 +399,7 @@ function PropertyDisplay({ listingData, params }) {
       subElements: [
         {
           name: "Planning Applications",
-          icon: "mdi:shield-alert",
+          icon: "mdi:planner",
           bgColor: "bg-red-200",
           id: "Planning",
           Component: PlanningCard,
@@ -472,9 +473,8 @@ function PropertyDisplay({ listingData, params }) {
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
               onClick={handleIconClick}
-              className={`text-2xl mt-3 cursor-pointer ${
-                isLiked ? "text-red-500" : "text-gray-500"
-              }`}
+              className={`text-2xl mt-3 cursor-pointer ${isLiked ? "text-red-500" : "text-gray-500"
+                }`}
             />
             <Button size="lg" className="bg-transparent">
               <Icon icon="bx:share" />
@@ -634,17 +634,19 @@ function PropertyDisplay({ listingData, params }) {
                       // postcode={listingData?.ref_postcode}
                       // setRentEstimate={setRentEstimate}
                       rentEstimate={rentEstimate}
-                      // latitude={listingData?.address?.latitude || 0 }
-                      // longitude={listingData?.address?.longitude || 0}
+                      latitude={listingData?.address?.latitude || 0}
+                      longitude={listingData?.address?.longitude || 0}
                       price={formattedPrice || "NA"}
                       area={listingData?.area || "NA"}
                       address={fullAdress}
                       uprn={uprn}
-                      // data={newData}
+                      // data1={newData}
                       data={locationData}
                       postcode={postcode}
+
                       schoolData={schoolData}
-                      // setRentEstimate={setRentEstimate}
+                      setRentEstimate={setRentEstimate}
+                      rentData={rentData}
                     />
                   </div>
                 ))}
@@ -690,13 +692,11 @@ function PropertyDisplay({ listingData, params }) {
                                   (subElement, subIndex) => (
                                     <motion.li
                                       key={subElement.id}
-                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
-                                        subElement.bgColor
-                                      } ${
-                                        hoveredSubElement === subElement.id
+                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${subElement.bgColor
+                                        } ${hoveredSubElement === subElement.id
                                           ? subElement.bgColor
                                           : ""
-                                      }`}
+                                        }`}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: subIndex * 0.01 }}

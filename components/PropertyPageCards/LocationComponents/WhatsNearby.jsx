@@ -168,7 +168,7 @@ const haversineDistance = (coords1, coords2) => {
             address: address,
             lat,
             lon,
-            distance: `${distance.toFixed(2)} km`,
+            // distance: `${distance.toFixed(2)} km`,
           };
         });
 

@@ -125,12 +125,6 @@ function AgePopulationData({ AgePopulationData }) {
             AgePopulationData["_source"]["Age: Aged 85 years and over"]
           ),
         },
-        {
-          name: "Under 4",
-          value: parseInt(
-            AgePopulationData["_source"]["Age: Aged 4 years and under"]
-          ),
-        }
       ];
       setFormattedData(data);
       setLoading(false);
@@ -142,23 +136,19 @@ function AgePopulationData({ AgePopulationData }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row items-start p-4">
-      {/* Age Data on the Left */}
+    <div className="flex flex-col items-start p-4">
+      {/* Age Data at the top */}
       <div className="flex items-center p-2">
         <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2 ml-1">
-          <Icon
-            icon="game-icons:ages"
-            width={24}
-            className="text-gray-700"
-          />
+          <Icon icon="game-icons:ages" width={24} className="text-gray-700" />
         </div>
         <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
           Age Data
         </h2>
       </div>
 
-      {/* Chart Centered */}
-      <div className="flex-grow flex justify-center w-full lg:w-auto">
+      {/* Chart below */}
+      <div className="w-full flex justify-center">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={formattedData}
