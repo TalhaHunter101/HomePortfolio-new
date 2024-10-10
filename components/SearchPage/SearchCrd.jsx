@@ -19,11 +19,15 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
   }, [initialLiked]);
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? property.images.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? property.images.length - 1 : prevIndex - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === property.images.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === property.images.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const handleLikeToggle = async () => {
@@ -71,30 +75,80 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
               style={{ cursor: "pointer" }}
             />
           </div>
-          <div className="absolute top-2 left-2 z-10 bg-[#fdfdfdb5] px-2 rounded-md">
-            listed {timeAgo(property?.date)}
+          <div className="absolute top-2 left-2 z-10 flex">
+            <span className="bg-[#fdfdfdb5] px-2 rounded-md text-sm">
+              {timeAgo(property?.date)}
+            </span>
+
+            {property?.totalPriceChange !== "No price change" && (
+              <div className="bg-[#fdfdfdb5] px-1 rounded-md mx-1 text-sm flex items-center gap-2">
+                <Image
+                  src="/icons/grow-down.svg"
+                  height={15}
+                  width={15}
+                  alt="SVG Icon"
+                />
+                {property?.totalPriceChange}
+              </div>
+            )}
           </div>
           <div className="absolute right-0 bottom-0 z-10">
-            <Image alt="Property" className="h-8 w-10 rounded-none" src={property?.developer_logo} />
+            <Image
+              alt="Property"
+              className="h-8 w-10 rounded-none"
+              src={property?.developer_logo}
+            />
           </div>
           <div className="w-full overflow-hidden rounded-none relative">
-            <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
               {property?.images?.map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-full">
                   <Link href={`/property/${property.id}`}>
-                    <Image radius="none" src={image?.original} alt={`Property ${index + 1}`} width={600} height={200} classNames={{ wrapper: "min-w-full" }} />
+                    <Image
+                      radius="none"
+                      src={image?.original}
+                      alt={`Property ${index + 1}`}
+                      width={600}
+                      height={200}
+                      classNames={{ wrapper: "min-w-full" }}
+                    />
                   </Link>
                 </div>
               ))}
             </div>
           </div>
           <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
-            <Button isIconOnly variant="flat" radius="full" size="sm" onClick={handlePrevious}>
-              <Icon color="white" icon="bx:bx-chevron-left" width={24} height={24} />
+            <Button
+              isIconOnly
+              variant="flat"
+              radius="full"
+              size="sm"
+              onClick={handlePrevious}
+            >
+              <Icon
+                color="white"
+                icon="bx:bx-chevron-left"
+                width={24}
+                height={24}
+              />
               <span className="sr-only">Previous</span>
             </Button>
-            <Button isIconOnly variant="flat" radius="full" size="sm" onClick={handleNext}>
-              <Icon color="white" icon="bx:bx-chevron-right" width={24} height={24} />
+            <Button
+              isIconOnly
+              variant="flat"
+              radius="full"
+              size="sm"
+              onClick={handleNext}
+            >
+              <Icon
+                color="white"
+                icon="bx:bx-chevron-right"
+                width={24}
+                height={24}
+              />
               <span className="sr-only">Next</span>
             </Button>
           </div>
@@ -106,7 +160,9 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
             <h3 className="font-bold text-2xl">£{humanReadablePrice}</h3>
             <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">
               <div className="">
-                <h3 className="font-semibold text-xl">{property?.minBedrooms}</h3>
+                <h3 className="font-semibold text-xl">
+                  {property?.minBedrooms}
+                </h3>
                 <p className="text-sm text-gray-600">beds</p>
               </div>
               <div className="">
@@ -114,11 +170,17 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
                 <p className="text-sm text-gray-600">baths</p>
               </div>
               <div className="">
-                <h3 className="font-semibold text-xl">{(property?.areaSize !== null && formatCurrency(property?.areaSize)) || "NA"}</h3>
+                <h3 className="font-semibold text-xl">
+                  {(property?.areaSize !== null &&
+                    formatCurrency(property?.areaSize)) ||
+                    "NA"}
+                </h3>
                 <p className="text-sm text-gray-600">sqft</p>
               </div>
             </div>
-            <p className="pt-2 text-default-500 text-sm">{property?.fullAddress || property?.address}</p>
+            <p className="pt-2 text-default-500 text-sm">
+              {property?.fullAddress || property?.address}
+            </p>
           </div>
         </Link>
       </CardBody>

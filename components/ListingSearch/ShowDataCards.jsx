@@ -31,7 +31,6 @@ function ShowDataCards({
   const [sortOrder, setSortOrder] = useState("asc");
   const [likedProperties, setLikedProperties] = useState([]);
 
-
   useEffect(() => {
     const fetchLikedProperties = async () => {
       try {
@@ -51,8 +50,6 @@ function ShowDataCards({
     };
     fetchLikedProperties();
   }, []);
-  
-  
 
   const sortData = () => {
     const sortedData = [...filter].sort((a, b) => {
@@ -78,6 +75,23 @@ function ShowDataCards({
         const id = property?._source?.listingId;
         const description = property?._source?.summaryDescription;
 
+        // Calculate total price change
+        const priceChanges =
+          property?._source?.priceHistory?.priceChanges || [];
+        const totalPriceChange = priceChanges.reduce((acc, change) => {
+          const priceChangeLabel = change?.priceChangeLabel || "£0";
+          const numericValue = parseFloat(
+            priceChangeLabel.replace(/[£,]/g, "") // remove '£' and commas
+          );
+          return acc + numericValue;
+        }, 0);
+
+        // Format the total price change
+        const formattedPriceChange =
+          totalPriceChange > 0
+            ? `${(totalPriceChange / 1000).toFixed(0)}k drop`
+            : "No price change";
+
         groupedData.push({
           id: id,
           branch_name: property?._source?.branch?.name,
@@ -97,13 +111,10 @@ function ShowDataCards({
             convertToSquareFeet(property?._source?.totalFloorArea),
           fullAddress: property?._source?.fullAddress,
           address: property?._source?.analyticsTaxonomy?.displayAddress,
-          lng: parseFloat(
-            property?._source?.location?.coordinates?.longitude
-          ),
-          lat: parseFloat(
-            property?._source?.location?.coordinates?.latitude
-          ),
+          lng: parseFloat(property?._source?.location?.coordinates?.longitude),
+          lat: parseFloat(property?._source?.location?.coordinates?.latitude),
           date: property?._source?.publishedOn,
+          totalPriceChange: formattedPriceChange, // Add the price change information
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);
@@ -114,9 +125,7 @@ function ShowDataCards({
     getPropsData();
   }, [cardData]);
 
-  const [selectedKeys, setSelectedKeys] = React.useState(
-    new Set(["Sort by"])
-  );
+  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Sort by"]));
 
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -183,9 +192,7 @@ function ShowDataCards({
                       endContent={
                         <Icon
                           icon={
-                            isOpen
-                              ? "ph:caret-up-fill"
-                              : "ph:caret-down-fill"
+                            isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
                           }
                         />
                       }
@@ -222,7 +229,9 @@ function ShowDataCards({
               <div
                 className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-${
                   showMap ? "1" : "2"
-                } xl:grid-cols-${showMap ? "1" : "3"} gap-4 overflow-y-auto max-h-full`}
+                } xl:grid-cols-${
+                  showMap ? "1" : "3"
+                } gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&
                   filter.map((card, index) => (
