@@ -43,7 +43,13 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import ThumbnailCard from "../Property/ThumbnailCard";
 
 function PropertyDisplay({ listingData, params }) {
-
+  
+  const [walkScore, setWalkScore] = useState(null);
+  const [listingWalkScore, setListingWalkScore] = useState(null);
+  const [busData, setBusData] = useState([]);
+  const [busLocations, setBusLocations] = useState([]);
+  
+ 
   // const price = listingData?.pricing?.internalValue;
 
   // const { squerfoot, fullAddress } = useListingStore();
@@ -63,7 +69,7 @@ function PropertyDisplay({ listingData, params }) {
   //   counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
   //   analyticsTaxonomy: listingData?.analyticsTaxonomy,
   // };
-
+  const town = fullAdress ? fullAdress.split(", ")[2] : null; 
   const locationData = {
     address: fullAdress,
     location: {
@@ -622,7 +628,7 @@ function PropertyDisplay({ listingData, params }) {
                       {...listingData}
                       title={subElement.name}
                       // schoolData={schoolData}
-                      city={listingData?.location?.townOrCity}
+                      city={town}
                       postTownName={
                         listingData?.analyticsTaxonomy?.postTownName
                       }
@@ -647,6 +653,7 @@ function PropertyDisplay({ listingData, params }) {
                       schoolData={schoolData}
                       setRentEstimate={setRentEstimate}
                       rentData={rentData}
+                  
                     />
                   </div>
                 ))}

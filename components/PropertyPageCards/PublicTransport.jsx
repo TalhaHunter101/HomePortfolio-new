@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { BusMapStatic, TransportMapStatic } from "../Maps";
 import { useListingStore } from "@/store/listingStore";
 
-export function PublicTransportCard({ data, latitude, longitude }) {
+export function PublicTransportCard({ postcode,data, latitude, longitude }) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
   const [busData, setBusData] = useState([]);
@@ -48,7 +48,7 @@ export function PublicTransportCard({ data, latitude, longitude }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            postcode: data?.ref_postcode,
+            postcode: data?.ref_postcode ||postcode ,
           }),
         });
 
