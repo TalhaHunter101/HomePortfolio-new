@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import CardItem from "./EVcardComponents/CarousalCards";
 import { EvChargingMapStatic } from "../Maps";
 
-export function EVCard({ price, roi, postTownName }) {
+export function EVCard({ price, roi,city, postTownName }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [evChargingData, setEvChargingData] = useState([]);
   const [evChargingCount, setEvChargingCount] = useState(0);
@@ -31,10 +31,10 @@ export function EVCard({ price, roi, postTownName }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            town: postTownName,
+            town: postTownName || city,
           }),
         });
-
+        console.log("postTownName-------------", postTownName);
         if (res.ok) {
           const data = await res.json();
           setEvChargingData(data?.hits || []);
