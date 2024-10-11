@@ -114,7 +114,8 @@ function ShowDataCards({
           lng: parseFloat(property?._source?.location?.coordinates?.longitude),
           lat: parseFloat(property?._source?.location?.coordinates?.latitude),
           date: property?._source?.publishedOn,
-          totalPriceChange: formattedPriceChange, // Add the price change information
+          totalPriceChange: formattedPriceChange,
+          displayAddress: property?._source?.analyticsTaxonomy?.displayAddress,
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);

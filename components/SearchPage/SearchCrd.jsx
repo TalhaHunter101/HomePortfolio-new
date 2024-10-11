@@ -155,7 +155,15 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
         </div>
       </CardHeader>
       <CardBody className="overflow-hidden py-2">
-        <Link href={`/property/${property.id}`}>
+        {/* <Link href={`/property/${property.id}?address=${property?.displayAddress}`}> */}
+        <Link
+          href={{
+            pathname: `/property/${property?.displayAddress.replace(
+              /\s+/g,
+              "-"
+            )}?id=${property.id}`,
+          }}
+        >
           <div className="p-1">
             <h3 className="font-bold text-2xl">£{humanReadablePrice}</h3>
             <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">

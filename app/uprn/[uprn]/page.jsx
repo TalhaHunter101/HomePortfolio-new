@@ -13,7 +13,6 @@ export default function PropertyPage({ params }) {
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { resetMarketInfo } = marketInfoStore();
 
-  console.log("params is", params);
 
   useEffect(() => {
     const fetchDatabyListId = async () => {
