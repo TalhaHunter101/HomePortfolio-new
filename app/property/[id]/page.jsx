@@ -1,65 +1,65 @@
-"use client";
-import React, { useEffect, useState, useRef } from "react";
-
 import Footer from "@/components/common/Footer/Footer";
-
 import PropertyDisplay from "@/components/Property/PropertyDisplay";
-import { Spinner } from "@nextui-org/react";
-import { marketInfoStore } from "@/store/listingStore";
 
+export async function generateMetadata({ params }) {
+  const id = params.id.split("%3D")[1];
+  const { res } = await getData(id);
 
-
-export default function PropertyPage({ params }) {
-  const id = params.id.split('%3D')[1];  
-
-
-  const [listingData, setlistingData] = useState(null);
-  const [isDataLoading, setIsDataLoading] = useState(true);
-  const { resetMarketInfo } = marketInfoStore();
-
-  useEffect(() => {
-    const fetchDatabyListId = async () => {
-      try {
-        setIsDataLoading(true);
-        const response = await fetch("/api/indevisual/get-listing-by-id", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ listingId: id }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setlistingData(data?._source);
-          setIsDataLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsDataLoading(false);
-      }
+  // Ensure data exists before accessing properties
+  if (!res || !res._source) {
+    return {
+      title: "Homeprotfolio",
+      openGraph: {
+        title: "Homeprotfolio",
+      },
+      description: "", // Set default description if no data
     };
+  }
 
-    fetchDatabyListId();
+  const fullAddress =
+    res._source.metaTitle ||
+    res._source.analyticsTaxonomy?.displayAddress ||
+    "Homeprotfolio property";
+  const title =
+    fullAddress.length > 60
+      ? `${fullAddress.substring(0, 60)}...`
+      : fullAddress;
 
-    return () => {
-      resetMarketInfo();
-    };
-  }, [params.id, resetMarketInfo]) ;
- 
+  const description = res._source.metaDescription || "";
+
+  return {
+    title,
+    openGraph: {
+      title,
+    },
+    description,
+  };
+}
+
+async function getData(id) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/indevisual/get-listing-by-id`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ listingId: id }),
+    }
+  );
+
+  const res = await response.json();
+  return { res };
+}
+
+export default async function page({ params }) {
+  const id = params.id.split("%3D")[1];
+  const { res } = await getData(id);
+
   return (
     <>
-      {isDataLoading ? (
-        <div className="w-full h-screen flex justify-center items-center">
-          <Spinner className="mt-20" size="lg" />
-        </div>
-      ) : (
-        <PropertyDisplay listingData={listingData} params={params} />
-      )}
-
-      {/* <PropertyDisplay listingData={listingDatasa} params={params} /> */}
-      <Footer /> 
+      <PropertyDisplay listingData={res?._source} params={params} />
+      <Footer />
     </>
   );
 }
