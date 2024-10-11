@@ -86,8 +86,10 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 md:pr-8">
             <div className="flex items-center justify-start">
-              <AcmeIcon size={44} />
-              <span className="text-medium font-medium">HomePortfolio</span>
+              {/* <AcmeIcon size={44} /> */}
+              {/* <span className="text-medium font-medium">HomePortfolio</span> */}
+              <img src="/HpLogo.jpeg" alt="logo" className="h-12 w-32 object-contain" />
+
             </div>
             <p className="text-sm text-default-500">
               We provide comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free
