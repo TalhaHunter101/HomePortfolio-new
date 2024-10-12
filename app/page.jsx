@@ -14,6 +14,7 @@ import SearchInput from "@/components/Homepage/SearchInput";
 import Footer from "@/components/common/Footer/Footer";
 import CardsScroll from "@/components/Homepage/CardScroll";
 import ScrollingBanner from "@/components/carousel/scrolling-banner";
+import { title } from "process";
 
 
 
@@ -403,6 +404,31 @@ let DataSources = [
     image: '/MainPageImg/partnersLogos/regis-school-ofsted.png'
   },{
     image: '/MainPageImg/partnersLogos/ValuationOffice-300x159.png.webp'
+  }
+]
+
+let stats = [
+  {
+    title: 'Residential Properties',
+    value: '30M+',
+    icon: 'solar:home-outline'
+  },{
+    title: 'property records updated everyday',
+    value: '10K+',
+    icon: 'mdi:update'
+  },{
+    title: "postcodes available for market research",
+    value: '2M+',
+    icon: 'entypo:location'
+  },{
+    title: 'Market Deals',
+    value: '1M+',
+    icon: 'mdi:handshake'
+  },
+  {
+    title: 'Data points',
+    value: '167',
+    icon: 'bxs:data'
   }
 ]
 
@@ -1249,7 +1275,7 @@ export default function Home() {
             We pull data from the best sources to provide you with the most accurate and up-to-date information.
           </p>
         </div>
-       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
+       <section className="mx-auto w-full max-w-[100vw] px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
   <ScrollingBanner shouldPauseOnHover gap="40px">
     {DataSources.map((source, index) => (
       <div
@@ -1257,11 +1283,13 @@ export default function Home() {
         className="flex flex-col items-center justify-center w-auto h-auto"
         style={{ minWidth: '150px' }} // Ensures a minimum width for the image container
       >
-        <img
+        <Image
           src={source.image}
           alt="partner"
-          className="h-20 w-auto max-h-20 object-contain"
-          style={{ maxWidth: '100%' }} // Limits the width to prevent squeezing
+          className="h-20 w-[100vw] max-h-20 object-contain"
+          style={{ maxWidth: '100%',filter: 'grayscale(100%)'
+           }} // Limits the width to prevent squeezing
+          
         />
       </div>
     ))}
@@ -1277,7 +1305,7 @@ export default function Home() {
 
 
 
-<div className="mt-1 bg-gradient-radial from-indigo-100 right-1/3 py-16 w-full">
+<div className="mt-1 w-full">
   {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
   Card 1
   <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
@@ -1334,72 +1362,26 @@ export default function Home() {
     <p className="text-md text-gray-500">DataPoints</p>
   </div>
 </div> */}
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
-  {/* <!-- Card 1 --> */}
-  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
-    <div class="flex items-center">
-      <div class="flex items-center justify-center  rounded-full p-2">
-        <Icon icon="carbon:home" className="text-indigo-600 font-bold text-2xl" height={40} width={40}></Icon>
-      </div>
-      <div class="ml-3 text-left">
-        <p class="text-xl font-semibold text-gray-700">30M+</p>
-        <p class="text-md text-gray-500">Residential Properties</p>
-      </div>
-    </div>
-  </div>
 
-  {/* <!-- Card 2 --> */}
-  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
-    <div class="flex items-center">
-      <div class="flex items-center justify-center  rounded-full p-2">
-        <Icon icon="material-symbols:update" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
-      </div>
-      <div class="ml-3 text-left">
-        <p class="text-xl font-semibold text-gray-700">10K+</p>
-        <p class="text-md text-gray-500">Property records updated everyday</p>
-      </div>
-    </div>
-  </div>
+<div className="bg-gray-50/60 w-full shadow-md rounded-lg p-4 border border-indigo-100 hover:shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
 
-  {/* <!-- Card 3 --> */}
-  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
-    <div class="flex items-center">
-      <div class="flex items-center justify-center  rounded-full p-2">
-        <Icon icon="carbon:location" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
-      </div>
-      <div class="ml-3 text-left">
-        <p class="text-xl font-semibold text-gray-700">2M+</p>
-        <p class="text-md text-gray-500">Postcodes available for market research</p>
-      </div>
-    </div>
-  </div>
+{
+  stats.map((stat, index) => (
+      <div className="flex items-center space-x-4" key={index}>
+        <div className="bg-gray-100 rounded-xl h-16 w-16 flex items-center justify-center">
+          <Icon icon={stat.icon} className="text-purple-900 text-2xl h-12 w-12" />
+        </div>
+        <div className="flex-1">
+          <p className="text-xl font-bold">{stat.value}</p>
+          <p className="text-md text-gray-500">{stat.title}</p>
 
-  {/* <!-- Card 4 --> */}
-  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
-    <div class="flex items-center">
-      <div class="flex items-center justify-center rounded-full p-2">
-        <Icon icon="mdi:deal-outline" class="text-indigo-600 text-2xl" height={40} width={40}></Icon>
+        </div>
       </div>
-      <div class="ml-3 text-left">
-        <p class="text-xl font-semibold text-gray-700">1M+</p>
-        <p class="text-md text-gray-500">Market deals</p>
-      </div>
-    </div>
-  </div>
-
-  {/* <!-- Card 5 --> */}
-  <div class="bg-[#eff6ff] border-[#dbeafe] border-2 shadow-md rounded-lg p-6 flex items-center h-full">
-    <div class="flex items-center">
-      <div class="flex items-center justify-center  rounded-full p-2">
-        <Icon icon="carbon:chart-bar" class="text-indigo-600 text-2xl " height={40} width={40}></Icon>
-      </div>
-      <div class="ml-3 text-left">
-        <p class="text-xl font-semibold text-gray-700">167+</p>
-        <p class="text-md text-gray-500">DataPoints</p>
-      </div>
-    </div>
-  </div>
+  ))
+}
 </div>
+
+
 
 
 

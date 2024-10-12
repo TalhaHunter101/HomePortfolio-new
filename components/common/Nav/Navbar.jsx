@@ -89,8 +89,8 @@ export default function NavBar() {
         <NavbarBrand>
           {/* <AcmeLogo /> */}
           <Link href={'/'}>
-          {/* <p className="font-bold text-inherit">HomePortfolio</p> */}
-          <img src="/HpLogo.jpeg" alt="logo" className="h-10 w-32 object-contain" />
+          <p className="font-bold text-inherit">HomePortfolio</p>
+          {/* <img src="/HpLogo.jpeg" alt="logo" className="h-10 w-32 object-contain" /> */}
 
 
           </Link>
