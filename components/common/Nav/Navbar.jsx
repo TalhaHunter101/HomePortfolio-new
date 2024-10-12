@@ -30,7 +30,7 @@ export default function NavBar() {
     pb.authStore.model ? setIsLoggedin(true) : setIsLoggedin(false);
     }
 
-    }, []);
+    }, [pb.authStore.model]);
 
 
 

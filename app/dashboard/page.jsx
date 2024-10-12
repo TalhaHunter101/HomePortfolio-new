@@ -101,22 +101,20 @@ export default function Page() {
 
 
   return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome to the home page</p>
+    <div className="pt-16 p-4">
+   
 
-      <h2>Your Favorite Properties</h2>
+<div >
+        <h1 className="text-2xl p-4 font-bold">Favorite Properties</h1>
+</div>
 
-
-
-      <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-full">
+      <div className="grid p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto max-h-full">
 
       {propertiesData?.length > 0 ? (
 
 
 propertiesData?.map((property) => (
-  <Card
-  key={property._source.listingId}
+  <Card key={property._source.listingId}
         className=""
         // onMouseEnter={() => {
         //   setCardHover(property.id);
@@ -154,7 +152,17 @@ propertiesData?.map((property) => (
               >
                 {property?._source.propertyImage?.map((image, index) => (
                   <div key={index} className="flex-shrink-0 w-full">
-                    <Link href={`/property/${property.id}`}>
+
+
+
+<Link  href={{
+            pathname: `/property/${property?.displayAddress?.replace(
+              /\s+/g,
+              "-"
+            )}?id=${property.id}`,
+          }}>
+
+                    {/* <Link href={`/property/${property.id}`}> */}
                       <Image
                         radius="none"
                         src={image?.original}
@@ -207,7 +215,12 @@ propertiesData?.map((property) => (
           </div>
         </CardHeader>
         <CardBody className="overflow-hidden py-2">
-          <Link href={`/property/${property._source.listingId}`}>
+        <Link  href={{
+            pathname: `/property/${property?.displayAddress?.replace(
+              /\s+/g,
+              "-"
+            )}?id=${property.id}`,
+          }}>
             <div className="p-1">
               <h3 className="font-bold text-2xl">£{property._source.price}</h3>
               {/* <div className="text-sm uppercase flex text-bold">
