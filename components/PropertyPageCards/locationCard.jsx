@@ -40,7 +40,7 @@ export function LocationCard({ data, postcode, schoolData }) {
   };
 
   const renderMap = () => {
-    const mapProps = { center, isInteractive: isMapInteractive };
+    const mapProps = { center,isMapInteractive };
 
     switch (activeMap) {
       case 'location':
@@ -48,9 +48,9 @@ export function LocationCard({ data, postcode, schoolData }) {
       case 'schools':
         return <SchoolsMap data={data} schoolData={schoolData} isInteractive={isMapInteractive} />;
       case 'homes_for_sale':
-        return <HomesForSaleMap {...mapProps} nearByListingsData={nearByListingsData} />;
+        return <HomesForSaleMap {...mapProps} nearByListingsData={nearByListingsData} isInteractive={isMapInteractive} />;
       case 'whats_nearby':
-        return <WhatsNearbyMap {...mapProps} />;
+        return <WhatsNearbyMap {...mapProps} isInteractive={isMapInteractive} />;
       default:
         return <LocationMap {...mapProps} />;
     }
@@ -101,9 +101,9 @@ export function LocationCard({ data, postcode, schoolData }) {
       {/* Map rendering */}
       <CardBody className="p-0 overflow-auto relative" style={{ maxHeight: '500px' }}>
         <div
-          className={`relative w-full h-full transition duration-300 ${
-            isMapInteractive ? 'pointer-events-auto' : 'pointer-events-none'
-          }`}
+          className={`relative w-full h-full transition duration-300 
+          
+          `}
         >
           {renderMap()}
         </div>

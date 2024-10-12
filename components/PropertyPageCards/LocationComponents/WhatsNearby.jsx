@@ -84,7 +84,7 @@ const amenities = [
   },
 ];
 
-const WhatsNearbyMap = ({ center }) => {
+const WhatsNearbyMap = ({ center,isInteractive }) => {
   const [locations, setLocations] = useState([]);
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
 
@@ -231,7 +231,7 @@ const haversineDistance = (coords1, coords2) => {
           ) : null
         )}
       </div>
-      <div className="absolute inset-0 z-0">
+      <div className={`absolute inset-0 z-0 ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }`}>
         <NearByPlacesStatic
           center={center}
           height="500px"
