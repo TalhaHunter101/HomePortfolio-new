@@ -50,27 +50,22 @@ export default function Component() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
 
     try {
-        // const response = await fetch('/api/auth/register', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ email, password, passwordConfirm }),
-        // });
-
         const response = await pb.collection('users').create({ email, password, passwordConfirm });
-        const data = await response.json();
-        if (response.ok) {
-            setSuccess('User registered successfully');
+  
+        if (response.id) {
+            toast.success('User registered successfully');
+
+            pb.collection('users').authWithPassword(email, password);
+            router.push('/dashboard');
+
+
         } else {
-            setError(data.message);
+            toast.error(data.message);
         } 
     } catch (err) {
-        setError('An error occurred');
+      toast.error(err.message);
     }
 };
 

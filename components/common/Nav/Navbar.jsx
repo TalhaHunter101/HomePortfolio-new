@@ -147,8 +147,8 @@ export default function NavBar() {
       </Link>
     </NavbarItem>
     <NavbarItem>
-      <Link color="foreground" href="/signup">
-        Signup
+      <Link color="foreground" href="/register">
+        Sign Up
       </Link>
     </NavbarItem>
     </>

@@ -23,11 +23,12 @@ function ShowDataCards({
   setCurrentPage,
   pageSize,
   isLoading,
+  isFavorite,
 }) {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState([]);
   const [toLocation, setToLocation] = useState("");
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(!isFavorite);
   const [sortOrder, setSortOrder] = useState("asc");
   const [likedProperties, setLikedProperties] = useState([]);
 
@@ -141,7 +142,7 @@ function ShowDataCards({
   return (
     <div className="w-screen flex flex-grow pt-16">
       {/* Map Section */}
-      {showMap && (
+      { !isFavorite &&   showMap && (
         <div className="hidden lg:flex w-full lg:w-3/5 flex-col gap-4 p-4 h-full fixed">
           {toLocation && (
             <motion.div
@@ -177,47 +178,53 @@ function ShowDataCards({
               <h3 className="text-md uppercase font-bold mb-2 md:mb-0">
                 {totalcount} Properties
               </h3>
-              <div className="flex space-x-2">
-                <Button
-                  radius="sm"
-                  size="lg"
-                  className="w-full max-w-xs"
-                  auto
-                  onClick={() => setShowMap(!showMap)}
-                >
-                  {showMap ? "Hide Map" : "Show Map"}
-                </Button>
-                <Dropdown onOpenChange={handleToggle}>
-                  <DropdownTrigger>
-                    <Button
-                      endContent={
-                        <Icon
-                          icon={
-                            isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
-                          }
-                        />
-                      }
-                      radius="sm"
-                      size="lg"
-                      className="w-full max-w-xs"
-                    >
-                      {selectedValue}
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu
-                    aria-label="Sort by selection"
-                    variant="flat"
-                    disallowEmptySelection
-                    selectionMode="single"
-                    selectedKeys={selectedKeys}
-                    onSelectionChange={setSelectedKeys}
+
+              {
+                !isFavorite && (
+                  <div className="flex space-x-2">
+                  <Button
+                    radius="sm"
+                    size="lg"
+                    className="w-full max-w-xs"
+                    auto
+                    onClick={() => setShowMap(!showMap)}
                   >
-                    <DropdownItem key="roi">Sort by ROI</DropdownItem>
-                    <DropdownItem key="price">Sort by Price</DropdownItem>
-                    <DropdownItem key="nil">None</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
+                    {showMap ? "Hide Map" : "Show Map"}
+                  </Button>
+                  <Dropdown onOpenChange={handleToggle}>
+                    <DropdownTrigger>
+                      <Button
+                        endContent={
+                          <Icon
+                            icon={
+                              isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
+                            }
+                          />
+                        }
+                        radius="sm"
+                        size="lg"
+                        className="w-full max-w-xs"
+                      >
+                        {selectedValue}
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+                      aria-label="Sort by selection"
+                      variant="flat"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selectedKeys}
+                      onSelectionChange={setSelectedKeys}
+                    >
+                      <DropdownItem key="roi">Sort by ROI</DropdownItem>
+                      <DropdownItem key="price">Sort by Price</DropdownItem>
+                      <DropdownItem key="nil">None</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                )
+              }
+             
             </div>
 
             {/* Cards */}
@@ -229,9 +236,9 @@ function ShowDataCards({
               )}
               <div
                 className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-${
-                  showMap ? "1" : "2"
-                } xl:grid-cols-${
                   showMap ? "1" : "3"
+                } xl:grid-cols-${
+                  showMap ? "1" : "4"
                 } gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&
