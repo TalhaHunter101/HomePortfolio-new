@@ -101,7 +101,7 @@ export function LocationCard({ data, postcode, schoolData }) {
       {/* Map rendering */}
       <CardBody className="p-0 overflow-auto relative" style={{ maxHeight: '500px' }}>
         <div
-          className={`relative w-full h-full transition duration-300 
+          className={`relative w-full  transition duration-300 overflow-hidden h-[40vh] md:h-[60vh]
           
           `}
         >
