@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card, Spinner } from "@nextui-org/react";
+import { Card, Chip, Spinner } from "@nextui-org/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
@@ -27,13 +27,13 @@ function SearchDropdown({ results, isDataLoading }) {
           <div className="px-2 border-b border-gray-300">
             <div>
 
-              {results?.townGroupedByCounty?.length > 0 && (
+              {results?.towns?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Places
                   </p>
                   <div>
-                    {results?.townGroupedByCounty.map((item, i) => (
+                    {results?.towns.map((item, i) => (
                       // <Link
                       //   key={i}
                       //   href={`/search/${item?.replace(/\s+/g, "-")}`}
@@ -53,17 +53,34 @@ function SearchDropdown({ results, isDataLoading }) {
                       // </Link>
                       <div key={i} className="my-3">
 
-                        <div className="flex cursor-pointer">
-                          {item.county}
+                        <div className="flex">
+                          <Link href={`/search/${item.name?.replace(/\s+/g, "-")}?type=${item.type}`}>
+                          <div className="flex cursor-pointer">
+        <Image 
+          src="/icons/location.svg"
+          height={20}
+          width={20}
+          alt="dev"
+          className="mx-2"
+        />
+        <div className="flex flex-row gap-4">
+          <span className="text-md font-light ">{item.name}</span>
+
+          <span className="text-xs font-semibold shadow-md p-1  "> {item.type}</span>
+
+
+          </div> 
+          </div>
+                          </Link>
                           </div>
-{
+{/* {
   item?.towns.map((town, i) => (
     <Link
       key={i}
-      href={`/search/${town?.replace(/\s+/g, "-")}`}
+      href={`/search/${town?.replace(/\s+/g, "-")}?type=town`}
     >
       <div className="flex cursor-pointer">
-        <Image
+        <Image 
           src="/icons/location.svg"
           height={20}
           width={20}
@@ -76,20 +93,20 @@ function SearchDropdown({ results, isDataLoading }) {
       </div>
     </Link>
   ))
-}
+} */}
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {results?.postcode?.length > 0 && (
+              {results?.postcodes?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     PostCode
                   </p>
                   <div>
-                    {results?.postcode.map((item, i) => (
+                    {results?.postcodes.map((item, i) => (
                       // <Link
                       //   key={i}
                       //   href={`/search/${item?.POSTCODE.replace(
