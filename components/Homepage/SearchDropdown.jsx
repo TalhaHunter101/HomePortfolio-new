@@ -26,167 +26,58 @@ function SearchDropdown({ results, isDataLoading }) {
         <Card className="max-h-[50vh] overflow-y-auto py-2">
           <div className="px-2 border-b border-gray-300">
             <div>
-              {/* {results?.uk?.length > 0 && (
-                <div className="px-2 border-b-[1px] border-gray-300">
-                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    PostCode
-                  </p>
-                  <div>
-                    {results?.uk.map((item, i) => (
-                      <Link
-                        key={i}
-                        href={`/search/${item?._source?.ref_postcode.replace(
-                          /\s+/g,
-                          "-"
-                        )}`}
-                      >
-                        <div className="flex my-3 cursor-pointer">
-                          <Image
-                            src="/icons/location.svg"
-                            height={20}
-                            width={20}
-                            alt="dev"
-                            className="mx-2"
-                          />
-                          <div>
-                            <p className="text-sm text-primaryfonts">
-                              {item?._source?.ref_postcode}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
 
-              {results?.county?.length > 0 && (
+              {results?.townGroupedByCounty?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
                     Places
                   </p>
                   <div>
-                    {[
-                      ...new Set(
-                        results?.county?.map(
-                          (item) =>
-                            item?._source?.analyticsTaxonomy?.countyAreaName
-                        )
-                      ),
-                    ].map((countyAreaName, i) => (
-                      <Link
-                        key={i}
-                        href={`/search/${countyAreaName.replace(/\s+/g, "-")}`}
-                      >
-                        <div className="flex my-3 cursor-pointer">
-                          <Image
-                            src="/icons/location.svg"
-                            height={20}
-                            width={20}
-                            alt="dev"
-                            className="mx-2"
-                          />
-                          <div>
-                            <p className="text-sm text-primaryfonts">
-                              {countyAreaName}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {results?.address?.length > 0 && (
-                <div className="px-2 border-b-[1px] border-gray-300">
-                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Addresses
-                  </p>
-                  <div>
-                    {results?.address.map((item, i) => (
-                      <Link key={i} href={`/property/${item?._source?.listingId}`}>
-                        <div className="flex my-3 cursor-pointer">
-                          <Icon
-                            icon="entypo:address"
-                            height={20}
-                            width={20}
-                            color="black"
-                            className="mx-2"
-                          />
-                          <div>
-                            <p className="text-sm text-primaryfonts">
-                            {item?._source?.analyticsTaxonomy.displayAddress}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-
-              {results?.housPricesAddress?.length > 0 && (
-                <div className="px-2 border-b-[1px] border-gray-300">
-                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Sold Houses
-                  </p>
-                 
-                  <div>
-                    {results?.housPricesAddress.map((item, i) => (
-                      <Link key={i} href={`/uprn/${item?._source?.uprn}`}> 
-                        <div className="flex my-3 cursor-pointer">
-                          <Icon
-                            icon="entypo:address"
-                            height={20}
-                            width={20}
-                            color="black"
-                            className="mx-2"
-                          />
-                          <div>
-                            <p className="text-sm text-primaryfonts">
-                            {item?._source?.full_address}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )} */}
-
-              {results?.posttown?.length > 0 && (
-                <div className="px-2 border-b-[1px] border-gray-300">
-                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                    Places
-                  </p>
-                  <div>
-                    {results?.posttown.map((item, i) => (
+                    {results?.townGroupedByCounty.map((item, i) => (
                       // <Link
                       //   key={i}
-                      //   href={`/search/${item?.POST_TOWN.replace(
-                      //     /\s+/g,
-                      //     "-"
-                      //   )}`}
+                      //   href={`/search/${item?.replace(/\s+/g, "-")}`}
                       // >
-                      <Link
-                        key={i}
-                        href={`/search/${item?.replace(/\s+/g, "-")}`}
-                      >
-                        <div className="flex my-3 cursor-pointer">
-                          <Image
-                            src="/icons/location.svg"
-                            height={20}
-                            width={20}
-                            alt="dev"
-                            className="mx-2"
-                          />
-                          <div>
-                            <p className="text-sm text-primaryfonts">{item}</p>
+                      //   <div className="flex my-3 cursor-pointer">
+                      //     <Image
+                      //       src="/icons/location.svg"
+                      //       height={20}
+                      //       width={20}
+                      //       alt="dev"
+                      //       className="mx-2"
+                      //     />
+                      //     <div>
+                      //       <p className="text-sm text-primaryfonts">{item}</p>
+                      //     </div>
+                      //   </div>
+                      // </Link>
+                      <div key={i} className="my-3">
+
+                        <div className="flex cursor-pointer">
+                          {item.county}
                           </div>
-                        </div>
-                      </Link>
+{
+  item?.towns.map((town, i) => (
+    <Link
+      key={i}
+      href={`/search/${town?.replace(/\s+/g, "-")}`}
+    >
+      <div className="flex cursor-pointer">
+        <Image
+          src="/icons/location.svg"
+          height={20}
+          width={20}
+          alt="dev"
+          className="mx-2"
+        />
+        <div>
+          <p className="text-sm text-primaryfonts">{town}</p>
+        </div>
+      </div>
+    </Link>
+  ))
+}
+                      </div>
                     ))}
                   </div>
                 </div>

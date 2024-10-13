@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { throttle } from "lodash"; // Import lodash throttle function
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import { areAllArraysEmpty } from "@/utils/Helper";
 import useStore from "@/store/useStore";
@@ -10,72 +11,61 @@ export default function AutocompleteSearch({ properties }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
-  const {clearAllFilter} = useStore()
+  const { clearAllFilter } = useStore();
 
-  const searchPostcode = useCallback(async () => {
-    try {
-      setIsDataLoading(true);
-      clearAllFilter();
+  const searchPostcode = useCallback(
+    async (term) => {
+      try {
+        setIsDataLoading(true);
+        clearAllFilter();
 
-      // Fetch results from /listing-search
-      const listingResponse = await fetch(`/api/get-postcode`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: searchTerm }),
-      });
-      const listingResult = await listingResponse.json();
+        // Fetch results from /listing-search
+        const listingResponse = await fetch(`/api/get-postcode`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query: term }), // Use the passed term, not searchTerm
+        });
+        const listingResult = await listingResponse.json();
 
-      let mergedResults = {
-        uk: [],
-        county: [],
-        address: [],
-        regionName: [],
-        housPricesAddress: [] // Initialize with empty array
-      };
-      console.log("mergedResults", mergedResults);
-      
+        let mergedResults = {
+          uk: [],
+          county: [],
+          address: [],
+          regionName: [],
+          housPricesAddress: [], // Initialize with empty array
+        };
 
-      if (listingResult && !areAllArraysEmpty(listingResult)) {
-        mergedResults = { ...listingResult };
+        if (listingResult && !areAllArraysEmpty(listingResult)) {
+          mergedResults = { ...listingResult };
+        }
+
+        // Set the merged results
+        setResults(mergedResults);
+      } catch (error) {
+        console.error(error);
+        setResults(null);
+      } finally {
+        setIsDataLoading(false);
       }
+    },
+    [clearAllFilter]
+  );
 
-      // Fetch results from /get-house-prices
-      // const housePriceResponse = await fetch(`/api/search/get-house-prices`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ searchValue: searchTerm }),
-      // });
-      // const housePriceResult = await housePriceResponse.json();
-
-      // // Merge house price results if they exist
-      // if (housePriceResult && housePriceResult.housPricesAddress) {
-      //   mergedResults.housPricesAddress = housePriceResult.housPricesAddress;
-      // }
-
-      // Set the merged results
-      setResults(mergedResults);
-
-    } catch (error) {
-      console.error(error);
-      setResults(null);
-    } finally {
-      setIsDataLoading(false);
-    }
-  }, [searchTerm]);
-
-  
+  // Create a stable throttled version of searchPostcode
+  const throttledSearchPostcode = useCallback(
+    throttle((term) => searchPostcode(term), 1000, { leading: true, trailing: true }), // Leading true to execute immediately
+    [searchPostcode]
+  );
 
   useEffect(() => {
     if (searchTerm === "") {
       setResults(null);
     } else if (searchTerm.length >= 2) {
-      searchPostcode();
+      throttledSearchPostcode(searchTerm); // Use the throttled version
     }
-  }, [searchTerm, searchPostcode]);
+  }, [searchTerm, throttledSearchPostcode]);
 
   const tabVariants = {
     enter: (direction) => ({
@@ -100,25 +90,7 @@ export default function AutocompleteSearch({ properties }) {
 
   return (
     <div className="mt-4 p-4 rounded-lg w-full overflow-hidden">
-     
-      <div className="tabs-container flex justify-center ">
-        {/* <div className="tabs-wrapper">
-          <button
-            onClick={() => setSelectedTab("1")}
-            className={`tab-button ${selectedTab === "1" ? "active-tab" : ""}`}
-          >
-            Browse Listings
-          </button>
-          <button
-            onClick={() => setSelectedTab("2")}
-            className={`tab-button ${selectedTab === "2" ? "active-tab" : ""}`}
-          >
-            Instant Home Valuation
-          </button>
-        </div> */}
-      </div>
-
-      
+      <div className="tabs-container flex justify-center "></div>
       <motion.div
         key={selectedTab}
         custom={selectedTab === "1" ? 1 : -1}
@@ -131,13 +103,6 @@ export default function AutocompleteSearch({ properties }) {
         {selectedTab === "1" ? (
           <div className="search-container max-w-[90vw] w-full mx-auto ">
             <div className="input-wrapper flex items-center w-full p-2 border border-gray-300 rounded bg-white">
-              {/* <Icon
-                icon="fluent:home-48-filled"
-                width="20"
-                height="20"
-                color="gray"
-                className="mr-2"
-              /> */}
               <input
                 type="text"
                 placeholder="Search by location or address"
@@ -145,9 +110,12 @@ export default function AutocompleteSearch({ properties }) {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Icon icon="akar-icons:search" className="search-icon ml-2 cursor-pointer" />
+              <Icon
+                icon="akar-icons:search"
+                className="search-icon ml-2 cursor-pointer"
+              />
             </div>
-          
+
             {results && (
               <div>
                 <SearchDropdown results={results} isDataLoading={isDataLoading} />
@@ -157,13 +125,6 @@ export default function AutocompleteSearch({ properties }) {
         ) : (
           <div className="evaluation-container">
             <div className="input-wrapper large-input">
-              {/* <Icon
-                icon="fluent:home-48-filled"
-                width="20"
-                height="20"
-                color="gray"
-                className="mr-2"
-              /> */}
               <input
                 type="text"
                 placeholder="Enter address"
@@ -183,102 +144,89 @@ export default function AutocompleteSearch({ properties }) {
       </motion.div>
 
       <style jsx>{`
-  .tabs-container {
-    display: flex;
-    justify-content: center;
-  }
+        .tabs-container {
+          display: flex;
+          justify-content: center;
+        }
 
-  .tabs-wrapper {
-    display: flex;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
-    background-color: #f5f8fa;
-    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); / 3D shadow effect /
-  }
+        .tabs-wrapper {
+          display: flex;
+          border-radius: 8px 8px 0 0;
+          overflow: hidden;
+          background-color: #f5f8fa;
+        }
 
-  .tab-button {
-    flex: 1;
-    padding: 6px 15px;
-    cursor: pointer;
-    border: none;
-    background-color: #f5f8fa;
-    font-size: 14px;
-    color: #666;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); / Tab 3D effect /
-  }
+        .tab-button {
+          flex: 1;
+          padding: 6px 15px;
+          cursor: pointer;
+          border: none;
+          background-color: #f5f8fa;
+          font-size: 14px;
+          color: #666;
+          transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+          border-bottom: 2px solid transparent;
+          white-space: nowrap;
+        }
 
-  .active-tab {
-    background-color: #d8e9f9;
-    color: #333;
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3); / Deeper shadow for active tab /
-  }
+        .active-tab {
+          background-color: #d8e9f9;
+          color: #333;
+          box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
+        }
 
-  .tab-content-container {
-    padding: 15px;
-    border-radius: 0 0 15px 15px;
-    background-color: white;
-    border-top: 1px solid #ddd;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); / 3D effect on content /
-  }
+        .tab-content-container {
+          padding: 15px;
+          border-radius: 0 0 15px 15px;
+          background-color: white;
+          border-top: 1px solid #ddd;
+          box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        }
 
-  .input-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); / Input 3D effect /
-    transition: box-shadow 0.3s;
-  }
+        .input-wrapper {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+          transition: box-shadow 0.3s;
+        }
 
-  .input-wrapper:hover {
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15); / Hover effect /
-  }
+        .input-wrapper:hover {
+          box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+        }
 
-  .large-input {
-    width: 100%;
-    padding: 15px;
-  }
+        .custom-input {
+          flex-grow: 1;
+          border: none;
+          outline: none;
+          font-size: 16px;
+        }
 
- 
+        .search-icon {
+          margin-left: 10px;
+        }
 
-  .custom-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-   
+        .get-report-button {
+          padding: 5px 15px;
+          background-color: #333;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          margin-left: 10px;
+          cursor: pointer;
+          font-size: 14px;
+          line-height: 1;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+          transition: box-shadow 0.3s;
+        }
 
-  }
-
-  .search-icon {
-    margin-left: 10px;
-  }
-
-  .get-report-button {
-    padding: 5px 15px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); / 3D button effect /
-    transition: box-shadow 0.3s;
-  }
-
-  .get-report-button:hover {
-    background-color: #000;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); / Hover effect /
-  }
-`}</style>
-
+        .get-report-button:hover {
+          background-color: #000;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+        }
+      `}</style>
     </div>
   );
 }
-//working
