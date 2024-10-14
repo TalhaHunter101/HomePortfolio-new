@@ -6,8 +6,6 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 function SearchDropdown({ results, isDataLoading }) {
-  console.log("results", results);
-
   return (
     <>
       {isDataLoading && (
@@ -53,10 +51,12 @@ function SearchDropdown({ results, isDataLoading }) {
                       <div key={i} className="my-3">
                         <div className="flex">
                           <Link
-                            href={`/search/${item.name?.replace(
+                            href={{
+                              pathname:`/search/${item.name?.replace(
                               /\s+/g,
                               "-"
-                            )}?type=${item.type}`}
+                            )}?type=${item.type}`
+                            }}
                           >
                             <div className="flex cursor-pointer">
                               <Image
@@ -123,7 +123,9 @@ function SearchDropdown({ results, isDataLoading }) {
 
                       <Link
                         key={i}
-                        href={`/search/${item?.replace(/\s+/g, "-")}`}
+                        href={{
+                          pathname: `/search/${item?.replace(/\s+/g, "-")}`,
+                        }}
                       >
                         <div className="flex my-3 cursor-pointer">
                           <Image
