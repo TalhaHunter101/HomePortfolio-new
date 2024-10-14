@@ -413,11 +413,11 @@ let stats = [
     value: '30M+',
     icon: 'solar:home-outline'
   },{
-    title: 'property records updated everyday',
+    title: 'property records updated ',
     value: '10K+',
     icon: 'mdi:update'
   },{
-    title: "postcodes available for market research",
+    title: "postcodes available ",
     value: '2M+',
     icon: 'entypo:location'
   },{
@@ -1368,7 +1368,7 @@ export default function Home() {
 {
   stats.map((stat, index) => (
       <div className="flex items-center space-x-4" key={index}>
-        <div className="bg-gray-100 rounded-xl h-16 w-16 flex items-center justify-center">
+        <div className="bg-gray-200 rounded-xl h-16 w-16 flex items-center justify-center">
           <Icon icon={stat.icon} className="text-purple-900 text-2xl h-12 w-12" />
         </div>
         <div className="flex-1">
