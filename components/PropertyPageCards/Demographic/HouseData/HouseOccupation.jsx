@@ -26,7 +26,8 @@ function HouseOccupation({ occupationData, city }) {
           "Administrative & Secretarial",
         "5. Skilled trades occupations": "Skilled Trades",
         "6. Caring, leisure and other service occupations": "Caring & Service",
-        "7. Sales and customer service occupations": "Sales & Customer Service",
+        "7. Sales and customer service occupations":
+          "Sales & Customer Service",
         "8. Process, plant and machine operatives":
           "Process & Machine Operatives",
         "9. Elementary occupations": "Elementary Occupations",
@@ -74,7 +75,8 @@ function HouseOccupation({ occupationData, city }) {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={100}
+                outerRadius={100} // Outer radius for donut size
+                innerRadius={80} // Inner radius for thin donut effect
                 fill="#82ca9d"
                 label
               >

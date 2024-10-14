@@ -87,7 +87,8 @@ function HouseTenure({ tenureData, city }) {
               nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius={100} // Set outer radius to control the size of the pie
+              outerRadius={100} // Outer radius for donut size
+              innerRadius={80} // Inner radius for donut (adjust to make it thinner or thicker)
               fill="#8884d8"
               label
               startAngle={360}
