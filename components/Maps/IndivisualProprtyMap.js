@@ -35,13 +35,13 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center?.lat && center?.lng) {
-      map.setView([center.lat, center.lng], 16);  
+      map.setView([center?.lat, center?.lng], 16);  
     }
-  }, [center.lat, center.lng, map]);
+  }, [center?.lat, center?.lng, map]);
 
   return (
     <Marker
-      position={[center.lat, center.lng]}
+      position={[center?.lat, center?.lng]}
       icon={customIcon}
     />
   );
@@ -53,7 +53,7 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center }) => {
   return (
     <div>
       <MapContainer
-        center={[center.lat, center.lng]}
+        center={[center?.lat, center?.lng]}
         zoom={zoom}
         maxZoom={28}
         minZoom={1}
