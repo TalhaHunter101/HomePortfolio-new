@@ -44,7 +44,7 @@ import { storeUsersData } from "@/store/authStore";
 import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
 
-function PropertyDisplay({ listingData, params }) {  
+function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
   const formattedPrice = formatCurrency(price);
   const { squerfoot, fullAddress } = useListingStore();
@@ -170,7 +170,7 @@ function PropertyDisplay({ listingData, params }) {
         },
       ],
     },
-  
+
     {
       name: "Around the Neighborhood",
       id: "around-neighborhood",
@@ -190,7 +190,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "goodplace",
           Component: DataShows,
         },
-        
+
         {
           name: "Around the Neighborhood",
           icon: "mdi:person-details",
@@ -198,7 +198,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "neighbors",
           Component: DataNeighbour,
         },
-        
+
         {
           name: "Can I raise a family here?",
           icon: "mdi:account-group",
@@ -396,26 +396,26 @@ function PropertyDisplay({ listingData, params }) {
       alert("Please log in to add or remove favorites.");
       return;
     }
-  
+
     // Retrieve the PocketBase auth token from localStorage
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const authData = localStorage?.getItem("pocketbase_auth");
       const parsedAuthData = authData ? JSON.parse(authData) : null;
       const token = parsedAuthData?.token;
-  
+
       if (!token) {
         alert("You need to log in to save favorites.");
         return;
       }
     }
-  
+
     try {
       if (isLiked) {
         // If the property is already liked, remove it from favorites
         const result = await pb.collection("favorite").getList(1, 1, {
           filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
         });
-  
+
         if (result.items.length > 0) {
           // Remove the favorite entry
           await pb.collection("favorite").delete(result.items[0].id);
@@ -431,7 +431,7 @@ function PropertyDisplay({ listingData, params }) {
         });
         toast.success("Property added to favorites");
       }
-  
+
       // Toggle the `isLiked` state
       setIsLiked(!isLiked);
     } catch (error) {
@@ -439,11 +439,10 @@ function PropertyDisplay({ listingData, params }) {
       toast.error("Error updating favorites");
     }
   };
-  
 
   return (
     <>
-    <Toaster position="bottom-center" />
+      <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
         <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
           <div className="flex  space-x-2">
@@ -537,44 +536,44 @@ function PropertyDisplay({ listingData, params }) {
 
             {/* Existing styles for larger screens */}
             <div className="mb-4 md:pl-6 flex items-center flex-row hidden md:flex">
-  {/* Content for md and lg screens */}
-  <div className="flex-1 text-center md:text-left">
-    <h3 className="font-bold text-2xl lg:text-4xl">
-      £{formattedPrice}
-    </h3>
-    <span className="text-sm font-bold lg:text-base flex items-center">
-      <Icon
-        icon="mdi:map-marker-outline"
-        className="text-gray-500 mr-1"
-      />
-      {fullAddress || listingData?.address}
-    </span>
-    <span className="font-bold text-gray-400 text-sm lg:text-base">
-      {" "}
-      {listingData?.area}
-    </span>
-  </div>
-  <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
-    <div>
-      <h3 className="font-semibold text-2xl lg:text-4xl">
-        {bedrooms}
-      </h3>
-      <p className="text-xs lg:text-sm text-gray-600">beds</p>
-    </div>
-    <div>
-      <h3 className="font-semibold text-2xl lg:text-4xl">
-        {bathrooms}
-      </h3>
-      <p className="text-xs lg:text-sm text-gray-600">baths</p>
-    </div>
-    <div>
-      <h3 className="font-semibold text-2xl lg:text-4xl">
-        {formatedSqft || "NA"}
-      </h3>
-      <p className="text-xs lg:text-sm text-gray-600">sqft</p>
-    </div>
-  </div>
-</div>
+              {/* Content for md and lg screens */}
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="font-bold text-2xl lg:text-4xl">
+                  £{formattedPrice}
+                </h3>
+                <span className="text-sm font-bold lg:text-base flex items-center">
+                  <Icon
+                    icon="mdi:map-marker-outline"
+                    className="text-gray-500 mr-1"
+                  />
+                  {fullAddress || listingData?.address}
+                </span>
+                <span className="font-bold text-gray-400 text-sm lg:text-base">
+                  {" "}
+                  {listingData?.area}
+                </span>
+              </div>
+              <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
+                <div>
+                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                    {bedrooms}
+                  </h3>
+                  <p className="text-xs lg:text-sm text-gray-600">beds</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                    {bathrooms}
+                  </h3>
+                  <p className="text-xs lg:text-sm text-gray-600">baths</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                    {formatedSqft || "NA"}
+                  </h3>
+                  <p className="text-xs lg:text-sm text-gray-600">sqft</p>
+                </div>
+              </div>
+            </div>
 
             <p className="text-sm pl-6 font-bold hidden md:block">
               {listingData?.title}

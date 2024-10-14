@@ -509,8 +509,6 @@ function PropertyDisplay({ listingData, params }) {
     setIsLiked(!isLiked);
   };
 
-
-  console.log("sqfeetData is",sqfeetData);
   
 
   return (

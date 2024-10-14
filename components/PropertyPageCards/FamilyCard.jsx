@@ -199,6 +199,7 @@ export function FamilyCard({ postcode, city }) {
               totalPopulation={totalPopulation}
               compositionData={compositionData}
               agePopulationData={agePopulationData}
+              educationData={educationData}
             />
           </div>
 
