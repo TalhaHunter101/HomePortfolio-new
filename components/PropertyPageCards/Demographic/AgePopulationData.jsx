@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { Spinner } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import {
   BarChart,
@@ -132,7 +133,7 @@ function AgePopulationData({ AgePopulationData }) {
   }, [AgePopulationData]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="w-full h-full flex justify-center items-center"><Spinner size="lg" /></div>;
   }
 
   return (

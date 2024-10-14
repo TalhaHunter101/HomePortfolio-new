@@ -5,7 +5,7 @@ import {
 } from "@/store/listingStore";
 import { formatCurrency } from "@/utils/Helper";
 import { Icon } from "@iconify/react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import React from "react";
 
 function DataShows({ postcode, rentData }) {
@@ -64,57 +64,90 @@ function DataShows({ postcode, rentData }) {
               {postcode}: Highlights
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 pt-4">
+              {/* Total Population */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
+                <span className="text-sm font-medium text-gray-500 mb-1">
                   Total Population
-                </p>
-                <p className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {populationData}
-                  <Icon
-                    icon="mdi:account-group"
-                    height={32}
-                    className="inline pb-2"
-                  />
-                </p>
+                </span>
+                <div className="text-2xl sm:text-4xl font-medium text-purple-300">
+                  {populationData ? (
+                    <>
+                      {populationData}
+                      <Icon
+                        icon="mdi:account-group"
+                        height={32}
+                        className="inline pb-2"
+                      />
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
               </div>
+
+              {/* Walk Score */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
+                <span className="text-sm font-medium text-gray-500 mb-1">
                   Walk Score
-                </p>
-                <p className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {walkScore}{" "}
-                  <Icon
-                    icon="fa-solid:walking"
-                    height={32}
-                    className="inline pb-2"
-                  />
-                </p>
+                </span>
+                <div className="text-2xl sm:text-4xl font-medium text-purple-300">
+                  {walkScore ? (
+                    <>
+                      {walkScore}{" "}
+                      <Icon
+                        icon="fa-solid:walking"
+                        height={32}
+                        className="inline pb-2"
+                      />
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
               </div>
+
+              {/* Average Home Price */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
+                <span className="text-sm font-medium text-gray-500 mb-1">
                   Average Home Price
-                </p>
-                <p className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  £{formatCurrency(medianPrice)}{" "}
-                  <Icon
-                    icon="f7:house-fill"
-                    height={32}
-                    className="inline pb-2"
-                  />
-                </p>
+                </span>
+                <div className="text-2xl sm:text-4xl font-medium text-purple-300">
+                  {medianPrice ? (
+                    <>
+                      £{formatCurrency(medianPrice)}{" "}
+                      <Icon
+                        icon="f7:house-fill"
+                        height={32}
+                        className="inline pb-2"
+                      />
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
               </div>
+
+              {/* Median Rent */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
+                <span className="text-sm font-medium text-gray-500 mb-1">
                   Median Rent
-                </p>
-                <p className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {rentData[0]?._source?.median_rent.replace("pcm", "").trim()}
-                  <Icon
-                    icon="mage:building-b"
-                    height={32}
-                    className="inline pb-2"
-                  />
-                </p>
+                </span>
+                <div className="text-2xl sm:text-4xl font-medium text-purple-300">
+                  {rentData[0]?._source?.median_rent ? (
+                    <>
+                      {rentData[0]?._source?.median_rent
+                        .replace("pcm", "")
+                        .trim()}
+                      <Icon
+                        icon="mage:building-b"
+                        height={32}
+                        className="inline pb-2"
+                      />
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
               </div>
             </div>
           </div>

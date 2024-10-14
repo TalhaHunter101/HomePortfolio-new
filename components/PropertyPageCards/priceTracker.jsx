@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { PricetrackerChart } from "./Charts/pricetrckerChart";
 import { useListingStore } from "@/store/listingStore";
 import { Icon } from "@iconify/react";
@@ -110,7 +110,14 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
       </CardHeader>
       <CardBody>
         {data.length <= 0 ? (
-          <p className="text-default-500">No data available</p>
+          <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
         ) : (
           <section
             id="price-tracker"
