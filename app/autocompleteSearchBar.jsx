@@ -36,7 +36,6 @@ export default function AutocompleteSearch({ properties }) {
           regionName: [],
           housPricesAddress: [], // Initialize with empty array
         };
-
         if (listingResult && !areAllArraysEmpty(listingResult)) {
           mergedResults = { ...listingResult };
         }
