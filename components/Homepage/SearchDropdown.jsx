@@ -26,7 +26,6 @@ function SearchDropdown({ results, isDataLoading }) {
         <Card className="max-h-[50vh] overflow-y-auto py-2">
           <div className="px-2 border-b border-gray-300">
             <div>
-
               {results?.towns?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
@@ -52,28 +51,35 @@ function SearchDropdown({ results, isDataLoading }) {
                       //   </div>
                       // </Link>
                       <div key={i} className="my-3">
-
                         <div className="flex">
-                          <Link href={`/search/${item.name?.replace(/\s+/g, "-")}?type=${item.type}`}>
-                          <div className="flex cursor-pointer">
-        <Image 
-          src="/icons/location.svg"
-          height={20}
-          width={20}
-          alt="dev"
-          className="mx-2"
-        />
-        <div className="flex flex-row gap-4">
-          <span className="text-md font-light ">{item.name}</span>
+                          <Link
+                            href={`/search/${item.name?.replace(
+                              /\s+/g,
+                              "-"
+                            )}?type=${item.type}`}
+                          >
+                            <div className="flex cursor-pointer">
+                              <Image
+                                src="/icons/location.svg"
+                                height={20}
+                                width={20}
+                                alt="dev"
+                                className="mx-2"
+                              />
+                              <div className="flex flex-row gap-4">
+                                <span className="text-md font-light ">
+                                  {item.name}
+                                </span>
 
-          <span className="text-xs font-semibold shadow-md p-1  "> {item.type}</span>
-
-
-          </div> 
-          </div>
+                                <span className="text-xs font-semibold shadow-md p-1  ">
+                                  {" "}
+                                  {item.type}
+                                </span>
+                              </div>
+                            </div>
                           </Link>
-                          </div>
-{/* {
+                        </div>
+                        {/* {
   item?.towns.map((town, i) => (
     <Link
       key={i}
@@ -149,10 +155,11 @@ function SearchDropdown({ results, isDataLoading }) {
                         href={{
                           pathname: item?.is_property
                             ? `/property/${item?.listingId}`
-                            : `/uprn/${item?.full_address.replace(
-                                /\s+/g,
-                                "-"
-                              )}?uprn=${item?.address?.uprn}`,
+                            : `/house/${item?.full_address
+                                ?.replace(/\s+/g, "-")
+                                .replace(/,/g, "")}?uprn=${
+                                item?.address?.uprn
+                              }`,
                         }}
                       >
                         <div className="flex my-3 cursor-pointer">

@@ -43,18 +43,16 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import ThumbnailCard from "../Property/ThumbnailCard";
 
 function PropertyDisplay({ listingData, params }) {
-  
   const [walkScore, setWalkScore] = useState(null);
   const [listingWalkScore, setListingWalkScore] = useState(null);
   const [busData, setBusData] = useState([]);
   const [busLocations, setBusLocations] = useState([]);
-  
- 
+  const [sqfeetData, setSetsqfeetData] = useState("");
   // const price = listingData?.pricing?.internalValue;
 
-  // const { squerfoot, fullAddress } = useListingStore();
+  const { squerfoot, fullAddress } = useListingStore();
   // const uprn = params?.uprn || "123456";
-  const uprn = params.uprn.split('%3D')[1];
+  const uprn = params.uprn.split("%3D")[1];
   const fullAdress = listingData?.full_address || "N.A";
   const price =
     listingData?.history?.historicSales[0]?.price ||
@@ -69,7 +67,7 @@ function PropertyDisplay({ listingData, params }) {
   //   counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
   //   analyticsTaxonomy: listingData?.analyticsTaxonomy,
   // };
-  const town = fullAdress ? fullAdress.split(", ")[2] : null; 
+  const town = fullAdress ? fullAdress.split(", ")[2] : null;
   const locationData = {
     address: fullAdress,
     location: {
@@ -87,7 +85,7 @@ function PropertyDisplay({ listingData, params }) {
     },
     pricing: {
       internalValue: price,
-    }
+    },
   };
 
   const formattedPrice = formatCurrency(price);
@@ -109,14 +107,10 @@ function PropertyDisplay({ listingData, params }) {
 
     analyticsTaxonomy: listingData?.analyticsTaxonomy,
   };
-  console.log('listingData', listingData);
-
+  console.log("listingData", listingData);
 
   // getSchoolData();
   // getPricePaidData();
-
-
-
 
   //   const getPricePaidData = async () => {
   //     try {
@@ -149,8 +143,6 @@ function PropertyDisplay({ listingData, params }) {
   //   fetchData();
   // }, [listingData, postcode]);
 
-
-
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
 
@@ -171,13 +163,16 @@ function PropertyDisplay({ listingData, params }) {
       if (!listingData?.ref_postcode) return; // Ensure there's a valid postcode before making the API call
 
       try {
-        const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ postcode: listingData.ref_postcode }),
-        });
+        const response = await fetch(
+          `/api/indevisual/get-schools-by-postcode`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ postcode: listingData.ref_postcode }),
+          }
+        );
 
         if (response.ok) {
           const result = await response.json();
@@ -190,7 +185,6 @@ function PropertyDisplay({ listingData, params }) {
 
     getSchoolData();
   }, [listingData?.ref_postcode]);
-
 
   // const getPricePaidData = async () => {
   //   try {
@@ -210,7 +204,6 @@ function PropertyDisplay({ listingData, params }) {
   //     }
   //   } catch (error) {}
   // };
-
 
   const getRentData = async () => {
     try {
@@ -242,6 +235,51 @@ function PropertyDisplay({ listingData, params }) {
     }
   }, [listingData?.ref_postcode]);
   // }, [listingData]);
+
+  useEffect(() => {
+    const fetchEPCData = async (uprn) => {
+      try {
+        const response = await fetch("/api/indevisual/get-epc-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uprn }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch EPC data");
+        }
+
+        const { epcData } = await response.json();
+
+        const address1 = epcData[0]?._source?.ADDRESS1 || "";
+        const address2 = epcData[0]?._source?.ADDRESS2 || "";
+        const address3 = epcData[0]?._source?.ADDRESS3 || "";
+        const postcode = epcData[0]?._source?.POSTCODE || "";
+        const town = epcData[0]?._source?.POSTTOWN || "";
+
+        const fullAddress = [address1, address2, address3, postcode, town]
+          .filter(Boolean)
+          .join(", ");
+
+        const squerfootInMeters = epcData[0]?._source?.TOTAL_FLOOR_AREA;
+        const squerfootInFeet = parseInt(squerfootInMeters) * 10.7639;
+        setSetsqfeetData(squerfootInFeet.toFixed(0) || "NA");
+
+        return {
+          totalFloorArea: epcData[0]?._source?.TOTAL_FLOOR_AREA || null,
+          fullAddress,
+        };
+      } catch (error) {
+        console.error(`Error fetching EPC data for UPRN ${uprn}:`, error);
+        return null;
+      }
+    };
+    if (uprn) {
+      fetchEPCData(uprn);
+    }
+  }, [uprn]);
 
   const navElements = [
     {
@@ -471,6 +509,10 @@ function PropertyDisplay({ listingData, params }) {
     setIsLiked(!isLiked);
   };
 
+
+  console.log("sqfeetData is",sqfeetData);
+  
+
   return (
     <>
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
@@ -479,8 +521,9 @@ function PropertyDisplay({ listingData, params }) {
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
               onClick={handleIconClick}
-              className={`text-2xl mt-3 cursor-pointer ${isLiked ? "text-red-500" : "text-gray-500"
-                }`}
+              className={`text-2xl mt-3 cursor-pointer ${
+                isLiked ? "text-red-500" : "text-gray-500"
+              }`}
             />
             <Button size="lg" className="bg-transparent">
               <Icon icon="bx:share" />
@@ -544,7 +587,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold">
-                    {listingData?.sqft || "NA"}
+                    {listingData?.sqft || sqfeetData || "N.A."}
                   </h4>
                   <p className="text-xs text-gray-500">Sq Ft</p>
                 </div>
@@ -602,7 +645,7 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
                 <div>
                   <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {listingData?.sqft || "NA"}
+                    {listingData?.sqft || sqfeetData || squerfoot || "N.A"}
                   </h3>
                   <p className="text-xs lg:text-sm text-gray-600">sqft</p>
                 </div>
@@ -649,11 +692,9 @@ function PropertyDisplay({ listingData, params }) {
                       // data1={newData}
                       data={locationData}
                       postcode={postcode}
-
                       schoolData={schoolData}
                       setRentEstimate={setRentEstimate}
                       rentData={rentData}
-                  
                     />
                   </div>
                 ))}
@@ -699,11 +740,13 @@ function PropertyDisplay({ listingData, params }) {
                                   (subElement, subIndex) => (
                                     <motion.li
                                       key={subElement.id}
-                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${subElement.bgColor
-                                        } ${hoveredSubElement === subElement.id
+                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
+                                        subElement.bgColor
+                                      } ${
+                                        hoveredSubElement === subElement.id
                                           ? subElement.bgColor
                                           : ""
-                                        }`}
+                                      }`}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: subIndex * 0.01 }}

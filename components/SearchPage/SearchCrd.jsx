@@ -106,12 +106,14 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
             >
               {property?.images?.map((image, index) => (
                 <div key={index} className="flex-shrink-0 w-full">
-                  <Link  href={{
-            pathname: `/property/${property?.displayAddress?.replace(
-              /\s+/g,
-              "-"
-            )}?id=${property.id}`,
-          }}>
+                  <Link
+                    href={{
+                      pathname: `/property/${property?.displayAddress?.replace(
+                        /\s+/g,
+                        "-"
+                      )}?id=${property.id}`,
+                    }}
+                  >
                     <Image
                       radius="none"
                       src={image?.original}
@@ -163,10 +165,9 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
         {/* <Link href={`/property/${property.id}?address=${property?.displayAddress}`}> */}
         <Link
           href={{
-            pathname: `/property/${property?.displayAddress?.replace(
-              /\s+/g,
-              "-"
-            )}?id=${property.id}`,
+            pathname: `/property/${property?.displayAddress
+              ?.replace(/\s+/g, "-")
+              .replace(/,/g, "")}?id=${property.id}`,
           }}
         >
           <div className="p-1">
