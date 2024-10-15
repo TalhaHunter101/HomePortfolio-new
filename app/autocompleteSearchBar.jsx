@@ -13,6 +13,21 @@ export default function AutocompleteSearch({ properties }) {
   const [selectedTab, setSelectedTab] = useState("1");
   const { clearAllFilter } = useStore();
 
+  const fetchCities = useCallback(async (term) => {
+    const response = await fetch("/dummydata/city.json");
+    const cities = await response.json();
+
+    // Filter cities that match the search term
+    const matchedCities = cities.filter((city) =>
+      city.City.toLowerCase().includes(term.toLowerCase())
+    );
+    
+
+    return matchedCities.map((city) => ({
+      name: city.City,
+      type: "town", // or 'city' depending on your logic
+    }));
+  }, []);
   const searchPostcode = useCallback(
     async (term) => {
       try {
@@ -25,7 +40,7 @@ export default function AutocompleteSearch({ properties }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ query: term }), // Use the passed term, not searchTerm
+          body: JSON.stringify({ query: term }),
         });
         const listingResult = await listingResponse.json();
 
@@ -34,11 +49,20 @@ export default function AutocompleteSearch({ properties }) {
           county: [],
           address: [],
           regionName: [],
-          housPricesAddress: [], // Initialize with empty array
+          housPricesAddress: [],
+          towns: [], 
         };
+
+        // Fetch matching cities from city.json
+        const citiesFromJson = await fetchCities(term);
+
+        // Add results from the backend API if not empty
         if (listingResult && !areAllArraysEmpty(listingResult)) {
           mergedResults = { ...listingResult };
         }
+
+        // Merge the cities into the `towns` key in the results
+        mergedResults.towns = citiesFromJson;
 
         // Set the merged results
         setResults(mergedResults);
@@ -49,7 +73,7 @@ export default function AutocompleteSearch({ properties }) {
         setIsDataLoading(false);
       }
     },
-    [clearAllFilter]
+    [clearAllFilter, fetchCities]
   );
 
   // Create a stable throttled version of searchPostcode
@@ -65,6 +89,7 @@ export default function AutocompleteSearch({ properties }) {
       throttledSearchPostcode(searchTerm); // Use the throttled version
     }
   }, [searchTerm, throttledSearchPostcode]);
+
 
   const tabVariants = {
     enter: (direction) => ({
