@@ -73,7 +73,9 @@ function SearchDropdown({ results, isDataLoading }) {
 
                                 <span className="text-xs font-semibold shadow-md p-1  ">
                                   {" "}
-                                  {item.type}
+                                  {
+                                    item.type === "town" ? "City" : "County"
+                                  }
                                 </span>
                               </div>
                             </div>
