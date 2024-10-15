@@ -52,7 +52,7 @@ function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
     listingData?.imageUris?.slice(0, 4) ||
-    listingData?.propertyImage.slice(0, 4);
+    listingData?.propertyImage?.slice(0, 4);
   const bedrooms =
     listingData?.attributes?.bedrooms ||
     listingData?.counts?.numBedrooms ||
@@ -63,7 +63,7 @@ function PropertyDisplay({ listingData, params }) {
     null;
 
   let pathname = usePathname();
-  let hashId = pathname.split("#")[1];
+  let hashId = pathname?.split("#")[1];
 
   const [openSection, setOpenSection] = useState(hashId);
   const [hoveredSubElement, setHoveredSubElement] = useState(null);
@@ -376,7 +376,7 @@ function PropertyDisplay({ listingData, params }) {
       });
 
       // Check if the property is found in the user's favorites
-      if (response.items.length > 0) {
+      if (response?.items?.length >= 0) {
         setIsLiked(true); // Property is already liked
       } else {
         setIsLiked(false); // Property is not liked yet
@@ -392,7 +392,7 @@ function PropertyDisplay({ listingData, params }) {
   }, [listingData, usersData]);
 
   const handleLikeToggle = async () => {
-    if (!usersData || !usersData.id) {
+    if (!usersData || !usersData?.id) {
       alert("Please log in to add or remove favorites.");
       return;
     }
@@ -416,10 +416,10 @@ function PropertyDisplay({ listingData, params }) {
           filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
         });
 
-        if (result.items.length > 0) {
+        if (result?.items?.length > 0) {
           // Remove the favorite entry
-          await pb.collection("favorite").delete(result.items[0].id);
-          toast.success("Property removed from favorites");
+          await pb?.collection("favorite")?.delete(result.items[0].id);
+          toast?.success("Property removed from favorites");
         } else {
           toast.error("Error: favorite entry not found.");
         }

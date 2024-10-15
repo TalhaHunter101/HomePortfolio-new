@@ -53,7 +53,7 @@ async function getData(id) {
 }
 
 export default async function page({ params }) {
-  const id = params.id.split("%3D")[1];
+  const id = params?.id?.split("%3D")?.[1];
   const { res } = await getData(id);
 
   return (
