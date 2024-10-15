@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { NearByPlacesStatic } from "../Maps";
 
@@ -158,6 +158,7 @@ async function getNearbyLocations(
 export function NearbyCard({ data, city }) {
   const [locations, setLocations] = useState([]); // Dynamic locations state
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
+  const [loading, setLoading] = useState(true); // Add loading state
   const [mycenter, setMycenter] = useState({
     lat: data?.location?.coordinates?.latitude,
     lng: data?.location?.coordinates?.longitude,
@@ -168,9 +169,13 @@ export function NearbyCard({ data, city }) {
       lat: data?.location?.coordinates?.latitude,
       lng: data?.location?.coordinates?.longitude,
     };
-    getNearbyLocations(center.lat, center.lng, selectedAmenity).then((locs) =>
-      setLocations(locs)
-    );
+    
+    setLoading(true); // Start loading before fetching data
+    
+    getNearbyLocations(center.lat, center.lng, selectedAmenity).then((locs) => {
+      setLocations(locs);
+      setLoading(false); // End loading after data is fetched
+    });
   }, [
     selectedAmenity,
     data?.location?.coordinates?.latitude,
@@ -178,8 +183,6 @@ export function NearbyCard({ data, city }) {
   ]);
 
   const items = locations.length ? locations : getItemsData();
-
-  // Dynamically find the nearest location for the selected amenity
   const nearestAmenity = items.find((item) => item.category === selectedAmenity);
 
   return (
@@ -206,7 +209,11 @@ export function NearbyCard({ data, city }) {
               <div className="text-xs md:text-sm capitalize text-foreground">
                 Nearest {amenities.find((a) => a.key === selectedAmenity)?.name}
               </div>
-              {nearestAmenity ? (
+              {loading ? (
+                <div className="text-base md:text-base text-foreground font-medium">
+                  <Spinner size="xs"/>
+                </div>
+              ) : nearestAmenity ? (
                 <div className="text-base md:text-base text-foreground font-medium">
                   {nearestAmenity.name} <br />
                 </div>
@@ -219,6 +226,7 @@ export function NearbyCard({ data, city }) {
           </div>
         </div>
       </CardHeader>
+
 
       <CardBody>
         <div className="rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">

@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { formatCurrency, timeAgo } from "@/utils/Helper";
 
-export function BasicInfoCard({ title, content, data, price, area }) {
+export function BasicInfoCard({  content, data, price, area }) {
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>

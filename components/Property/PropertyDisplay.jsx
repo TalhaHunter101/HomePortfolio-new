@@ -461,7 +461,7 @@ function PropertyDisplay({ listingData, params }) {
         </div>
 
         {/* main div */}
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-10 w-full">
           <div className="lg:col-span-7">
             {mainImages && <MainCard images={mainImages} />}
           </div>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Button, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, Button, CardHeader, Spinner } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Peoplegender from "./Demographic/Peoplegender";
 import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
@@ -206,36 +206,53 @@ export function FamilyCard({ postcode, city }) {
           {/* Right section */}
           <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+              {/* Spinner for Total Population */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Total Population</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {
-                    totalPopulation?._source?.[
-                      "Sex: All persons; measures: Value"
+                  {totalPopulation?._source?.[
+                    "Sex: All persons; measures: Value"
+                  ] ? (
+                    totalPopulation._source[
+                    "Sex: All persons; measures: Value"
                     ]
-                  }
+                  ) : (
+                    <Spinner />
+                  )}
                 </span>
               </div>
+
+              {/* Spinner for Median Age */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Median Age</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {medianAge || "N/A"}
+                  {medianAge !== null ? medianAge : <Spinner />}
                 </span>
               </div>
             </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
+              {/* Spinner for Average HH Income */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Average HH Income</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  £{formatCurrency(peopleGenderData?.averageIncome) || "N/A"}
+                  {peopleGenderData?.averageIncome !== undefined ? (
+                    `£${formatCurrency(peopleGenderData?.averageIncome)}`
+                  ) : (
+                    <Spinner />
+                  )}
                 </span>
               </div>
+
+              {/* Spinner for Single Family Household */}
               <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">
-                  Single Family Household
-                </span>
+                <span className="text-sm text-gray-400">Single Family Household</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {singleFamilyHouseholds}
+                  {singleFamilyHouseholds !== undefined ? (
+                    singleFamilyHouseholds
+                  ) : (
+                    <Spinner />
+                  )}
                 </span>
               </div>
             </div>
