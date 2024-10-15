@@ -108,6 +108,44 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
+              {
+                results?.county?.length >= 0 && (
+                  <div className="px-2 border-b-[1px] border-gray-300">
+                    <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                      County
+                    </p>
+                    <div>
+                      {results?.county.map((item, i) => (
+                        <Link
+                          key={i}
+                          href={{
+                            pathname: `/search/${item?.name?.replace(
+                              /\s+/g,
+                              "-"
+                            )}?type=${item?.type}`,
+                          }}
+                        >
+                          <div className="flex my-3 cursor-pointer">
+                            <Image
+                              src="/icons/country.svg"
+                              height={20}
+                              width={20}
+                              alt="dev"
+                              className="mx-2"
+                            />
+                            <div>
+                              <p className="text-sm text-primaryfonts">
+                                {item?.name}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+
               {results?.postcodes?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
                   <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
