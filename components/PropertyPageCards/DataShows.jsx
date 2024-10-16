@@ -14,21 +14,19 @@ function DataShows({ postcode, rentData }) {
   const { medianPrice } = marketCompStore();
 
   const calculateCollegeDegreePercentage = () => {
-    if (educationData?._source) {
-      const totalPopulation = parseInt(
-        educationData._source[
-          "Highest level of qualification: Total: All usual residents aged 16 years and over"
-        ]
-      );
-      const level4AndAbove = parseInt(
-        educationData._source[
-          "Highest level of qualification: Level 4 qualifications and above"
-        ]
-      );
+    const totalPopulation = parseInt(
+      educationData?._source?.[
+        "Highest level of qualification: Total: All usual residents aged 16 years and over"
+      ]
+    );
+    const level4AndAbove = parseInt(
+      educationData?._source?.[
+        "Highest level of qualification: Level 4 qualifications and above"
+      ]
+    );
 
-      if (totalPopulation && level4AndAbove) {
-        return ((level4AndAbove / totalPopulation) * 100).toFixed(2);
-      }
+    if (totalPopulation && level4AndAbove) {
+      return ((level4AndAbove / totalPopulation) * 100).toFixed(2);
     }
     return "N/A";
   };

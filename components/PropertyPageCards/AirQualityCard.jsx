@@ -1,38 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardBody,
-  Button,
-  Progress,
-  CardHeader,
-} from "@nextui-org/react";
+import { Card, CardBody, Button, Progress, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 export function AirQualityCard({ latitude, longitude }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [airQualityData, setAirQualityData] = useState(null);
-
-  // const months = [
-  //   "Sep",
-  //   "Nov",
-  //   "Jan",
-  //   "Mar",
-  //   "May",
-  //   "Jul",
-  //   "Sep"
-  // ];
-
-  // Hardcoded values for highlighted days (0 is no highlight, 1 is highlighted)
-  // const daysHighlighted = [
-  //   [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  // ];
 
   useEffect(() => {
     const fetchAirQualityData = async () => {
@@ -41,7 +14,7 @@ export function AirQualityCard({ latitude, longitude }) {
           `http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=c6edfc199a2855bf23667e94fc691e70`
         );
         const data = await response.json();
-        setAirQualityData(data.list[0]);
+        setAirQualityData(data?.list?.[0]);
       } catch (error) {
         console.error("Error fetching air quality data:", error);
       }
@@ -58,10 +31,8 @@ export function AirQualityCard({ latitude, longitude }) {
     setCurrentIndex((prevIndex) => (prevIndex === 6 - 1 ? 0 : prevIndex + 1));
   };
 
-  // Fetch air quality data from API
   const airQualityDetails = [
     {
-      //hardcoded
       label: "Average Air Quality",
       icon: "ion:skull",
       title: "Average air quality last month",
@@ -75,7 +46,7 @@ export function AirQualityCard({ latitude, longitude }) {
       label: "CO",
       icon: "ion:skull",
       title: "What is Carbon Monoxide?",
-      value: `${airQualityData?.components?.co} µg/m³`,
+      value: `${airQualityData?.components?.co ?? 'N/A'} µg/m³`,
       description:
         "Carbon monoxide (CO) is a colorless, odorless gas that can be harmful when inhaled in large amounts.",
       level: airQualityData?.components?.co > 10000 ? "High" : "Normal",
@@ -85,7 +56,7 @@ export function AirQualityCard({ latitude, longitude }) {
       label: "NO",
       icon: "ion:skull",
       title: "What is Nitric Oxide?",
-      value: `${airQualityData?.components?.no} µg/m³`,
+      value: `${airQualityData?.components?.no ?? 'N/A'} µg/m³`,
       description:
         "Nitric oxide (NO) is a gas that can contribute to air pollution and respiratory problems.",
       level: airQualityData?.components?.no > 200 ? "High" : "Normal",
@@ -95,7 +66,7 @@ export function AirQualityCard({ latitude, longitude }) {
       label: "NO2",
       icon: "ion:skull",
       title: "What is Nitrogen Dioxide?",
-      value: `${airQualityData?.components?.no2} µg/m³`,
+      value: `${airQualityData?.components?.no2 ?? 'N/A'} µg/m³`,
       description:
         "Nitrogen dioxide (NO2) is a reddish-brown gas that can irritate the respiratory system.",
       level: airQualityData?.components?.no2 > 200 ? "High" : "Normal",
@@ -105,7 +76,7 @@ export function AirQualityCard({ latitude, longitude }) {
       label: "O3",
       icon: "ion:skull",
       title: "What is Ozone?",
-      value: `${airQualityData?.components?.o3} µg/m³`,
+      value: `${airQualityData?.components?.o3 ?? 'N/A'} µg/m³`,
       description:
         "Ozone (O3) at ground level is a harmful air pollutant that affects the respiratory system.",
       level: airQualityData?.components?.o3 > 180 ? "High" : "Normal",
@@ -115,7 +86,7 @@ export function AirQualityCard({ latitude, longitude }) {
       label: "PM2.5",
       icon: "twemoji:lungs",
       title: "What is PM2.5?",
-      value: `${airQualityData?.components?.pm2_5} µg/m³`,
+      value: `${airQualityData?.components?.pm2_5 ?? 'N/A'} µg/m³`,
       description:
         "PM2.5 are fine particulate matter that can penetrate the respiratory system and cause health issues.",
       level: airQualityData?.components?.pm2_5 > 35 ? "High" : "Normal",
@@ -134,26 +105,6 @@ export function AirQualityCard({ latitude, longitude }) {
     bgColor: detail.bgColor,
   }));
 
-  // const DayGrid = () => {
-  //   return (
-  //     <div className="flex flex-col space-y-1">
-  //       {months.map((month, index) => (
-  //         <div key={index} className="flex  items-center">
-  //           <span className="w-8 text-xs text-left  mr-2">{month}</span>
-  //           <div className="grid grid-flow-col auto-cols-max gap-0.5">
-  //             {daysHighlighted[index].map((highlight, dayIndex) => (
-  //               <div
-  //                 key={dayIndex}
-  //                 className={`w-3 h-3 ${highlight === 1 ? "bg-green-400" : "bg-gray-200"} rounded-sm`}
-  //               ></div>
-  //             ))}
-  //           </div>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
-
   return (
     <Card className="m-4 min-h-[250px]">
       <CardHeader>
@@ -166,7 +117,7 @@ export function AirQualityCard({ latitude, longitude }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            {" "}
+          {" "}
             How is the air quality in your area?
           </h2>
         </div>
@@ -174,13 +125,6 @@ export function AirQualityCard({ latitude, longitude }) {
       <CardBody>
         <div className="bg-white rounded-md">
           <div className="p-6 flex flex-col items-center relative cursor-pointer overflow-hidden rounded-t-lg">
-            {/* <h2 className="w-full mb-4 flex font-semibold capitalize text-lg text-black">
-              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-green-300 mr-2">
-                <Icon icon="ion:skull" width={24} height={24} />
-              </div>
-              How is the air quality in your area?
-            </h2> */}
-
             {airQualityData ? (
               <div className="relative w-full overflow-hidden rounded-lg">
                 {/* Carousel */}
@@ -197,7 +141,7 @@ export function AirQualityCard({ latitude, longitude }) {
                       className="flex-shrink-0 w-full flex justify-center"
                     >
                       {index === 0 ? (
-                        <div className="flex flex-col md:flex-row justify-between  rounded-lg shadow-md w-full max-w-6xl">
+                        <div className="flex flex-col md:flex-row justify-between rounded-lg shadow-md w-full max-w-6xl">
                           <div className="w-3/5 text-left p-8 ">
                             <h3 className="text-lg font-medium mt-24 mb-2">
                               Average air quality last month
@@ -209,9 +153,7 @@ export function AirQualityCard({ latitude, longitude }) {
                               <Progress value={50} color="success" />
                               <div className="flex justify-between text-sm mt-2">
                                 <span className="text-green-600">Good</span>
-                                <span className="text-yellow-500">
-                                  Moderate
-                                </span>
+                                <span className="text-yellow-500">Moderate</span>
                                 <span className="text-red-500">Unhealthy</span>
                               </div>
                             </div>
@@ -226,11 +168,7 @@ export function AirQualityCard({ latitude, longitude }) {
                                 <span className="mt-2">CO</span>
                               </div>
                               <div className="flex flex-col items-center">
-                                <Icon
-                                  icon="twemoji:lungs"
-                                  width={32}
-                                  height={32}
-                                />
+                                <Icon icon="twemoji:lungs" width={32} height={32} />
                                 <span className="mt-2">PM2.5</span>
                               </div>
                             </div>
@@ -239,10 +177,7 @@ export function AirQualityCard({ latitude, longitude }) {
                               className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
                             >
                               Learn more about the air{" "}
-                              <Icon
-                                className="inline"
-                                icon="ion:chevron-forward"
-                              />
+                              <Icon className="inline" icon="ion:chevron-forward" />
                             </Button>
                           </div>
                         </div>
@@ -253,11 +188,7 @@ export function AirQualityCard({ latitude, longitude }) {
                               {component.title}
                             </h3>
                             <div className="flex justify-center items-center mb-3 p-3 rounded-full bg-gray-100">
-                              <Icon
-                                icon={component.icon}
-                                width={32}
-                                height={32}
-                              />
+                              <Icon icon={component.icon} width={32} height={32} />
                             </div>
                             <p className="text-md text-gray-600 text-center">
                               {component.description}
@@ -320,7 +251,6 @@ export function AirQualityCard({ latitude, longitude }) {
             )}
           </div>
         </div>
-        {/* Adding DayGrid component */}
       </CardBody>
     </Card>
   );

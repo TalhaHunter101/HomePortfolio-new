@@ -53,8 +53,8 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
     
         // Extract and map the year and price data from results
         const mappedData = results?.hits?.map((item) => ({
-          year: new Date(item._source.deed_date).getFullYear(),
-          price: Number(item._source.price_paid),
+          year: new Date(item?._source?.deed_date).getFullYear(),
+          price: Number(item?._source?.price_paid),
         }));
     
         // Sort the data by year in descending order
@@ -66,8 +66,8 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
           const secondLastYearData = sortedData[1]; // Second latest year data
     
           // Calculate growth rate and rate per year
-          const growthRateCalc = ((lastYearData.price - secondLastYearData.price) / secondLastYearData.price) * 100;
-          const ratePerYearCalc = lastYearData.price - secondLastYearData.price; // No decimal points
+          const growthRateCalc = ((lastYearData?.price - secondLastYearData?.price) / secondLastYearData?.price) * 100;
+          const ratePerYearCalc = lastYearData?.price - secondLastYearData?.price; // No decimal points
     
           // Set the calculated values to state
           setGrowthRate(growthRateCalc.toFixed(2)); // Format to 2 decimal places
@@ -109,7 +109,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
         </div>
       </CardHeader>
       <CardBody>
-        {data.length <= 0 ? (
+        {data?.length <= 0 ? (
           <CardBody className="flex flex-col items-center justify-center">
           <Image
             src="/undraw_no_data_re_kwbl (1).svg"

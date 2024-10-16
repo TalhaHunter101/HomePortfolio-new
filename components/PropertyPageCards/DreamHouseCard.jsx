@@ -5,8 +5,6 @@ import { DreamHouseLineChart } from "./Charts/LineChartDreamHouse";
 import { Icon } from "@iconify/react";
 
 const calculateStats = (data, propertyType) => {
-
-
   if (!data || data.length === 0) {
     console.log(`No data available for property type: ${propertyType}`);
     return null;
@@ -15,25 +13,21 @@ const calculateStats = (data, propertyType) => {
   const currentYear = new Date().getFullYear();
   const oneYearAgo = currentYear - 1;
 
-
   const prices = data
-    .filter(
-      (item) => {
-        const itemYear = parseInt(item._source.deed_date.split('-')[0]);
-        const isIncluded = 
-          item._source?.property_type === propertyType &&
-          item._source?.price_paid &&
-          item._source?.deed_date &&
-          itemYear >= oneYearAgo;
-        return isIncluded;
-      }
-    )
+    .filter((item) => {
+      const itemYear = parseInt(item?._source?.deed_date?.split("-")[0]);
+      return (
+        item?._source?.property_type === propertyType &&
+        item?._source?.price_paid &&
+        item?._source?.deed_date &&
+        itemYear >= oneYearAgo
+      );
+    })
     .map((item) => ({
-      price_paid: parseInt(item._source.price_paid),
-      deed_date: new Date(item._source.deed_date),
+      price_paid: parseInt(item?._source?.price_paid),
+      deed_date: new Date(item?._source?.deed_date),
     }))
     .sort((a, b) => b.deed_date - a.deed_date);
-
 
   if (prices.length === 0) {
     console.log(`No valid prices found for property type: ${propertyType}`);
@@ -41,16 +35,14 @@ const calculateStats = (data, propertyType) => {
   }
 
   const median = prices[Math.floor(prices.length / 2)].price_paid;
-  const minPrice = Math.min(...prices.map(p => p.price_paid));
-  const maxPrice = Math.max(...prices.map(p => p.price_paid));
+  const minPrice = Math.min(...prices.map((p) => p.price_paid));
+  const maxPrice = Math.max(...prices.map((p) => p.price_paid));
 
   // Calculate percentage change in 3 months
   const threeMonthsAgo = new Date();
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
   const recentPrices = prices.filter((item) => item.deed_date >= threeMonthsAgo);
   const olderPrices = prices.filter((item) => item.deed_date < threeMonthsAgo);
-
-
 
   let percentageChange = null;
   if (recentPrices.length > 0 && olderPrices.length > 0) {
@@ -59,14 +51,12 @@ const calculateStats = (data, propertyType) => {
     percentageChange = ((recentMedian - olderMedian) / olderMedian) * 100;
   }
 
-  const result = {
+  return {
     median,
     minPrice,
     maxPrice,
     percentageChange,
   };
-
-  return result;
 };
 
 export function DreamHouseCard({ pricePaidData }) {
@@ -83,6 +73,7 @@ export function DreamHouseCard({ pricePaidData }) {
       setTerracedStats(calculateStats(pricePaidData, "T"));
     }
   }, [pricePaidData]);
+
   return (
     <Card className="m-4">
       <CardHeader>
@@ -90,15 +81,14 @@ export function DreamHouseCard({ pricePaidData }) {
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-green-400 rounded-full mr-2">
             <Icon
               icon="fluent-mdl2:insights"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="" // Adjust the icon color if needed
+              width={16}
+              className=""
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
             Gain insight into current & past market trends
           </h2>
         </div>
-
       </CardHeader>
       <CardBody>
         <div className="p-2 rounded-md">
@@ -121,34 +111,31 @@ export function DreamHouseCard({ pricePaidData }) {
             , in comparison to its previous month.
           </span>
 
-          <div className="flex justify-between flex-col  lg:flex-row gap-8 mt-4">
-            <div className="lg:w-7/12 mt-28 ">
-              <DreamHouseLineChart  data={pricePaidData} />
+          <div className="flex justify-between flex-col lg:flex-row gap-8 mt-4">
+            <div className="lg:w-7/12 mt-28">
+              <DreamHouseLineChart data={pricePaidData} />
             </div>
 
-            <div className="lg:w-5/12 py-3 hidden md:block ">
-              <div className="grid gap-y-4 ">
-                {/* Single Family Section */}
-
+            <div className="lg:w-5/12 py-3 hidden md:block">
+              <div className="grid gap-y-4">
                 {detachedStats && (
-                  <div className="grid gap-y-1 ">
+                  <div className="grid gap-y-1">
                     <div className="font-medium text-purple-500">Detached</div>
-
                     <ul className="grid gap-2 list-disc pt-2 pl-6">
                       <li>
                         Median Sale Price (last month):{" "}
                         <span className="font-medium inline-block text-base text-purple-500">
-                          £{detachedStats.median.toLocaleString()}
+                          £{detachedStats.median?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
                       <li>
                         Sale price range:{" "}
                         <span className="font-medium inline-block text-base text-purple-500">
-                          £{detachedStats.minPrice.toLocaleString()}
+                          £{detachedStats.minPrice?.toLocaleString() ?? "N/A"}
                         </span>{" "}
                         to{" "}
                         <span className="font-medium inline-block text-base text-purple-500">
-                          £{detachedStats.maxPrice.toLocaleString()}
+                          £{detachedStats.maxPrice?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
                       {detachedStats.percentageChange !== null && (
@@ -175,28 +162,24 @@ export function DreamHouseCard({ pricePaidData }) {
 
                 {semiDetachedStats && (
                   <div className="grid gap-y-1">
-                    <div className="font-medium text-blue-600">
-                      Semi-detached
-                    </div>
-
+                    <div className="font-medium text-blue-600">Semi-detached</div>
                     <ul className="grid gap-2 list-disc pt-2 pl-6">
                       <li>
                         Median Sale Price (last month):{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                          £{semiDetachedStats.median.toLocaleString()}
+                          £{semiDetachedStats.median?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
                       <li>
                         Sale price range:{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                          £{semiDetachedStats.minPrice.toLocaleString()}
+                          £{semiDetachedStats.minPrice?.toLocaleString() ?? "N/A"}
                         </span>{" "}
                         to{" "}
                         <span className="font-medium inline-block text-base text-blue-600">
-                          £{semiDetachedStats.maxPrice.toLocaleString()}
+                          £{semiDetachedStats.maxPrice?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
-
                       {semiDetachedStats.percentageChange !== null && (
                         <li>
                           Sale price{" "}
@@ -222,25 +205,23 @@ export function DreamHouseCard({ pricePaidData }) {
                 {flatStats && (
                   <div className="grid gap-y-1">
                     <div className="font-medium text-gray-600">Flat</div>
-
                     <ul className="grid gap-2 list-disc pt-2 pl-6">
                       <li>
                         Median Sale Price (last month):{" "}
-                        <span className="font-medium inline-block text-base text-blue-600">
-                          £{flatStats.median.toLocaleString()}
+                        <span className="font-medium inline-block text-base text-gray-600">
+                          £{flatStats.median?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
                       <li>
                         Sale price range:{" "}
-                        <span className="font-medium inline-block text-base text-blue-600">
-                          £{flatStats.minPrice.toLocaleString()}
+                        <span className="font-medium inline-block text-base text-gray-600">
+                          £{flatStats.minPrice?.toLocaleString() ?? "N/A"}
                         </span>{" "}
                         to{" "}
-                        <span className="font-medium inline-block text-base text-blue-600">
-                          £{flatStats.maxPrice.toLocaleString()}
+                        <span className="font-medium inline-block text-base text-gray-600">
+                          £{flatStats.maxPrice?.toLocaleString() ?? "N/A"}
                         </span>
                       </li>
-
                       {flatStats.percentageChange !== null && (
                         <li>
                           Sale price{" "}
