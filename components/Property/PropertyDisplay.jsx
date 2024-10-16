@@ -90,8 +90,8 @@ function PropertyDisplay({ listingData, params }) {
           }
         );
 
-        if (response.ok) {
-          const result = await response.json();
+        if (response?.ok) {
+          const result = await response?.json();
           setSchoolData(result);
         }
       } catch (error) {
@@ -111,8 +111,8 @@ function PropertyDisplay({ listingData, params }) {
           }),
         });
 
-        if (result.ok) {
-          const resultData = await result.json();
+        if (result?.ok) {
+          const resultData = await result?.json();
           setPricePaidData(resultData);
         }
       } catch (error) {}
@@ -130,8 +130,8 @@ function PropertyDisplay({ listingData, params }) {
           }),
         });
 
-        if (result.ok) {
-          const resultData = await result.json();
+        if (result?.ok) {
+          const resultData = await result?.json();
           setRentData(resultData);
         }
       } catch (error) {}
@@ -367,12 +367,12 @@ function PropertyDisplay({ listingData, params }) {
   const [isLiked, setIsLiked] = useState(false);
   const { usersData } = storeUsersData();
   const checkIfLiked = async () => {
-    if (!usersData || !usersData.id) return; // Ensure the user is logged in
+    if (!usersData || !usersData?.id) return; // Ensure the user is logged in
 
     try {
       // Retrieve the user's favorites collection
-      const response = await pb.collection("favorite").getList(1, 1, {
-        filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
+      const response = await pb?.collection("favorite")?.getList(1, 1, {
+        filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
       });
 
       // Check if the property is found in the user's favorites
@@ -412,31 +412,31 @@ function PropertyDisplay({ listingData, params }) {
     try {
       if (isLiked) {
         // If the property is already liked, remove it from favorites
-        const result = await pb.collection("favorite").getList(1, 1, {
-          filter: `property_id='${listingData.listingId}' && userId='${usersData.id}'`,
+        const result = await pb?.collection("favorite")?.getList(1, 1, {
+          filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
         });
 
         if (result?.items?.length > 0) {
           // Remove the favorite entry
-          await pb?.collection("favorite")?.delete(result.items[0].id);
+          await pb?.collection("favorite")?.delete(result?.items[0]?.id);
           toast?.success("Property removed from favorites");
         } else {
-          toast.error("Error: favorite entry not found.");
+          toast?.error("Error: favorite entry not found.");
         }
       } else {
         // If the property is not liked, add it to favorites
-        await pb.collection("favorite").create({
-          property_id: listingData.listingId,
-          userId: usersData.id,
+        await pb?.collection("favorite")?.create({
+          property_id: listingData?.listingId,
+          userId: usersData?.id,
         });
-        toast.success("Property added to favorites");
+        toast?.success("Property added to favorites");
       }
 
       // Toggle the `isLiked` state
       setIsLiked(!isLiked);
     } catch (error) {
-      console.error("Error toggling favorite:", error);
-      toast.error("Error updating favorites");
+      console?.error("Error toggling favorite:", error);
+      toast?.error("Error updating favorites");
     }
   };
 
@@ -623,20 +623,20 @@ function PropertyDisplay({ listingData, params }) {
               </div>
             </div>
 
-            {navElements.map((element, index) => (
+            {navElements?.map((element, index) => (
               <React.Fragment key={index}>
-                <Waypoint onEnter={() => setOpenSection(element.id)} />
+                <Waypoint onEnter={() => setOpenSection(element?.id)} />
 
-                {element.subElements.map((subElement, subIndex) => (
+                {element?.subElements?.map((subElement, subIndex) => (
                   <div
                     className="pl-1"
                     key={subIndex}
-                    id={subElement.id}
-                    onMouseEnter={() => handleMouseEnter(subElement.id)}
+                    id={subElement?.id}
+                    onMouseEnter={() => handleMouseEnter(subElement?.id)}
                   >
                     <subElement.Component
                       {...listingData}
-                      title={subElement.name}
+                      title={subElement?.name}
                       schoolData={schoolData}
                       city={listingData?.location?.townOrCity}
                       postTownName={
@@ -667,7 +667,7 @@ function PropertyDisplay({ listingData, params }) {
           <nav className="sticky top-6 p-4 bg-white w-45 h-fit hidden lg:block">
             <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
               <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-                {navElements.map((element, index) => (
+                {navElements?.map((element, index) => (
                   <motion.div
                     key={index}
                     className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
@@ -680,14 +680,14 @@ function PropertyDisplay({ listingData, params }) {
                         <button
                           className="w-full text-left"
                           aria-label=""
-                          onClick={() => toggleSection(element.id)}
+                          onClick={() => toggleSection(element?.id)}
                         >
                           <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
-                            {element.name}
+                            {element?.name}
                           </h2>
                         </button>
                         <AnimatePresence>
-                          {openSection && element.id == openSection && (
+                          {openSection && element?.id == openSection && (
                             <motion.div
                               key={openSection}
                               initial={{ height: 0, opacity: 0 }}
@@ -697,15 +697,15 @@ function PropertyDisplay({ listingData, params }) {
                               className="overflow-hidden"
                             >
                               <motion.ul className="mt-1">
-                                {element.subElements.map(
+                                {element?.subElements?.map(
                                   (subElement, subIndex) => (
                                     <motion.li
-                                      key={subElement.id}
+                                      key={subElement?.id}
                                       className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
-                                        subElement.bgColor
+                                        subElement?.bgColor
                                       } ${
-                                        hoveredSubElement === subElement.id
-                                          ? subElement.bgColor
+                                        hoveredSubElement === subElement?.id
+                                          ? subElement?.bgColor
                                           : ""
                                       }`}
                                       initial={{ opacity: 0, x: -10 }}
@@ -713,19 +713,19 @@ function PropertyDisplay({ listingData, params }) {
                                       transition={{ delay: subIndex * 0.01 }}
                                     >
                                       <a
-                                        href={"#" + subElement.id}
+                                        href={"#" + subElement?.id}
                                         onClick={() =>
-                                          handleMouseEnter(subElement.id)
+                                          handleMouseEnter(subElement?.id)
                                         }
                                         className="flex items-center space-x-4 w-full text-md font-semibold"
                                       >
                                         <div
-                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
+                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement?.bgColor}`}
                                         >
-                                          <Icon icon={subElement.icon} />
+                                          <Icon icon={subElement?.icon} />
                                         </div>
                                         <span className="text-base">
-                                          {subElement.name}
+                                          {subElement?.name}
                                         </span>
                                       </a>
                                     </motion.li>

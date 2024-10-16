@@ -2,10 +2,10 @@ import Footer from "@/components/common/Footer/Footer";
 import PropertyDisplay from "@/components/Property/PropertyDisplay";
 
 export async function generateMetadata({ params }) {
-  const id = params.id.split("%3D")[1];
+  const id = params?.id?.split("%3D")?.[1];
   const { res } = await getData(id);
 
-  if (!res || !res._source) {
+  if (!res || !res?._source) {
     return {
       title: "Homeprotfolio",
       openGraph: {
@@ -16,15 +16,15 @@ export async function generateMetadata({ params }) {
   }
 
   const fullAddress =
-    res._source.metaTitle ||
-    res._source.analyticsTaxonomy?.displayAddress ||
+    res?._source?.metaTitle ||
+    res?._source?.analyticsTaxonomy?.displayAddress ||
     "Homeprotfolio property";
   const title =
-    fullAddress.length > 60
-      ? `${fullAddress.substring(0, 60)}...`
+    fullAddress?.length > 60
+      ? `${fullAddress?.substring(0, 60)}...`
       : fullAddress;
 
-  const description = res._source.metaDescription || "";
+  const description = res?._source?.metaDescription || "";
 
   return {
     title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
 
 async function getData(id) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/indevisual/get-listing-by-id`,
+    `${process?.env?.NEXT_PUBLIC_SITE_URL}/api/indevisual/get-listing-by-id`,
     {
       method: "POST",
       headers: {
@@ -47,7 +47,7 @@ async function getData(id) {
     }
   );
 
-  const res = await response.json();
+  const res = await response?.json();
   return { res };
 }
 
