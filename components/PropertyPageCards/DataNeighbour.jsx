@@ -9,8 +9,13 @@ import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import React from "react";
 
 function DataNeighbour({ postcode }) {
-  const { populationData, educationData, tenureAllData, economicActivityData } =
-    useDemographicStore();
+  const {
+    populationData,
+    educationData,
+    tenureAllData,
+    economicActivityData,
+    isDataLoading,
+  } = useDemographicStore();
   const { walkScore } = useListingStore();
   const { medianPrice } = marketCompStore();
 
@@ -50,7 +55,8 @@ function DataNeighbour({ postcode }) {
 
       if (totalHouseholds && (socialRented || privateRented)) {
         return (
-          ((socialRented + privateRented) / totalHouseholds) * 100
+          ((socialRented + privateRented) / totalHouseholds) *
+          100
         ).toFixed(0);
       }
     }
@@ -163,9 +169,7 @@ function DataNeighbour({ postcode }) {
 
               {/* Owners */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
-                  Owners
-                </p>
+                <p className="text-sm font-medium text-gray-500 mb-1">Owners</p>
                 <div className="text-4xl font-medium text-purple-300">
                   {calculateOwnersPercentage() !== null ? (
                     `${calculateOwnersPercentage()}%`

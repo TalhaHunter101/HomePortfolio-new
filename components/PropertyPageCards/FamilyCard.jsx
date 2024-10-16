@@ -34,11 +34,14 @@ export function FamilyCard({ postcode, city }) {
     setEducationData: setSingleEducationData,
     setTenureAllData,
     setEconomicActivityData,
+    setIsDataLoading,
+    isDataLoading,
   } = useDemographicStore();
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
+        setIsDataLoading(true);
         const endpoints = [
           "/api/indevisual/demographic/get-people-gender-data",
           "/api/indevisual/demographic/get-house-occupation-data",
@@ -87,8 +90,12 @@ export function FamilyCard({ postcode, city }) {
         setEducationData(fetchedEducationData);
         setCompositionData(fetchedCompositionData);
         setEconomicData(fetchedEconomicData);
+        setIsDataLoading(false);
       } catch (error) {
+        setIsDataLoading(false);
         console.error("Error fetching data:", error);
+      } finally {
+        setIsDataLoading(false);
       }
     };
 
@@ -210,15 +217,20 @@ export function FamilyCard({ postcode, city }) {
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Total Population</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {totalPopulation?._source?.[
-                    "Sex: All persons; measures: Value"
-                  ] ? (
-                    totalPopulation._source[
-                    "Sex: All persons; measures: Value"
-                    ]
-                  ) : (
+                  {isDataLoading ? (
                     <Spinner />
+                  ) : totalPopulation.length === 0 ? (
+                    "N/A"
+                  ) : (
+                    <>
+                      {
+                        totalPopulation?._source?.[
+                          "Sex: All persons; measures: Value"
+                        ]
+                      }
+                    </>
                   )}
+
                 </span>
               </div>
 
@@ -246,7 +258,9 @@ export function FamilyCard({ postcode, city }) {
 
               {/* Spinner for Single Family Household */}
               <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">Single Family Household</span>
+                <span className="text-sm text-gray-400">
+                  Single Family Household
+                </span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                   {singleFamilyHouseholds !== undefined ? (
                     singleFamilyHouseholds
