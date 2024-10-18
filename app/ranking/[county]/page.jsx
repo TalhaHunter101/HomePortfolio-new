@@ -11,7 +11,7 @@ export default function CountyPage({ params }) {
 
     return (
         <div className="p-6 max-w-[87rem] mt-20 mx-auto">
-            <h1 className="text-3xl sm:text-5xl font-bold text-center mb-6">
+            <h1 className="text-3xl sm:text-5xl font-bold mb-6">
                 Most Affordable Neighborhoods in {countyData.countyName}
             </h1>
             <p className="text-base sm:text-lg text-gray-700 mb-8">
