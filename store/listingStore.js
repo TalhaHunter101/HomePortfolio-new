@@ -32,7 +32,9 @@ export const useDemographicStore = create((set) => ({
   educationData: null,
   tenureAllData:null,
   economicActivityData: null,
+  isDataLoading: true,
   
+  setIsDataLoading: (value) => set({ isDataLoading: value }),
   setSingleFamilyHouseholds: (value) => set({ singleFamilyHouseholds: value }),
   setPopulationData: (value) => set({ populationData: value }),
   setEducationData: (value) => set({ educationData: value }),

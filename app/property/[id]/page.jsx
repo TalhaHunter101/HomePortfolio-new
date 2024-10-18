@@ -5,14 +5,13 @@ export async function generateMetadata({ params }) {
   const id = params?.id?.split("%3D")?.[1];
   const { res } = await getData(id);
 
-  // Ensure data exists before accessing properties
   if (!res || !res?._source) {
     return {
       title: "Homeprotfolio",
       openGraph: {
         title: "Homeprotfolio",
       },
-      description: "", // Set default description if no data
+      description: "",
     };
   }
 

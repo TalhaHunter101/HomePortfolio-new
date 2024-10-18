@@ -9,7 +9,8 @@ import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import React from "react";
 
 function DataShows({ postcode, rentData }) {
-  const { populationData, educationData } = useDemographicStore();
+  const { populationData, educationData, isDataLoading } =
+    useDemographicStore();
   const { walkScore } = useListingStore();
   const { medianPrice } = marketCompStore();
 
@@ -68,7 +69,11 @@ function DataShows({ postcode, rentData }) {
                   Total Population
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {populationData ? (
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : populationData === null ? (
+                    "N/A"
+                  ) : (
                     <>
                       {populationData}
                       <Icon
@@ -77,8 +82,6 @@ function DataShows({ postcode, rentData }) {
                         className="inline pb-2"
                       />
                     </>
-                  ) : (
-                    <Spinner />
                   )}
                 </div>
               </div>
@@ -89,17 +92,19 @@ function DataShows({ postcode, rentData }) {
                   Walk Score
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {walkScore ? (
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : walkScore === null ? (
+                    "N/A"
+                  ) : (
                     <>
-                      {walkScore}{" "}
+                      {walkScore}
                       <Icon
                         icon="fa-solid:walking"
                         height={32}
                         className="inline pb-2"
                       />
                     </>
-                  ) : (
-                    <Spinner />
                   )}
                 </div>
               </div>
@@ -110,7 +115,11 @@ function DataShows({ postcode, rentData }) {
                   Average Home Price
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {medianPrice ? (
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : medianPrice === null ? (
+                    "N/A"
+                  ) : (
                     <>
                       £{formatCurrency(medianPrice)}{" "}
                       <Icon
@@ -119,8 +128,6 @@ function DataShows({ postcode, rentData }) {
                         className="inline pb-2"
                       />
                     </>
-                  ) : (
-                    <Spinner />
                   )}
                 </div>
               </div>

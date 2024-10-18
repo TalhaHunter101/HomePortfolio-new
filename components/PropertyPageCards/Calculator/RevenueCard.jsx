@@ -5,7 +5,6 @@ import { useCalculationsStore } from "../../../store/calculationsStore";
 
 export default function RevenueCard() {
   const [isOpen, setIsOpen] = useState(false);
-
   const {
     monthlyRevenue,
     setMonthlyRevenue,
@@ -18,6 +17,9 @@ export default function RevenueCard() {
   useEffect(() => {
     if (monthlyRevenue > 0) {
       const newAnnualRevenue = monthlyRevenue * 12;
+      if (newAnnualRevenue !== annualRevenue) {
+        setAnnualRevenue(newAnnualRevenue);
+      }
       if (newAnnualRevenue !== annualRevenue) setAnnualRevenue?.(newAnnualRevenue);
     }
   }, [monthlyRevenue, annualRevenue, setAnnualRevenue]);

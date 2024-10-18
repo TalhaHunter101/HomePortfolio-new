@@ -30,7 +30,9 @@ export function CrimeCard({ postcode }) {
   };
 
   useEffect(() => {
-    if (postcode) getCrimeData(postcode);
+    if (postcode){
+      getCrimeData(postcode);
+    }
   }, [postcode]);
 
   return (

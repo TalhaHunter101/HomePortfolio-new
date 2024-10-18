@@ -448,7 +448,7 @@ function PropertyDisplay({ listingData, params }) {
           <div className="flex  space-x-2">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={handleLikeToggle}
+              onClick={()=>handleLikeToggle()}
               className={`text-2xl mt-3 cursor-pointer ${
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
@@ -604,7 +604,7 @@ function PropertyDisplay({ listingData, params }) {
                   variant="bordered"
                   className="text-xs font-medium text-blue-600"
                   size="sm"
-                  onClick={toggleReadMore}
+                  onClick={()=>toggleReadMore()}
                   style={{ marginTop: "1rem" }}
                 >
                   {isExpanded ? "Show Less" : "Read More"}{" "}
