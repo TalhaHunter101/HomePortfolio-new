@@ -19,7 +19,7 @@ export function HomeTypesCard({ city }) {
 
   function analyzePrices(data) {
     const prices = data
-      .map((item) => parseFloat(item._source?.pricing?.internalValue))
+      ?.map((item) => parseFloat(item?._source?.pricing?.internalValue))
       .filter((price) => !isNaN(price));
 
     prices.sort((a, b) => a - b);
@@ -59,10 +59,12 @@ export function HomeTypesCard({ city }) {
         if (response.ok) {
           const result = await response.json();
           setData(result);
-          const data = analyzePrices(result);
-          setMinMaxData(data);
+          const analyzedData = analyzePrices(result);
+          setMinMaxData(analyzedData);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     getHouseTypeData(city);
@@ -80,8 +82,7 @@ export function HomeTypesCard({ city }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            What type of Homes available for sale by home type, beds & price
-            range?
+            What type of Homes available for sale by home type, beds & price range?
           </h2>
         </div>
       </CardHeader>
@@ -91,9 +92,7 @@ export function HomeTypesCard({ city }) {
             {/* Home Types Distribution Section */}
             <div className="flex flex-row flex-wrap gap-8">
               <div className="flex flex-col gap-y-2 flex-1 basis-96">
-                <div className="text-xl font-semibold">
-                  Home Types Distribution
-                </div>
+                <div className="text-xl font-semibold">Home Types Distribution</div>
 
                 <DistributionPieChart
                   main_data={data}
@@ -103,16 +102,14 @@ export function HomeTypesCard({ city }) {
 
               {/* Home Price Distribution Section */}
               <div className="flex flex-col gap-y-2 flex-1 basis-80">
-                <div className="text-xl font-semibold">
-                  Home Price Distribution
-                </div>
+                <div className="text-xl font-semibold">Home Price Distribution</div>
 
                 <div className="flex flex-col gap-3 md:flex-row justify-between">
                   <div className="flex flex-col items-start">
                     <div className="lg:mb-1">Min</div>
                     <div className="text-lime-500">
                       <span className="text-4xl text-2xl lg:text-3xl">
-                        £{minMaxData.min}
+                        £{minMaxData?.min}
                       </span>
                     </div>
                   </div>
@@ -121,7 +118,7 @@ export function HomeTypesCard({ city }) {
                       <div className="lg:mb-1">Median</div>
                       <div className="text-amber-500">
                         <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData.median}
+                          £{minMaxData?.median}
                         </span>
                       </div>
                     </div>
@@ -133,7 +130,7 @@ export function HomeTypesCard({ city }) {
                       </div>
                       <div className="text-red-500">
                         <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData.max}
+                          £{minMaxData?.max}
                         </span>
                       </div>
                     </div>

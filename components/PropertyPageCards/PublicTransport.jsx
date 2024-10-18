@@ -16,9 +16,9 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
   // Count transports for each type (rail, bus, ferry)
   const transportCounts = data?.transports?.reduce((acc, transport) => {
     const { poiType } = transport;
-    const key = poiType.includes("rail")
+    const key = poiType?.includes("rail")
       ? "rail"
-      : poiType.includes("bus")
+      : poiType?.includes("bus")
       ? "bus"
       : "ferry";
     acc[key] = (acc[key] || 0) + 1;
@@ -54,10 +54,11 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
         });
 
         if (res.ok) {
-          const data = await res.json();
-          setWalkScore(data[0]?._source?.walk_score);
-          setWalkScoreDescription(data[0]?._source?.description);
-          setListingWalkScore(data[0]?._source?.walk_score);
+          const result = await res.json();
+          const walkData = result[0]?._source;
+          setWalkScore(walkData?.walk_score || 0);
+          setWalkScoreDescription(walkData?.description || "");
+          setListingWalkScore(walkData?.walk_score || 0);
         }
       } catch (error) {
         console.log(error);
@@ -81,11 +82,11 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
 
           // Extract latitude and longitude from bus coordinates
           const busLocations = busData?.map((bus) => ({
-            lat: bus.coordinates[1],
-            lng: bus.coordinates[0],
+            lat: bus?.coordinates[1],
+            lng: bus?.coordinates[0],
           }));
 
-          setBusLocations(busLocations); // Set the bus locations with correct lat/lng
+          setBusLocations(busLocations || []); // Set the bus locations with correct lat/lng
         } else {
           console.log("Failed to fetch bus data");
         }
@@ -121,7 +122,7 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
 
             {/* Walk Score Info */}
             <div className="px-4 text-purple-300 w-[30vw]">
-              <div className="text-xs text-gray-500 md:text-sm  capitalize text-foreground text-center">
+              <div className="text-xs text-gray-500 md:text-sm capitalize text-foreground text-center">
                 <a
                   href="https://walkradius.com"
                   target="_blank"
@@ -142,33 +143,9 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
 
       <CardBody>
         <div className="rounded-md">
-          <div className="  z-10 shadow text-gray-500 font-medium bg-purple-100 text-xs sm:text-sm p-4 rounded-lg mb-3">
+          <div className="z-10 shadow text-gray-500 font-medium bg-purple-100 text-xs sm:text-sm p-4 rounded-lg mb-3">
             {walkScoreDescription}
           </div>
-          {/* <div className="bg-gray-250 p-4 sm:p-4 sm:py-6 lg:flex relative cursor-pointer overflow-hidden bg-background text-foreground rounded-t-lg">
-            <h2 className="w-full pr-10 lg:pr-4 relative z-10 lg:w-1/2 mb-3 lg:mb-0 flex items-start space-x-2 sm:space-x-4 font-semibold capitalize text-foreground mb-2 sm:mb-4 text-lg">
-              <div className="h-6 w-6 lg:w-8 lg:h-8 px-2 flex justify-center items-center mr-1 rounded-full bg-purple-400">
-                <Icon icon="mdi:bus" />
-              </div>
-              <span>What are my public transportation options?</span>
-            </h2>
-            <div className="sentences leading-6 w-full relative pr-2 sm:pr-10 md:pr-2 z-10 max-w-md mt-4 md:mt-0 text-foreground grid sm:items-center grid-cols-2">
-              <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
-                <div className="text-xs md:text-sm capitalize text-foreground">
-                  <a
-                    href="https://www.walkscore.com/how-it-works/"
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                  >
-                    Walk Score<sup>®</sup>
-                  </a>
-                </div>
-                <div className="text-xl text-muted-foreground font-medium">
-                  {walkScore || "N/A"}
-                </div>
-              </div>
-            </div>
-          </div> */}
 
           <div className="hidden xl:flex h-96 ">
             <div className="flex relative overflow-hidden sm:mx-4 gap-2 w-full">
@@ -176,7 +153,7 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
                 <div className="h-full w-full border-1 maplibregl-map mapboxgl-map">
                   <div>
                     {selectedType === "bus" ? (
-                      <BusMapStatic center={busLocations} />
+                      <BusMapStatic center={busLocations || []} />
                     ) : (
                       <TransportMapStatic center={center} />
                     )}
@@ -233,16 +210,16 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
                             <div className="w-full justify-between">
                               <span className="text-green-800 font-bold">
                                 {selectedType === "bus"
-                                  ? `Bus ID: ${transport.id}`
-                                  : transport.title}
+                                  ? `Bus ID: ${transport?.id}`
+                                  : transport?.title}
                               </span>
                               <span className="font-semibold ml-4">
                                 {selectedType === "bus"
-                                  ? `Destination: ${transport.destination}`
-                                  : `${transport.poiType.replace(
+                                  ? `Destination: ${transport?.destination}`
+                                  : `${transport?.poiType?.replace(
                                       /_/g,
                                       " "
-                                    )} • ${transport.distanceInMiles} mi away`}
+                                    )} • ${transport?.distanceInMiles} mi away`}
                               </span>
                             </div>
                             <div className="mt-2">
@@ -254,8 +231,8 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
                                 }}
                               >
                                 {selectedType === "bus"
-                                  ? `Line: ${transport.service.line_name}`
-                                  : transport.poiType.replace(/_/g, " ")}
+                                  ? `Line: ${transport?.service?.line_name}`
+                                  : transport?.poiType?.replace(/_/g, " ")}
                               </span>
                             </div>
                           </div>

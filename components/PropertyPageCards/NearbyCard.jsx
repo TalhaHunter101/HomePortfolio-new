@@ -30,7 +30,7 @@ const amenities = [
     key: "bar",
     bg_color: "bg-desert-200",
   },
-  // {
+   // {
   //   name: "pubs",
   //   icon: "fluent:drink-beer-24-regular",
   //   icon_name: "bar",
@@ -146,7 +146,6 @@ async function getNearbyLocations(
           category: element.tags.amenity || "Unknown",
           lat, // Ensure lat/lon are captured correctly
           lon,
-          // distance: `${Math.random().toFixed(2) * 2} miles away`, // Mock distance
         };
       });
   } catch (error) {
@@ -169,9 +168,9 @@ export function NearbyCard({ data, city }) {
       lat: data?.location?.coordinates?.latitude,
       lng: data?.location?.coordinates?.longitude,
     };
-    
+
     setLoading(true); // Start loading before fetching data
-    
+
     getNearbyLocations(center.lat, center.lng, selectedAmenity).then((locs) => {
       setLocations(locs);
       setLoading(false); // End loading after data is fetched
@@ -183,7 +182,7 @@ export function NearbyCard({ data, city }) {
   ]);
 
   const items = locations.length ? locations : getItemsData();
-  const nearestAmenity = items.find((item) => item.category === selectedAmenity);
+  const nearestAmenity = items.find((item) => item?.category === selectedAmenity);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -211,11 +210,11 @@ export function NearbyCard({ data, city }) {
               </div>
               {loading ? (
                 <div className="text-base md:text-base text-foreground font-medium">
-                  <Spinner size="xs"/>
+                  <Spinner size="xs" />
                 </div>
               ) : nearestAmenity ? (
                 <div className="text-base md:text-base text-foreground font-medium">
-                  {nearestAmenity.name} <br />
+                  {nearestAmenity?.name} <br />
                 </div>
               ) : (
                 <div className="text-base md:text-base text-foreground font-medium">
@@ -226,7 +225,6 @@ export function NearbyCard({ data, city }) {
           </div>
         </div>
       </CardHeader>
-
 
       <CardBody>
         <div className="rounded-br-lg rounded-bl-lg pt-6 border-t-0 -mt-2 bg-gray-250">
@@ -292,17 +290,16 @@ export function NearbyCard({ data, city }) {
                             <div className="flex-shrink-0">
                               <Icon
                                 icon={amenities.find(
-                                  (amenity) => amenity.key === item.category
+                                  (amenity) => amenity.key === item?.category
                                 )?.icon || "mdi:map-marker"}
                                 className="inline-block text-4xl text-green-800 mr-5 xs:mr-8"
                               />
                             </div>
                             <ul className="text-xs">
                               <li className="text-gray-800 text-sm">
-                                {item.name}
+                                {item?.name}
                               </li>
-                              <li>{item.category}</li>
-                              {/* <li>{item.distance}</li> */}
+                              <li>{item?.category}</li>
                             </ul>
                           </div>
                         </div>
@@ -318,4 +315,3 @@ export function NearbyCard({ data, city }) {
     </Card>
   );
 }
-

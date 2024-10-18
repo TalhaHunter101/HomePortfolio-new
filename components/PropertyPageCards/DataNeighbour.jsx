@@ -20,78 +20,71 @@ function DataNeighbour({ postcode }) {
   const { medianPrice } = marketCompStore();
 
   const calculateCollegeDegreePercentage = () => {
-    if (educationData?._source) {
-      const totalPopulation = parseInt(
-        educationData._source[
-          "Highest level of qualification: Total: All usual residents aged 16 years and over"
-        ]
-      );
-      const level4AndAbove = parseInt(
-        educationData._source[
-          "Highest level of qualification: Level 4 qualifications and above"
-        ]
-      );
+    const totalPopulation = parseInt(
+      educationData?._source?.[
+        "Highest level of qualification: Total: All usual residents aged 16 years and over"
+      ]
+    );
+    const level4AndAbove = parseInt(
+      educationData?._source?.[
+        "Highest level of qualification: Level 4 qualifications and above"
+      ]
+    );
 
-      if (totalPopulation && level4AndAbove) {
-        return ((level4AndAbove / totalPopulation) * 100).toFixed(0);
-      }
+    if (totalPopulation && level4AndAbove) {
+      return ((level4AndAbove / totalPopulation) * 100).toFixed(0);
     }
     return null;
   };
 
   const calculateRentersPercentage = () => {
-    if (tenureAllData?._source) {
-      const totalHouseholds = parseInt(
-        tenureAllData._source["Tenure of household: Total: All households"]
-      );
-      const socialRented = parseInt(
-        tenureAllData._source["Tenure of household: Social rented"]
-      );
-      const privateRented = parseInt(
-        tenureAllData._source["Tenure of household: Private rented"]
-      );
+    const totalHouseholds = parseInt(
+      tenureAllData?._source?.["Tenure of household: Total: All households"]
+    );
+    const socialRented = parseInt(
+      tenureAllData?._source?.["Tenure of household: Social rented"]
+    );
+    const privateRented = parseInt(
+      tenureAllData?._source?.["Tenure of household: Private rented"]
+    );
 
-      if (totalHouseholds && (socialRented || privateRented)) {
-        return (
-          ((socialRented + privateRented) / totalHouseholds) * 100
-        ).toFixed(0);
-      }
+    if (totalHouseholds && (socialRented || privateRented)) {
+      return (
+        ((socialRented + privateRented) / totalHouseholds) *
+          100
+      ).toFixed(0);
     }
     return null;
   };
 
   const calculateOwnersPercentage = () => {
-    if (tenureAllData?._source) {
-      const totalHouseholds = parseInt(
-        tenureAllData._source["Tenure of household: Total: All households"]
-      );
-      const ownsOutright = parseInt(
-        tenureAllData._source["Tenure of household: Owned: Owns outright"]
-      );
+    const totalHouseholds = parseInt(
+      tenureAllData?._source?.["Tenure of household: Total: All households"]
+    );
+    const ownsOutright = parseInt(
+      tenureAllData?._source?.["Tenure of household: Owned: Owns outright"]
+    );
 
-      if (totalHouseholds && ownsOutright) {
-        return ((ownsOutright / totalHouseholds) * 100).toFixed(0);
-      }
+    if (totalHouseholds && ownsOutright) {
+      return ((ownsOutright / totalHouseholds) * 100).toFixed(0);
     }
     return null;
   };
 
   const calculateFullTimeEmploymentPercentage = () => {
-    if (economicActivityData?._source) {
-      const totalActive = parseInt(
-        economicActivityData._source[
-          "Economic activity status: Economically active (excluding full-time students)"
-        ]
-      );
-      const inEmployment = parseInt(
-        economicActivityData._source[
-          "Economic activity status: Economically active (excluding full-time students):In employment"
-        ]
-      );
+    const totalActive = parseInt(
+      economicActivityData?._source?.[
+        "Economic activity status: Economically active (excluding full-time students)"
+      ]
+    );
+    const inEmployment = parseInt(
+      economicActivityData?._source?.[
+        "Economic activity status: Economically active (excluding full-time students):In employment"
+      ]
+    );
 
-      if (totalActive && inEmployment) {
-        return ((inEmployment / totalActive) * 100).toFixed(0);
-      }
+    if (totalActive && inEmployment) {
+      return ((inEmployment / totalActive) * 100).toFixed(0);
     }
     return null;
   };
