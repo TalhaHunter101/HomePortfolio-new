@@ -19,8 +19,6 @@ function DataNeighbour({ postcode }) {
   const { walkScore } = useListingStore();
   const { medianPrice } = marketCompStore();
 
-  console.log("economicActivityData is", economicActivityData);
-
   const calculateCollegeDegreePercentage = () => {
     if (educationData?._source) {
       const totalPopulation = parseInt(
@@ -55,8 +53,7 @@ function DataNeighbour({ postcode }) {
 
       if (totalHouseholds && (socialRented || privateRented)) {
         return (
-          ((socialRented + privateRented) / totalHouseholds) *
-          100
+          ((socialRented + privateRented) / totalHouseholds) * 100
         ).toFixed(0);
       }
     }
@@ -118,68 +115,76 @@ function DataNeighbour({ postcode }) {
 
       <div className="p-6 rounded-lg">
         <div className="space-y-6">
-          <div>
-            <p className="text-sm text-gray-500 mb-4">
-              The demographics of a place can be a fair indicator of how
-              neighborly a place is. {calculateRentersPercentage() ?? "N/A"}% of
-              the households in {postcode} are renter-occupied.
-            </p>
-            <div className="grid grid-cols-2 gap-6 text-gray-600">
-              {/* College Degree */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
-                  College Degree
-                </p>
-                <div className="text-4xl font-medium text-purple-300">
-                  {calculateCollegeDegreePercentage() !== null ? (
-                    `${calculateCollegeDegreePercentage()}%`
-                  ) : (
-                    <Spinner />
-                  )}
+          {isDataLoading ? (
+            <div className="flex justify-center">
+              <Spinner />
+            </div>
+          ) : (
+            <div>
+              <p className="text-sm text-gray-500 mb-4">
+                The demographics of a place can be a fair indicator of how
+                neighborly a place is. {calculateRentersPercentage() ?? "N/A"}%
+                of the households in {postcode} are renter-occupied.
+              </p>
+              <div className="grid grid-cols-2 gap-6 text-gray-600">
+                {/* College Degree */}
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    College Degree
+                  </p>
+                  <div className="text-4xl font-medium text-purple-300">
+                    {calculateCollegeDegreePercentage() !== null ? (
+                      `${calculateCollegeDegreePercentage()}%`
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Full Time Employment */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
-                  Full time Employment
-                </p>
-                <div className="text-4xl font-medium text-purple-300">
-                  {calculateFullTimeEmploymentPercentage() !== null ? (
-                    `${calculateFullTimeEmploymentPercentage()}%`
-                  ) : (
-                    <Spinner />
-                  )}
+                {/* Full Time Employment */}
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Full time Employment
+                  </p>
+                  <div className="text-4xl font-medium text-purple-300">
+                    {calculateFullTimeEmploymentPercentage() !== null ? (
+                      `${calculateFullTimeEmploymentPercentage()}%`
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Renters */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">
-                  Renters
-                </p>
-                <div className="text-4xl font-medium text-purple-300">
-                  {calculateRentersPercentage() !== null ? (
-                    `${calculateRentersPercentage()}%`
-                  ) : (
-                    <Spinner />
-                  )}
+                {/* Renters */}
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Renters
+                  </p>
+                  <div className="text-4xl font-medium text-purple-300">
+                    {calculateRentersPercentage() !== null ? (
+                      `${calculateRentersPercentage()}%`
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Owners */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Owners</p>
-                <div className="text-4xl font-medium text-purple-300">
-                  {calculateOwnersPercentage() !== null ? (
-                    `${calculateOwnersPercentage()}%`
-                  ) : (
-                    <Spinner />
-                  )}
+                {/* Owners */}
+                <div>
+                  <p className="text-sm font-medium text-gray-500 mb-1">
+                    Owners
+                  </p>
+                  <div className="text-4xl font-medium text-purple-300">
+                    {calculateOwnersPercentage() !== null ? (
+                      `${calculateOwnersPercentage()}%`
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </Card>

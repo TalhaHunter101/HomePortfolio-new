@@ -230,7 +230,6 @@ export function FamilyCard({ postcode, city }) {
                       }
                     </>
                   )}
-
                 </span>
               </div>
 
@@ -238,7 +237,13 @@ export function FamilyCard({ postcode, city }) {
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Median Age</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {medianAge !== null ? medianAge : <Spinner />}
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : medianAge === null ? (
+                    "N/A"
+                  ) : (
+                    <>{medianAge ? medianAge : "N/A"}</>
+                  )}
                 </span>
               </div>
             </div>
@@ -248,11 +253,18 @@ export function FamilyCard({ postcode, city }) {
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Average HH Income</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {peopleGenderData?.averageIncome !== undefined ? (
-                    `£${formatCurrency(peopleGenderData?.averageIncome)}`
-                  ) : (
+
+                {isDataLoading ? (
                     <Spinner />
+                  ) : peopleGenderData?.averageIncome === undefined ? (
+                    "N/A"
+                  ) : (
+                    <>
+                     {`£${formatCurrency(peopleGenderData?.averageIncome)}`}
+                    </>
                   )}
+
+                 
                 </span>
               </div>
 
@@ -262,10 +274,15 @@ export function FamilyCard({ postcode, city }) {
                   Single Family Household
                 </span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {singleFamilyHouseholds !== undefined ? (
-                    singleFamilyHouseholds
-                  ) : (
+
+                {isDataLoading ? (
                     <Spinner />
+                  ) : singleFamilyHouseholds === undefined ? (
+                    "N/A"
+                  ) : (
+                    <>
+                     {singleFamilyHouseholds ? singleFamilyHouseholds : "N/A"}
+                    </>
                   )}
                 </span>
               </div>

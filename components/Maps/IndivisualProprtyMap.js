@@ -1,9 +1,9 @@
-"use client";
 import { useEffect } from "react";
 import {
   MapContainer,
   Marker,
   useMap,
+  GeoJSON,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -35,7 +35,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center?.lat && center?.lng) {
-      map.setView([center?.lat, center?.lng], 16);  
+      map.setView([center?.lat, center?.lng], 16);
     }
   }, [center?.lat, center?.lng, map]);
 
@@ -47,8 +47,59 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const IndivisualProprtyMapStatic = ({ height = "650px", center }) => {    
+// Convert MULTIPOLYGON string to GeoJSON format
+const parseFloodZoneData = (floodZoneData) => {
+  const coordinates = floodZoneData.geometry
+    .replace("MULTIPOLYGON (((", "")
+    .replace(")))", "")
+    .split("),(")
+    .map((polygon) =>
+      polygon.split(",").map((point) =>
+        point
+          .trim()
+          .split(" ")
+          .map((coord) => parseFloat(coord))
+      )
+    );
+
+  return {
+    type: "Feature",
+    properties: {
+      floodRiskLevel: floodZoneData["flood-risk-level"],
+      floodRiskType: floodZoneData["flood-risk-type"],
+    },
+    geometry: {
+      type: "MultiPolygon",
+      coordinates: [coordinates], // GeoJSON expects an array of polygons
+    },
+  };
+};
+
+const FloodRiskOverlay = ({ floodData }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (floodData) {
+      const geoJsonLayer = L.geoJSON(floodData, {
+        style: function () {
+          return { color: "#e28f21", weight: 8 }; // Customize flood zone style
+        },
+      }).addTo(map);
+
+      return () => {
+        map.removeLayer(geoJsonLayer);
+      };
+    }
+  }, [floodData, map]);
+
+  return null;
+};
+
+const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData }) => {
   const zoom = 13;
+
+  // Parse flood zone data to GeoJSON
+  const floodZoneGeoJSON = floodZoneData ? parseFloodZoneData(floodZoneData) : null;
 
   return (
     <div>
@@ -60,10 +111,11 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center }) => {
         style={{
           width: "100%",
           height: height,
-        }} 
+        }}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />
+        {floodZoneGeoJSON && <FloodRiskOverlay floodData={floodZoneGeoJSON} />}
       </MapContainer>
     </div>
   );

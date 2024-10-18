@@ -133,7 +133,11 @@ function AgePopulationData({ AgePopulationData }) {
   }, [AgePopulationData]);
 
   if (loading) {
-    return <div className="w-full h-full flex justify-center items-center"><Spinner size="lg" /></div>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   return (
@@ -148,21 +152,36 @@ function AgePopulationData({ AgePopulationData }) {
         </h2>
       </div>
 
+      {loading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        <>
+          {formattedData ? (
+            <div className="w-full flex justify-center">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={formattedData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#5AB2F6" barSize={20} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          ):(
+            <div className="w-full h-full flex justify-center items-center">
+              No Data Available
+            </div>
+          )}
+        </>
+      )}
+
       {/* Chart below */}
-      <div className="w-full flex justify-center">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart
-            data={formattedData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip />
-            <Bar dataKey="value" fill="#5AB2F6" barSize={20} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
     </div>
   );
 }
