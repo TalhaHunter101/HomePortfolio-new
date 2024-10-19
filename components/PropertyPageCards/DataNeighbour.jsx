@@ -38,6 +38,10 @@ function DataNeighbour({ postcode }) {
   };
  
   const calculateRentersPercentage = () => {
+
+
+    console.log( "gvshdcgvsdvchbsdbc-------------------------",tenureAllData?._source);
+
     const totalHouseholds = parseInt(
       tenureAllData?._source?.["Tenure of household: Total: All households"]
     );
@@ -62,8 +66,8 @@ function DataNeighbour({ postcode }) {
       tenureAllData?._source?.["Tenure of household: Total: All households"]
     );
     const ownsOutright = parseInt(
-      tenureAllData?._source?.["Tenure of household: Owned: Owns outright"]
-    );
+      tenureAllData?._source?.["Tenure of household: Owned"] 
+    ) + parseInt(tenureAllData?._source?.["Tenure of household: Shared ownership"]);
 
     if (totalHouseholds && ownsOutright) {
       return ((ownsOutright / totalHouseholds) * 100).toFixed(0);
