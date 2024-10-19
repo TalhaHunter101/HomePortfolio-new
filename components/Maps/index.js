@@ -54,3 +54,9 @@ export const RecentlySoldMapsStatic = dynamic(() => import("./RecentlySoldMaps")
   ssr: false,
   loading: () => <div className="w-full h-full flex justify-center items-center"><Spinner label="Map is loading" size="sm" /></div>,
 })
+
+
+export const FloodMapMapsStatic = dynamic(() => import("./Flood/FloodMap"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full flex justify-center items-center"><Spinner label="Map is loading" size="sm" /></div>,
+})

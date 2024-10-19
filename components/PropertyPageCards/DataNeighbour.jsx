@@ -36,7 +36,7 @@ function DataNeighbour({ postcode }) {
     }
     return null;
   };
-
+ 
   const calculateRentersPercentage = () => {
     const totalHouseholds = parseInt(
       tenureAllData?._source?.["Tenure of household: Total: All households"]

@@ -52,10 +52,10 @@ function SearchDropdown({ results, isDataLoading }) {
                         <div className="flex">
                           <Link
                             href={{
-                              pathname:`/search/${item.name?.replace(
-                              /\s+/g,
-                              "-"
-                            )}?type=${item.type}`
+                              pathname: `/search/${item.name?.replace(
+                                /\s+/g,
+                                "-"
+                              )}?type=${item.type}`,
                             }}
                           >
                             <div className="flex cursor-pointer">
@@ -73,9 +73,7 @@ function SearchDropdown({ results, isDataLoading }) {
 
                                 <span className="text-xs font-semibold shadow-md p-1  ">
                                   {" "}
-                                  {
-                                    item.type === "town" ? "City" : "County"
-                                  }
+                                  {item.type === "town" ? "City" : "County"}
                                 </span>
                               </div>
                             </div>
@@ -108,43 +106,41 @@ function SearchDropdown({ results, isDataLoading }) {
                 </div>
               )}
 
-              {
-                results?.county?.length >= 0 && (
-                  <div className="px-2 border-b-[1px] border-gray-300">
-                    <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
-                      County
-                    </p>
-                    <div>
-                      {results?.county.map((item, i) => (
-                        <Link
-                          key={i}
-                          href={{
-                            pathname: `/search/${item?.name?.replace(
-                              /\s+/g,
-                              "-"
-                            )}?type=${item?.type}`,
-                          }}
-                        >
-                          <div className="flex my-3 cursor-pointer">
-                            <Image
-                              src="/icons/country.svg"
-                              height={20}
-                              width={20}
-                              alt="dev"
-                              className="mx-2"
-                            />
-                            <div>
-                              <p className="text-sm text-primaryfonts">
-                                {item?.name}
-                              </p>
-                            </div>
+              {results?.county?.length >= 0 && (
+                <div className="px-2 border-b-[1px] border-gray-300">
+                  <p className="my-1 text-xs font-semibold text-gray-500 uppercase">
+                    County
+                  </p>
+                  <div>
+                    {results?.county.map((item, i) => (
+                      <Link
+                        key={i}
+                        href={{
+                          pathname: `/search/${item?.name?.replace(
+                            /\s+/g,
+                            "-"
+                          )}?type=${item?.type}`,
+                        }}
+                      >
+                        <div className="flex my-3 cursor-pointer">
+                          <Image
+                            src="/icons/country.svg"
+                            height={20}
+                            width={20}
+                            alt="dev"
+                            className="mx-2"
+                          />
+                          <div>
+                            <p className="text-sm text-primaryfonts">
+                              {item?.name}
+                            </p>
                           </div>
-                        </Link>
-                      ))}
-                    </div>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                )
-              }
+                </div>
+              )}
 
               {results?.postcodes?.length > 0 && (
                 <div className="px-2 border-b-[1px] border-gray-300">
@@ -198,7 +194,8 @@ function SearchDropdown({ results, isDataLoading }) {
                           pathname: item?.is_property
                             ? `/property/${item?.listingId}`
                             : `/house/${item?.full_address
-                                ?.replace(/\s+/g, "-")
+                                ?.toLowerCase() // Convert to lowercase
+                                .replace(/\s+/g, "-") // Replace spaces with hyphens
                                 .replace(/,/g, "")}?uprn=${
                                 item?.address?.uprn
                               }`,

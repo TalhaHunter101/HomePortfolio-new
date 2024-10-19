@@ -111,6 +111,7 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
                       pathname: `/property/${String(
                         property?.displayAddress || ""
                       )
+                        .toLowerCase()
                         .replace(/\s+/g, "-")
                         .replace(/,/g, "")}?id=${property?.id}`,
                     }}
@@ -167,6 +168,7 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
         <Link
           href={{
             pathname: `/property/${String(property?.displayAddress || "")
+              .toLowerCase()
               .replace(/\s+/g, "-")
               .replace(/,/g, "")}?id=${property?.id}`,
           }}

@@ -43,6 +43,7 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import { storeUsersData } from "@/store/authStore";
 import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
+import FloodData from "../PropertyPageCards/FloodData";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -317,6 +318,13 @@ function PropertyDisplay({ listingData, params }) {
           Component: CrimeCard,
         },
         {
+          name: "Flood Map",
+          icon: "mdi:account-group",
+          bgColor: "bg-red-500",
+          id: "FloodMap",
+          Component: FloodData,
+        },
+        {
           name: "Is the air quality good?",
           icon: "mdi:weather-windy",
           bgColor: "bg-red-300",
@@ -344,6 +352,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "EPC",
           Component: EPCCard,
         },
+        
       ],
     },
   ];
