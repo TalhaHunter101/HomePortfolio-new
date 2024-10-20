@@ -21,6 +21,12 @@ const FloodData = () => {
 
         const polygons = await Promise.all(
           polygonUrls.map(async (url) => {
+
+            //check if url is http or https if it is http then convert it to https
+            if (url.startsWith("http://")) {
+              url = url.replace("http://", "https://");
+            }
+
             const polygonResponse = await fetch(url);
             const polygonData = await polygonResponse.json();
 
