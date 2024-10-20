@@ -138,7 +138,7 @@ const dta = {
   
         <div className="mt-24">
           <h2 className="text-4xl lg:text-5xl lg:tracking-tight text-center">
-            {dta.team.title} <span className="text-indigo-600 font-bold">{dta.team.title.split(" ")[1]}</span>
+            {dta.team.title} <span className="text-indigo-600 font-bold">members</span>
           </h2>
           <p className="text-lg mt-4 text-slate-600 text-center">{dta.team.description}</p>
         </div>
