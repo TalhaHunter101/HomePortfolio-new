@@ -1,3 +1,5 @@
+
+"use client"
 // Import necessary components
 import React, { useEffect } from "react";
 import { MapContainer, GeoJSON, Marker, Popup, useMap } from "react-leaflet";
