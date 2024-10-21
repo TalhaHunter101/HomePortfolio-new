@@ -13,7 +13,7 @@ export const metadata = {
   description: "Discover, source, analyse and track any property in seconds, all in one place",
   favicon: "./favicon.ico",
   openGraph: {
-    title: "Home Portfolio",
+    title: "Homeportfolio - AI-Powered Property Data Insights for Any UK Property",
     
     description: "Discover, source, analyse and track any property in seconds, all in one place",
     url: "https://home-portfolio-weld.vercel.app/", // Replace with your actual domain
