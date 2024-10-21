@@ -16,7 +16,7 @@ const countStatus = (data, decisions) => {
   ).length || 0;
 };
 
-export function PlanningCard({ postcode }) {
+export function PlanningCard({ postcode,ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
   const statusData = [
     {
@@ -92,7 +92,7 @@ export function PlanningCard({ postcode }) {
             <Icon icon="mdi:planner" width={16} className="text-purple-700" />
           </div>
           <h2 className="text-xl font-bold text-gray-700 text-center sm:text-left">
-            What are the Planning applications in {postcode}?
+            What are the Planning applications in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

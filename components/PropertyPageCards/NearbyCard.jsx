@@ -154,7 +154,7 @@ async function getNearbyLocations(
   }
 }
 
-export function NearbyCard({ data, city }) {
+export function NearbyCard({ data, city,ShortAddress }) {
   const [locations, setLocations] = useState([]); // Dynamic locations state
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -198,7 +198,7 @@ export function NearbyCard({ data, city }) {
               />
             </div>
             <h2 className="text-xl font-bold text-gray-700">
-              What’s nearby {city}
+              What’s nearby {ShortAddress}
             </h2>
           </div>
 

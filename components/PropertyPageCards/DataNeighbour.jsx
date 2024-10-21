@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react";
 import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import React from "react";
 
-function DataNeighbour({ postcode }) {
+function DataNeighbour({ postcode,ShortAddress }) {
   const {
     populationData,
     educationData,
@@ -38,9 +38,6 @@ function DataNeighbour({ postcode }) {
   };
  
   const calculateRentersPercentage = () => {
-
-
-    console.log( "gvshdcgvsdvchbsdbc-------------------------",tenureAllData?._source);
 
     const totalHouseholds = parseInt(
       tenureAllData?._source?.["Tenure of household: Total: All households"]
@@ -105,7 +102,7 @@ function DataNeighbour({ postcode }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Who are your {postcode} neighbours?
+            Who are your {ShortAddress} neighbours?
           </h2>
         </div>
       </CardHeader>

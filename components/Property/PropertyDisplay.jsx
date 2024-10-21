@@ -72,6 +72,7 @@ function PropertyDisplay({ listingData, params }) {
   const [pricePaidData, setPricePaidData] = useState([]);
   const [rentEstimate, setRentEstimate] = useState(0);
   const [rentData, setRentData] = useState([]);
+  const [ShortAddress, setShortAddress] = useState(listingData?.address);
 
   const formatedSqft = formatCurrency(
     listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
@@ -142,6 +143,13 @@ function PropertyDisplay({ listingData, params }) {
     getPricePaidData();
     getRentData();
   }, [listingData]);
+
+  useEffect(() => {
+    if (fullAddress) {
+      const shortadd = fullAddress.split(",")[0];
+      setShortAddress(shortadd);
+    }
+  }, [fullAddress]);
 
   const navElements = [
     {
@@ -352,7 +360,6 @@ function PropertyDisplay({ listingData, params }) {
           id: "EPC",
           Component: EPCCard,
         },
-        
       ],
     },
   ];
@@ -449,6 +456,9 @@ function PropertyDisplay({ listingData, params }) {
     }
   };
 
+  console.log("shortadd is",ShortAddress);
+  
+
   return (
     <>
       <Toaster position="bottom-center" />
@@ -457,7 +467,7 @@ function PropertyDisplay({ listingData, params }) {
           <div className="flex  space-x-2">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={()=>handleLikeToggle()}
+              onClick={() => handleLikeToggle()}
               className={`text-2xl mt-3 cursor-pointer ${
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
@@ -613,7 +623,7 @@ function PropertyDisplay({ listingData, params }) {
                   variant="bordered"
                   className="text-xs font-medium text-blue-600"
                   size="sm"
-                  onClick={()=>toggleReadMore()}
+                  onClick={() => toggleReadMore()}
                   style={{ marginTop: "1rem" }}
                 >
                   {isExpanded ? "Show Less" : "Read More"}{" "}
@@ -665,6 +675,7 @@ function PropertyDisplay({ listingData, params }) {
                       area={formatedSqft || "NA"}
                       address={fullAddress || listingData?.address}
                       rentData={rentData}
+                      ShortAddress={ShortAddress}
                     />
                   </div>
                 ))}

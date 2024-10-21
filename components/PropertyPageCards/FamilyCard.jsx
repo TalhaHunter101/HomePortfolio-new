@@ -15,7 +15,7 @@ import {
 } from "@/store/listingStore";
 import { formatCurrency } from "@/utils/Helper";
 
-export function FamilyCard({ postcode, city }) {
+export function FamilyCard({ postcode, city,ShortAddress }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [peopleGenderData, setPeopleGenderData] = useState([]);
   const [housingData, setHousingData] = useState([]);
@@ -189,7 +189,7 @@ export function FamilyCard({ postcode, city }) {
             />
           </div>
           <h2 className="text-lg sm:text-xl font-bold text-gray-700">
-            Can I raise a family in {postcode}?
+            Can I raise a family in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react";
 import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import React from "react";
 
-function DataShows({ postcode, rentData }) {
+function DataShows({ postcode, rentData,ShortAddress }) {
   const { populationData, educationData, isDataLoading } =
     useDemographicStore();
   const { walkScore } = useListingStore();
@@ -44,7 +44,7 @@ function DataShows({ postcode, rentData }) {
             />
           </div>
           <h2 className="text-lg sm:text-xl font-bold text-gray-700">
-            Is {postcode}, A Good Place To Live?
+            Is {ShortAddress}, A Good Place To Live?
           </h2>
         </div>
       </CardHeader>
