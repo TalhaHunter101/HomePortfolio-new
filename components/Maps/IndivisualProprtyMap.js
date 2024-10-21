@@ -1,13 +1,10 @@
 "use client";
-import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { useEffect, useState } from "react";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import WMSLayer from "./WMSLayers";
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -35,19 +32,14 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center?.lat && center?.lng) {
-      map.setView([center.lat, center.lng], 16);  
+      map.setView([center.lat, center.lng], 16);
     }
   }, [center.lat, center.lng, map]);
 
-  return (
-    <Marker
-      position={[center.lat, center.lng]}
-      icon={customIcon}
-    />
-  );
+  return <Marker position={[center.lat, center.lng]} icon={customIcon} />;
 };
 
-const IndivisualProprtyMapStatic = ({ height = "650px", center }) => {    
+const IndivisualProprtyMapStatic = ({ height = "650px", center, postcode }) => {
   const zoom = 13;
 
   return (
@@ -60,10 +52,11 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center }) => {
         style={{
           width: "100%",
           height: height,
-        }} 
+        }}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />
+        <WMSLayer postcode={postcode} />
       </MapContainer>
     </div>
   );
