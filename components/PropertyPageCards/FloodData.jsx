@@ -3,7 +3,7 @@ import { FloodMapMapsStatic } from "../Maps";
 import { Card, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-const FloodData = () => {
+const FloodData = ({ latitude, longitude }) => {
   const [floodAreas, setFloodAreas] = useState([]);
 
   useEffect(() => {
@@ -21,10 +21,9 @@ const FloodData = () => {
 
         const polygons = await Promise.all(
           polygonUrls.map(async (url) => {
-
             //check if url is http or https if it is http then convert it to https
             if (url.startsWith("http://")) {
-              url = url.replace("http://", "https://");
+              url = url.replace("http://", "http://");
             }
 
             const polygonResponse = await fetch(url);
@@ -59,7 +58,7 @@ const FloodData = () => {
           </div>
         </CardHeader>
 
-        <FloodMapMapsStatic floodAreas={floodAreas} height="400px" />
+        <FloodMapMapsStatic floodAreas={floodAreas} latitude={latitude} longitude={longitude} height="400px" />
       </div>
     </Card>
   );

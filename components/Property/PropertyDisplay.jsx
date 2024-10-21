@@ -652,7 +652,7 @@ function PropertyDisplay({ listingData, params }) {
                     key={subIndex}
                     id={subElement?.id}
                     onMouseEnter={() => handleMouseEnter(subElement?.id)}
-                  >
+                  > 
                     <subElement.Component
                       {...listingData}
                       title={subElement?.name}
