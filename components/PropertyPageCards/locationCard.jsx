@@ -44,7 +44,7 @@ export function LocationCard({ data, postcode, schoolData }) {
 
     switch (activeMap) {
       case "location":
-        return <LocationMap {...mapProps} postcode={postcode} />;
+        return <LocationMap {...mapProps} postcode={postcode} center={center} />;
       case "schools":
         return <SchoolsMap data={data} schoolData={schoolData} isInteractive={isMapInteractive} />;
       case "homes_for_sale":
@@ -82,9 +82,9 @@ export function LocationCard({ data, postcode, schoolData }) {
             {isMapInteractive ? 'Disable Map Interactions' : 'Enable Map Interactions'}
           </span>
         </div>
-      <CardHeader className="bg-white inline p-4">
+      {/* <CardHeader className="bg-white inline p-4">
         <p className="text-xs font-bold mb-3">Location</p>
-        <p className="text-xs">{data?.address}</p>
+        <p className="text-xs">{data?.address}</p> */}
       </CardHeader>
       
       {/* Tabs for selecting different map views */}
