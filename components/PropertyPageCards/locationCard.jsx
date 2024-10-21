@@ -57,7 +57,7 @@ export function LocationCard({ data, postcode, schoolData }) {
       case "whats_nearby":
         return <WhatsNearbyMap {...mapProps} isInteractive={isMapInteractive} />;
       default:
-        return <LocationMap {...mapProps} />;
+        return <LocationMap {...mapProps} postcode={postcode} />;
     }
   };
 
