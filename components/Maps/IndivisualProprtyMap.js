@@ -1,6 +1,11 @@
-"use client";
-import { useEffect, useState } from "react";
-import { MapContainer, Marker, useMap } from "react-leaflet";
+"use client"
+import { useEffect } from "react";
+import {
+  MapContainer,
+  Marker,
+  useMap,
+  GeoJSON,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
@@ -32,20 +37,76 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center?.lat && center?.lng) {
-      map.setView([center.lat, center.lng], 16);
+      map.setView([center?.lat, center?.lng], 16);
     }
-  }, [center.lat, center.lng, map]);
+  }, [center?.lat, center?.lng, map]);
 
-  return <Marker position={[center.lat, center.lng]} icon={customIcon} />;
+  return (
+    <Marker
+      position={[center?.lat, center?.lng]}
+      icon={customIcon}
+    />
+  );
 };
 
-const IndivisualProprtyMapStatic = ({ height = "650px", center, postcode }) => {
+// Convert MULTIPOLYGON string to GeoJSON format
+const parseFloodZoneData = (floodZoneData) => {
+  const coordinates = floodZoneData.geometry
+    .replace("MULTIPOLYGON (((", "")
+    .replace(")))", "")
+    .split("),(")
+    .map((polygon) =>
+      polygon.split(",").map((point) =>
+        point
+          .trim()
+          .split(" ")
+          .map((coord) => parseFloat(coord))
+      )
+    );
+
+  return {
+    type: "Feature",
+    properties: {
+      floodRiskLevel: floodZoneData["flood-risk-level"],
+      floodRiskType: floodZoneData["flood-risk-type"],
+    },
+    geometry: {
+      type: "MultiPolygon",
+      coordinates: [coordinates], // GeoJSON expects an array of polygons
+    },
+  };
+};
+
+const FloodRiskOverlay = ({ floodData }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (floodData) {
+      const geoJsonLayer = L.geoJSON(floodData, {
+        style: function () {
+          return { color: "#e28f21", weight: 8 }; // Customize flood zone style
+        },
+      }).addTo(map);
+
+      return () => {
+        map.removeLayer(geoJsonLayer);
+      };
+    }
+  }, [floodData, map]);
+
+  return null;
+};
+
+const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData }) => {
   const zoom = 13;
+
+  // Parse flood zone data to GeoJSON
+  const floodZoneGeoJSON = floodZoneData ? parseFloodZoneData(floodZoneData) : null;
 
   return (
     <div>
       <MapContainer
-        center={[center.lat, center.lng]}
+        center={[center?.lat, center?.lng]}
         zoom={zoom}
         maxZoom={28}
         minZoom={1}
@@ -56,7 +117,7 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center, postcode }) => {
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />
-        <WMSLayer postcode={postcode} />
+        {floodZoneGeoJSON && <FloodRiskOverlay floodData={floodZoneGeoJSON} />}
       </MapContainer>
     </div>
   );

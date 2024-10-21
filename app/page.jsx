@@ -14,6 +14,7 @@ import SearchInput from "@/components/Homepage/SearchInput";
 import Footer from "@/components/common/Footer/Footer";
 import CardsScroll from "@/components/Homepage/CardScroll";
 import ScrollingBanner from "@/components/carousel/scrolling-banner";
+import { title } from "process";
 
 
 
@@ -406,6 +407,31 @@ let DataSources = [
   }
 ]
 
+let stats = [
+  {
+    title: 'Residential Properties',
+    value: '30M+',
+    icon: 'solar:home-outline'
+  },{
+    title: 'property records updated ',
+    value: '10K+',
+    icon: 'mdi:update'
+  },{
+    title: "postcodes available ",
+    value: '2M+',
+    icon: 'entypo:location'
+  },{
+    title: 'Market Deals',
+    value: '1M+',
+    icon: 'mdi:handshake'
+  },
+  {
+    title: 'Data points',
+    value: '167',
+    icon: 'bxs:data'
+  }
+]
+
 
 
 export default function Home() {
@@ -553,15 +579,17 @@ export default function Home() {
         <div className="flex flex-col justify-center md:p-8 w-full px-4 sm:px-6">
           <div className="w-full flex items-center justify-center p-5">
             <Chip variant="flat" color="secondary">
-              Two-Col Features
+            SOLUTIONS designed for you
+
             </Chip>
           </div>
           <div className="w-full justify-center">
-            <h2 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
-              Supercharge Your Workflows
-            </h2>
+            <h3 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+            Turn property data into opportunities with a solution designed to fit your needs.
+
+            </h3>
             <p className="text-md mt-4 text-slate-600 text-center">
-              Unlock your team's true potential with our state-of-the-art SaaS platform. From intelligent task management to real-time collaboration and top-notch data security, we have everything you need to streamline your workflows and achieve high productivity.
+            Make better, faster decisions with the best property data. Research and analyse any property market with HomePortfolio. Easily identify & evaluate your next property investment opportunities and engage, convert, and retain your customers.
             </p>
           </div>
           <div className="grid md:grid-cols-2 py-10 justify-center items-center">
@@ -1241,13 +1269,13 @@ export default function Home() {
 
         <div className="mt-24">
           <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
-            Our <span className="text-indigo-600">Data Souces</span>
+            Our <span className="text-indigo-600">Data Sources</span>
           </h2>
           <p className="text-lg mt-4 text-slate-600 text-center">
             We pull data from the best sources to provide you with the most accurate and up-to-date information.
           </p>
         </div>
-       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
+       <section className="mx-auto w-full max-w-[100vw] px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
   <ScrollingBanner shouldPauseOnHover gap="40px">
     {DataSources.map((source, index) => (
       <div
@@ -1255,11 +1283,13 @@ export default function Home() {
         className="flex flex-col items-center justify-center w-auto h-auto"
         style={{ minWidth: '150px' }} // Ensures a minimum width for the image container
       >
-        <img
+        <Image
           src={source.image}
           alt="partner"
-          className="h-20 w-auto max-h-20 object-contain"
-          style={{ maxWidth: '100%' }} // Limits the width to prevent squeezing
+          className="h-20 w-[100vw] max-h-20 object-contain"
+          style={{ maxWidth: '100%',filter: 'grayscale(100%)'
+           }} // Limits the width to prevent squeezing
+          
         />
       </div>
     ))}
@@ -1275,44 +1305,87 @@ export default function Home() {
 
 
 
-<div className="mt-8">
-  <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 text-center">
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:home" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">30M+</p>
+<div className="mt-1 w-full">
+  {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
+  Card 1
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:home" className="text-indigo-600 text-2xl" />
       </div>
-      <p className="text-lg">Residential Properties</p>
+      <p className="text-xl font-semibold text-gray-700 ml-3">30M+</p>
     </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="material-symbols:update" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">10K+</p>
-      </div>
-      <p className="text-lg">Property records updated everyday</p>
-    </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:location" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">2M+</p>
-      </div>
-      <p className="text-lg">Postcodes available for market research</p>
-    </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="mdi:deal-outline" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">1M+</p>
-      </div>
-      <p className="text-lg">Market deals</p>
-    </div>
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center justify-center mb-4">
-        <Icon icon="carbon:chart-bar" className="text-indigo-600 text-3xl mr-4" />
-        <p className="text-2xl font-bold">167+</p>
-      </div>
-      <p className="text-lg">DataPoints</p>
-    </div>
+    <p className="text-md text-gray-500">Residential Properties</p>
   </div>
+
+  Card 2
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="material-symbols:update" className="text-indigo-600 text-2xl" />
+      </div>
+      <p className="text-xl font-semibold text-gray-700 ml-3">10K+</p>
+    </div>
+    <p className="text-md text-gray-500">Property records updated everyday</p>
+  </div>
+
+  Card 3
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:location" className="text-indigo-600 text-2xl" />
+      </div>
+      <p className="text-xl font-semibold text-gray-700 ml-3">2M+</p>
+    </div>
+    <p className="text-md text-gray-500">Postcodes available for market research</p>
+  </div>
+
+  Card 4
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="mdi:deal-outline" className="text-indigo-600 text-2xl" />
+      </div>
+      <p className="text-xl font-semibold text-gray-700 ml-3">1M+</p>
+    </div>
+    <p className="text-md text-gray-500">Market deals</p>
+  </div>
+
+  Card 5
+  <div className="bg-gradient-to-br from-indigo-50 to-white shadow-md rounded-lg p-6 border border-indigo-100 hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
+    <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center bg-indigo-100 rounded-full p-2">
+        <Icon icon="carbon:chart-bar" className="text-indigo-600 text-2xl" />
+      </div>
+      <p className="text-xl font-semibold text-gray-700 ml-3">167+</p>
+    </div>
+    <p className="text-md text-gray-500">DataPoints</p>
+  </div>
+</div> */}
+
+<div className="bg-gray-50/60 w-full shadow-md rounded-lg p-4 border border-indigo-100 hover:shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 text-center">
+
+{
+  stats.map((stat, index) => (
+      <div className="flex items-center space-x-4" key={index}>
+        <div className="bg-gray-200 rounded-xl h-16 w-16 flex items-center justify-center">
+          <Icon icon={stat.icon} className="text-purple-900 text-2xl h-12 w-12" />
+        </div>
+        <div className="flex-1">
+          <p className="text-xl font-bold">{stat.value}</p>
+          <p className="text-md text-gray-500">{stat.title}</p>
+
+        </div>
+      </div>
+  ))
+}
+</div>
+
+
+
+
+
+
 </div>
 
 

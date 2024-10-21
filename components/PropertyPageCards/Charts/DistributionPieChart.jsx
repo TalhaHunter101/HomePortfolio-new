@@ -242,8 +242,8 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
 
   // Define responsive radius sizes based on screen width
   const isLargeScreen = typeof window !== 'undefined' && window.innerWidth >= 1024;
-  const innerRadius = isLargeScreen ? 40 : 30;
-  const outerRadius = isLargeScreen ? 150 : 80;
+  const innerRadius = isLargeScreen ? 120 : 70;  // Adjust inner radius for a thin ring
+  const outerRadius = isLargeScreen ? 150 : 100; // Adjust outer radius for a thin ring
 
   return (
     <div className="h-96">

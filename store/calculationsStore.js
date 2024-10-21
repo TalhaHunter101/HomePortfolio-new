@@ -66,7 +66,7 @@ export const useCalculationsStore = create((set) => ({
     setMonthlyPayment: (monthlyPayment) => set({ monthlyPayment }),
 
     setMonthlyRevenue: (monthlyRevenue) => set({ monthlyRevenue }),
-    setAnnualRevenue: (annualRevenue) => set({ annualRevenue }),
+    setAnnualRevenue: (annualRevenue) => set({  }),
     setProjectedMonthlyRevenue: (ProjectedMonthlyRevenue) => set({ ProjectedMonthlyRevenue }),
 
     setPropertyManagementFee: (propertyManagementFee) => set({ propertyManagementFee }),

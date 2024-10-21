@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { NearByPlacesStatic } from "../Maps";
 
@@ -30,7 +30,7 @@ const amenities = [
     key: "bar",
     bg_color: "bg-desert-200",
   },
-  // {
+   // {
   //   name: "pubs",
   //   icon: "fluent:drink-beer-24-regular",
   //   icon_name: "bar",
@@ -146,7 +146,6 @@ async function getNearbyLocations(
           category: element.tags.amenity || "Unknown",
           lat, // Ensure lat/lon are captured correctly
           lon,
-          // distance: `${Math.random().toFixed(2) * 2} miles away`, // Mock distance
         };
       });
   } catch (error) {
@@ -155,9 +154,10 @@ async function getNearbyLocations(
   }
 }
 
-export function NearbyCard({ data }) {
+export function NearbyCard({ data, city,ShortAddress }) {
   const [locations, setLocations] = useState([]); // Dynamic locations state
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
+  const [loading, setLoading] = useState(true); // Add loading state
   const [mycenter, setMycenter] = useState({
     lat: data?.location?.coordinates?.latitude,
     lng: data?.location?.coordinates?.longitude,
@@ -168,9 +168,13 @@ export function NearbyCard({ data }) {
       lat: data?.location?.coordinates?.latitude,
       lng: data?.location?.coordinates?.longitude,
     };
-    getNearbyLocations(center.lat, center.lng, selectedAmenity).then((locs) =>
-      setLocations(locs)
-    );
+
+    setLoading(true); // Start loading before fetching data
+
+    getNearbyLocations(center.lat, center.lng, selectedAmenity).then((locs) => {
+      setLocations(locs);
+      setLoading(false); // End loading after data is fetched
+    });
   }, [
     selectedAmenity,
     data?.location?.coordinates?.latitude,
@@ -178,16 +182,12 @@ export function NearbyCard({ data }) {
   ]);
 
   const items = locations.length ? locations : getItemsData();
-  console.log("itemsi",items);
-  
-
-  const nearestGrocery = items.find((item) => item.category === "restaurant");
-
+  const nearestAmenity = items.find((item) => item?.category === selectedAmenity);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <div className="flex  w-full items-center  justify-between">
+        <div className="flex w-full items-center justify-between">
           {/* Left Section: Icon and Question */}
           <div className="flex items-center">
             <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
@@ -198,7 +198,7 @@ export function NearbyCard({ data }) {
               />
             </div>
             <h2 className="text-xl font-bold text-gray-700">
-              What’s nearby 6677 Charing Street?
+              What’s nearby {ShortAddress}
             </h2>
           </div>
 
@@ -206,15 +206,19 @@ export function NearbyCard({ data }) {
           <div className="relative mt-2 pr-2 sm:pr-10 md:pr-2 z-10 max-w-md grid grid-cols-1 items-start sm:items-center text-right">
             <div className="flex flex-col items-start md:items-center mb-2 pr-2 text-center justify-between">
               <div className="text-xs md:text-sm capitalize text-foreground">
-                Nearest Restaurants
+                Nearest {amenities.find((a) => a.key === selectedAmenity)?.name}
               </div>
-              {nearestGrocery ? (
+              {loading ? (
                 <div className="text-base md:text-base text-foreground font-medium">
-                  {nearestGrocery.name} <br />
+                  <Spinner size="xs" />
+                </div>
+              ) : nearestAmenity ? (
+                <div className="text-base md:text-base text-foreground font-medium">
+                  {nearestAmenity?.name} <br />
                 </div>
               ) : (
                 <div className="text-base md:text-base text-foreground font-medium">
-                  No nearby grocery found
+                  No nearby {selectedAmenity} found
                 </div>
               )}
             </div>
@@ -285,20 +289,17 @@ export function NearbyCard({ data }) {
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
                               <Icon
-                                icon={
-                                  amenities.find(
-                                    (amenity) => amenity.key === item.category
-                                  )?.icon || "mdi:map-marker"
-                                }
+                                icon={amenities.find(
+                                  (amenity) => amenity.key === item?.category
+                                )?.icon || "mdi:map-marker"}
                                 className="inline-block text-4xl text-green-800 mr-5 xs:mr-8"
                               />
                             </div>
                             <ul className="text-xs">
                               <li className="text-gray-800 text-sm">
-                                {item.name}
+                                {item?.name}
                               </li>
-                              <li>{item.category}</li>
-                              {/* <li>{item.distance}</li> */}
+                              <li>{item?.category}</li>
                             </ul>
                           </div>
                         </div>

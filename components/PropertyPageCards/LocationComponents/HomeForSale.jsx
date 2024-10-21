@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import SearchCard from "@/components/SearchPage/SearchCrd";
 import { SearchMap } from "@/components/Maps";
 
-const HomesForSaleMap = ({ center, nearByListingsData }) => {
+const HomesForSaleMap = ({ center, nearByListingsData,isInteractive }) => {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState();
   const [toLocation, setToLocation] = useState("");
@@ -73,7 +73,7 @@ const HomesForSaleMap = ({ center, nearByListingsData }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <Card className="h-full rounded-none">
+            <Card className={`h-full rounded-none ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }`}>
               <SearchMap
                 center={toLocation}
                 hovercard={cardHover}

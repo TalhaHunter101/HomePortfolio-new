@@ -42,6 +42,7 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
+  
   const [sizePerSqFeet, setSizePerSqFeet] = useState([]);
   const [prices, setPrices] = useState([]);
   const [scatterData, setScatterData] = useState([]);

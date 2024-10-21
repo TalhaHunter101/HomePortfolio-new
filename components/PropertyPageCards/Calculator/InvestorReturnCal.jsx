@@ -19,7 +19,7 @@ function InvestorReturnCal({ propertyPrice }) {
         </div>
         <div className="shadow rounded-xl border border-purple-100">
           <p className="text-gray-400 text-sm font-medium mt-2">Net Annual Cash Flow</p>
-          <p className="text-xl font-bold text-purple-900 mb-2">£246383</p>
+          <p className="text-xl font-bold text-purple-900 mb-2">  £246383</p>
         </div>
         <div className="shadow rounded-xl border border-purple-100">
           <p className="text-gray-400 text-sm font-medium mt-2">Gross Yield</p>

@@ -30,33 +30,41 @@ const footerNavigation = {
   ],
 
   Company: [
-    { name: "About Us", href: "#" },
+    { name: "About Us", href: "/AboutUs" },
     { name: "Our Blog", href: "#" },
     { name: "Contact Us", href: "#" },
+    { name: "Privacy Policy", href: "/PrivacyPolicy" },
+    { name: "Terms & Conditions", href: "/Terms&Conditions" },
     
   ],
 
   social: [
     {
       name: "Facebook",
-      href: "#",
+      href: "https://www.facebook.com/homeportfoliohq/",
       icon: (props) => <Icon {...props} icon="fontisto:facebook" />,
     },
     {
       name: "Instagram",
-      href: "#",
+      href: "https://www.instagram.com/homeportfolio_/",
       icon: (props) => <Icon {...props} icon="fontisto:instagram" />,
     },
     {
       name: "Twitter",
-      href: "#",
+      href: "https://www.twitter.com/home_portfolio",
       icon: (props) => <Icon {...props} icon="fontisto:twitter" />,
     },
     {
       name: "Youtube",
-      href: "#",
+      href: "https://www.youtube.com/@home_portfolio",
       icon: (props) => <Icon {...props} icon="mingcute:youtube-fill" width={20} height={24} />,
+    },
+    {
+      name: "Pinterest",
+      href: "https://www.pinterest.com/home_portfolio/",
+      icon: (props) => <Icon {...props} icon="mdi:pinterest" width={20} height={24} />,
     }
+
  
   ],
 };
@@ -86,8 +94,10 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 md:pr-8">
             <div className="flex items-center justify-start">
-              <AcmeIcon size={44} />
-              <span className="text-medium font-medium">HomePortfolio</span>
+              {/* <AcmeIcon size={44} /> */}
+              {/* <span className="text-medium font-medium">HomePortfolio</span> */}
+              <img src="/HpLogo.jpeg" alt="logo" className="h-12 w-32 object-contain" />
+
             </div>
             <p className="text-sm text-default-500">
               We provide comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free

@@ -14,6 +14,7 @@ import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { convertToSquareFeet } from "@/utils/Helper";
+import pb from "@/lib/pocketbase";
 
 function ShowDataCards({
   cardData,
@@ -22,12 +23,34 @@ function ShowDataCards({
   setCurrentPage,
   pageSize,
   isLoading,
+  isFavorite,
 }) {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState([]);
   const [toLocation, setToLocation] = useState("");
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(!isFavorite);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [likedProperties, setLikedProperties] = useState([]);
+
+  useEffect(() => {
+    const fetchLikedProperties = async () => {
+      try {
+        const userData = JSON.parse(localStorage?.getItem("pocketbase_auth"));
+        if (userData && userData?.token) {
+          // Disable auto-cancellation for this request by setting autoCancel to false
+          const response = await pb.collection("favorite").getFullList({
+            filter: `userId='${userData.model.id}'`,
+            $autoCancel: false, // This prevents the request from being cancelled
+          });
+          const likedPropertyIds = response.map((fav) => fav.property_id);
+          setLikedProperties(likedPropertyIds);
+        }
+      } catch (error) {
+        console.error("Error fetching liked properties:", error);
+      }
+    };
+    fetchLikedProperties();
+  }, []);
 
   const sortData = () => {
     const sortedData = [...filter].sort((a, b) => {
@@ -53,6 +76,23 @@ function ShowDataCards({
         const id = property?._source?.listingId;
         const description = property?._source?.summaryDescription;
 
+        // Calculate total price change
+        const priceChanges =
+          property?._source?.priceHistory?.priceChanges || [];
+        const totalPriceChange = priceChanges.reduce((acc, change) => {
+          const priceChangeLabel = change?.priceChangeLabel || "£0";
+          const numericValue = parseFloat(
+            priceChangeLabel.replace(/[£,]/g, "") // remove '£' and commas
+          );
+          return acc + numericValue;
+        }, 0);
+
+        // Format the total price change
+        const formattedPriceChange =
+          totalPriceChange > 0
+            ? `${(totalPriceChange / 1000).toFixed(0)}k drop`
+            : "No price change";
+
         groupedData.push({
           id: id,
           branch_name: property?._source?.branch?.name,
@@ -72,13 +112,11 @@ function ShowDataCards({
             convertToSquareFeet(property?._source?.totalFloorArea),
           fullAddress: property?._source?.fullAddress,
           address: property?._source?.analyticsTaxonomy?.displayAddress,
-          lng: parseFloat(
-            property?._source?.location?.coordinates?.longitude
-          ),
-          lat: parseFloat(
-            property?._source?.location?.coordinates?.latitude
-          ),
+          lng: parseFloat(property?._source?.location?.coordinates?.longitude),
+          lat: parseFloat(property?._source?.location?.coordinates?.latitude),
           date: property?._source?.publishedOn,
+          totalPriceChange: formattedPriceChange,
+          displayAddress: property?._source?.analyticsTaxonomy?.displayAddress,
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);
@@ -89,9 +127,7 @@ function ShowDataCards({
     getPropsData();
   }, [cardData]);
 
-  const [selectedKeys, setSelectedKeys] = React.useState(
-    new Set(["Sort by"])
-  );
+  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Sort by"]));
 
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -106,7 +142,7 @@ function ShowDataCards({
   return (
     <div className="w-screen flex flex-grow pt-16">
       {/* Map Section */}
-      {showMap && (
+      { !isFavorite &&   showMap && (
         <div className="hidden lg:flex w-full lg:w-3/5 flex-col gap-4 p-4 h-full fixed">
           {toLocation && (
             <motion.div
@@ -142,49 +178,53 @@ function ShowDataCards({
               <h3 className="text-md uppercase font-bold mb-2 md:mb-0">
                 {totalcount} Properties
               </h3>
-              <div className="flex space-x-2">
-                <Button
-                  radius="sm"
-                  size="lg"
-                  className="w-full max-w-xs"
-                  auto
-                  onClick={() => setShowMap(!showMap)}
-                >
-                  {showMap ? "Hide Map" : "Show Map"}
-                </Button>
-                <Dropdown onOpenChange={handleToggle}>
-                  <DropdownTrigger>
-                    <Button
-                      endContent={
-                        <Icon
-                          icon={
-                            isOpen
-                              ? "ph:caret-up-fill"
-                              : "ph:caret-down-fill"
-                          }
-                        />
-                      }
-                      radius="sm"
-                      size="lg"
-                      className="w-full max-w-xs"
-                    >
-                      {selectedValue}
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu
-                    aria-label="Sort by selection"
-                    variant="flat"
-                    disallowEmptySelection
-                    selectionMode="single"
-                    selectedKeys={selectedKeys}
-                    onSelectionChange={setSelectedKeys}
+
+              {
+                !isFavorite && (
+                  <div className="flex space-x-2">
+                  <Button
+                    radius="sm"
+                    size="lg"
+                    className="w-full max-w-xs"
+                    auto
+                    onClick={() => setShowMap(!showMap)}
                   >
-                    <DropdownItem key="roi">Sort by ROI</DropdownItem>
-                    <DropdownItem key="price">Sort by Price</DropdownItem>
-                    <DropdownItem key="nil">None</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
+                    {showMap ? "Hide Map" : "Show Map"}
+                  </Button>
+                  <Dropdown onOpenChange={handleToggle}>
+                    <DropdownTrigger>
+                      <Button
+                        endContent={
+                          <Icon
+                            icon={
+                              isOpen ? "ph:caret-up-fill" : "ph:caret-down-fill"
+                            }
+                          />
+                        }
+                        radius="sm"
+                        size="lg"
+                        className="w-full max-w-xs"
+                      >
+                        {selectedValue}
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+                      aria-label="Sort by selection"
+                      variant="flat"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selectedKeys}
+                      onSelectionChange={setSelectedKeys}
+                    >
+                      <DropdownItem key="roi">Sort by ROI</DropdownItem>
+                      <DropdownItem key="price">Sort by Price</DropdownItem>
+                      <DropdownItem key="nil">None</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                )
+              }
+             
             </div>
 
             {/* Cards */}
@@ -196,8 +236,10 @@ function ShowDataCards({
               )}
               <div
                 className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-${
-                  showMap ? "1" : "2"
-                } xl:grid-cols-${showMap ? "1" : "3"} gap-4 overflow-y-auto max-h-full`}
+                  showMap ? "1" : "3"
+                } xl:grid-cols-${
+                  showMap ? "1" : "4"
+                } gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&
                   filter.map((card, index) => (
@@ -210,6 +252,7 @@ function ShowDataCards({
                       <SearchCard
                         property={card}
                         setCardHover={setCardHover}
+                        isLiked={likedProperties.includes(card.id)}
                       />
                     </motion.div>
                   ))}

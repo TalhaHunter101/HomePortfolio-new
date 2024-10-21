@@ -10,12 +10,16 @@ import useStore from "@/store/useStore";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import withClickOutside from "@/components/DropdownHOC";
+import { usePathname } from "next/navigation";
 
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
 const SearchPage = ({ params }) => {
-  const encodedPage = params.page;
-  const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
+  const encodedPage = params.page;  
+  const page = decodeURIComponent(encodedPage.split("%3Ftype")[0].replace(/-/g, " "));
+  let pathname = usePathname();
+  const typeis = pathname.split("=")[1] || "";
+
   const [listingData, setListingData] = useState([]);
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -101,6 +105,7 @@ const SearchPage = ({ params }) => {
         },
         body: JSON.stringify({
           searchValue: page,
+          type: typeis,
           filters,
           currentPage,
           pageSize,
@@ -159,8 +164,7 @@ const SearchPage = ({ params }) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [page, currentPage]);
-
+  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, fetchProperties]); 
   return (
     <main className="flex mt-16 flex-col h-screen">
       {/* Navbar */}

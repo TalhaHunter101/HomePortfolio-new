@@ -91,17 +91,17 @@ export function PriceHistory({  data }) {
                       </svg>
                     </div>
                     <div className="mx-2">
-                      {formatDate(change.priceChangeDate)}
+                      {formatDate(change?.priceChangeDate)}
                     </div>
                   </div>
                   <div className="col-span-3">
                     Sold
                     <br />
                     <span className="subText">
-                      {change.isPriceDrop ? "Price Drop" : "Price Change"}
+                      {change?.isPriceDrop ? "Price Drop" : "Price Change"}
                     </span>
                   </div>
-                  <div className="col-span-2">{change.priceChangeLabel}</div>
+                  <div className="col-span-2">{change?.priceChangeLabel}</div>
                 </div>
               ))}
 

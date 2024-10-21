@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Button, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, Button, CardHeader, Spinner } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Peoplegender from "./Demographic/Peoplegender";
 import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
@@ -15,7 +15,7 @@ import {
 } from "@/store/listingStore";
 import { formatCurrency } from "@/utils/Helper";
 
-export function FamilyCard({ postcode, city }) {
+export function FamilyCard({ postcode, city,ShortAddress }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [peopleGenderData, setPeopleGenderData] = useState([]);
   const [housingData, setHousingData] = useState([]);
@@ -34,11 +34,14 @@ export function FamilyCard({ postcode, city }) {
     setEducationData: setSingleEducationData,
     setTenureAllData,
     setEconomicActivityData,
+    setIsDataLoading,
+    isDataLoading,
   } = useDemographicStore();
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
+        setIsDataLoading(true);
         const endpoints = [
           "/api/indevisual/demographic/get-people-gender-data",
           "/api/indevisual/demographic/get-house-occupation-data",
@@ -87,8 +90,12 @@ export function FamilyCard({ postcode, city }) {
         setEducationData(fetchedEducationData);
         setCompositionData(fetchedCompositionData);
         setEconomicData(fetchedEconomicData);
+        setIsDataLoading(false);
       } catch (error) {
+        setIsDataLoading(false);
         console.error("Error fetching data:", error);
+      } finally {
+        setIsDataLoading(false);
       }
     };
 
@@ -182,7 +189,7 @@ export function FamilyCard({ postcode, city }) {
             />
           </div>
           <h2 className="text-lg sm:text-xl font-bold text-gray-700">
-            Can I raise a family in {postcode}?
+            Can I raise a family in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>
@@ -199,42 +206,84 @@ export function FamilyCard({ postcode, city }) {
               totalPopulation={totalPopulation}
               compositionData={compositionData}
               agePopulationData={agePopulationData}
+              educationData={educationData}
             />
           </div>
 
           {/* Right section */}
           <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+              {/* Spinner for Total Population */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Total Population</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {
-                    totalPopulation?._source?.[
-                      "Sex: All persons; measures: Value"
-                    ]
-                  }
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : totalPopulation.length === 0 ? (
+                    "N/A"
+                  ) : (
+                    <>
+                      {
+                        totalPopulation?._source?.[
+                          "Sex: All persons; measures: Value"
+                        ]
+                      }
+                    </>
+                  )}
                 </span>
               </div>
+
+              {/* Spinner for Median Age */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Median Age</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {medianAge || "N/A"}
+                  {isDataLoading ? (
+                    <Spinner />
+                  ) : medianAge === null ? (
+                    "N/A"
+                  ) : (
+                    <>{medianAge ? medianAge : "N/A"}</>
+                  )}
                 </span>
               </div>
             </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
+              {/* Spinner for Average HH Income */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">Average HH Income</span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  £{formatCurrency(peopleGenderData?.averageIncome) || "N/A"}
+
+                {isDataLoading ? (
+                    <Spinner />
+                  ) : peopleGenderData?.averageIncome === undefined ? (
+                    "N/A"
+                  ) : (
+                    <>
+                     {`£${formatCurrency(peopleGenderData?.averageIncome)}`}
+                    </>
+                  )}
+
+                 
                 </span>
               </div>
+
+              {/* Spinner for Single Family Household */}
               <div className="flex flex-col text-center">
                 <span className="text-sm text-gray-400">
                   Single Family Household
                 </span>
                 <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {singleFamilyHouseholds}
+
+                {isDataLoading ? (
+                    <Spinner />
+                  ) : singleFamilyHouseholds === undefined ? (
+                    "N/A"
+                  ) : (
+                    <>
+                     {singleFamilyHouseholds ? singleFamilyHouseholds : "N/A"}
+                    </>
+                  )}
                 </span>
               </div>
             </div>

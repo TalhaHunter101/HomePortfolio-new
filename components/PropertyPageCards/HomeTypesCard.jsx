@@ -19,7 +19,7 @@ export function HomeTypesCard({ city }) {
 
   function analyzePrices(data) {
     const prices = data
-      .map((item) => parseFloat(item._source?.pricing?.internalValue))
+      ?.map((item) => parseFloat(item?._source?.pricing?.internalValue))
       .filter((price) => !isNaN(price));
 
     prices.sort((a, b) => a - b);
@@ -59,17 +59,19 @@ export function HomeTypesCard({ city }) {
         if (response.ok) {
           const result = await response.json();
           setData(result);
-          const data = analyzePrices(result);
-          setMinMaxData(data);
+          const analyzedData = analyzePrices(result);
+          setMinMaxData(analyzedData);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     getHouseTypeData(city);
   }, [city]);
 
   return (
-    <Card className="m-4 h-[70vh]" >
+    <Card className="m-4 min-h-full ">
       <CardHeader>
         <div className="flex items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-green-400 rounded-full mr-2">
@@ -80,56 +82,43 @@ export function HomeTypesCard({ city }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            What type of Homes available for sale by home type, beds & price
-            range?
+            What type of Homes available for sale by home type, beds & price range?
           </h2>
         </div>
-        {/* <h4 className='pl-4 text-gray-500 font-medium'>Homes available for sale by home type, beds & price range
-        </h4> */}
       </CardHeader>
       <CardBody>
-        <div className="h-full  rounded-md p-4">
+        <div className="h-full rounded-md p-4">
           <div className="flex flex-col justify-between gap-y-4 h-full layout-single md:fullbleed">
             {/* Home Types Distribution Section */}
             <div className="flex flex-row flex-wrap gap-8">
               <div className="flex flex-col gap-y-2 flex-1 basis-96">
-                <div className="text-xl font-semibold">
-                  Home Types Distribution
-                </div>
+                <div className="text-xl font-semibold">Home Types Distribution</div>
 
-                {/* <div className="grid relative md:pt-12/16 pt-15/16"> */}
-                 
-
-                  {/* <div className="grid relative  md:pt-12/16 pt-15/16"> */}
-                    <DistributionPieChart
-                      main_data={data}
-                      setbarchart={setbarchart}
-                    />
-                  {/* </div> */}
-                {/* </div> */}
+                <DistributionPieChart
+                  main_data={data}
+                  setbarchart={setbarchart}
+                />
               </div>
 
               {/* Home Price Distribution Section */}
-              <div className="flex  flex-col gap-y-2 flex-1 basis-80">
-                <div className="text-xl font-semibold">
-                  Home Price Distribution
-                </div>
+              <div className="flex flex-col gap-y-2 flex-1 basis-80">
+                <div className="text-xl font-semibold">Home Price Distribution</div>
 
                 <div className="flex flex-col gap-3 md:flex-row justify-between">
                   <div className="flex flex-col items-start">
-                    <div className="  lg:mb-1">Min</div>
+                    <div className="lg:mb-1">Min</div>
                     <div className="text-lime-500">
                       <span className="text-4xl text-2xl lg:text-3xl">
-                        £{minMaxData.min}
+                        £{minMaxData?.min}
                       </span>
                     </div>
                   </div>
                   <div className="justify-self-end">
                     <div className="flex flex-col items-start">
-                      <div className="  lg:mb-1">Median</div>
+                      <div className="lg:mb-1">Median</div>
                       <div className="text-amber-500">
                         <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData.median}
+                          £{minMaxData?.median}
                         </span>
                       </div>
                     </div>
@@ -141,13 +130,13 @@ export function HomeTypesCard({ city }) {
                       </div>
                       <div className="text-red-500">
                         <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData.max}
+                          £{minMaxData?.max}
                         </span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <span className="self-center  pt-4 text-sm lg:text-base text-zd-600">
+                <span className="self-center pt-4 text-sm lg:text-base text-zd-600">
                   Houses
                 </span>
                 <div

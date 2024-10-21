@@ -11,12 +11,12 @@ import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
-  return data.filter((item) =>
+  return data?.filter((item) =>
     decisions.includes(item?._source?.other_fields?.decision)
-  ).length;
+  ).length || 0;
 };
 
-export function PlanningCard({ postcode }) {
+export function PlanningCard({ postcode,ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
   const statusData = [
     {
@@ -29,6 +29,7 @@ export function PlanningCard({ postcode }) {
         "Approve",
         "Approval",
         "Approve with Conditions",
+        "Application Granted",
       ]),
       iconColor: "text-green-500",
       icon: "mdi:check-circle",
@@ -69,7 +70,7 @@ export function PlanningCard({ postcode }) {
       }
 
       const data = await response.json();
-      setPlanningData(data);
+      setPlanningData(data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
       return null;
@@ -81,23 +82,17 @@ export function PlanningCard({ postcode }) {
     if (postcode) getPlanningData(postcode);
   }, [postcode]);
 
-
-  console.log("planningData is",planningData);
-  
+  console.log("planningData is", planningData);
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
-        <div className="flex items-center my-2">
+        <div className="flex flex-col sm:flex-row items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
-            <Icon
-              icon="mdi:planner"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
-            />
+            <Icon icon="mdi:planner" width={16} className="text-purple-700" />
           </div>
-          <h2 className="text-xl font-bold text-gray-700">
-            What are the Planning application in {postcode}?
+          <h2 className="text-xl font-bold text-gray-700 text-center sm:text-left">
+            What are the Planning applications in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>
@@ -113,24 +108,22 @@ export function PlanningCard({ postcode }) {
         </CardBody>
       ) : (
         <CardBody>
-          <div className="flex flex-col border border-subtle-border rounded-md">
+          <div className="flex flex-col rounded-md">
             {/* Status Cards */}
-            <div className="flex p-2 justify-between ">
+            <div className="flex flex-col sm:flex-row flex-wrap p-2 justify-between">
               {statusData.map((status, index) => (
                 <StatusCard
                   key={index}
-                  label={status.label}
-                  count={status.count}
-                  iconColor={status.iconColor}
-                  icon={status.icon}
+                  label={status?.label}
+                  count={status?.count}
+                  iconColor={status?.iconColor}
+                  icon={status?.icon}
+                  className="w-full sm:w-auto mb-2 sm:mb-0"
                 />
               ))}
-
             </div>
-            <div className="p-2">
-            <PlanningApplicationsTable planningData={planningData} />
-
-              {/* <Carousel data={planningData} /> */}
+            <div className="p-2 overflow-x-auto">
+              <PlanningApplicationsTable planningData={planningData} />
             </div>
             <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">
@@ -141,7 +134,7 @@ export function PlanningCard({ postcode }) {
                         <PlanningApplicationMapStatic
                           center={
                             planningData.length > 0
-                              ? planningData.map((data) => ({
+                              ? planningData?.map((data) => ({
                                   lat: data?._source?.location_y,
                                   lng: data?._source?.location_x,
                                 }))

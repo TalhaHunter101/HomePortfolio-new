@@ -30,7 +30,7 @@ export function MarketComparisonCard({ data }) {
   const { setMarketComp, marketComp } = marketCompStore();
   const [currentPrice, setCurrentPrice] = useState(0);
   const [currentSize, setCurrentSize] = useState(0);
-  const { squerfoot, fullAddress } = useListingStore();
+  const { squerfoot, fullAddress } = useListingStore();  
 
   const items = getItemsData();
 

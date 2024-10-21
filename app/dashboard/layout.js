@@ -1,28 +1,33 @@
-'use client';
+"use client";
+import React from "react";
+import { useState, useEffect } from "react";
+import pb from "@/lib/pocketbase";
+import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from 'react';
-import pb from '../../lib/pocketbase';
+export default function Layout({ children }) {
+  const router = useRouter();
 
-export default function RootLayout({ children }) {
-  const [userDetails, setUserDetails] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const user = pb.authStore.model;
+    console.log(user);
+    setUser(user);
 
-
-    if(typeof window !== 'undefined') {
-        const user = localStorage.getItem('pocketbase_auth')
-        setUserDetails(user);
+    if (!user) {
+      router.push("/login");
     }
-
-
   }, []);
 
   return (
-    <html lang="en">
-      <body>
-        {children}
-     
-      </body>
-    </html>
+    <>
+      {children}
+
+      <div className="mt-24">
+        {/* {
+                JSON.stringify(user)
+              } */}
+      </div>
+    </>
   );
 }

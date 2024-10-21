@@ -4,13 +4,12 @@ import React,{useState} from "react";
 import {Button, Input, Checkbox, Link, Divider} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 import toast, { Renderable, Toast, Toaster, ValueFunction } from "react-hot-toast";
-import { signup } from "../login/action";
 import { useRouter } from "next/navigation";
+import pb from "@/lib/pocketbase";
 
 export default function Component() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = React.useState(false);
-  const [loading, setLoading] = useState(false);
   const router = useRouter(); 
 
   const [email, setEmail] = useState('');
@@ -51,26 +50,22 @@ export default function Component() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
 
     try {
-        const response = await fetch('/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password, passwordConfirm }),
-        });
+        const response = await pb.collection('users').create({ email, password, passwordConfirm });
+  
+        if (response.id) {
+            toast.success('User registered successfully');
 
-        const data = await response.json();
-        if (response.ok) {
-            setSuccess('User registered successfully');
+            pb.collection('users').authWithPassword(email, password);
+            router.push('/dashboard');
+
+
         } else {
-            setError(data.message);
-        }
+            toast.error(data.message);
+        } 
     } catch (err) {
-        setError('An error occurred');
+      toast.error(err.message);
     }
 };
 

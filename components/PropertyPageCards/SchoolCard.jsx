@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { smallString } from "@/utils/Helper";
 import { SchoolMapStatic } from "../Maps";
 
-export function SchoolsCard({ schoolData, data, address }) {
+export function SchoolsCard({ schoolData, data, address,ShortAddress }) {
   const [isOpen, setIsOpen] = useState(true);
   const [selectedType, setSelectedType] = useState("All grades");
 
@@ -38,7 +38,7 @@ export function SchoolsCard({ schoolData, data, address }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            How Are the Schools {address}?
+            How Are the Schools {ShortAddress}?
           </h2>
         </div>
       </CardHeader>
