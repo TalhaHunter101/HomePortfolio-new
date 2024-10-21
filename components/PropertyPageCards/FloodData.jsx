@@ -10,37 +10,67 @@ const FloodData = ({ latitude, longitude }) => {
     const fetchFloodAreas = async () => {
       try {
         const response = await fetch(
-          "https://environment.data.gov.uk/flood-monitoring/id/floodAreas"
+          "https://environment.data.gov.uk/flood-monitoring/id/floods"
         );
         const data = await response.json();
-
-        // Extract polygon URLs
-        const polygonUrls = data.items
-          .map((area) => area.polygon)
-          .filter(Boolean);
-
-        const polygons = await Promise.all(
-          polygonUrls.map(async (url) => {
-            //check if url is http or https if it is http then convert it to https
-            if (url.startsWith("http://")) {
-              url = url.replace("http://", "http://");
-            }
-
-            const polygonResponse = await fetch(url);
-            const polygonData = await polygonResponse.json();
-
-            return polygonData;
-          })
-        );
-
+  
+        // Extract polygon URLs and severity level
+        const areasWithPolygons = data.items
+          .map((area) => ({
+            polygon: area.floodArea?.polygon,
+            severityLevel: area.severityLevel
+          }))
+          .filter((area) => area.polygon); // Ensure only areas with polygons are included
+  
+          // console.log("areasWithPolygons is",areasWithPolygons);
+          
+          const polygons = await Promise.all(
+            areasWithPolygons.map(async (area) => {
+              let { polygon, severityLevel } = area;
+              try {
+                // Convert HTTP to HTTPS if needed
+                if (polygon && polygon.startsWith("http://")) {
+                  polygon = polygon.replace("http://", "https://");
+                }
+          
+                // Fetch the polygon data
+                const polygonResponse = await fetch(polygon);
+                
+                if (!polygonResponse.ok) {
+                  throw new Error(`Failed to fetch polygon data from ${polygon}`);
+                }
+          
+                const polygonData = await polygonResponse.json();
+                
+                // Debug logs for polygon and severity level
+                console.log("polygonData is", polygonData);
+                console.log("severityLevel is", severityLevel);
+                
+                return { polygonData, severityLevel };
+                
+              } catch (error) {
+                console.error(`Error fetching polygon data for area ${polygon}:`, error);
+                return null; // Return null to handle failed fetches
+              }
+            })
+          );
+          
+          // Filter out null values in case any of the fetch calls failed
+          const validPolygons = polygons.filter(polygon => polygon !== null);
+          
+          // Debug log for the final polygons array
+          console.log("polygons is", validPolygons);
+          
+  
         setFloodAreas(polygons);
       } catch (error) {
         console.error("Error fetching flood areas:", error);
       }
     };
-
+  
     fetchFloodAreas();
   }, []);
+  
 
   return (
     <Card className="m-4 p-0 overflow-hidden">
