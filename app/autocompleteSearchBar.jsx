@@ -27,7 +27,7 @@ export default function AutocompleteSearch({ properties }) {
       name: city.City,
       type: "town", // or 'city' depending on your logic
     }));
-  }, []);
+  }, []); 
   const searchPostcode = useCallback(
     async (term) => {
       try {
