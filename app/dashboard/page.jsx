@@ -58,10 +58,8 @@ export default function Page() {
         // const data = await response.json();
 
         // Extract property IDs from favorites
-        console.log(favorites);
         const propertyIds = favorites.map((favorite) => favorite.property_id);
 
-         console.log(propertyIds);
         if (propertyIds.length > 0) {
           // Call your API endpoint with the property IDs
           const propertiesResponse = await fetch(

@@ -11,8 +11,6 @@ function Peoplegender({ PeopleGenderData, city }) {
   const setSingleFamilyHouseholds = useDemographicStore(
     (state) => state.setSingleFamilyHouseholds
   );
-
-  console.log("PeopleGenderData is",PeopleGenderData);
   
 
   useEffect(() => {

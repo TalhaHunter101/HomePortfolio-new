@@ -58,9 +58,7 @@ export const ReportModal = ({ isOpen, onOpenChange, selectedAddress }) => {
     };
 
     const handleSubmit = ({ email, selectedAddress }) => {
-        
-        console.log("email", email);
-        console.log("Selected Address:", selectedAddress); // Log the selected address
+    
         onOpenChange(false);
     };
 

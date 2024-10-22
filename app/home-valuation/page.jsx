@@ -45,7 +45,6 @@ export default function Component() {
     setQuery(address); // Update the input field with the selected address
     const selected = { address, uprn };
     setSelectedAddress(selected); // Store the selected address and UPRN
-    console.log(selected); 
     setResults([]); // Clear the results
   };
 

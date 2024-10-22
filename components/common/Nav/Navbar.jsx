@@ -51,7 +51,6 @@ export default function NavBar() {
   let pathname = usePathname();
 
 
-  console.log(pathname);
   // check if the url contains the word "home-valuation"
   let isHomeValuation = pathname ? pathname.includes("home-valuation") : false;
 

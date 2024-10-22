@@ -21,8 +21,7 @@ const [isgettingreport, setIsGettingReport] = useState(false);
     // Check if selectedAddress is not null/undefined and email is valid
     if (selectedAddress && email) {
       // Log selectedAddress and email
-      console.log("Selected Address:", selectedAddress);
-      console.log("Email:", email);
+     
       setIsGettingReport(true);
 
    await  fetch("/api/send-report", {

@@ -456,7 +456,6 @@ function PropertyDisplay({ listingData, params }) {
     }
   };
 
-  console.log("shortadd is",ShortAddress);
   
 
   return (

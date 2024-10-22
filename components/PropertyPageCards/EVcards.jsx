@@ -34,7 +34,6 @@ export function EVCard({ price, roi, city, postTownName }) {
             town: postTownName || city,
           }),
         });
-        console.log("postTownName-------------", postTownName);
         if (res.ok) {
           const data = await res.json();
           setEvChargingData(data?.hits || []);
@@ -47,7 +46,6 @@ export function EVCard({ price, roi, city, postTownName }) {
     getEvChargingData();
   }, [postTownName]);
 
-  console.log("evChargingData", evChargingData);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1066px" }}>

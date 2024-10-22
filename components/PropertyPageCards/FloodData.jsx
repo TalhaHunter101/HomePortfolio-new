@@ -42,9 +42,7 @@ const FloodData = ({ latitude, longitude }) => {
           
                 const polygonData = await polygonResponse.json();
                 
-                // Debug logs for polygon and severity level
-                console.log("polygonData is", polygonData);
-                console.log("severityLevel is", severityLevel);
+              
                 
                 return { polygonData, severityLevel };
                 
@@ -59,7 +57,6 @@ const FloodData = ({ latitude, longitude }) => {
           const validPolygons = polygons.filter(polygon => polygon !== null);
           
           // Debug log for the final polygons array
-          console.log("polygons is", validPolygons);
           
   
         setFloodAreas(polygons);

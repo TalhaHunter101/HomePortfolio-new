@@ -107,7 +107,6 @@ function PropertyDisplay({ listingData, params }) {
 
     analyticsTaxonomy: listingData?.analyticsTaxonomy,
   };
-  console.log("listingData", listingData);
 
   // getSchoolData();
   // getPricePaidData();

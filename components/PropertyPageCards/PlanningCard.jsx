@@ -82,7 +82,6 @@ export function PlanningCard({ postcode,ShortAddress }) {
     if (postcode) getPlanningData(postcode);
   }, [postcode]);
 
-  console.log("planningData is", planningData);
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>

@@ -99,7 +99,6 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
     getWalkScore();
   }, [data?.ref_postcode, latitude, longitude, selectedType]);
 
-  console.log("busLocations", busLocations);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>

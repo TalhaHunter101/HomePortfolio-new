@@ -81,6 +81,23 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
           fetchedEconomicData,
         ] = await Promise.all(fetchData);
 
+      console.log("fetchedEconomicData", fetchedEconomicData);
+      console.log("fetchedHousingData", fetchedHousingData);
+      console.log("fetchedOccupationData", fetchedOccupationData);
+      console.log("fetchedTenureData", fetchedTenureData);
+      console.log("fetchedTotalPopulationData", fetchedTotalPopulationData);
+      console.log("fetchedAgePopulationData", fetchedAgePopulationData);
+      console.log("fetchedEducationData", fetchedEducationData);
+      console.log("fetchedCompositionData", fetchedCompositionData);
+      console.log("fetchedEconomicData", fetchedEconomicData);
+      
+      
+      
+      
+      
+      
+        
+
         setPeopleGenderData(fetchedPeopleGenderData);
         setOccupationData(fetchedOccupationData);
         setTenureData(fetchedTenureData);
@@ -101,6 +118,10 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
 
     fetchAllData();
   }, [postcode, setSingleEducationData]);
+
+
+  
+  
 
   useEffect(() => {
     if (educationData) {

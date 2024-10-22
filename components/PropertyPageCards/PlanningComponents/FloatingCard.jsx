@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 
 export default function FloatingCard({ data }) {
-  console.log("Planning data", data);
 
   return (
     <Card className="w-80  h-80  ">

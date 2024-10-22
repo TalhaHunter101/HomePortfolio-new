@@ -193,7 +193,6 @@ const haversineDistance = (coords1, coords2) => {
   useEffect(() => {
     getNearbyLocations(center.lat, center.lon)
       .then((locations) => {
-        console.log(locations);
         setLocations(locations);
       })
       .catch((error) => {

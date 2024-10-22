@@ -11,7 +11,6 @@ const getStatusCounts = (data, appType) => {
   };
 
   data.forEach((item) => {
-    console.log("item", item?._source?.other_fields.application_type);
     
     if (item?._source?.other_fields?.application_type === appType) {
       
