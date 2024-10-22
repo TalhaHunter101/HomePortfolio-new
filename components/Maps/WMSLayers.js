@@ -20,7 +20,6 @@ const WMSLayer = memo(({ postcode }) => {
       layers={geoserver.workspace + ":" + geoserver.layerName}
       transparent="true"
       format="image/png"
-      //   cql_filter="Name='BB7 4'"
       params={{
         ...(CQL_FILTER && { CQL_FILTER }),
       }}
@@ -28,5 +27,7 @@ const WMSLayer = memo(({ postcode }) => {
     />
   );
 });
+
+WMSLayer.displayName = 'WMSLayer';
 
 export default WMSLayer;
