@@ -9,6 +9,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import WMSLayer from "./WMSLayers";
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -96,7 +97,7 @@ const FloodRiskOverlay = ({ floodData }) => {
   return null;
 };
 
-const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData }) => {
+const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData, postcode }) => {
   const zoom = 13;
 
   // Parse flood zone data to GeoJSON
@@ -117,6 +118,7 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData })
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />
         {floodZoneGeoJSON && <FloodRiskOverlay floodData={floodZoneGeoJSON} />}
+        <WMSLayer postcode={postcode} />
       </MapContainer>
     </div>
   );

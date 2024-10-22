@@ -8,7 +8,7 @@ import HomesForSaleMap from './LocationComponents/HomeForSale';
 import WhatsNearbyMap from './LocationComponents/WhatsNearby';
 
 export function LocationCard({ data, postcode, schoolData }) {
-  const [activeMap, setActiveMap] = useState('location');
+  const [activeMap, setActiveMap] = useState("location");
   const [nearByListingsData, setNearByListingsData] = useState([]);
   const [isMapInteractive, setIsMapInteractive] = useState(false);
 
@@ -20,9 +20,9 @@ export function LocationCard({ data, postcode, schoolData }) {
   useEffect(() => {
     const getNearbyListings = async () => {
       try {
-        const res = await fetch('/api/indevisual/get-nearby-listing', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const res = await fetch("/api/indevisual/get-nearby-listing", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ postcode }),
         });
 
@@ -43,16 +43,21 @@ export function LocationCard({ data, postcode, schoolData }) {
     const mapProps = { center,isMapInteractive };
 
     switch (activeMap) {
-      case 'location':
-        return <LocationMap {...mapProps} />;
-      case 'schools':
+      case "location":
+        return <LocationMap {...mapProps} postcode={postcode} center={center} />;
+      case "schools":
         return <SchoolsMap data={data} schoolData={schoolData} isInteractive={isMapInteractive} />;
-      case 'homes_for_sale':
-        return <HomesForSaleMap {...mapProps} nearByListingsData={nearByListingsData} isInteractive={isMapInteractive} />;
-      case 'whats_nearby':
+      case "homes_for_sale":
+        return (
+          <HomesForSaleMap
+            {...mapProps}
+            nearByListingsData={nearByListingsData}
+          isInteractive={isMapInteractive} />
+        );
+      case "whats_nearby":
         return <WhatsNearbyMap {...mapProps} isInteractive={isMapInteractive} />;
       default:
-        return <LocationMap {...mapProps} />;
+        return <LocationMap {...mapProps} postcode={postcode} />;
     }
   };
 
@@ -77,6 +82,9 @@ export function LocationCard({ data, postcode, schoolData }) {
             {isMapInteractive ? 'Disable Map Interactions' : 'Enable Map Interactions'}
           </span>
         </div>
+      {/* <CardHeader className="bg-white inline p-4">
+        <p className="text-xs font-bold mb-3">Location</p>
+        <p className="text-xs">{data?.address}</p> */}
       </CardHeader>
       
       {/* Tabs for selecting different map views */}
@@ -91,10 +99,42 @@ export function LocationCard({ data, postcode, schoolData }) {
           onSelectionChange={(key) => setActiveMap(key)}
           selectedKey={activeMap}
         >
-          <Tab key="location" title={<div className="flex items-center space-x-2"><Icon icon="mdi:map-marker" /><span>Location</span></div>} />
-          <Tab key="schools" title={<div className="flex items-center space-x-2"><Icon icon="mdi:school" /><span>Schools</span></div>} />
-          <Tab key="homes_for_sale" title={<div className="flex items-center space-x-2"><Icon icon="mdi:home-city" /><span>Homes For Sale</span></div>} />
-          <Tab key="whats_nearby" title={<div className="flex items-center space-x-2"><Icon icon="mdi:compass-outline" /><span>What&#39;s Nearby</span></div>} />
+          <Tab
+            key="location"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="mdi:map-marker" />
+                <span>Location</span>
+              </div>
+            }
+          />
+          <Tab
+            key="schools"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="mdi:school" />
+                <span>Schools</span>
+              </div>
+            }
+          />
+          <Tab
+            key="homes_for_sale"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="mdi:home-city" />
+                <span>Homes For Sale</span>
+              </div>
+            }
+          />
+          <Tab
+            key="whats_nearby"
+            title={
+              <div className="flex items-center space-x-2">
+                <Icon icon="mdi:compass-outline" />
+                <span>What&#39;s Nearby</span>
+              </div>
+            }
+          />
         </Tabs>
       </div>
 
