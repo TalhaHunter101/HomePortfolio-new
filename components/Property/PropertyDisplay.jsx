@@ -146,10 +146,14 @@ function PropertyDisplay({ listingData, params }) {
 
   useEffect(() => {
     if (fullAddress) {
-      const shortadd = fullAddress.split(",")[0];
+      let shortadd = fullAddress.split(",")[0];
+      
+      shortadd = shortadd.replace(/[0-9]/g, "").trim();
+      
       setShortAddress(shortadd);
     }
   }, [fullAddress]);
+  
 
   const navElements = [
     {
