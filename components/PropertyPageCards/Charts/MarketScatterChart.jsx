@@ -13,6 +13,7 @@ import { marketCompStore } from "@/store/listingStore";
 
 // Helper function to calculate the median for the top 3 values
 const calculateMedian = (values) => {
+  
   if (values.length === 0) return 0;
 
   // Sort values in ascending order and take only the top 3
@@ -24,6 +25,18 @@ const calculateMedian = (values) => {
   if (top3Values.length % 2) return top3Values[half];
   return (top3Values[half - 1] + top3Values[half]) / 2.0;
 };
+
+// const calculateMedian = (values) => {
+//   if (values.length === 0) return 0;
+
+//   // Sort values in ascending order
+//   values.sort((a, b) => a - b);
+
+//   const half = Math.floor(values.length / 2);
+
+//   if (values.length % 2) return values[half];
+//   return (values[half - 1] + values[half]) / 2.0;
+// };
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -73,7 +86,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
             if (size !== "" && price !== undefined) {
               sizesqfeet.push(size);
               prices.push(price);
-            }
+            } 
           });
 
           setSizePerSqFeet(sizesqfeet);

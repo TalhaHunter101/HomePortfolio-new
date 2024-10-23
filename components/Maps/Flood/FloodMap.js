@@ -124,8 +124,6 @@ const FloodRiskLegend = () => {
 
 
 const FloodMap = ({ floodAreas, latitude, longitude, height }) => {
-  console.log("floodAreas is", floodAreas);
-
   return (
     <MapContainer
       center={[latitude || 53.2, longitude || -0.55]} // Default center if lat/long not provided
@@ -135,27 +133,32 @@ const FloodMap = ({ floodAreas, latitude, longitude, height }) => {
         height: `${height ? height : "650px"}`,
       }}
     >
-      {/* MapTiler Layer */}
       <MapTilerLayerComponent />
 
-      {/* Marker for current location */}
       <LocationMarker latitude={latitude} longitude={longitude} />
 
-      {/* Flood risk legend */}
       <FloodRiskLegend />
 
-      {/* Flood areas polygons */}
       {floodAreas
-        .filter((area) => area?.polygonData && area?.polygonData.features) // Filter out areas with null or invalid polygonData
+        .filter((area) => area?.polygonData && area?.polygonData.features)
         .map((area, index) => (
           <GeoJSON
             key={index}
-            data={area.polygonData.features} // Only render if polygonData is valid
-            style={() => polygonStyle(area.severityLevel)}
-          />
+            data={area.polygonData.features}
+            style={() => polygonStyle(area.severityLevel)} // Style based on severityLevel
+          >
+            <Popup>
+              <div>
+                <p><strong>Latitude:</strong> {area.lat}</p>
+                <p><strong>Longitude:</strong> {area.long}</p>
+                <p><strong>Severity Level:</strong> {area.severityLevel}</p>
+              </div>
+            </Popup>
+          </GeoJSON>
         ))}
     </MapContainer>
   );
 };
+
 
 export default FloodMap;

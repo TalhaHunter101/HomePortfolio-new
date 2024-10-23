@@ -9,57 +9,68 @@ const FloodData = ({ latitude, longitude }) => {
   useEffect(() => {
     const fetchFloodAreas = async () => {
       try {
-        const response = await fetch(
+        // Fetch flood data with severity level
+        const floodResponse = await fetch(
           "https://environment.data.gov.uk/flood-monitoring/id/floods"
         );
-        const data = await response.json();
+        const floodData = await floodResponse.json();
   
-        // Extract polygon URLs and severity level
-        const areasWithPolygons = data.items
+        // Fetch flood areas (larger dataset)
+        const areasResponse = await fetch(
+          "https://environment.data.gov.uk/flood-monitoring/id/floodAreas"
+        );
+        const areasData = await areasResponse.json();
+  
+        // Extract flood areas with polygons from the second API
+        const areasWithPolygons = areasData.items
           .map((area) => ({
-            polygon: area.floodArea?.polygon,
-            severityLevel: area.severityLevel
+            polygon: area.polygon,
+            floodAreaID: area.notation, // Use 'notation' as the common key
+            lat: area.lat,
+            long: area.long,
           }))
-          .filter((area) => area.polygon); // Ensure only areas with polygons are included
+          .filter((area) => area.polygon); // Only include areas with polygons
   
-          // console.log("areasWithPolygons is",areasWithPolygons);
-          
-          const polygons = await Promise.all(
-            areasWithPolygons.map(async (area) => {
-              let { polygon, severityLevel } = area;
-              try {
-                // Convert HTTP to HTTPS if needed
-                if (polygon && polygon.startsWith("http://")) {
-                  polygon = polygon.replace("http://", "https://");
-                }
-          
-                // Fetch the polygon data
-                const polygonResponse = await fetch(polygon);
-                
-                if (!polygonResponse.ok) {
-                  throw new Error(`Failed to fetch polygon data from ${polygon}`);
-                }
-          
-                const polygonData = await polygonResponse.json();
-                
-              
-                
-                return { polygonData, severityLevel };
-                
-              } catch (error) {
-                console.error(`Error fetching polygon data for area ${polygon}:`, error);
-                return null; // Return null to handle failed fetches
+        // Create a mapping of floodAreaID to severityLevel from the first API
+        const severityMapping = floodData.items.reduce((acc, flood) => {
+          if (flood.floodAreaID) {
+            acc[flood.floodAreaID] = flood.severityLevel;
+          }
+          return acc;
+        }, {});
+  
+        // Combine both datasets by adding severityLevel to areas with polygons
+        const combinedFloodAreas = await Promise.all(
+          areasWithPolygons.map(async (area) => {
+            let { polygon } = area;
+  
+            try {
+              if (polygon && polygon.startsWith("http://")) {
+                polygon = polygon.replace("http://", "https://");
               }
-            })
-          );
-          
-          // Filter out null values in case any of the fetch calls failed
-          const validPolygons = polygons.filter(polygon => polygon !== null);
-          
-          // Debug log for the final polygons array
-          
   
-        setFloodAreas(polygons);
+              const polygonResponse = await fetch(polygon);
+              if (!polygonResponse.ok) {
+                throw new Error(`Failed to fetch polygon data from ${polygon}`);
+              }
+  
+              const polygonData = await polygonResponse.json();
+  
+              return {
+                polygonData,
+                severityLevel: severityMapping[area.floodAreaID] || 3, 
+                lat: area.lat,
+                long: area.long,
+              };
+            } catch (error) {
+              console.error(`Error fetching polygon data for area ${polygon}:`, error);
+              return null;
+            }
+          })
+        );
+  
+        const validPolygons = combinedFloodAreas.filter((area) => area !== null);
+        setFloodAreas(validPolygons);
       } catch (error) {
         console.error("Error fetching flood areas:", error);
       }
@@ -67,6 +78,7 @@ const FloodData = ({ latitude, longitude }) => {
   
     fetchFloodAreas();
   }, []);
+  
   
 
   return (
