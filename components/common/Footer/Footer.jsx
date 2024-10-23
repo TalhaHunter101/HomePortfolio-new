@@ -32,7 +32,7 @@ const footerNavigation = {
   Company: [
     { name: "About Us", href: "/AboutUs" },
     { name: "Our Blog", href: "#" },
-    { name: "Contact Us", href: "#" },
+    { name: "Contact Us", href: "/ContactUs" },
     { name: "Privacy Policy", href: "/PrivacyPolicy" },
     { name: "Terms & Conditions", href: "/Terms&Conditions" },
     
