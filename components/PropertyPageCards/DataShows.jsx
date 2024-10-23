@@ -12,7 +12,7 @@ function DataShows({ postcode, rentData,ShortAddress }) {
   const { populationData, educationData, isDataLoading } =
     useDemographicStore();
   const { walkScore } = useListingStore();
-  const { medianPrice } = marketCompStore();
+  const { averagePrice } = marketCompStore();
 
   const calculateCollegeDegreePercentage = () => {
     const totalPopulation = parseInt(
@@ -117,11 +117,11 @@ function DataShows({ postcode, rentData,ShortAddress }) {
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
                   {isDataLoading ? (
                     <Spinner />
-                  ) : medianPrice === null ? (
+                  ) : averagePrice === null ? (
                     "N/A"
                   ) : (
                     <>
-                      £{formatCurrency(medianPrice)}{" "}
+                      £{formatCurrency(averagePrice)}{" "}
                       <Icon
                         icon="f7:house-fill"
                         height={32}

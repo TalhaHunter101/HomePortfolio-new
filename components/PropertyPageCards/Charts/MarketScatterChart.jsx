@@ -26,6 +26,20 @@ const calculateMedian = (values) => {
   return (top3Values[half - 1] + top3Values[half]) / 2.0;
 };
 
+const calculateAverage = (prices) => {
+  if (prices.length === 0) return 0;
+
+  // Convert all prices to numbers
+  const numericPrices = prices.map(price => Number(price));
+
+  // Calculate average
+  const sum = numericPrices.reduce((acc, price) => acc + price, 0);
+  return sum / numericPrices.length;
+};
+
+
+
+
 // const calculateMedian = (values) => {
 //   if (values.length === 0) return 0;
 
@@ -60,7 +74,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
   const [prices, setPrices] = useState([]);
   const [scatterData, setScatterData] = useState([]);
 
-  const { setMedianPrice } = marketCompStore(); // Zustand store
+  const { setMedianPrice, setAveragePrice } = marketCompStore(); // Zustand store
 
   useEffect(() => {
     const getMarketComparisonData = async () => {
@@ -94,7 +108,9 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
 
           // Calculate the median using the top 3 prices
           const median = calculateMedian(prices);
+          const average = calculateAverage(prices);
           setMedianPrice(median); // Set in Zustand store
+          setAveragePrice(average)
 
           // Prepare scatter data
           const scatterData = sizesqfeet.map((size, index) => ({
@@ -125,7 +141,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
     };
 
     getMarketComparisonData();
-  }, [data, price, currentSize, setMedianPrice]);
+  }, [data, price, currentSize, setMedianPrice, setAveragePrice]);
 
   return (
     <CardBody className="w-full flex flex-col justify-between bg-white rounded-lg">

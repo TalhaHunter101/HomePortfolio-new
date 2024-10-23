@@ -16,8 +16,10 @@ export const useListingStore = create((set) => ({
 export const marketCompStore = create((set) => ({
   marketComp: null,
   medianPrice: null,
+  averagePrice: null,
   setMarketComp: (marketComp) => set({ marketComp }),
   setMedianPrice: (value) => set({ medianPrice: value }),
+  setAveragePrice: (value) => set({ averagePrice: value }),
 }));
 
 export const marketInfoStore = create((set) => ({

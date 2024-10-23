@@ -18,6 +18,20 @@ const calculateMedian = (prices) => {
   return sortedPrices[middleIndex];
 };
 
+
+
+const calculateAverage = (prices) => {
+  if (prices.length === 0) return 0;
+
+  // Convert all prices to numbers
+  const numericPrices = prices.map(price => Number(price));
+
+  // Calculate average
+  const sum = numericPrices.reduce((acc, price) => acc + price, 0);
+  return sum / numericPrices.length;
+};
+
+
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [SoldListingData, setSoldListingData] = useState([]);
@@ -67,6 +81,7 @@ export function RecentlySoldCard({ city, postcode }) {
             )
             .filter((price) => !isNaN(price));
           setMedianPrice(calculateMedian(prices));
+          // setMedianPrice(calculateAverage(prices));
 
           setSoldLocations(locations);
           setIsDataLoading(false);
