@@ -9,6 +9,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import "leaflet-gesture-handling"
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -76,6 +78,7 @@ const SchoolMap = ({ height, center = [] }) => {
           width: "100%",
           height: `${height ? height : "650px"} `,
         }} 
+        gestureHandling={true}
       >
         <MapTilerLayerComponent />
         <MarkerClusterGroup iconCreateFunction={iconCreateFunction}>

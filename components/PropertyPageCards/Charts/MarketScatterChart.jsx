@@ -15,9 +15,14 @@ import { marketCompStore } from "@/store/listingStore";
 const calculateMedian = (prices) => {
   if (prices.length === 0) return 0;
 
-  const sortedPrices = prices.sort((a, b) => a - b);
+  // Convert all prices to numbers
+  const numericPrices = prices.map(price => Number(price));
+
+  // Sort the prices
+  const sortedPrices = numericPrices.sort((a, b) => a - b);
   const middleIndex = Math.floor(sortedPrices.length / 2);
 
+  // Calculate median
   if (sortedPrices.length % 2 === 0) {
     return (sortedPrices[middleIndex - 1] + sortedPrices[middleIndex]) / 2;
   }
