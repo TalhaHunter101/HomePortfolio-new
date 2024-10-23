@@ -16,7 +16,7 @@ export default function ContactForm() {
     setLoading(true);
 
     // FormSubmit endpoint for sending form data
-    const response = await fetch('https://formsubmit.co/fariq4949@gmail.com', {
+    const response = await fetch('https://formsubmit.co/aahanalhassan@gmail.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,21 +57,21 @@ export default function ContactForm() {
               <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 {/* SVG path here */}
               </svg>
-              <span>1734 San Francisco, CA 93063</span>
+              <span>12 James Street, london </span>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               {/* Email information */}
               <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 {/* SVG path here */}
               </svg>
-              <a href="mailto:hello@astroship-pro.com">hello@astroship-pro.com</a>
+              <a href="mailto:hello@homeportfolio.com">hello@homeportfolio.com</a>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               {/* Phone information */}
               <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 {/* SVG path here */}
               </svg>
-              <a href="tel:+19874587899">+1 (987) 4587 899</a>
+              <a href="tel:+12874587899...">+12 (987) 4587 8...</a>
             </div>
           </div>
         </div>
