@@ -4,6 +4,8 @@ import { MapContainer, TileLayer, GeoJSON, Marker, useMap } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import noiseData from "../../../public/noise.json";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import "leaflet-gesture-handling"
 
 // Custom polygon styling based on noise level
 const polygonStyle = (noiseLevel) => {
@@ -108,6 +110,8 @@ const NoiseMap = ({ latitude, longitude, height }) => {
         width: "100%",
         height: `${height ? height : "650px"}`,
       }}
+      gestureHandling={true} // Enable gesture handling
+
     >
       {/* Add TileLayer to render the map */}
       <TileLayer

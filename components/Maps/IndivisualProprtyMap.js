@@ -10,6 +10,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import WMSLayer from "./WMSLayers";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import "leaflet-gesture-handling"
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -114,6 +116,7 @@ const IndivisualProprtyMapStatic = ({ height = "650px", center, floodZoneData, p
           width: "100%",
           height: height,
         }}
+        gestureHandling={true} // Enable gesture handling
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />

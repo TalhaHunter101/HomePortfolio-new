@@ -6,6 +6,8 @@ import { MapContainer, GeoJSON, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import L from "leaflet";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import "leaflet-gesture-handling"
 
 // MapTiler layer component
 const MapTilerLayerComponent = () => {
@@ -132,6 +134,8 @@ const FloodMap = ({ floodAreas, latitude, longitude, height }) => {
         width: "100%",
         height: `${height ? height : "650px"}`,
       }}
+      gestureHandling={true} // Enable gesture handling
+
     >
       <MapTilerLayerComponent />
 

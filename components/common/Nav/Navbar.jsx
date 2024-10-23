@@ -115,6 +115,11 @@ export default function NavBar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
+          <Link color="foreground" href="/ContactUs">
+         Contact us
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
           <Link color="foreground" href="#">
          Blogs
           </Link>

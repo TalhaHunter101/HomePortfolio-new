@@ -8,6 +8,8 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import "leaflet-gesture-handling"
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -75,6 +77,7 @@ const NearByPlacesMap = ({ height = "650px", center, locations, amenities, selec
           width: "100%",
           height: height,
         }}
+        gestureHandling={true}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} locations={locations} amenities={amenities} selectedAmenity={selectedAmenity} />

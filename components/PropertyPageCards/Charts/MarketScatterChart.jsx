@@ -12,18 +12,22 @@ import { CardBody } from "@nextui-org/react";
 import { marketCompStore } from "@/store/listingStore";
 
 // Helper function to calculate the median for the top 3 values
-const calculateMedian = (values) => {
-  
-  if (values.length === 0) return 0;
+const calculateMedian = (prices) => {
+  if (prices.length === 0) return 0;
 
-  // Sort values in ascending order and take only the top 3
-  values.sort((a, b) => a - b);
-  const top3Values = values.slice(0, 3); // Extract top 3 values
+  // Convert all prices to numbers
+  const numericPrices = prices.map(price => Number(price));
 
-  const half = Math.floor(top3Values.length / 2);
+  // Sort the prices
+  const sortedPrices = numericPrices.sort((a, b) => a - b);
+  const middleIndex = Math.floor(sortedPrices.length / 2);
 
-  if (top3Values.length % 2) return top3Values[half];
-  return (top3Values[half - 1] + top3Values[half]) / 2.0;
+  // Calculate median
+  if (sortedPrices.length % 2 === 0) {
+    return (sortedPrices[middleIndex - 1] + sortedPrices[middleIndex]) / 2;
+  }
+
+  return sortedPrices[middleIndex];
 };
 
 const calculateAverage = (prices) => {
