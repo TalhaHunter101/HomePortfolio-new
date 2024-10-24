@@ -16,7 +16,7 @@ export default function ContactForm() {
     setLoading(true);
 
     // FormSubmit endpoint for sending form data
-    const response = await fetch('https://formsubmit.co/aahanalhassan@gmail.com', {
+    const response = await fetch('https://formsubmit.co/samos@homeportfolio.com', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export default function ContactForm() {
               <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 {/* SVG path here */}
               </svg>
-              <a href="mailto:hello@homeportfolio.com">hello@homeportfolio.com</a>
+              <a href="mailto:samos@homeportfolio.com">samos@homeportfolio.com</a>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               {/* Phone information */}

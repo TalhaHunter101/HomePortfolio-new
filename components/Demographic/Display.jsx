@@ -21,28 +21,7 @@ import AutocompleteSearch from "@/app/autocompleteSearchBar";
 
 function DisplayLayout({ }) {
 
-    const properties = [
-        {
-            title: 'Residential Properties',
-            value: '30M+',
-            icon: 'solar:home-outline'
-        },
-        {
-            title: 'property records updated ',
-            value: '10K+',
-            icon: 'mdi:update'
-        },
-        {
-            title: "postcodes available ",
-            value: '2M+',
-            icon: 'entypo:location'
-        },
-        {
-            title: 'Market Deals',
-            value: '1M+',
-            icon: 'mdi:handshake'
-        },
-    ]
+   
 
 
 
@@ -101,7 +80,7 @@ function DisplayLayout({ }) {
 
     const navElements = [
         {
-            name: "All about the Neighbourhood",
+            name: "Overview",
             id: "about-home",
             subElements: [
 
@@ -206,22 +185,7 @@ function DisplayLayout({ }) {
 
                 {/* main div */}
 
-                <div className="flex flex-col items-center justify-center px-6 gap-4 w-full py-8">
-                    {/* Heading */}
-                    <h1 className="text-black font-bold text-5xl text-center">
-                        Know the neighbourhood behind the postcode.
-                    </h1>
-
-                    {/* Subheading */}
-                    <p className="text-gray-500 text-lg text-center">
-                        Make sure you have all the facts before you buy or rent a property in the UK
-                    </p>
-
-                    {/* Search Box using NextUI components */}
-                    <div className="relative w-full max-w-lg mt-4">
-                        <AutocompleteSearch properties={properties} />
-                    </div>
-                </div>
+               
 
 
                 {/* lower div */}

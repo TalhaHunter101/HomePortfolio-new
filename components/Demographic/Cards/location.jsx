@@ -15,18 +15,7 @@ export function LocationOverviewCard() {
     return (
       <div className="relative w-full transition duration-300 overflow-hidden h-[40vh] md:h-[60vh] bg-gray-200">
         {/* Switch in top right corner */}
-        <div className="absolute top-2 right-2 flex items-center space-x-2 z-10">
-          <Switch
-            checked={isMapInteractive}
-            onChange={toggleMapInteractivity}
-            aria-label="Map Interactivity Toggle"
-            startContent={<Icon icon="hugeicons:touch-locked-04" />}
-            endContent={<Icon icon="carbon:touch-1-filled" />}
-          />
-          <span className="text-gray-500 font-semibold text-xs">
-            {isMapInteractive ? 'Disable Map Interactions' : 'Enable Map Interactions'}
-          </span>
-        </div>
+        
         
         {/* Placeholder for the map */}
         <p className="text-center text-lg font-semibold">Map Placeholder</p>
@@ -37,7 +26,7 @@ export function LocationOverviewCard() {
   return (
     <div className="m-4">
       {/* Tabs for selecting different map views */}
-      <div className="sticky top-0 bg-transparent z-10 mb-4">
+      {/* <div className="sticky top-0 bg-transparent z-10 mb-4">
         <Tabs
           radius="full"
           fullWidth
@@ -138,7 +127,7 @@ export function LocationOverviewCard() {
             }
           />
         </Tabs>
-      </div>
+      </div> */}
 
       {/* The card now only contains the map */}
       <Card className="p-0 overflow-hidden">
