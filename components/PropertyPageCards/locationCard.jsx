@@ -35,9 +35,7 @@ export function LocationCard({ data, postcode, schoolData }) {
     getNearbyListings();
   }, [postcode]);
 
-  const toggleMapInteractivity = () => {
-    setIsMapInteractive((prevState) => !prevState);
-  };
+ 
 
   const renderMap = () => {
     const mapProps = { center,isMapInteractive };
@@ -69,19 +67,7 @@ export function LocationCard({ data, postcode, schoolData }) {
           <p className="text-xs font-bold mb-1">Location</p> 
           <p className="text-xs">{data?.address}</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Switch 
-          
-            checked={isMapInteractive} 
-            onChange={toggleMapInteractivity} 
-            aria-label="Map Interactivity Toggle"
-            startContent={<Icon icon="hugeicons:touch-locked-04" />}
-            endContent={<Icon icon="carbon:touch-1-filled" />}
-          />
-          <span className="text-gray-500 font-semibold text-xs">
-            {isMapInteractive ? 'Disable Map Interactions' : 'Enable Map Interactions'}
-          </span>
-        </div>
+        
       {/* <CardHeader className="bg-white inline p-4">
         <p className="text-xs font-bold mb-3">Location</p>
         <p className="text-xs">{data?.address}</p> */}

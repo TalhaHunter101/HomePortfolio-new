@@ -10,7 +10,7 @@ export default function CountyPage({ params }) {
     const countyData = dummyData;
 
     return (
-        <div className="p-6 max-w-[87rem] mt-20 mx-auto">
+        <div className="p-6 max-w-[80rem] mt-20 mx-auto  sm:px-6">
             <h1 className="text-3xl sm:text-5xl font-bold mb-6">
                 Most Affordable Neighborhoods in {countyData.countyName}
             </h1>
@@ -30,7 +30,7 @@ export default function CountyPage({ params }) {
 
             {countyData.neighborhoods.map((neighborhood, index) => (
                 <div key={index} className="mb-12">
-                    <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+                    <h2 className="text-2xl sm:text-3xl text-gray-700 font-semibold mb-4">
                         {index + 1}. {neighborhood.name}
                     </h2>
                     <div className="mb-6">
@@ -54,19 +54,19 @@ export default function CountyPage({ params }) {
                                 </div>
                                 <div>
                                     <p>Population</p>
-                                    <strong className='text-3xl '>{neighborhood.population.toLocaleString()}</strong>
+                                    <h2 className='text-3xl font-medium text-gray-600 '>{neighborhood.population.toLocaleString()}</h2>
                                 </div>
                                 <div>
                                     <p>Median Home Price / Sqft</p>
-                                    <strong className='text-3xl'>${neighborhood.pricePerSqft}</strong>
+                                    <h2 className='text-3xl font-medium text-gray-600'>${neighborhood.pricePerSqft}</h2>
                                 </div>
                                 <div>
                                     <p>Median Home Price</p>
-                                    <strong className='text-3xl'>${neighborhood.homePrice.toLocaleString()}</strong>
+                                    <h2 className='text-3xl font-medium text-gray-600'>${neighborhood.homePrice.toLocaleString()}</h2>
                                 </div>
                                 <div>
                                     <p>Median Rent</p>
-                                    <strong className='text-3xl'>${neighborhood.rent}</strong>
+                                    <h2 className='text-3xl font-medium text-gray-600'>${neighborhood.rent}</h2>
                                 </div>
                             </div>
 
@@ -78,15 +78,15 @@ export default function CountyPage({ params }) {
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
                                 <div>
                                     <p>Walk Score</p>
-                                    <strong className='text-3xl'>{neighborhood.walkScore}<Icon className='inline p-1' icon="healthicons:walking" /></strong>
+                                    <h1 className='text-3xl font-semibold text-gray-600'>{neighborhood.walkScore}<Icon className='inline p-1' icon="healthicons:walking" /></h1>
                                 </div>
                                 <div>
                                     <p>Bike Score</p>
-                                    <strong className='text-3xl'>{neighborhood.bikeScore}<Icon className='inline p-1' icon="mdi:bike" /></strong>
+                                    <h1 className='text-3xl font-semibold text-gray-600'>{neighborhood.bikeScore}<Icon className='inline p-1' icon="mdi:bike" /></h1>
                                 </div>
                                 <div>
                                     <p>Transit Score</p>
-                                    <strong className='text-3xl'>{neighborhood.transitScore}<Icon className='inline p-1' icon="mdi:bus" /></strong>
+                                    <h1 className='text-3xl font-semibold text-gray-600'>{neighborhood.transitScore}<Icon className='inline p-1' icon="mdi:bus" /></h1>
                                 </div>
                             </div>
 
