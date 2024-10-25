@@ -22,13 +22,15 @@ const ageCategoryData = [
 
 const COLORS = ['#82ca9d', '#fda4af', '#8884d8'];
 
-function ageCard() {
+function ageCard( data) {
+  const { agePopulationData } = data;
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
       <CardHeader className="flex flex-col items-start p-4">
         <div>
-          <h2 className="text-xl font-bold">Age</h2>
+        <pre>{JSON.stringify(agePopulationData, null, 2)}</pre>
+          <h2 className="text-xl font-bold">Age {agePopulationData}</h2>
           <p className="text-4xl font-semibold mt-2">34.6</p>
           <p className="text-md text-gray-500">Median age</p>
           <p className="text-sm mt-2 text-gray-500">

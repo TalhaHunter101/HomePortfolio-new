@@ -21,7 +21,8 @@ const raceEthnicityData = [
 const COLORS = ['#82ca9d', '#fda4af']; // Colors for the sex pie chart
 const BAR_COLOR = '#82ca9d'; // Color for the bar chart
 
-function DemographicSexRaceCard() {
+function DemographicSexRaceCard( data) {
+  console.log ('dataaaaa', data)
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
