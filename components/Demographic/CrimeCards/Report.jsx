@@ -2,27 +2,14 @@ import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-export const CrimeReportCard = () => {
-  // Dummy data for testing
-  const dummyReportData = [
-    { _source: { "Crime type": "Burglary", Month: "2023-09" } },
-    { _source: { "Crime type": "Theft", Month: "2023-09" } },
-    { _source: { "Crime type": "Theft", Month: "2023-09" } },
-    { _source: { "Crime type": "Assault", Month: "2023-09" } },
-    { _source: { "Crime type": "Burglary", Month: "2023-08" } },
-    { _source: { "Crime type": "Vandalism", Month: "2023-08" } },
-    { _source: { "Crime type": "Theft", Month: "2023-08" } },
-    { _source: { "Crime type": "Assault", Month: "2023-08" } },
-    { _source: { "Crime type": "Burglary", Month: "2023-07" } },
-    { _source: { "Crime type": "Assault", Month: "2023-07" } },
-    { _source: { "Crime type": "Theft", Month: "2023-06" } },
-  ];
+export const CrimeReportCard = ({ reportData }) => {
+  const totalCrimes = reportData.length;
 
-  // Calculate the crime data dynamically
-  const crimeDataMap = dummyReportData.reduce((acc, report) => {
+  // Calculate the crime data dynamically (for the right section)
+  const crimeDataMap = reportData.reduce((acc, report) => {
     const crimeType = report._source["Crime type"];
     if (!acc[crimeType]) {
-      acc[crimeType] = { count: 0, trend: "stable" };
+      acc[crimeType] = { count: 0, trend: "stable" }; // Assuming stable as default trend
     }
     acc[crimeType].count += 1;
     return acc;
@@ -31,27 +18,36 @@ export const CrimeReportCard = () => {
   const crimeData = Object.keys(crimeDataMap).map((crimeType) => ({
     type: crimeType,
     count: crimeDataMap[crimeType].count,
-    trend: crimeDataMap[crimeType].trend,
+    trend: crimeDataMap[crimeType].trend, // This will need real data to set trend
   }));
 
-  // Find the latest month in the data
-  const latestMonth = dummyReportData.reduce((latest, report) => {
-    const currentMonth = report._source.Month;
-    return new Date(currentMonth) > new Date(latest) ? currentMonth : latest;
-  }, dummyReportData[0]?._source?.Month);
+  // Find the latest month in the data, with a fallback if reportData is empty or invalid
+  const latestMonth = reportData.length > 0
+    ? reportData.reduce((latest, report) => {
+        const currentMonth = report._source?.Month;
+        return currentMonth && new Date(currentMonth) > new Date(latest) ? currentMonth : latest;
+      }, reportData[0]?._source?.Month)
+    : null;
 
-  // Format the latest month as "MMM YYYY"
+  // Format the latest month as "MMM YYYY" if latestMonth is valid
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
-  const [year, month] = latestMonth.split("-");
-  const formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
+
+  let formattedLatestMonth = "N/A"; // Default if no valid date found
+  if (latestMonth) {
+    const [year, month] = latestMonth.split("-");
+    formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
+  }
 
   return (
-    <Card className="m-4 p-4  h-full max-h-[500px]"> {/* Set a maximum height for the card */}
+    <Card className="m-4 p-4 h-full max-h-[500px]">
       <CardBody className="h-full">
-        <div className="bg-gray-100 p-4 rounded-lg shadow-sm mb-4">
-          <h1 className="text-lg font-semibold text-gray-800 mb-1">Top Reported Crimes</h1>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+          <h1 className="text-lg font-semibold text-gray-800 mb-1">
+            Top Reported Crimes
+          </h1>
           <h2 className="text-sm text-gray-500">
             Crime for latest month ({formattedLatestMonth})
           </h2>

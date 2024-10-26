@@ -4,24 +4,24 @@ import { Card, Text } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
 
 export const BadgeCard = ({ reportData }) => {
-//   const crimeCountsByMonth = reportData.reduce((acc, report) => {
-//     const month = report._source.Month;
-//     if (!acc[month]) {
-//       acc[month] = 0;
-//     }
-//     acc[month] += 1;
-//     return acc;
-//   }, {});
+  const crimeCountsByMonth = reportData.reduce((acc, report) => {
+    const month = report._source.Month;
+    if (!acc[month]) {
+      acc[month] = 0;
+    }
+    acc[month] += 1;
+    return acc;
+  }, {});
 
-//   const sortedMonths = Object.keys(crimeCountsByMonth).sort((a, b) => new Date(a) - new Date(b));
-//   const lastThreeMonths = sortedMonths.slice(-3);
-//   const [firstMonthCount, secondMonthCount, thirdMonthCount] = lastThreeMonths.map(month => crimeCountsByMonth[month]);
+  const sortedMonths = Object.keys(crimeCountsByMonth).sort((a, b) => new Date(a) - new Date(b));
+  const lastThreeMonths = sortedMonths.slice(-3);
+  const [firstMonthCount, secondMonthCount, thirdMonthCount] = lastThreeMonths.map(month => crimeCountsByMonth[month]);
 
-//   const percentageChange = ((firstMonthCount - thirdMonthCount) / firstMonthCount) * 100;
-//   const formattedPercentageChange = percentageChange.toFixed(1); // Limit to one decimal place
-//   const isDecrease = percentageChange > 0;
- const formattedPercentageChange = 0;
-    const isDecrease = false;
+  const percentageChange = ((firstMonthCount - thirdMonthCount) / firstMonthCount) * 100;
+  const formattedPercentageChange = percentageChange.toFixed(1); // Limit to one decimal place
+  const isDecrease = percentageChange > 0;
+//  const formattedPercentageChange = 0;
+//     const isDecrease = false;
 
   return (
     <Card className='m-4 p-0 overflow-hidden'>

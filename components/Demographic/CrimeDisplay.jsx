@@ -6,7 +6,7 @@ import { Waypoint } from "react-waypoint";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import mainCard from "./CrimeCards/main";
+import MainCard from "./CrimeCards/main";
 import { LocationOverviewCard } from "./CrimeCards/location";
 import { BadgeCard } from "./CrimeCards/badge";
 import CrimeLevelsChartCard from "./CrimeCards/Chart";
@@ -43,7 +43,7 @@ function CrimeDisplayLayout({ data }) {
           icon: "mdi:email",
           bgColor: "bg-pink-400",
           id: "data",
-          Component: mainCard,
+          Component: MainCard,
         },
         {
           name: "Badge",
@@ -114,7 +114,7 @@ function CrimeDisplayLayout({ data }) {
                     id={subElement.id}
                     onMouseEnter={() => handleMouseEnter(subElement.id)}
                   >
-                    <subElement.Component data={data} />
+                    <subElement.Component data={data} reportData={crimeData} />
                   </div>
                 ))}
               </React.Fragment>
