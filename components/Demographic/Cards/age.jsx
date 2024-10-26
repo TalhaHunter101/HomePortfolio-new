@@ -22,13 +22,15 @@ const ageCategoryData = [
 
 const COLORS = ['#82ca9d', '#fda4af', '#8884d8'];
 
-function ageCard() {
+function ageCard( data) {
+  const { agePopulationData } = data;
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
       <CardHeader className="flex flex-col items-start p-4">
         <div>
-          <h2 className="text-xl font-bold">Age</h2>
+        <pre>{JSON.stringify(agePopulationData, null, 2)}</pre>
+          <h2 className="text-xl font-bold">Age {agePopulationData}</h2>
           <p className="text-4xl font-semibold mt-2">34.6</p>
           <p className="text-md text-gray-500">Median age</p>
           <p className="text-sm mt-2 text-gray-500">
@@ -59,14 +61,21 @@ function ageCard() {
         <div>
           <h3 className="text-md font-bold mb-4">Population by age category</h3>
           <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie data={ageCategoryData} dataKey="value" outerRadius={80} fill="#8884d8" label>
-                {ageCategoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+      <PieChart>
+        <Pie
+          data={ageCategoryData}
+          dataKey="value"
+          outerRadius={80}    // Outer radius for the donut size
+          innerRadius={60}    // Inner radius for the thin donut effect
+          fill="#8884d8"
+          label
+        >
+          {ageCategoryData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
           <div className="flex justify-around mt-2 text-sm">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-[#82ca9d]" /> <span>Under 18</span>

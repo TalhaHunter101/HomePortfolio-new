@@ -6,17 +6,16 @@ import { Waypoint } from "react-waypoint";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-import {LocationOverviewCard} from "./Cards/location";
-import DataOverview from "./Cards/demographics";
-import AgeCard from "./Cards/age"; // Ensure correct import
-import DemographicSexRaceCard from "./Cards/demographicsexdata";
-import IncomeOverviewCard from "./Cards/income";
-import PovertyOverviewCard from "./Cards/poverty";
-import TransportationOverviewCard from "./Cards/transport";
-import OverviewCard from "./Cards/overview";
-import NeighbourhoodCard from "./Cards/neighborhood";
 
-function DisplayLayout({ data }) {
+
+import mainCard from "./CrimeCards/main";
+import { LocationOverviewCard } from "./CrimeCards/location";
+import { BadgeCard } from "./CrimeCards/badge";
+import CrimeLevelsChartCard from "./CrimeCards/Chart";
+import CrimeReportCard from "./CrimeCards/Report";
+
+
+function CrimeDisplayLayout({ data }) {
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
 
@@ -31,7 +30,7 @@ function DisplayLayout({ data }) {
       id: "about-home",
       subElements: [
         {
-          name: "Location",
+          name: "location",
           icon: "mdi:map-marker",
           bgColor: "bg-pink-300",
           id: "location",
@@ -41,58 +40,34 @@ function DisplayLayout({ data }) {
           name: "Data Overview",
           icon: "mdi:email",
           bgColor: "bg-pink-400",
-          id: "reachout",
-          Component: DataOverview,
+          id: "data",
+          Component: mainCard,
         },
         {
-          name: "Age",
-          icon: "mdi:calendar",
-          bgColor: "bg-pink-500",
-          id: "age",
-          Component: AgeCard,
+          name: "Badge",
+          icon: "mdi:email",
+          bgColor: "bg-pink-400",
+          id: "badge",
+          Component: BadgeCard,
         },
-        {
-          name: "Gender",
-          icon: "mdi:gender-male-female",
-          bgColor: "bg-pink-500",
-          id: "gender",
-          Component: DemographicSexRaceCard,
-        },
-        {
-          name: "Income",
-          icon: "mdi:currency-usd",
-          bgColor: "bg-pink-500",
-          id: "income",
-          Component: IncomeOverviewCard,
-        },
-        {
-          name: "Poverty",
-          icon: "mdi:account-alert",
-          bgColor: "bg-pink-500",
-          id: "poverty",
-          Component: PovertyOverviewCard,
-        },
-        {
-          name: "Transport",
-          icon: "mdi:bus",
-          bgColor: "bg-pink-500",
-          id: "transport",
-          Component: TransportationOverviewCard,
-        },
-        {
-          name: "Overview",
-          icon: "mdi:view-dashboard",
-          bgColor: "bg-pink-500",
-          id: "overview",
-          Component: OverviewCard,
-        },
-        {
-          name: "Neighbourhood",
-          icon: "mdi:home-group",
-          bgColor: "bg-pink-500",
-          id: "neighbourhood",
-          Component: NeighbourhoodCard,
-        },
+       {
+        name: "statistics",
+        icon: "mdi:email",
+        bgColor: "bg-pink-400",
+        id: "statistics",
+        Component: CrimeLevelsChartCard,
+
+       },
+       {
+        name:"Report",
+        icon: "mdi:email",
+        bgColor: "bg-pink-400",
+        id: "report",
+        Component: CrimeReportCard,
+       }
+       
+        
+       
       ],
     },
   ];
@@ -233,4 +208,4 @@ function DisplayLayout({ data }) {
   );
 }
 
-export default DisplayLayout;
+export default CrimeDisplayLayout;
