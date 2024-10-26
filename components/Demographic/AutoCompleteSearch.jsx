@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { throttle } from "lodash"; // Import lodash throttle function
-import SearchDropdown from "@/components/Homepage/SearchDropdown";
-import { areAllArraysEmpty } from "@/utils/Helper";
+import { throttle } from "lodash";
 import useStore from "@/store/useStore";
-import { Card, Link, Spinner } from "@nextui-org/react";
+import { Card, Spinner } from "@nextui-org/react";
 import Image from "next/image";
 import { usePostcodeStore } from "@/store/neighbourhoodStore";
 
@@ -140,6 +138,7 @@ export default function AutoCompleteSearchNew({ properties }) {
                                 key={i}
                                 onClick={() => {
                                   setCurrentPostcode(item.ref_postcode);
+                                  localStorage.setItem("selectedPostcode", item.ref_postcode);
                                   setResults([]);
                                 }}
                               >

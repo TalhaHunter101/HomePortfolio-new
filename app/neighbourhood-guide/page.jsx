@@ -4,7 +4,10 @@ import DisplayLayout from "@/components/Demographic/Display";
 import AutocompleteSearch from "../autocompleteSearchBar";
 import { Icon } from "@iconify/react"; // Import Iconify for icons
 import AutoCompleteSearchNew from "@/components/Demographic/AutoCompleteSearch";
-import { usePostcodeStore } from "@/store/neighbourhoodStore";
+import {
+  useNeighbourhoodDemographicStore,
+  usePostcodeStore,
+} from "@/store/neighbourhoodStore";
 
 // Dummy content for each tab
 const TabContent = ({ tab }) => {
@@ -34,8 +37,22 @@ const TabContent = ({ tab }) => {
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("Overview");
-  const {currentPostcode} = usePostcodeStore()
-
+  const { currentPostcode,setCurrentPostcode } = usePostcodeStore();
+  const {
+    setEconomicData,
+    setEucationData,
+    setOccupationData,
+    setTenureData,
+    setCompositionData,
+    setPaetnerShipData,
+    setPopulationData,
+    setPopulationAgeData,
+    setEthnicGroupData,
+    setAccomadationData,
+    setWalkScore,
+    setWalkScoreDescription,
+    setIsLoading,
+  } = useNeighbourhoodDemographicStore();
 
   const properties = [
     {
@@ -73,18 +90,126 @@ const Page = () => {
   ];
 
   useEffect(() => {
-    if(currentPostcode){
-      console.log("currentPostcode", currentPostcode);
-      
+    const savedPostcode = localStorage.getItem("selectedPostcode");
+    if (savedPostcode && !currentPostcode) {
+      setCurrentPostcode(savedPostcode);
     }
-    
-  }, [currentPostcode])
-  
+  }, [currentPostcode, setCurrentPostcode]);
+
+
+  useEffect(() => {
+    const fetchAllDemographicData = async ({ postcode }) => {
+      try {
+        setIsLoading(true);
+        const endpoints = [
+          "/api/v2/demographic/get-economic-activity-data",
+          "/api/v2/demographic/get-education-data",
+          "/api/v2/demographic/get-hous-occupation-data",
+          "/api/v2/demographic/get-house-tenure-data",
+          "/api/v2/demographic/get-houshold-composition-data",
+          "/api/v2/demographic/get-partnership-data",
+          "/api/v2/demographic/get-population-data",
+          "/api/v2/demographic/get-population-data-by-age",
+          "/api/v2/demographic/get-ethnic-group-data",
+          "/api/v2/demographic/get-accomodation-data",
+        ];
+
+        const fetchData = endpoints.map((endpoint) =>
+          fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ postcode: postcode }),
+          }).then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+        );
+
+        const [
+          fetchEconomicData,
+          fetchEducationData,
+          fetchHousOccupationData,
+          fetchHouseTenureData,
+          fetchHousholdCompositionData,
+          fetchPartnershipData,
+          fetchPopulationData,
+          fetchPopulationAgeData,
+          fetchEthnicGroupData,
+          fetchAccomodationData,
+        ] = await Promise.all(fetchData);
+
+        setEconomicData(fetchEconomicData);
+        setEucationData(fetchEducationData);
+        setOccupationData(fetchHousOccupationData);
+        setTenureData(fetchHouseTenureData);
+        setCompositionData(fetchHousholdCompositionData);
+        setPaetnerShipData(fetchPartnershipData);
+        setPopulationData(fetchPopulationData);
+        setPopulationAgeData(fetchPopulationAgeData);
+        setEthnicGroupData(fetchEthnicGroupData);
+        setAccomadationData(fetchAccomodationData);
+
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    const getWalkScore = async ({ postcode }) => {
+      try {
+        const res = await fetch("/api/indevisual/get-walk-score", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            postcode: postcode,
+          }),
+        });
+
+        if (res.ok) {
+          const result = await res.json();
+          const walkData = result[0]?._source;
+          setWalkScore(walkData?.walk_score || 0);
+          setWalkScoreDescription(walkData?.description || "");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (currentPostcode) {
+      fetchAllDemographicData({ postcode: currentPostcode });
+      getWalkScore({ postcode: currentPostcode });
+    }
+
+    return () => {};
+  }, [
+    currentPostcode,
+    setEconomicData,
+    setEucationData,
+    setOccupationData,
+    setTenureData,
+    setCompositionData,
+    setPaetnerShipData,
+    setPopulationData,
+    setPopulationAgeData,
+    setEthnicGroupData,
+    setAccomadationData,
+    setIsLoading,
+    setWalkScore,
+    setWalkScoreDescription,
+  ]);
 
   return (
     <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center px-6 gap-4 w-full py-8">
-        {/* Heading */}
         <h1 className="text-black font-bold text-5xl text-center">
           Know the neighbourhood behind the postcode.
         </h1>

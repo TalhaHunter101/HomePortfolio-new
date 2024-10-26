@@ -1,27 +1,47 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-
-const sexData = [
-  { name: 'Male', value: 49 },
-  { name: 'Female', value: 51 },
-];
-
-const raceEthnicityData = [
-  { name: 'White', value: 53 },
-  { name: 'Black', value: 26 },
-  { name: 'Native', value: 0 },
-  { name: 'Asian', value: 4 },
-  { name: 'Islander', value: 0 },
-  { name: 'Other', value: 0 },
-  { name: 'Two+', value: 5 },
-  { name: 'Hispanic', value: 12 },
-];
+import { useNeighbourhoodDemographicStore } from '@/store/neighbourhoodStore';
 
 const COLORS = ['#82ca9d', '#fda4af']; // Colors for the sex pie chart
 const BAR_COLOR = '#82ca9d'; // Color for the bar chart
 
 function DemographicSexRaceCard() {
+  const { ethnicGroupData, populationData } = useNeighbourhoodDemographicStore();
+ 
+  // Prepare data for charts
+  const { sexData, raceEthnicityData } = useMemo(() => {
+    if (!ethnicGroupData || ethnicGroupData.length === 0 || !populationData || populationData.length === 0) {
+      return {
+        sexData: [],
+        raceEthnicityData: [],
+      };
+    }
+
+    const ethnicData = ethnicGroupData[0]._source; // Assuming one data entry for ethnic group data
+    const popData = populationData[0]._source; // Assuming one data entry for population data
+
+    const totalPopulation = popData["Total Population"];
+    const totalRaceEthnicity = ethnicData["Total Race Ethnicity"];
+
+    // Data for Sex Pie Chart
+    const sexData = [
+      { name: 'Male', value: parseFloat(((popData["Male"] || 0) / totalPopulation * 100).toFixed(2)) },
+      { name: 'Female', value: parseFloat(((popData["Female"] || 0) / totalPopulation * 100).toFixed(2)) },
+    ];
+
+    // Data for Race & Ethnicity Bar Chart
+    const raceEthnicityData = [
+      { name: 'White', value: parseFloat(((ethnicData["White"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Black', value: parseFloat(((ethnicData["Black"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Asian', value: parseFloat(((ethnicData["Asian"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Others', value: parseFloat(((ethnicData["Others"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Two+', value: parseFloat(((ethnicData["Two or more"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+    ];
+
+    return { sexData, raceEthnicityData };
+  }, [ethnicGroupData, populationData]);
+
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
