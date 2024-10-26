@@ -1,37 +1,54 @@
-import React from 'react';
+'use client';
+import React, { useMemo } from 'react';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-
-const ageRangeData = [
-  { name: '0-9', value: 11 },
-  { name: '10-19', value: 12 },
-  { name: '20-29', value: 18 },
-  { name: '30-39', value: 18 },
-  { name: '40-49', value: 13 },
-  { name: '50-59', value: 11 },
-  { name: '60-69', value: 8 },
-  { name: '70-79', value: 6 },
-  { name: '80+', value: 3 },
-];
-
-const ageCategoryData = [
-  { name: 'Under 18', value: 23 },
-  { name: '18 to 64', value: 68 },
-  { name: '65 and over', value: 9 },
-];
+import { useNeighbourhoodDemographicStore } from '@/store/neighbourhoodStore';
 
 const COLORS = ['#82ca9d', '#fda4af', '#8884d8'];
 
-function ageCard( data) {
-  const { agePopulationData } = data;
+function AgeCard() {
+  const { populationAgeData } = useNeighbourhoodDemographicStore();
+  
+  const { ageRangeData, ageCategoryData, medianAge } = useMemo(() => {
+    if (!populationAgeData || populationAgeData.length === 0) {
+      return {
+        ageRangeData: [],
+        ageCategoryData: [],
+        medianAge: 0,
+      };
+    }
+
+    const data = populationAgeData[0]._source; // Assuming one data entry for now
+    const ageRangeData = [
+      { name: '0-9', value: (data["Aged 4 years and under"] || 0) + (data["Aged 5 to 9 years"] || 0) },
+      { name: '10-19', value: (data["Aged 10 to 14 years"] || 0) + (data["Aged 15 to 19 years"] || 0) },
+      { name: '20-29', value: (data["Aged 20 to 24 years"] || 0) + (data["Aged 25 to 29 years"] || 0) },
+      { name: '30-39', value: (data["Aged 30 to 34 years"] || 0) + (data["Aged 35 to 39 years"] || 0) },
+      { name: '40-49', value: (data["Aged 40 to 44 years"] || 0) + (data["Aged 45 to 49 years"] || 0) },
+      { name: '50-59', value: (data["Aged 50 to 54 years"] || 0) + (data["Aged 55 to 59 years"] || 0) },
+      { name: '60-69', value: (data["Aged 60 to 64 years"] || 0) + (data["Aged 65 to 69 years"] || 0) },
+      { name: '70-79', value: (data["Aged 70 to 74 years"] || 0) + (data["Aged 75 to 79 years"] || 0) },
+      { name: '80+', value: (data["Aged 80 to 84 years"] || 0) + (data["Aged 85 years and over"] || 0) },
+    ];
+
+    const ageCategoryData = [
+      { name: 'Under 18', value: ageRangeData.slice(0, 2).reduce((sum, age) => sum + age.value, 0) },
+      { name: '18 to 64', value: ageRangeData.slice(2, 7).reduce((sum, age) => sum + age.value, 0) },
+      { name: '65 and over', value: ageRangeData.slice(7).reduce((sum, age) => sum + age.value, 0) },
+    ];
+
+    const medianAge = data["Median Age"] || 0;
+
+    return { ageRangeData, ageCategoryData, medianAge };
+  }, [populationAgeData]);
+
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
       <CardHeader className="flex flex-col items-start p-4">
         <div>
-        <pre>{JSON.stringify(agePopulationData, null, 2)}</pre>
-          <h2 className="text-xl font-bold">Age {agePopulationData}</h2>
-          <p className="text-4xl font-semibold mt-2">34.6</p>
+          <h2 className="text-xl font-bold">Age</h2>
+          <p className="text-4xl font-semibold mt-2">{medianAge}</p>
           <p className="text-md text-gray-500">Median age</p>
           <p className="text-sm mt-2 text-gray-500">
             about 90 percent of the figure in the Raleigh-Cary, NC Metro Area: 37.5
@@ -93,4 +110,4 @@ function ageCard( data) {
   );
 }
 
-export default ageCard;
+export default AgeCard;

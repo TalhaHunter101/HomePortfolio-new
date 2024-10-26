@@ -6,18 +6,20 @@ import { Waypoint } from "react-waypoint";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-
-
-import mainCard from "./CrimeCards/main";
+import MainCard from "./CrimeCards/main";
 import { LocationOverviewCard } from "./CrimeCards/location";
 import { BadgeCard } from "./CrimeCards/badge";
 import CrimeLevelsChartCard from "./CrimeCards/Chart";
 import CrimeReportCard from "./CrimeCards/Report";
-
+import { useNeighbourhoodDemographicStore } from "@/store/neighbourhoodStore";
 
 function CrimeDisplayLayout({ data }) {
+  const { crimeData } = useNeighbourhoodDemographicStore();
+  console.log("crimeData is",crimeData);
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
+
+  
 
   const [openSection, setOpenSection] = useState(hashId);
   const [hoveredSubElement, setHoveredSubElement] = useState(null);
@@ -41,7 +43,7 @@ function CrimeDisplayLayout({ data }) {
           icon: "mdi:email",
           bgColor: "bg-pink-400",
           id: "data",
-          Component: mainCard,
+          Component: MainCard,
         },
         {
           name: "Badge",
@@ -50,24 +52,20 @@ function CrimeDisplayLayout({ data }) {
           id: "badge",
           Component: BadgeCard,
         },
-       {
-        name: "statistics",
-        icon: "mdi:email",
-        bgColor: "bg-pink-400",
-        id: "statistics",
-        Component: CrimeLevelsChartCard,
-
-       },
-       {
-        name:"Report",
-        icon: "mdi:email",
-        bgColor: "bg-pink-400",
-        id: "report",
-        Component: CrimeReportCard,
-       }
-       
-        
-       
+        {
+          name: "statistics",
+          icon: "mdi:email",
+          bgColor: "bg-pink-400",
+          id: "statistics",
+          Component: CrimeLevelsChartCard,
+        },
+        {
+          name: "Report",
+          icon: "mdi:email",
+          bgColor: "bg-pink-400",
+          id: "report",
+          Component: CrimeReportCard,
+        },
       ],
     },
   ];
@@ -116,7 +114,7 @@ function CrimeDisplayLayout({ data }) {
                     id={subElement.id}
                     onMouseEnter={() => handleMouseEnter(subElement.id)}
                   >
-                    <subElement.Component data={data} />
+                    <subElement.Component data={data} reportData={crimeData} />
                   </div>
                 ))}
               </React.Fragment>
@@ -127,81 +125,83 @@ function CrimeDisplayLayout({ data }) {
           {/* ... (rest of your code for navigation) */}
 
           <nav className="sticky top-6 p-4 bg-white w-45 h-fit hidden lg:block">
-                        <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
-                            <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-                                {navElements.map((element, index) => (
-                                    <motion.div
-                                        key={index}
-                                        className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3 }}
+            <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
+              <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
+                {navElements.map((element, index) => (
+                  <motion.div
+                    key={index}
+                    className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
+                      <div className="w-full">
+                        <button
+                          className="w-full text-left"
+                          aria-label=""
+                          onClick={() => toggleSection(element.id)}
+                        >
+                          <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
+                            {element.name}
+                          </h2>
+                        </button>
+                        <AnimatePresence>
+                          {openSection && element.id == openSection && (
+                            <motion.div
+                              key={openSection}
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <motion.ul className="mt-1">
+                                {element.subElements.map(
+                                  (subElement, subIndex) => (
+                                    <motion.li
+                                      key={subElement.id}
+                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
+                                        subElement.bgColor
+                                      } ${
+                                        hoveredSubElement === subElement.id
+                                          ? subElement.bgColor
+                                          : ""
+                                      }`}
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: subIndex * 0.01 }}
                                     >
-                                        <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-                                            <div className="w-full">
-                                                <button
-                                                    className="w-full text-left"
-                                                    aria-label=""
-                                                    onClick={() => toggleSection(element.id)}
-                                                >
-                                                    <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
-                                                        {element.name}
-                                                    </h2>
-                                                </button>
-                                                <AnimatePresence>
-                                                    {openSection && element.id == openSection && (
-                                                        <motion.div
-                                                            key={openSection}
-                                                            initial={{ height: 0, opacity: 0 }}
-                                                            animate={{ height: "auto", opacity: 1 }}
-                                                            exit={{ height: 0, opacity: 0 }}
-                                                            transition={{ duration: 0.3 }}
-                                                            className="overflow-hidden"
-                                                        >
-                                                            <motion.ul className="mt-1">
-                                                                {element.subElements.map(
-                                                                    (subElement, subIndex) => (
-                                                                        <motion.li
-                                                                            key={subElement.id}
-                                                                            className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${subElement.bgColor
-                                                                                } ${hoveredSubElement === subElement.id
-                                                                                    ? subElement.bgColor
-                                                                                    : ""
-                                                                                }`}
-                                                                            initial={{ opacity: 0, x: -10 }}
-                                                                            animate={{ opacity: 1, x: 0 }}
-                                                                            transition={{ delay: subIndex * 0.01 }}
-                                                                        >
-                                                                            <a
-                                                                                href={"#" + subElement.id}
-                                                                                onClick={() =>
-                                                                                    handleMouseEnter(subElement.id)
-                                                                                }
-                                                                                className="flex items-center space-x-4 w-full text-md font-semibold"
-                                                                            >
-                                                                                <div
-                                                                                    className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
-                                                                                >
-                                                                                    <Icon icon={subElement.icon} />
-                                                                                </div>
-                                                                                <span className="text-base">
-                                                                                    {subElement.name}
-                                                                                </span>
-                                                                            </a>
-                                                                        </motion.li>
-                                                                    )
-                                                                )}
-                                                            </motion.ul>
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
-                                            </div>
+                                      <a
+                                        href={"#" + subElement.id}
+                                        onClick={() =>
+                                          handleMouseEnter(subElement.id)
+                                        }
+                                        className="flex items-center space-x-4 w-full text-md font-semibold"
+                                      >
+                                        <div
+                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
+                                        >
+                                          <Icon icon={subElement.icon} />
                                         </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
-                    </nav>
+                                        <span className="text-base">
+                                          {subElement.name}
+                                        </span>
+                                      </a>
+                                    </motion.li>
+                                  )
+                                )}
+                              </motion.ul>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
     </>

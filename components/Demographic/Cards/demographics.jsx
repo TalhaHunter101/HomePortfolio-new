@@ -1,13 +1,16 @@
 import React from "react";
 import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import {
+  useNeighbourhoodDemographicStore,
+  usePostcodeStore,
+} from "@/store/neighbourhoodStore";
 
 function DataOverview({ postcode = "M1 1AE" }) {
-  // Static dummy data for demonstration
-  const populationData = 477084;
-  const walkScore = 75;
+  const { currentPostcode } = usePostcodeStore();
+  const { populationData, walkScore, isLoading, rentData } =
+    useNeighbourhoodDemographicStore();
   const medianPrice = 300000;
-  const medianRent = "1,500 pcm";
 
   return (
     <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
@@ -21,7 +24,7 @@ function DataOverview({ postcode = "M1 1AE" }) {
             />
           </div> */}
           <h2 className="text-lg sm:text-xl font-bold text-gray-700">
-            Is {postcode}, A Good Place To Live?
+            Is {currentPostcode}, A Good Place To Live?
           </h2>
         </div>
       </CardHeader>
@@ -37,7 +40,7 @@ function DataOverview({ postcode = "M1 1AE" }) {
                 height={24}
                 className="inline"
               />{" "}
-              {postcode}: Highlights
+              {currentPostcode}: Highlights
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 pt-4">
               {/* Total Population */}
@@ -46,17 +49,23 @@ function DataOverview({ postcode = "M1 1AE" }) {
                   Total Population
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {populationData !== null ? (
-                    <>
-                      {populationData}
-                      <Icon
-                        icon="mdi:account-group"
-                        height={32}
-                        className="inline pb-2"
-                      />
-                    </>
-                  ) : (
+                  {isLoading ? (
                     <Spinner />
+                  ) : (
+                    <>
+                      {populationData.length === 0 ? (
+                        <p>N/A</p>
+                      ) : (
+                        <>
+                          {populationData[0]?._source?.["Total Population"]}
+                          <Icon
+                            icon="mdi:account-group"
+                            height={32}
+                            className="inline pb-2"
+                          />
+                        </>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -67,17 +76,23 @@ function DataOverview({ postcode = "M1 1AE" }) {
                   Walk Score
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {walkScore !== null ? (
-                    <>
-                      {walkScore}
-                      <Icon
-                        icon="fa-solid:walking"
-                        height={32}
-                        className="inline pb-2"
-                      />
-                    </>
-                  ) : (
+                  {isLoading ? (
                     <Spinner />
+                  ) : (
+                    <>
+                      {walkScore === null ? (
+                        <p>N/A</p>
+                      ) : (
+                        <>
+                          {walkScore}
+                          <Icon
+                            icon="fa-solid:walking"
+                            height={32}
+                            className="inline pb-2"
+                          />
+                        </>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -109,9 +124,11 @@ function DataOverview({ postcode = "M1 1AE" }) {
                   Median Rent
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {medianRent ? (
+                  {rentData[0]?._source?.median_rent ? (
                     <>
-                      {medianRent}
+                      {rentData[0]?._source?.median_rent
+                        .replace("pcm", "")
+                        .trim()}
                       <Icon
                         icon="mage:building-b"
                         height={32}
