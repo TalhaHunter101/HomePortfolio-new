@@ -6,6 +6,7 @@ import useStore from "@/store/useStore";
 import { Card, Spinner } from "@nextui-org/react";
 import Image from "next/image";
 import { usePostcodeStore } from "@/store/neighbourhoodStore";
+import Link from "next/link";
 
 export default function AutoCompleteSearchNew({ properties }) {
   const [isDataLoading, setIsDataLoading] = useState(false);
@@ -112,7 +113,7 @@ export default function AutoCompleteSearchNew({ properties }) {
               />
             </div>
 
-            {results &&results.length !== 0 && (
+            {results && results.length !== 0 && (
               <>
                 {isDataLoading && (
                   <Card className="max-h-[50vh] overflow-y-auto py-2">
@@ -132,30 +133,37 @@ export default function AutoCompleteSearchNew({ properties }) {
                       <div>
                         <div>
                           {results &&
-                            results.map((item, i) => (
-                              <div
-                                className="flex my-3 cursor-pointer"
-                                key={i}
-                                onClick={() => {
-                                  setCurrentPostcode(item.ref_postcode);
-                                  localStorage.setItem("selectedPostcode", item.ref_postcode);
-                                  setResults([]);
-                                }}
-                              >
-                                <Image
-                                  src="/icons/location.svg"
-                                  height={20}
-                                  width={20}
-                                  alt="dev"
-                                  className="mx-2"
-                                />
-                                <div>
-                                  <p className="text-sm text-primaryfonts">
-                                    {item.ref_postcode}
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
+                            results.map((item, i) => {
+                              const formattedPostcode = item.ref_postcode.replace(" ", "-");
+                              return (
+                                <Link
+                                  className="flex my-3 cursor-pointer"
+                                  key={i}
+                                  href={`/neighbourhood-guide/${formattedPostcode}`}
+                                  onClick={() => {
+                                    setCurrentPostcode(item.ref_postcode);
+                                    localStorage.setItem(
+                                      "selectedPostcode",
+                                      item.ref_postcode
+                                    );
+                                    setResults([]);
+                                  }}
+                                >
+                                  <Image
+                                    src="/icons/location.svg"
+                                    height={20}
+                                    width={20}
+                                    alt="dev"
+                                    className="mx-2"
+                                  />
+                                  <div>
+                                    <p className="text-sm text-primaryfonts">
+                                      {item.ref_postcode}
+                                    </p>
+                                  </div>
+                                </Link>
+                              );
+                            })}
                         </div>
                       </div>
                     </div>

@@ -113,7 +113,7 @@ export const ScatterChartComponent = ({ data, text, price, currentSize }) => {
           // Calculate the median using the top 3 prices
           const median = calculateMedian(prices);
           const average = calculateAverage(prices);
-          setMedianPrice(median); // Set in Zustand store
+          setMedianPrice(median);
           setAveragePrice(average)
 
           // Prepare scatter data

@@ -8,10 +8,9 @@ import {
 
 function DataOverview({ postcode = "M1 1AE" }) {
   const { currentPostcode } = usePostcodeStore();
-  const { populationData, walkScore, isLoading } =
+  const { populationData, walkScore, isLoading, rentData } =
     useNeighbourhoodDemographicStore();
   const medianPrice = 300000;
-  const medianRent = "1,500 pcm";
 
   return (
     <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
@@ -125,9 +124,11 @@ function DataOverview({ postcode = "M1 1AE" }) {
                   Median Rent
                 </span>
                 <div className="text-2xl sm:text-4xl font-medium text-purple-300">
-                  {medianRent ? (
+                  {rentData[0]?._source?.median_rent ? (
                     <>
-                      {medianRent}
+                      {rentData[0]?._source?.median_rent
+                        .replace("pcm", "")
+                        .trim()}
                       <Icon
                         icon="mage:building-b"
                         height={32}
