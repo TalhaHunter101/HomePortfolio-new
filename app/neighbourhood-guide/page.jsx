@@ -1,16 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import DisplayLayout from "@/components/Demographic/Display";
-import AutocompleteSearch from "../autocompleteSearchBar";
 import { Icon } from "@iconify/react"; // Import Iconify for icons
 import AutoCompleteSearchNew from "@/components/Demographic/AutoCompleteSearch";
 import {
   useNeighbourhoodDemographicStore,
   usePostcodeStore,
 } from "@/store/neighbourhoodStore";
+import CrimeDisplayLayout from "@/components/Demographic/CrimeDisplay";
 
 // Dummy content for each tab
-const TabContent = ({ tab }) => {
+const TabContent = ({ tab, data }) => {
   switch (tab) {
     case "Overview":
       return <DisplayLayout />;
@@ -19,7 +19,7 @@ const TabContent = ({ tab }) => {
     case "Affluence":
       return <div>Affluence data here</div>;
     case "Crime":
-      return <div>Crime data here</div>;
+      return <CrimeDisplayLayout />;
     case "Environment":
       return <div>Environment data here</div>;
     case "Transport":
@@ -49,6 +49,7 @@ const Page = () => {
     setPopulationAgeData,
     setEthnicGroupData,
     setAccomadationData,
+    setCrimeData,
     setWalkScore,
     setWalkScoreDescription,
     setIsLoading,
@@ -112,6 +113,7 @@ const Page = () => {
           "/api/v2/demographic/get-population-data-by-age",
           "/api/v2/demographic/get-ethnic-group-data",
           "/api/v2/demographic/get-accomodation-data",
+          "/api/indevisual/get-crime-data",
         ];
 
         const fetchData = endpoints.map((endpoint) =>
@@ -140,6 +142,7 @@ const Page = () => {
           fetchPopulationAgeData,
           fetchEthnicGroupData,
           fetchAccomodationData,
+          fetchCrimeData,
         ] = await Promise.all(fetchData);
 
         setEconomicData(fetchEconomicData);
@@ -152,6 +155,7 @@ const Page = () => {
         setPopulationAgeData(fetchPopulationAgeData);
         setEthnicGroupData(fetchEthnicGroupData);
         setAccomadationData(fetchAccomodationData);
+        setCrimeData(fetchCrimeData);
 
         setIsLoading(false);
       } catch (error) {
@@ -202,6 +206,7 @@ const Page = () => {
     setPopulationAgeData,
     setEthnicGroupData,
     setAccomadationData,
+    setCrimeData,
     setIsLoading,
     setWalkScore,
     setWalkScoreDescription,
@@ -250,3 +255,4 @@ const Page = () => {
 };
 
 export default Page;
+//consolimg data 
