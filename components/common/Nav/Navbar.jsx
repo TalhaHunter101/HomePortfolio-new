@@ -129,6 +129,11 @@ export default function NavBar() {
           Neighbourhood Guide
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/ranking">
+          Rankings
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
 
