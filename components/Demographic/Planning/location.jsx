@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardBody } from '@nextui-org/react';
 import { Tabs, Tab, Switch } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
+import { DemograpicMapStatic } from '@/components/Maps/NeighbourhoodMaps';
 
 export function LocationOverviewCard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -11,14 +12,17 @@ export function LocationOverviewCard() {
     setIsMapInteractive((prevState) => !prevState);
   };
 
+  const center = [
+    {
+      lat: 51.5072,
+      lng: 0.1276,
+    },
+  ];
+
   const renderMap = () => {
     return (
       <div className="relative w-full lg:w-[1100px] transition duration-300 overflow-hidden h-[40vh] md:h-[60vh] bg-gray-200">
-        {/* Switch in top right corner */}
-        
-        
-        {/* Placeholder for the map */}
-        <p className="text-center text-lg font-semibold">Map Placeholder</p>
+        <DemograpicMapStatic width="100%" center={center} height={"500px"} />
       </div>
     );
   };

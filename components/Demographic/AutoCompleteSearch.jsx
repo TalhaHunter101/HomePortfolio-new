@@ -23,17 +23,20 @@ export default function AutoCompleteSearchNew({ properties }) {
         clearAllFilter();
 
         // Fetch results from the new API endpoint
-        const response = await fetch(`/api/neighbourhood/search-postcode`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ postcode: term }),
-        });
+        const response = await fetch(
+          `/api/neighbourhood/neighbourhood-search`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ query: term }),
+          }
+        );
         const result = await response.json();
 
         // If results are returned, set them directly as an array
-        const mergedResults = result && result.length > 0 ? result : [];
+        const mergedResults = result;
 
         // Set the merged results
         setResults(mergedResults);
@@ -85,6 +88,8 @@ export default function AutoCompleteSearchNew({ properties }) {
     }),
   };
 
+  console.log("resultis is", results);
+
   return (
     <div className="mt-4 p-4 rounded-lg w-full overflow-hidden">
       <div className="tabs-container flex justify-center "></div>
@@ -113,7 +118,7 @@ export default function AutoCompleteSearchNew({ properties }) {
               />
             </div>
 
-            {results && results.length !== 0 && (
+            {results && (
               <>
                 {isDataLoading && (
                   <Card className="max-h-[50vh] overflow-y-auto py-2">
@@ -132,38 +137,129 @@ export default function AutoCompleteSearchNew({ properties }) {
                     <div className="px-2 ">
                       <div>
                         <div>
-                          {results &&
-                            results.map((item, i) => {
-                              const formattedPostcode = item.ref_postcode.replace(" ", "-");
-                              return (
-                                <Link
-                                  className="flex my-3 cursor-pointer"
-                                  key={i}
-                                  href={`/neighbourhood-guide/${formattedPostcode}`}
-                                  onClick={() => {
-                                    setCurrentPostcode(item.ref_postcode);
-                                    localStorage.setItem(
-                                      "selectedPostcode",
-                                      item.ref_postcode
-                                    );
-                                    setResults([]);
-                                  }}
-                                >
-                                  <Image
-                                    src="/icons/location.svg"
-                                    height={20}
-                                    width={20}
-                                    alt="dev"
-                                    className="mx-2"
-                                  />
-                                  <div>
-                                    <p className="text-sm text-primaryfonts">
-                                      {item.ref_postcode}
-                                    </p>
-                                  </div>
-                                </Link>
-                              );
-                            })}
+                          {results?.outcode?.length !== 0 && (
+                            <>
+                              <h2>Postcode</h2>
+
+                              {results?.outcode?.map((item, i) => {
+                                console.log("outcide", item);
+                                const formattedPostcode = item.outcode.replace(
+                                  " ",
+                                  "-"
+                                );
+                                return (
+                                  <Link
+                                    className="flex my-3 cursor-pointer"
+                                    key={i}
+                                    href={`/neighbourhood-guide/${formattedPostcode}`}
+                                    onClick={() => {
+                                      setCurrentPostcode(item.outcode);
+                                      localStorage.setItem(
+                                        "selectedPostcode",
+                                        item.outcode
+                                      );
+                                      setResults([]);
+                                    }}
+                                  >
+                                    <Image
+                                      src="/icons/location.svg"
+                                      height={20}
+                                      width={20}
+                                      alt="dev"
+                                      className="mx-2"
+                                    />
+                                    <div>
+                                      <p className="text-sm text-primaryfonts">
+                                        {item.outcode}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </>
+                          )}
+
+                          {results?.district_code?.length !== 0 && (
+                            <>
+                              <h2>District</h2>
+
+                              {results?.district_code?.map((item, i) => {
+                                const formattedPostcode = item.outcode.replace(
+                                  " ",
+                                  "-"
+                                );
+                                return (
+                                  <Link
+                                    className="flex my-3 cursor-pointer"
+                                    key={i}
+                                    href={`/neighbourhood-guide/${formattedPostcode}`}
+                                    onClick={() => {
+                                      setCurrentPostcode(item.outcode);
+                                      localStorage.setItem(
+                                        "selectedPostcode",
+                                        item.outcode
+                                      );
+                                      setResults([]);
+                                    }}
+                                  >
+                                    <Image
+                                      src="/icons/location.svg"
+                                      height={20}
+                                      width={20}
+                                      alt="dev"
+                                      className="mx-2"
+                                    />
+                                    <div>
+                                      <p className="text-sm text-primaryfonts">
+                                        {item.district_code}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </>
+                          )}
+
+                          {results?.District_name?.length !== 0 && (
+                            <>
+                              <h2>District</h2>
+
+                              {results?.District_name?.map((item, i) => {
+                                const formattedPostcode = item.outcode.replace(
+                                  " ",
+                                  "-"
+                                );
+                                return (
+                                  <Link
+                                    className="flex my-3 cursor-pointer"
+                                    key={i}
+                                    href={`/neighbourhood-guide/${formattedPostcode}`}
+                                    onClick={() => {
+                                      setCurrentPostcode(item.outcode);
+                                      localStorage.setItem(
+                                        "selectedPostcode",
+                                        item.outcode
+                                      );
+                                      setResults([]);
+                                    }}
+                                  >
+                                    <Image
+                                      src="/icons/location.svg"
+                                      height={20}
+                                      width={20}
+                                      alt="dev"
+                                      className="mx-2"
+                                    />
+                                    <div>
+                                      <p className="text-sm text-primaryfonts">
+                                        {item.District_name}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>

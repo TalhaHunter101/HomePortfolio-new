@@ -4,12 +4,15 @@ import { Icon } from "@iconify/react";
 import {
   useNeighbourhoodDemographicStore,
   usePostcodeStore,
+  userNewNeighbourhoodData,
 } from "@/store/neighbourhoodStore";
 
 function DataOverview({ postcode = "M1 1AE" }) {
   const { currentPostcode } = usePostcodeStore();
-  const { populationData, walkScore, isLoading, rentData } =
-    useNeighbourhoodDemographicStore();
+  const {  walkScore, rentData } =
+  useNeighbourhoodDemographicStore();
+
+  const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
   const medianPrice = 300000;
 
   return (
@@ -53,18 +56,12 @@ function DataOverview({ postcode = "M1 1AE" }) {
                     <Spinner />
                   ) : (
                     <>
-                      {populationData.length === 0 ? (
-                        <p>N/A</p>
-                      ) : (
-                        <>
-                          {populationData[0]?._source?.["Total Population"]}
-                          <Icon
-                            icon="mdi:account-group"
-                            height={32}
-                            className="inline pb-2"
-                          />
-                        </>
-                      )}
+                      {newNeighbourhoodData?.population}
+                      <Icon
+                        icon="mdi:account-group"
+                        height={32}
+                        className="inline pb-2"
+                      />
                     </>
                   )}
                 </div>

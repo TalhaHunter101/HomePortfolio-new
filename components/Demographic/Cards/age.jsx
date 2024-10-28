@@ -1,16 +1,25 @@
-'use client';
-import React, { useMemo } from 'react';
-import { Card, CardHeader, CardBody } from '@nextui-org/react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { useNeighbourhoodDemographicStore } from '@/store/neighbourhoodStore';
+import React, { useMemo } from "react";
+import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
+import { userNewNeighbourhoodData } from "@/store/neighbourhoodStore";
 
-const COLORS = ['#82ca9d', '#fda4af', '#8884d8'];
+const COLORS = ['#6295cc', '#ed8b69', '#33b5b5'];
 
 function AgeCard() {
-  const { populationAgeData } = useNeighbourhoodDemographicStore();
-  
+  const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
+
   const { ageRangeData, ageCategoryData, medianAge } = useMemo(() => {
-    if (!populationAgeData || populationAgeData.length === 0) {
+    if (!newNeighbourhoodData) {
       return {
         ageRangeData: [],
         ageCategoryData: [],
@@ -18,33 +27,32 @@ function AgeCard() {
       };
     }
 
-    const data = populationAgeData[0]._source; // Assuming one data entry for now
+    const data = newNeighbourhoodData; // Use newNeighbourhoodData directly
     const ageRangeData = [
-      { name: '0-9', value: (data["Aged 4 years and under"] || 0) + (data["Aged 5 to 9 years"] || 0) },
-      { name: '10-19', value: (data["Aged 10 to 14 years"] || 0) + (data["Aged 15 to 19 years"] || 0) },
-      { name: '20-29', value: (data["Aged 20 to 24 years"] || 0) + (data["Aged 25 to 29 years"] || 0) },
-      { name: '30-39', value: (data["Aged 30 to 34 years"] || 0) + (data["Aged 35 to 39 years"] || 0) },
-      { name: '40-49', value: (data["Aged 40 to 44 years"] || 0) + (data["Aged 45 to 49 years"] || 0) },
-      { name: '50-59', value: (data["Aged 50 to 54 years"] || 0) + (data["Aged 55 to 59 years"] || 0) },
-      { name: '60-69', value: (data["Aged 60 to 64 years"] || 0) + (data["Aged 65 to 69 years"] || 0) },
-      { name: '70-79', value: (data["Aged 70 to 74 years"] || 0) + (data["Aged 75 to 79 years"] || 0) },
-      { name: '80+', value: (data["Aged 80 to 84 years"] || 0) + (data["Aged 85 years and over"] || 0) },
+      { name: "0-9",   value: parseInt(data["Age: Aged 4 years and under"] || 0) + parseInt(data["Age: Aged 5 to 9 years"] || 0) },
+      { name: "10-19", value: parseInt(data["Age: Aged 10 to 14 years"] || 0) + parseInt(data["Age: Aged 15 to 19 years"] || 0) },
+      { name: "20-29", value: parseInt(data["Age: Aged 20 to 24 years"] || 0) + parseInt(data["Age: Aged 25 to 29 years"] || 0) },
+      { name: "30-39", value: parseInt(data["Age: Aged 30 to 34 years"] || 0) + parseInt(data["Age: Aged 35 to 39 years"] || 0) },
+      { name: "40-49", value: parseInt(data["Age: Aged 40 to 44 years"] || 0) + parseInt(data["Age: Aged 45 to 49 years"] || 0) },
+      { name: "50-59", value: parseInt(data["Age: Aged 50 to 54 years"] || 0) + parseInt(data["Age: Aged 55 to 59 years"] || 0) },
+      { name: "60-69", value: parseInt(data["Age: Aged 60 to 64 years"] || 0) + parseInt(data["Age: Aged 65 to 69 years"] || 0) },
+      { name: "70-79", value: parseInt(data["Age: Aged 70 to 74 years"] || 0) + parseInt(data["Age: Aged 75 to 79 years"] || 0) },
+      { name: "80+",   value: parseInt(data["Age: Aged 80 to 84 years"] || 0) + parseInt(data["Age: Aged 85 years and over"] || 0) },
     ];
 
     const ageCategoryData = [
-      { name: 'Under 18', value: ageRangeData.slice(0, 2).reduce((sum, age) => sum + age.value, 0) },
-      { name: '18 to 64', value: ageRangeData.slice(2, 7).reduce((sum, age) => sum + age.value, 0) },
-      { name: '65 and over', value: ageRangeData.slice(7).reduce((sum, age) => sum + age.value, 0) },
+      { name: "Under 18",  value: ageRangeData.slice(0, 2).reduce((sum, age) => sum + age.value, 0) },
+      { name: "18 to 64", value: ageRangeData.slice(2, 7).reduce((sum, age) => sum + age.value, 0) },
+      { name: "65 and over", value: ageRangeData.slice(7).reduce((sum, age) => sum + age.value, 0) },
     ];
 
-    const medianAge = data["Median Age"] || 0;
+    const medianAge = data["median_age"] || 0; // Ensure correct key match for median_age
 
     return { ageRangeData, ageCategoryData, medianAge };
-  }, [populationAgeData]);
+  }, [newNeighbourhoodData]);
 
   return (
     <Card className="m-4 p-0 overflow-hidden">
-      {/* Header */}
       <CardHeader className="flex flex-col items-start p-4">
         <div>
           <h2 className="text-xl font-bold">Age</h2>
@@ -58,21 +66,19 @@ function AgeCard() {
           </p>
         </div>
       </CardHeader>
-
-      {/* Body */}
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
-        {/* Bar chart for Population by Age Range */}
         <div className="lg:col-span-2">
-          <h3 className="text-md font-bold mb-4">Population by age range</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={ageRangeData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#82ca9d" barSize={30} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+  <h3 className="text-md font-bold mb-4">Population by age range</h3>
+  <ResponsiveContainer width="100%" height={250}>
+    <BarChart data={ageRangeData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="value" fill="#33b5b5" barSize={100} /> {/* Adjust barSize to 20 for thinner bars */}
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
 
         {/* Pie chart for Population by Age Category */}
         <div>
@@ -84,7 +90,7 @@ function AgeCard() {
           dataKey="value"
           outerRadius={80}    // Outer radius for the donut size
           innerRadius={60}    // Inner radius for the thin donut effect
-          fill="#8884d8"
+          fill="#ed8b69"
           label
         >
           {ageCategoryData.map((entry, index) => (
@@ -95,15 +101,16 @@ function AgeCard() {
     </ResponsiveContainer>
           <div className="flex justify-around mt-2 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#82ca9d]" /> <span>Under 18</span>
+              <div className="w-3 h-3 bg-[#6295cc]" /> <span>Under 18</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#FFBB28]" /> <span>18 to 64</span>
+              <div className="w-3 h-3 bg-[#ed8b69]" /> <span>18 to 64</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#8884d8]" /> <span>65 and over</span>
+              <div className="w-3 h-3 bg-[#33b5b5]" /> <span>65 and over</span>
             </div>
           </div>
+      
         </div>
       </CardBody>
     </Card>
