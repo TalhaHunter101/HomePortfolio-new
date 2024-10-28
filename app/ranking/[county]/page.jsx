@@ -117,25 +117,25 @@ export default function CountyPage({ params }) {
                         <div>
                           <p>Rent to Household Income Ratio</p>
                           <strong className="text-3xl text-blue-400 font-medium">
-                            {/* {neighborhood.rentIncomeRatio}% */}
+                            {neighborhood["Rent to Income"]}%
                           </strong>
                         </div>
                         <div>
                           <p>Population</p>
                           <h2 className="text-3xl font-medium text-gray-600 ">
-                            {/* {neighborhood.population.toLocaleString()} */}
+                            {neighborhood.population.toLocaleString()}
                           </h2>
                         </div>
                         <div>
-                          <p>Median Home Price / Sqft</p>
+                          <p>Average Home Price / Sqft</p>
                           <h2 className="text-3xl font-medium text-gray-600">
-                            {/* ${neighborhood.pricePerSqft} */}
+                            ${neighborhood["Avg Listing per sqft"]}
                           </h2>
                         </div>
                         <div>
-                          <p>Median Home Price</p>
+                          <p>Average Home Price</p>
                           <h2 className="text-3xl font-medium text-gray-600">
-                            {/* ${neighborhood.homePrice.toLocaleString()} */}
+                            ${neighborhood["Avg sold price"].toLocaleString()}
                           </h2>
                         </div>
                         <div>
@@ -202,13 +202,13 @@ export default function CountyPage({ params }) {
                     </div>
 
                     {/* Right Column - Cheapest Home */}
-                    <div className="lg:w-1/4 w-full mt-4">
+                    {/* <div className="lg:w-1/4 w-full mt-4">
                       <SearchCard
                         property={neighborhood.cheapestHome}
                         setCardHover={() => {}}
                         isLiked={false}
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-4">
                       <Button
                         startContent={<Icon icon="ic:round-home" />}
@@ -217,7 +217,7 @@ export default function CountyPage({ params }) {
                         className="mb-6 w-full sm:w-auto"
                       >
                         See other homes for sale in
-                        {/* {countyData.neighborhoods[0].name} */}
+                        {neighborhood["District_name"]}
                       </Button>
                     </div>
                   </div>

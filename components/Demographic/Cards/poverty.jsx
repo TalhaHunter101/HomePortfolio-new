@@ -40,7 +40,6 @@ function PovertyOverviewCard() {
 
 const COLORS = ['#ed8b69', '#33b5b5']; // Greenish and peach color
 
-function PovertyOverviewCard() {
   return (
     <Card className="m-4 p-0 overflow-hidden">
       <CardHeader className="p-4">
@@ -104,5 +103,6 @@ function PovertyOverviewCard() {
     </Card>
   );
 }
+
 
 export default PovertyOverviewCard;
