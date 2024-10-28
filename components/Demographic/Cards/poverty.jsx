@@ -13,7 +13,7 @@ const povertyDataSeniors = [
   { name: 'Non-poverty', value: 89 },
 ];
 
-const COLORS = ['#82ca9d', '#fda4af']; // Greenish and peach color
+const COLORS = ['#ed8b69', '#33b5b5']; // Greenish and peach color
 
 function PovertyOverviewCard() {
   return (

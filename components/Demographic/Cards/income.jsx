@@ -53,13 +53,13 @@ function IncomeOverviewCard() {
         <div className="lg:col-span-2">
           <h3 className="text-md font-bold mb-4">Household income</h3>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={householdIncomeData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill={BAR_COLOR} barSize={30} />
-            </BarChart>
-          </ResponsiveContainer>
+  <BarChart data={householdIncomeData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+    <Bar dataKey="value" fill="#33b5b5" barSize={100} /> {/* Reduced barSize for thinner bars */}
+  </BarChart>
+</ResponsiveContainer>
         </div>
       </CardBody>
     </Card>

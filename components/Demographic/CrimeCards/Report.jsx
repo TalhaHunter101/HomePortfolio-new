@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export const CrimeReportCard = ({ reportData }) => {
   const totalCrimes = reportData.length;
@@ -42,7 +43,7 @@ export const CrimeReportCard = ({ reportData }) => {
   }
 
   return (
-    <Card className="m-4 p-4 h-full max-h-[500px]">
+    <Card className="m-4 p-4 h-full ">
       <CardBody className="h-full">
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
           <h1 className="text-lg font-semibold text-gray-800 mb-1">
@@ -54,7 +55,7 @@ export const CrimeReportCard = ({ reportData }) => {
         </div>
 
         {/* Scrollable crimes list */}
-        <div className="space-y-3 max-h-64 overflow-y-auto">
+        <div className="space-y-3 max-h-64 h-64 overflow-y-auto mb-4">
           {crimeData.map((crime, index) => (
             <div
               key={index}
@@ -79,6 +80,22 @@ export const CrimeReportCard = ({ reportData }) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Bar chart to display crime data */}
+        <div className="mt-6 text-xs">
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart
+              data={crimeData}
+              layout="vertical" // Set layout to vertical for horizontal bars
+              margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+            >
+              <XAxis type="number" />
+              <YAxis dataKey="type" type="category" width={100} />
+              <Tooltip />
+              <Bar dataKey="count" fill="#33b5b5" barSize={20} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </CardBody>
     </Card>

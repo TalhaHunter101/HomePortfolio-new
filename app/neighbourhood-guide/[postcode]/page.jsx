@@ -8,16 +8,18 @@ import {
   usePostcodeStore,
 } from "@/store/neighbourhoodStore";
 import CrimeDisplayLayout from "@/components/Demographic/CrimeDisplay";
+import OverviewDisplayLayout from "@/components/Demographic/OverViewDisplay";
+import PlanningDisplayLayout from "@/components/Demographic/PlanningDisplay";
 
 // Dummy content for each tab
 const TabContent = ({ tab, data }) => {
   switch (tab) {
     case "Overview":
-      return <DisplayLayout />;
-    case "Demographics":
-      return <div>Demographics data here</div>;
-    case "Affluence":
-      return <div>Affluence data here</div>;
+      return <OverviewDisplayLayout/>;
+      case "Demographics":
+        return <DisplayLayout />
+    case "Planning Applications":
+      return <PlanningDisplayLayout/>;
     case "Crime":
       return <CrimeDisplayLayout />;
     case "Environment":
@@ -82,7 +84,7 @@ const Page = () => {
   const tabs = [
     { key: "Overview", label: "Overview", icon: "mdi:view-dashboard" },
     { key: "Demographics", label: "Demographics", icon: "mdi:account-group" },
-    { key: "Affluence", label: "Affluence", icon: "mdi:currency-usd" },
+    { key: "Planning Applications", label: "Planning Applications", icon: "mdi:currency-usd" },
     { key: "Crime", label: "Crime", icon: "mdi:shield-alert" },
     { key: "Environment", label: "Environment", icon: "mdi:tree" },
     { key: "Transport", label: "Transport", icon: "mdi:bus" },
