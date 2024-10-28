@@ -123,7 +123,7 @@ function TransportationOverviewCard() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="value" fill="#82ca9d" barSize={30} />
+              <Bar dataKey="value" fill="#33b5b5" barSize={100} />
             </BarChart>
           </ResponsiveContainer>
         </div>

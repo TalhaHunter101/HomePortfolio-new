@@ -13,7 +13,7 @@ import {
 } from "recharts";
 import { userNewNeighbourhoodData } from "@/store/neighbourhoodStore";
 
-const COLORS = ["#82ca9d", "#fda4af", "#8884d8"];
+const COLORS = ['#6295cc', '#ed8b69', '#33b5b5'];
 
 function AgeCard() {
   const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
@@ -68,44 +68,46 @@ function AgeCard() {
       </CardHeader>
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
         <div className="lg:col-span-2">
-          <h3 className="text-md font-bold mb-4">Population by age range</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={ageRangeData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#82ca9d" barSize={30} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+  <h3 className="text-md font-bold mb-4">Population by age range</h3>
+  <ResponsiveContainer width="100%" height={250}>
+    <BarChart data={ageRangeData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="value" fill="#33b5b5" barSize={100} /> {/* Adjust barSize to 20 for thinner bars */}
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
+
+        {/* Pie chart for Population by Age Category */}
         <div>
           <h3 className="text-md font-bold mb-4">Population by age category</h3>
           <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={ageCategoryData}
-                dataKey="value"
-                outerRadius={80}
-                innerRadius={60}
-                fill="#8884d8"
-                label
-              >
-                {ageCategoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-
+      <PieChart>
+        <Pie
+          data={ageCategoryData}
+          dataKey="value"
+          outerRadius={80}    // Outer radius for the donut size
+          innerRadius={60}    // Inner radius for the thin donut effect
+          fill="#ed8b69"
+          label
+        >
+          {ageCategoryData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
           <div className="flex justify-around mt-2 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#82ca9d]" /> <span>Under 18</span>
+              <div className="w-3 h-3 bg-[#6295cc]" /> <span>Under 18</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#FFBB28]" /> <span>18 to 64</span>
+              <div className="w-3 h-3 bg-[#ed8b69]" /> <span>18 to 64</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#8884d8]" /> <span>65 and over</span>
+              <div className="w-3 h-3 bg-[#33b5b5]" /> <span>65 and over</span>
             </div>
           </div>
       

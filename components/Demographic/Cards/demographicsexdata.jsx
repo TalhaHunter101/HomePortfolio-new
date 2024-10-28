@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { userNewNeighbourhoodData } from '@/store/neighbourhoodStore';
 
-const COLORS = ['#82ca9d', '#fda4af']; // Colors for the sex pie chart
+const COLORS = ['#33b5b5', '#ed8b69']; // Colors for the sex pie chart
 const BAR_COLOR = '#82ca9d'; // Color for the bar chart
 
 function DemographicSexRaceCard() {
@@ -70,10 +70,10 @@ function DemographicSexRaceCard() {
           </ResponsiveContainer>
           <div className="flex justify-around w-full mt-2 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#82ca9d]" /> <span>Male</span>
+              <div className="w-3 h-3 bg-[#33b5b5]" /> <span>Male</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#fda4af]" /> <span>Female</span>
+              <div className="w-3 h-3 bg-[#ed8b69]" /> <span>Female</span>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ function DemographicSexRaceCard() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="value" fill={BAR_COLOR} barSize={30} />
+              <Bar dataKey="value" fill="#33b5b5" barSize={100} />
             </BarChart>
           </ResponsiveContainer>
         </div>

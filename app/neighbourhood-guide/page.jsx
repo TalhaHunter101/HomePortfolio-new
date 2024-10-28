@@ -8,14 +8,15 @@ import {
   usePostcodeStore,
 } from "@/store/neighbourhoodStore";
 import CrimeDisplayLayout from "@/components/Demographic/CrimeDisplay";
+import OverviewDisplayLayout from "@/components/Demographic/OverViewDisplay";
 
 // Dummy content for each tab
 const TabContent = ({ tab, data }) => {
   switch (tab) {
     case "Overview":
-      return <DisplayLayout />;
+      return <OverviewDisplayLayout/>;
     case "Demographics":
-      return <div>Demographics data here</div>;
+      return <DisplayLayout />
     case "Affluence":
       return <div>Affluence data here</div>;
     case "Crime":
