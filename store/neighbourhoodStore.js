@@ -39,3 +39,11 @@ export const useNeighbourhoodDemographicStore = create((set) => ({
  setWalkScoreDescription: (data) => set({ walkScoreDescription: data }),
  setIsLoading: (isLoading) => set({ isLoading: isLoading }),
 }));
+
+
+export const userNewNeighbourhoodData = create((set) => ({
+  newNeighbourhoodData: null,
+  isLoading: true,
+  setNewNeighbourhoodData: (data) => set({ newNeighbourhoodData: data }),
+  setNewIsLoading: (isLoading) => set({ isLoading: isLoading }),
+}))

@@ -6,6 +6,7 @@ import { Button, Card, Chip, Input } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
 import AutocompleteSearch from '../autocompleteSearchBar';
 import { motion } from 'framer-motion';
+import RankingAutoCompleteSearch from '@/components/Ranking/RankingAutoCompleteSearch';
 
 let properties = [
   {
@@ -405,11 +406,11 @@ export default function RankingPage() {
             Whether you want to splurge or save, find your ideal area now.
           </p>
           <div className="mt-2 w-full sm:max-w-[90vw] md:max-w-[60vw] lg:max-w-[800px] flex justify-center gap-3 z-10">
-            <AutocompleteSearch properties={properties} />
+            <RankingAutoCompleteSearch />
           </div>
         </div>
 
-      </div>
+      </div> 
     </div>
   </div>
   

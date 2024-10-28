@@ -1,59 +1,54 @@
 import React, { useMemo } from 'react';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import { useNeighbourhoodDemographicStore } from '@/store/neighbourhoodStore';
+import { userNewNeighbourhoodData } from '@/store/neighbourhoodStore';
 
 const COLORS = ['#82ca9d', '#fda4af']; // Colors for the sex pie chart
 const BAR_COLOR = '#82ca9d'; // Color for the bar chart
 
 function DemographicSexRaceCard() {
-  const { ethnicGroupData, populationData } = useNeighbourhoodDemographicStore();
- 
+  const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
+
   // Prepare data for charts
   const { sexData, raceEthnicityData } = useMemo(() => {
-    if (!ethnicGroupData || ethnicGroupData.length === 0 || !populationData || populationData.length === 0) {
+    if (!newNeighbourhoodData) {
       return {
         sexData: [],
         raceEthnicityData: [],
       };
     }
 
-    const ethnicData = ethnicGroupData[0]._source; // Assuming one data entry for ethnic group data
-    const popData = populationData[0]._source; // Assuming one data entry for population data
+    const data = newNeighbourhoodData;
 
-    const totalPopulation = popData["Total Population"];
-    const totalRaceEthnicity = ethnicData["Total Race Ethnicity"];
+    const totalPopulation = parseFloat(data["Sex: All persons; measures: Value"]);
+    const totalRaceEthnicity = parseFloat(data["race_ethnicity_total"]);
 
     // Data for Sex Pie Chart
     const sexData = [
-      { name: 'Male', value: parseFloat(((popData["Male"] || 0) / totalPopulation * 100).toFixed(2)) },
-      { name: 'Female', value: parseFloat(((popData["Female"] || 0) / totalPopulation * 100).toFixed(2)) },
+      { name: 'Male', value: parseFloat(((data["Sex: Male; measures: Value"] || 0) / totalPopulation * 100).toFixed(2)) },
+      { name: 'Female', value: parseFloat(((data["Sex: Female; measures: Value"] || 0) / totalPopulation * 100).toFixed(2)) },
     ];
 
     // Data for Race & Ethnicity Bar Chart
     const raceEthnicityData = [
-      { name: 'White', value: parseFloat(((ethnicData["White"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Black', value: parseFloat(((ethnicData["Black"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Asian', value: parseFloat(((ethnicData["Asian"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Others', value: parseFloat(((ethnicData["Others"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Two+', value: parseFloat(((ethnicData["Two or more"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'White', value: parseFloat(((data["race_ethnicity_white"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Black', value: parseFloat(((data["race_ethnicity_black"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Asian', value: parseFloat(((data["race_ethnicity_asian"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Others', value: parseFloat(((data["race_ethnicity_other"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      { name: 'Two+', value: parseFloat(((data["race_ethnicity_two_or_more"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
     ];
 
     return { sexData, raceEthnicityData };
-  }, [ethnicGroupData, populationData]);
+  }, [newNeighbourhoodData]);
 
   return (
     <Card className="m-4 p-0 overflow-hidden">
-      {/* Header */}
       <CardHeader className="flex flex-col items-start p-4">
         <div>
-          <h2 className="text-xl font-bold">Sex</h2>
+          <h2 className="text-xl font-bold">Demographics</h2>
         </div>
       </CardHeader>
-
-      {/* Body */}
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
-        {/* Pie chart for Sex */}
         <div className="lg:col-span-1 flex flex-col items-center">
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -78,12 +73,10 @@ function DemographicSexRaceCard() {
               <div className="w-3 h-3 bg-[#82ca9d]" /> <span>Male</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-[#FFBB28]" /> <span>Female</span>
+              <div className="w-3 h-3 bg-[#fda4af]" /> <span>Female</span>
             </div>
           </div>
         </div>
-
-        {/* Bar chart for Race & Ethnicity */}
         <div className="lg:col-span-2">
           <h3 className="text-md font-bold mb-4">Race & Ethnicity</h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -101,4 +94,3 @@ function DemographicSexRaceCard() {
 }
 
 export default DemographicSexRaceCard;
-

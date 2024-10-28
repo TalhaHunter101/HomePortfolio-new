@@ -6,6 +6,7 @@ import AutoCompleteSearchNew from "@/components/Demographic/AutoCompleteSearch";
 import {
   useNeighbourhoodDemographicStore,
   usePostcodeStore,
+  userNewNeighbourhoodData,
 } from "@/store/neighbourhoodStore";
 import CrimeDisplayLayout from "@/components/Demographic/CrimeDisplay";
 
@@ -37,7 +38,7 @@ const TabContent = ({ tab, data }) => {
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("Overview");
-  const { currentPostcode,setCurrentPostcode } = usePostcodeStore();
+  const { currentPostcode, setCurrentPostcode } = usePostcodeStore();
   const {
     setEconomicData,
     setEucationData,
@@ -55,6 +56,9 @@ const Page = () => {
     setWalkScoreDescription,
     setIsLoading,
   } = useNeighbourhoodDemographicStore();
+
+  const { setNewNeighbourhoodData, setNewIsLoading } =
+    userNewNeighbourhoodData();
 
   const properties = [
     {
@@ -97,7 +101,6 @@ const Page = () => {
       setCurrentPostcode(savedPostcode);
     }
   }, [currentPostcode, setCurrentPostcode]);
-
 
   useEffect(() => {
     const fetchAllDemographicData = async ({ postcode }) => {
@@ -166,6 +169,33 @@ const Page = () => {
         setIsLoading(false);
       }
     };
+
+    const getNeighbourhoodData = async ({ outcode }) => {
+      try {
+        setNewIsLoading(true);
+        const res = await fetch("/api/neighbourhood/get-neighbourhood-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            outcode: outcode,
+          }),
+        });
+
+        if (res.ok) {
+          const result = await res.json();
+          setNewNeighbourhoodData(result[0]?._source);
+          setNewIsLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setNewIsLoading(false)
+      }finally{
+        setNewIsLoading(false)
+      }
+    };
+
     const getWalkScore = async ({ postcode }) => {
       try {
         const res = await fetch("/api/indevisual/get-walk-score", {
@@ -188,7 +218,8 @@ const Page = () => {
         console.log(error);
       }
     };
-    const getRentData = async ({postcode}) => {
+
+    const getRentData = async ({ postcode }) => {
       const outcode = postcode.split(" ")[0];
       try {
         const result = await fetch("/api/indevisual/get-rent-data", {
@@ -209,7 +240,7 @@ const Page = () => {
     };
 
     if (currentPostcode) {
-      fetchAllDemographicData({ postcode: currentPostcode });
+      getNeighbourhoodData({ outcode: currentPostcode });
       getWalkScore({ postcode: currentPostcode });
       getRentData({ postcode: currentPostcode });
     }
@@ -277,4 +308,4 @@ const Page = () => {
 };
 
 export default Page;
-//consolimg data 
+//consolimg data

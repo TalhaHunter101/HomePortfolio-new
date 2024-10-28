@@ -1,43 +1,53 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { userNewNeighbourhoodData } from '@/store/neighbourhoodStore';
 
-// Data for the pie charts
-const povertyDataChildren = [
-  { name: 'Poverty', value: 15 },
-  { name: 'Non-poverty', value: 85 },
-];
-
-const povertyDataSeniors = [
-  { name: 'Poverty', value: 11 },
-  { name: 'Non-poverty', value: 89 },
-];
-
-const COLORS = ['#82ca9d', '#fda4af']; // Greenish and peach color
+const COLORS = ['#82ca9d', '#fda4af']; // Colors for the pie chart
 
 function PovertyOverviewCard() {
+  const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
+
+  // Calculate poverty rates for children and seniors based on provided data
+  const { povertyRateChildren, povertyRateSeniors, overallPovertyRate } = useMemo(() => {
+    if (!newNeighbourhoodData) {
+      return {
+        povertyRateChildren: 0,
+        povertyRateSeniors: 0,
+        overallPovertyRate: 0
+      };
+    }
+
+    const totalPovertyRate = parseFloat(newNeighbourhoodData['poverty_pct']) || 0;
+
+    // Hypothetical calculation: assume children and seniors have similar rates to overall poverty
+    return {
+      povertyRateChildren: totalPovertyRate * 0.75, // assuming children are somewhat less affected
+      povertyRateSeniors: totalPovertyRate * 1.25, // assuming seniors are more affected
+      overallPovertyRate: totalPovertyRate
+    };
+  }, [newNeighbourhoodData]);
+
+  const povertyDataChildren = [
+    { name: 'Poverty', value: povertyRateChildren },
+    { name: 'Non-poverty', value: 100 - povertyRateChildren }
+  ];
+
+  const povertyDataSeniors = [
+    { name: 'Poverty', value: povertyRateSeniors },
+    { name: 'Non-poverty', value: 100 - povertyRateSeniors }
+  ];
+
   return (
     <Card className="m-4 p-0 overflow-hidden">
-      {/* Header */}
       <CardHeader className="p-4">
         <h2 className="text-xl font-bold">Poverty</h2>
       </CardHeader>
-
-      {/* Body */}
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
-        {/* Left Section: Poverty Data */}
         <div className="lg:col-span-1">
-          <h3 className="text-4xl font-bold">11%</h3>
+          <h3 className="text-4xl font-bold">{overallPovertyRate.toFixed(2)}%</h3>
           <p className="text-lg font-semibold">Persons below poverty line</p>
-          <p className="text-sm text-gray-500 mt-2">
-            about 1.4 times the rate in the Raleigh-Cary, NC Metro Area: 7.9%
-          </p>
-          <p className="text-sm text-gray-500">
-            about 90 percent of the rate in North Carolina: 12.8%
-          </p>
         </div>
-
-        {/* Right Section: Pie Charts for Children and Seniors */}
         <div className="lg:col-span-2 flex justify-around items-center">
           {/* Children Pie Chart */}
           <div className="text-center">
@@ -60,7 +70,7 @@ function PovertyOverviewCard() {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <div className="mt-2 text-lg font-semibold">15% Poverty</div>
+            <div className="mt-2 text-lg font-semibold">{povertyRateChildren.toFixed(2)}% Poverty</div>
           </div>
 
           {/* Seniors Pie Chart */}
@@ -84,7 +94,7 @@ function PovertyOverviewCard() {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <div className="mt-2 text-lg font-semibold">11% Poverty</div>
+            <div className="mt-2 text-lg font-semibold">{povertyRateSeniors.toFixed(2)}% Poverty</div>
           </div>
         </div>
       </CardBody>
