@@ -2,6 +2,7 @@
 import SearchCard from "@/components/SearchPage/SearchCrd";
 import { Icon } from "@iconify/react";
 import { Button, Spinner } from "@nextui-org/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CountyPage({ params }) {
@@ -212,12 +213,16 @@ export default function CountyPage({ params }) {
                     <div className="mt-4">
                       <Button
                         startContent={<Icon icon="ic:round-home" />}
-                        variant="ghost"
+                        variant="solid"
                         color="secondary"
+                        size="lg"
                         className="mb-6 w-full sm:w-auto"
+                        as={Link}
+                        href={`/search/${neighborhood["outcode"]}`}
+                        endContent={<Icon icon="ic:round-arrow-forward" />}
                       >
-                        See other homes for sale in
-                        {neighborhood["District_name"]}
+                        See homes for sale in
+                        {neighborhood["District_name"]} ({neighborhood["outcode"]})
                       </Button>
                     </div>
                   </div>
