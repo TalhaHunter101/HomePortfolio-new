@@ -11,6 +11,11 @@ import {
 import CrimeDisplayLayout from "@/components/Demographic/CrimeDisplay";
 import OverviewDisplayLayout from "@/components/Demographic/OverViewDisplay";
 import PlanningDisplayLayout from "@/components/Demographic/PlanningDisplay";
+import TransportDisplayLayout from "@/components/Demographic/TransportDisplay";
+import SchoolDisplayLayout from "@/components/Demographic/SchoolDisplay";
+import AmenitiesDisplayLayout from "@/components/Demographic/AmenitiesDisplay";
+import NoiseDisplayLayout from "@/components/Demographic/NoiseDisplay";
+import EnvironmentDisplayLayout from "@/components/Demographic/EnvironmentDisplay";
 
 // Dummy content for each tab
 const TabContent = ({ tab, data }) => {
@@ -24,15 +29,15 @@ const TabContent = ({ tab, data }) => {
     case "Crime":
       return <CrimeDisplayLayout />;
     case "Environment":
-      return <div>Environment data here</div>;
+      return <EnvironmentDisplayLayout/>
     case "Transport":
-      return <div>Transport data here</div>;
+      return <TransportDisplayLayout/>
     case "Amenities":
-      return <div>Amenities data here</div>;
+      return <AmenitiesDisplayLayout/>
     case "Schools":
-      return <div>Schools data here</div>;
+      return <SchoolDisplayLayout/>
     case "Noise":
-      return <div>Noise data here</div>;
+      return <NoiseDisplayLayout/>
     default:
       return null;
   }
