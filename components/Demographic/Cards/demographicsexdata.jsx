@@ -1,10 +1,20 @@
 import React, { useMemo } from 'react';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
 import { userNewNeighbourhoodData } from '@/store/neighbourhoodStore';
 
 const COLORS = ['#33b5b5', '#ed8b69']; // Colors for the sex pie chart
-const BAR_COLOR = '#82ca9d'; // Color for the bar chart
+const BAR_COLOR = '#33b5b5'; // Color for the bar chart
 
 function DemographicSexRaceCard() {
   const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
@@ -20,26 +30,90 @@ function DemographicSexRaceCard() {
 
     const data = newNeighbourhoodData;
 
-    const totalPopulation = parseFloat(data["Sex: All persons; measures: Value"]);
-    const totalRaceEthnicity = parseFloat(data["race_ethnicity_total"]);
+    const totalPopulation = parseFloat(data['Sex: All persons; measures: Value']);
+    const totalRaceEthnicity = parseFloat(data['race_ethnicity_total']);
 
     // Data for Sex Pie Chart
     const sexData = [
-      { name: 'Male', value: parseFloat(((data["Sex: Male; measures: Value"] || 0) / totalPopulation * 100).toFixed(2)) },
-      { name: 'Female', value: parseFloat(((data["Sex: Female; measures: Value"] || 0) / totalPopulation * 100).toFixed(2)) },
+      {
+        name: 'Male',
+        value: parseFloat(
+          (
+            ((data['Sex: Male; measures: Value'] || 0) / totalPopulation) *
+            100
+          ).toFixed(2)
+        ),
+      },
+      {
+        name: 'Female',
+        value: parseFloat(
+          (
+            ((data['Sex: Female; measures: Value'] || 0) / totalPopulation) *
+            100
+          ).toFixed(2)
+        ),
+      },
     ];
 
     // Data for Race & Ethnicity Bar Chart
     const raceEthnicityData = [
-      { name: 'White', value: parseFloat(((data["race_ethnicity_white"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Black', value: parseFloat(((data["race_ethnicity_black"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Asian', value: parseFloat(((data["race_ethnicity_asian"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Others', value: parseFloat(((data["race_ethnicity_other"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
-      { name: 'Two+', value: parseFloat(((data["race_ethnicity_two_or_more"] || 0) / totalRaceEthnicity * 100).toFixed(2)) },
+      {
+        name: 'White',
+        value: parseFloat(
+          (((data['race_ethnicity_white'] || 0) / totalRaceEthnicity) * 100).toFixed(2)
+        ),
+      },
+      {
+        name: 'Black',
+        value: parseFloat(
+          (((data['race_ethnicity_black'] || 0) / totalRaceEthnicity) * 100).toFixed(2)
+        ),
+      },
+      {
+        name: 'Asian',
+        value: parseFloat(
+          (((data['race_ethnicity_asian'] || 0) / totalRaceEthnicity) * 100).toFixed(2)
+        ),
+      },
+      {
+        name: 'Others',
+        value: parseFloat(
+          (((data['race_ethnicity_other'] || 0) / totalRaceEthnicity) * 100).toFixed(2)
+        ),
+      },
+      {
+        name: 'Two+',
+        value: parseFloat(
+          (
+            ((data['race_ethnicity_two_or_more'] || 0) / totalRaceEthnicity) *
+            100
+          ).toFixed(2)
+        ),
+      },
     ];
 
     return { sexData, raceEthnicityData };
   }, [newNeighbourhoodData]);
+
+  // Custom Tooltip for Bar Chart
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const percentage = payload[0].value;
+      const raceEthnicity = label;
+      return (
+        <div
+          style={{
+            backgroundColor: '#fff',
+            padding: '8px',
+            border: '1px solid #ccc',
+          }}
+        >
+          <p>{`${raceEthnicity}: ${percentage}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <Card className="m-4 p-0 overflow-hidden">
@@ -49,6 +123,7 @@ function DemographicSexRaceCard() {
         </div>
       </CardHeader>
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
+        {/* Sex Pie Chart */}
         <div className="lg:col-span-1 flex flex-col items-center">
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -63,7 +138,10 @@ function DemographicSexRaceCard() {
                 label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
               >
                 {sexData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
             </PieChart>
@@ -77,14 +155,29 @@ function DemographicSexRaceCard() {
             </div>
           </div>
         </div>
+
+        {/* Race & Ethnicity Bar Chart */}
         <div className="lg:col-span-2">
           <h3 className="text-md font-bold mb-4">Race & Ethnicity</h3>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={raceEthnicityData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#33b5b5" barSize={100} />
+            <BarChart
+              data={raceEthnicityData}
+              margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
+            >
+              <XAxis className='font-bold' dataKey="name" />
+              <YAxis hide /> {/* Y-axis is hidden */}
+              <Tooltip content={<CustomTooltip />} cursor={false} />
+              <Bar
+                dataKey="value"
+                fill={BAR_COLOR}
+                barSize={100}
+                label={{
+                  position: 'top',
+                  formatter: (value) => `${value}%`,
+                  fill: '#000',
+                  dy: -10, // Adjusts the vertical position of the label
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>

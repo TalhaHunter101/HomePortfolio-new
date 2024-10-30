@@ -1,6 +1,24 @@
 import React, { useState } from 'react';
-import { Card, CardHeader, CardBody, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Switch } from '@nextui-org/react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Switch,
+} from '@nextui-org/react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { Icon } from '@iconify/react';
 
 // Dummy data for the bar chart (Means of transportation to work)
@@ -75,6 +93,26 @@ function TransportationOverviewCard() {
     setIsTableVisible((prev) => !prev);
   };
 
+  // Custom Tooltip for Bar Chart
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const percentage = payload[0].value;
+      const transportationMode = label;
+      return (
+        <div
+          style={{
+            backgroundColor: '#fff',
+            padding: '8px',
+            border: '1px solid #ccc',
+          }}
+        >
+          <p>{`${transportationMode}: ${percentage}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className="m-4 p-0 overflow-hidden">
       {/* Header */}
@@ -88,9 +126,19 @@ function TransportationOverviewCard() {
             onChange={toggleTableVisibility}
             thumbIcon={({ isSelected, className }) =>
               isSelected ? (
-                <Icon icon="mdi:eye-off" className={className} width="20" height="20" />
+                <Icon
+                  icon="mdi:eye-off"
+                  className={className}
+                  width="20"
+                  height="20"
+                />
               ) : (
-                <Icon icon="mdi:eye" className={className} width="20" height="20" />
+                <Icon
+                  icon="mdi:eye"
+                  className={className}
+                  width="20"
+                  height="20"
+                />
               )
             }
           />
@@ -108,7 +156,8 @@ function TransportationOverviewCard() {
           <p className="text-lg font-semibold">minutes</p>
           <p className="text-md text-gray-600">Mean travel time to work</p>
           <p className="text-sm text-gray-500 mt-2">
-            about 80 percent of the figure in the Raleigh-Cary, NC Metro Area: 26.6
+            about 80 percent of the figure in the Raleigh-Cary, NC Metro Area:
+            26.6
           </p>
           <p className="text-sm text-gray-500">
             about 90 percent of the figure in North Carolina: 25.1
@@ -117,13 +166,28 @@ function TransportationOverviewCard() {
 
         {/* Right Section: Bar Chart for Means of Transportation */}
         <div className="lg:col-span-2">
-          <h3 className="text-md font-bold mb-4">Means of transportation to work</h3>
+          <h3 className="text-md font-bold mb-4">
+            Means of transportation to work
+          </h3>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={transportationData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#33b5b5" barSize={100} />
+            <BarChart
+              data={transportationData}
+              margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
+            >
+              <XAxis className='font-bold' dataKey="name" />
+              <YAxis hide /> {/* Y-axis is hidden */}
+              <Tooltip content={<CustomTooltip />} cursor={false} />
+              <Bar
+                dataKey="value"
+                fill="#33b5b5"
+                barSize={100}
+                label={{
+                  position: 'top',
+                  formatter: (value) => `${value}%`,
+                  fill: '#000',
+                  dy: -10,
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -131,7 +195,10 @@ function TransportationOverviewCard() {
         {/* Full-Width Section: Table */}
         {isTableVisible && (
           <div className="lg:col-span-3 mt-4">
-            <Table removeWrapper aria-label="Means of transportation to work">
+            <Table
+              removeWrapper
+              aria-label="Means of transportation to work"
+            >
               <TableHeader>
                 <TableColumn>Column</TableColumn>
                 <TableColumn>{tableHeaders.first}</TableColumn>
