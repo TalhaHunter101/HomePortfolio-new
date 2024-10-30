@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { SchoolMapStatic } from "@/components/Maps";
 import { smallString } from "@/utils/Helper";
 
-const SchoolsMap = ({ data, schoolData,isInteractive }) => {
+const SchoolsMap = ({ data, schoolData, isInteractive, geom }) => {
   const [selectedType, setSelectedType] = useState("All grades");
 
   const center = [

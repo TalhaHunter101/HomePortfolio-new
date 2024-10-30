@@ -45,7 +45,7 @@ import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
 import FloodData from "../PropertyPageCards/FloodData";
 
-function PropertyDisplay({ listingData, params }) {
+function PropertyDisplay({ listingData, params, geom }) {
   const price = listingData?.pricing?.internalValue;
   const formattedPrice = formatCurrency(price);
   const { squerfoot, fullAddress } = useListingStore();
@@ -147,13 +147,12 @@ function PropertyDisplay({ listingData, params }) {
   useEffect(() => {
     if (fullAddress) {
       let shortadd = fullAddress.split(",")[0];
-      
+
       shortadd = shortadd.replace(/[0-9]/g, "").trim();
-      
+
       setShortAddress(shortadd);
     }
   }, [fullAddress]);
-  
 
   const navElements = [
     {
@@ -460,8 +459,6 @@ function PropertyDisplay({ listingData, params }) {
     }
   };
 
-  
-
   return (
     <>
       <Toaster position="bottom-center" />
@@ -655,7 +652,7 @@ function PropertyDisplay({ listingData, params }) {
                     key={subIndex}
                     id={subElement?.id}
                     onMouseEnter={() => handleMouseEnter(subElement?.id)}
-                  > 
+                  >
                     <subElement.Component
                       {...listingData}
                       title={subElement?.name}
@@ -674,6 +671,7 @@ function PropertyDisplay({ listingData, params }) {
                       rentEstimate={rentEstimate}
                       latitude={listingData?.location?.coordinates?.latitude}
                       longitude={listingData?.location?.coordinates?.longitude}
+                      geom={geom}
                       price={price}
                       area={formatedSqft || "NA"}
                       address={fullAddress || listingData?.address}

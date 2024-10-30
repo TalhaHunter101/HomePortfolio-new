@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import SearchCard from "@/components/SearchPage/SearchCrd";
 import { SearchMap } from "@/components/Maps";
 
-const HomesForSaleMap = ({ center, nearByListingsData,isInteractive }) => {
+const HomesForSaleMap = ({ center, nearByListingsData, isInteractive, geom }) => {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState();
   const [toLocation, setToLocation] = useState("");
