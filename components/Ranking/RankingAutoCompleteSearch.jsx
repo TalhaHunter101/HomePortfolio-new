@@ -123,7 +123,7 @@ export default function RankingAutoCompleteSearch({ properties }) {
                             <Link
                               className="flex my-3 cursor-pointer"
                               key={i}
-                              href={`/ranking/${formattedPostcode}`}
+                              href={`/ranking/${formattedPostcode}/affordability`}
                               onClick={() => {
                                 setResults([]);
                               }}

@@ -15,10 +15,17 @@ const footerNavigation = {
   ],
 
   Platform: [
-    { name: "Search Listings", href: "#" },
-    { name: "Search Schools", href: "#" },
-    { name: "Sold Prices", href: "#" },
-    { name: "My HomePortfolio", href: "#" },
+    { name: "Search Listings", href: "/" },
+    // { name: "Search Schools", href: "#" },
+    // { name: "Sold Prices", href: "#" },
+    // { name: "My HomePortfolio", href: "#" },
+    {
+      name: "rankings",
+      href: "/ranking",
+    },{
+      name: "Neighbourhood Guide",
+      href: "/neighbourhood-guide"
+    }
   ],
 
   Resources: [
