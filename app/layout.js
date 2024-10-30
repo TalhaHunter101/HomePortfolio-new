@@ -18,7 +18,7 @@ export const metadata = {
     title: "Homeportfolio - AI-Powered Property Data Insights for Any UK Property",
     
     description: "Discover, source, analyse and track any property in seconds, all in one place",
-    url: "https://home-portfolio-weld.vercel.app/", // Replace with your actual domain
+    url: "https://home-portfolio-weld.vercel.app/", 
     images: [
       {
         url: "https://home-portfolio-weld.vercel.app/oggraph.jpeg", // Absolute URL to your image
