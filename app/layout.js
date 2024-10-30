@@ -5,6 +5,8 @@ import NavBar from "@/components/common/Nav/Navbar";
 import Footer from "@/components/common/Footer/Footer";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from 'nextjs-toploader';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+      <NextTopLoader />
         <Providers>
           <NextThemesProvider attribute="class" defaultTheme="light">
             <NavBar />
