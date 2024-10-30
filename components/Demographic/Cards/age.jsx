@@ -10,6 +10,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  Rectangle,
 } from "recharts";
 import { userNewNeighbourhoodData } from "@/store/neighbourhoodStore";
 
@@ -18,16 +19,16 @@ const COLORS = ['#6295cc', '#ed8b69', '#33b5b5'];
 function AgeCard() {
   const { newNeighbourhoodData, isLoading } = userNewNeighbourhoodData();
 
-  const { ageRangeData, ageCategoryData, medianAge } = useMemo(() => {
+  const { ageRangeDataWithPercentages, ageCategoryDataWithPercentages, medianAge } = useMemo(() => {
     if (!newNeighbourhoodData) {
       return {
-        ageRangeData: [],
-        ageCategoryData: [],
+        ageRangeDataWithPercentages: [],
+        ageCategoryDataWithPercentages: [],
         medianAge: 0,
       };
     }
 
-    const data = newNeighbourhoodData; // Use newNeighbourhoodData directly
+    const data = newNeighbourhoodData;
     const ageRangeData = [
       { name: "0-9",   value: parseInt(data["Age: Aged 4 years and under"] || 0) + parseInt(data["Age: Aged 5 to 9 years"] || 0) },
       { name: "10-19", value: parseInt(data["Age: Aged 10 to 14 years"] || 0) + parseInt(data["Age: Aged 15 to 19 years"] || 0) },
@@ -40,16 +41,47 @@ function AgeCard() {
       { name: "80+",   value: parseInt(data["Age: Aged 80 to 84 years"] || 0) + parseInt(data["Age: Aged 85 years and over"] || 0) },
     ];
 
+    const totalPopulation = ageRangeData.reduce((sum, age) => sum + age.value, 0);
+
+    const ageRangeDataWithPercentages = ageRangeData.map(age => ({
+      ...age,
+      percentage: parseFloat(((age.value / totalPopulation) * 100).toFixed(1)),
+    }));
+
     const ageCategoryData = [
       { name: "Under 18",  value: ageRangeData.slice(0, 2).reduce((sum, age) => sum + age.value, 0) },
       { name: "18 to 64", value: ageRangeData.slice(2, 7).reduce((sum, age) => sum + age.value, 0) },
       { name: "65 and over", value: ageRangeData.slice(7).reduce((sum, age) => sum + age.value, 0) },
     ];
 
-    const medianAge = data["median_age"] || 0; // Ensure correct key match for median_age
+    const ageCategoryDataWithPercentages = ageCategoryData.map(age => ({
+      ...age,
+      percentage: parseFloat(((age.value / totalPopulation) * 100).toFixed(1)),
+    }));
 
-    return { ageRangeData, ageCategoryData, medianAge };
+    const medianAge = data["median_age"] || 0;
+
+    return { ageRangeDataWithPercentages, ageCategoryDataWithPercentages, medianAge };
   }, [newNeighbourhoodData]);
+
+  // Log data for debugging
+  console.log('Age Range Data with Percentages:', ageRangeDataWithPercentages);
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{ backgroundColor: '#fff', padding: '8px', border: '1px solid #ccc', cursor: 'pointer' }}>
+          <p>{`${label}: ${payload[0].value}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomizedBar = (props) => {
+    const { x, y, width, height } = props;
+    return <Rectangle x={x} y={y} width={width} height={height} fill="#33b5b5" />;
+  };
 
   return (
     <Card className="m-4 p-0 overflow-hidden">
@@ -68,37 +100,43 @@ function AgeCard() {
       </CardHeader>
       <CardBody className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-6">
         <div className="lg:col-span-2">
-  <h3 className="text-md font-bold mb-4">Population by age range</h3>
-  <ResponsiveContainer width="100%" height={250}>
-    <BarChart data={ageRangeData} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Bar dataKey="value" fill="#33b5b5" barSize={100} /> {/* Adjust barSize to 20 for thinner bars */}
-    </BarChart>
-  </ResponsiveContainer>
-</div>
+          <h3 className="text-md font-bold mb-4">Population by age range</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={ageRangeDataWithPercentages} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
+              <XAxis className="font-bold" dataKey="name" />
+              <YAxis hide />
+              <Bar
+             
+                dataKey="percentage"
+                fill="#33b5b5"
+                barSize={100}
+                activeOpacity={1} 
+                isAnimationActive={false}
+                label={{ position: 'top', formatter: (value) => `${value}%`, fill: '#000', dy: -10 }}
+              />
+              <Tooltip content={<CustomTooltip />} cursor={false} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-
-        {/* Pie chart for Population by Age Category */}
         <div>
           <h3 className="text-md font-bold mb-4">Population by age category</h3>
           <ResponsiveContainer width="100%" height={250}>
-      <PieChart>
-        <Pie
-          data={ageCategoryData}
-          dataKey="value"
-          outerRadius={80}    // Outer radius for the donut size
-          innerRadius={60}    // Inner radius for the thin donut effect
-          fill="#ed8b69"
-          label
-        >
-          {ageCategoryData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-      </PieChart>
-    </ResponsiveContainer>
+            <PieChart>
+              <Pie
+                data={ageCategoryDataWithPercentages}
+                dataKey="percentage"
+                outerRadius={80}
+                innerRadius={60}
+                fill="#ed8b69"
+                label={({ name, percentage }) => `${name}: ${percentage}%`}
+              >
+                {ageCategoryDataWithPercentages.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
           <div className="flex justify-around mt-2 text-sm">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-[#6295cc]" /> <span>Under 18</span>
@@ -110,7 +148,6 @@ function AgeCard() {
               <div className="w-3 h-3 bg-[#33b5b5]" /> <span>65 and over</span>
             </div>
           </div>
-      
         </div>
       </CardBody>
     </Card>
@@ -118,3 +155,4 @@ function AgeCard() {
 }
 
 export default AgeCard;
+//working
