@@ -1,5 +1,6 @@
 "use client";
 import SearchCard from "@/components/SearchPage/SearchCrd";
+import { formatCurrency } from "@/utils/Helper";
 import { Icon } from "@iconify/react";
 import { Button, Spinner } from "@nextui-org/react";
 import Link from "next/link";
@@ -41,12 +42,18 @@ export default function CountyPage({ params }) {
     getRankingData();
   }, [decodedCounty]);
 
-  const countyData = dummyData;
+  // const countyData = dummyData;
+
+
+  const medianHomePrice = rankingData[0]?.["Avg sold price"];
+  const medianRent = rankingData[0]?.["Avg rent price"];
+  const population = rankingData[0]?.population;
+
 
   return (
     <div className="p-6 max-w-[80rem] mt-20 mx-auto  sm:px-6">
       <h1 className="text-3xl sm:text-5xl font-bold mb-6">
-        Most Affordable Neighborhoods in {countyData.countyName}
+        Most Affordable Neighbourhood  in {decodedCounty}
       </h1>
       <p className="text-base sm:text-lg text-gray-700 mb-8">
         The affordability of a place depends on multiple factors such as the
@@ -54,25 +61,26 @@ export default function CountyPage({ params }) {
         price-to-income ratios. These factors impact your cost of living and can
         give you a fair idea about the quality of life in Longmont. For
         instance, the median home prices can help you gauge how much you need to
-        be making in order to afford housing in {countyData.countyName}.
+        be making in order to afford housing in {decodedCounty}.
         <br />
         Based on this data, here is the list of the 10 most affordable places to
-        live in {countyData.countyName}. These neighborhoods in{" "}
-        {countyData.countyName} have a high median income level, low
+        live in {decodedCounty}. These Neighbourhood  in{" "}
+        {decodedCounty} have a high median income level, low
         rent-to-income ratio, or a relatively affordable home price-to-income
         ratio:
       </p>
       <div className="lg:justify-start">
         <h1 className="text-2xl sm:text-4xl font-bold text-gray-600 lg:items-start mb-6">
-          Check Out The Top 10 Most Affordable Neighborhoods To Live In{" "}
-          {countyData.countyName}:
+          Check Out The Top 10 Most Affordable Neighbourhood  To Live In{" "}
+          {decodedCounty}:
         </h1>
         <p className="text-base sm:text-lg text-gray-500 mb-8 lg:items-start">
-          With a median home price of $490,413 and a median rent of $1,791,{" "}
-          {countyData.neighborhoods[0].name} is the most affordable neighborhood
+       
+          With a average home price of £{rankingData && rankingData[0]?.["Avg sold price"]?.toLocaleString()} and a median rent of £{rankingData && rankingData[0]?.["Avg asking rent(p/m)_x"]?.toLocaleString()}{" "}
+          {rankingData &&  rankingData[0]?.District_name} is the most affordable neighborhood
           on our list. Based on the growth in home prices in{" "}
-          {countyData.neighborhoods[0].name} over the last 3 years, it ranks
-          No.11 among all the neighborhoods in {countyData.countyName}.
+          {rankingData &&  rankingData[0]?.District_name} over the last 3 years, it ranks
+          No.1 among all the Neighbourhood  in {decodedCounty}.
         </p>
       </div>
 
@@ -91,11 +99,13 @@ export default function CountyPage({ params }) {
                     {/* Left Column */}
                     <div className="w-full">
                       <p className="text-gray-600 mb-4">
-                        With a median home price of $
+                        With a median home price of £{formatCurrency(neighborhood["Avg sold price"])} and median
+                        rent of £{formatCurrency(neighborhood["Avg asking rent(p/m)_x"])} {neighborhood["District_name"]} is one of the most affordable Neighbourhood  in{" "}
+                        {decodedCounty}.
                         {/* {neighborhood.homePrice.toLocaleString()} and median
                         rent of ${neighborhood.rent},{neighborhood.name} is one
-                        of the most affordable neighborhoods in{" "}
-                        {countyData.countyName}. */}
+                        of the most affordable Neighbourhood  in{" "}
+                        {decodedCounty}. */}
                       </p>
                       <Button
                         startContent={
@@ -106,7 +116,7 @@ export default function CountyPage({ params }) {
                         className="mb-6 w-full sm:w-auto"
                       >
                         Learn more about the housing market in{" "}
-                        {/* {countyData.neighborhoods[0].name} */}
+                        {/* {countyData.Neighbourhood [0].name} */}
                       </Button>
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 mb-4">
                         <div>
@@ -130,19 +140,20 @@ export default function CountyPage({ params }) {
                         <div>
                           <p>Average Home Price / Sqft</p>
                           <h2 className="text-3xl font-medium text-gray-600">
-                            ${neighborhood["Avg Listing per sqft"]}
+                          £{formatCurrency(neighborhood["Avg Listing per sqft"])}
                           </h2>
                         </div>
                         <div>
                           <p>Average Home Price</p>
                           <h2 className="text-3xl font-medium text-gray-600">
-                            ${neighborhood["Avg sold price"].toLocaleString()}
+                          £{formatCurrency(neighborhood["Avg sold price"].toLocaleString())}
                           </h2>
                         </div>
                         <div>
                           <p>Median Rent</p>
                           <h2 className="text-3xl font-medium text-gray-600">
-                            {/* ${neighborhood.rent} */}
+                          
+                          £{formatCurrency(neighborhood?.["Avg asking rent(p/m)_x"]?.toLocaleString())}
                           </h2>
                         </div>
                       </div>
@@ -238,7 +249,7 @@ export default function CountyPage({ params }) {
 
 const dummyData = {
   countyName: "Longmont",
-  neighborhoods: [
+  Neighbourhood : [
     {
       name: "Longmont Estates",
       homePrice: 490413,
