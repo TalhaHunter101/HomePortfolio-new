@@ -49,13 +49,22 @@ export default function Component() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#ffffff] to-[#b792f6b5]">
+    <div
+    style={{
+      backgroundColor: "#fff",
+      backgroundImage: `url('/bg-plain-banner.png')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      width: "100%",
+    }}
+    className="flex flex-col items-center justify-center min-h-screen ">
       <div className="text-center">
         <h1 className="text-4xl font-bold">
           Get an instant{" "}
           <span className="relative  inline-block">
             <span className="relative z-10">home evaluation</span>
-            <span className="absolute  inset-0 bg-[#874debb5] z-0 transform -skew-x-6" />
+            <span className="absolute" />
           </span>
           , powered by HomeportFolio AI
         </h1>
