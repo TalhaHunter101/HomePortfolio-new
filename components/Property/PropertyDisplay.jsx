@@ -45,7 +45,7 @@ import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
 import FloodData from "../PropertyPageCards/FloodData";
 
-function PropertyDisplay({ listingData, params, geom }) {
+function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
   const formattedPrice = formatCurrency(price);
   const { squerfoot, fullAddress } = useListingStore();
@@ -671,7 +671,6 @@ function PropertyDisplay({ listingData, params, geom }) {
                       rentEstimate={rentEstimate}
                       latitude={listingData?.location?.coordinates?.latitude}
                       longitude={listingData?.location?.coordinates?.longitude}
-                      geom={geom}
                       price={price}
                       area={formatedSqft || "NA"}
                       address={fullAddress || listingData?.address}

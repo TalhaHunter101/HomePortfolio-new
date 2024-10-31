@@ -28,6 +28,7 @@ export const IndivisualProprtyMapStatic = dynamic(
         <Spinner label="Map is loading" size="sm" />
       </div>
     ),
+    error: () => <p>Error loading map.</p>,
   }
 );
 

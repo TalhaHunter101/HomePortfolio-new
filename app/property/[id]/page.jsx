@@ -46,19 +46,17 @@ async function getData(id) {
       body: JSON.stringify({ listingId: id }),
     }
   );
-  const { listing, geom } = await response?.json();
-  console.log("Listing details: ", listing);
-  console.log("Geom details: ", geom);
-  return { listing, geom };
+  const res = await response?.json();
+  return { res };
 }
 
 export default async function page({ params }) {
   const id = params?.id?.split("%3D")?.[1];
-  const { listing, geom } = await getData(id);
+  const { res } = await getData(id);
 
   return (
     <>
-      <PropertyDisplay listingData={listing?._source} params={params} geom={geom} />
+      <PropertyDisplay listingData={res?._source} params={params} />
       <Footer />
     </>
   );
