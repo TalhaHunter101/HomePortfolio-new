@@ -9,6 +9,20 @@ import RentEstimate from "@/components/HomeValuation/RentEstimate";
 import SaleEstimatesChart from "@/components/HomeValuation/SaleEstimatesChart";
 import { Card } from "@nextui-org/react";
 
+const THEME_COLORS = {
+  primary: '#4F46E5',
+  secondary: '#10B981',
+  accent: '#F59E0B',
+  text: '#1F2937',
+  background: '#F9FAFB',
+  chart: {
+    primary: '#4F46E5',
+    secondary: '#10B981',
+    accent: '#F59E0B',
+    gradient: ['#4F46E5', '#10B981']
+  }
+};
+
 const getHomeDetails = async (uprn_id) => {
   let data = await fetch("https://home-portfolio-weld.vercel.app/api/house_data", {
     method: "POST",
@@ -36,30 +50,33 @@ export default async function HomeEvaluation({ params }) {
   };
 
   return (
-    <div className=" mt-14 p-4 bg-white shadow-lg rounded-lg mx-7">
+    <div className="mt-14 p-8 bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-lg mx-auto max-w-7xl">
       <HeaderValuation data={homeDetails} />
-      <div className="flex flex-col md:flex-row gap-4 mt-4">
-        <RentEstimate data={homeDetails} />
-        <PropertyDetails data={homeDetails} />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <RentEstimate data={homeDetails} colors={THEME_COLORS} />
+        <PropertyDetails data={homeDetails} colors={THEME_COLORS} />
       </div>
-      <CenterSubSection data={homeDetails} />
-      <DisplayMap defaultProps={defaultProps} />
-      <Card className="p-4">
-        <p className="text-xl font-bold my-3">Sales Estimates</p>
-        <SaleEstimatesChart data={homeDetails} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <Card className="p-6">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Price Trends</h3>
+          <SaleEstimatesChart data={homeDetails} colors={THEME_COLORS} />
+        </Card>
+        <Card className="p-6">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Historic Sales</h3>
+          <HistoricSalesChart data={homeDetails} colors={THEME_COLORS} />
+        </Card>
+      </div>
+
+      <Card className="mt-6 p-6">
+        <DisplayMap defaultProps={defaultProps} />
       </Card>
 
-      <Card className="p-4 my-4">
-        <p className="text-xl font-bold my-3">Historic Sales</p>
-
-        <HistoricSalesChart data={homeDetails} />
+      <Card className="mt-6 p-6">
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Comparable Properties</h2>
+        <PropertyComparisonTable data={homeDetails} colors={THEME_COLORS} />
       </Card>
-
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Comparable Properties</h2>
-
-        <PropertyComparisonTable data={homeDetails} />
-      </div>
 
       <RentalReportFooter />
     </div>
