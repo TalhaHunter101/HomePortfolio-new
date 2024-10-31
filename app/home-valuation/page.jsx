@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { Input, Button, Card, Spinner } from "@nextui-org/react";
 import { ReportModal } from "@/components/QuestionFlow/QfModal";
 import Link from "next/link";
+import NavBar from "../../components/common/Nav/Navbar";
 
 export default function Component() {
   const [query, setQuery] = useState("");
@@ -49,61 +50,83 @@ export default function Component() {
   };
 
   return (
-    <div
-    style={{
-      backgroundColor: "#fff",
-      backgroundImage: `url('/bg-plain-banner.png')`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      width: "100%",
-    }}
-    className="flex flex-col items-center justify-center min-h-screen ">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold">
-          Get an instant{" "}
-          <span className="relative  inline-block">
-            <span className="relative z-10">home evaluation</span>
-            <span className="absolute" />
-          </span>
-          , powered by HomeportFolio AI
-        </h1>
-      </div>
-      <div className="mt-8">
-        <Card className="flex flex-row items-center p-4 shadow-lg rounded-lg min-w-[50vw]">
-          <Input
-            fullWidth
-            radius="sm"
-            placeholder="Enter address"
-            startContent={<Icon icon="bi:house-fill" fontSize={28} />}
-            className="mr-4"
-            value={query}
-            onChange={handleInputChange}
-          />
-          <Button auto flat radius="sm" className="font-semibold text-xs md:text-base" color="secondary" onPress={handleOpenModal}>
-            Get My Report
-          </Button>
-        </Card>
-      </div>
-      {/* Pass the selectedAddress to the ReportModal */}
-      <ReportModal isOpen={isModalOpen} onOpenChange={handleCloseModal} selectedAddress={selectedAddress} />
-      <div className="mt-2 flex flex-col items-center space-y-4">
-        {isLoading && <Spinner />}
-        {results.length > 0 && (
+    <div className="min-h-screen flex flex-col">
+      {/* NavBar at the top */}
+      <NavBar />
+      
+      {/* Main content */}
+      <div
+        style={{
+          backgroundColor: "#fff",
+          backgroundImage: `url('/bg-plain-banner.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          flex: 1, // This ensures the div takes remaining space
+        }}
+        className="flex flex-col items-center justify-center"
+      >
+        <div className="text-center">
+          <h1 className="text-4xl font-bold">
+            Get an instant{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10">home evaluation</span>
+              <span className="absolute" />
+            </span>
+            , powered by HomeportFolio AI
+          </h1>
+        </div>
+
+        {/* Rest of your components */}
+        <div className="mt-8">
           <Card className="flex flex-row items-center p-4 shadow-lg rounded-lg min-w-[50vw]">
-            <ul>
-              {results.map((data, index) => (
-                <li
-                  key={index}
-                  className="py-2 border-b cursor-pointer"
-                  onClick={() => handleAddressClick(data?._source?.full_address, data?._source?.uprn)}
-                >
-                  {data?._source?.full_address}
-                </li>
-              ))}
-            </ul>
+            <Input
+              fullWidth
+              radius="sm"
+              placeholder="Enter address"
+              startContent={<Icon icon="bi:house-fill" fontSize={28} />}
+              className="mr-4"
+              value={query}
+              onChange={handleInputChange}
+            />
+            <Button 
+              auto 
+              flat 
+              radius="sm" 
+              className="font-semibold text-xs md:text-base" 
+              color="secondary" 
+              onPress={handleOpenModal}
+            >
+              Get My Report
+            </Button>
           </Card>
-        )}
+        </div>
+
+        <ReportModal 
+          isOpen={isModalOpen} 
+          onOpenChange={handleCloseModal} 
+          selectedAddress={selectedAddress} 
+        />
+
+        <div className="mt-2 flex flex-col items-center space-y-4">
+          {isLoading && <Spinner />}
+          {results.length > 0 && (
+            <Card className="flex flex-row items-center p-4 shadow-lg rounded-lg min-w-[50vw]">
+              <ul>
+                {results.map((data, index) => (
+                  <li
+                    key={index}
+                    className="py-2 border-b cursor-pointer"
+                    onClick={() => handleAddressClick(data?._source?.full_address, data?._source?.uprn)}
+                  >
+                    {data?._source?.full_address}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
+        </div>
       </div>
     </div>
   );

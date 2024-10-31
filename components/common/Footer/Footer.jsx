@@ -20,6 +20,10 @@ const footerNavigation = {
     // { name: "Sold Prices", href: "#" },
     // { name: "My HomePortfolio", href: "#" },
     {
+      name: "Home Valuation",
+      href: "/home-valuation",
+    },
+    {
       name: "rankings",
       href: "/ranking",
     },{
