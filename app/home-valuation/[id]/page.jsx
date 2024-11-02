@@ -41,6 +41,7 @@ export default async function HomeEvaluation({ params }) {
   let uprn_id = params.id;
 
   let homeDetails = await getHomeDetails(uprn_id);
+  
 
   const defaultProps = {
     lat: Number(23.079727),
@@ -52,7 +53,7 @@ export default async function HomeEvaluation({ params }) {
   return (
     <div className="mt-14 p-8 bg-gradient-to-br from-white to-gray-50 shadow-xl rounded-lg mx-auto max-w-7xl">
       <HeaderValuation data={homeDetails} />
-      
+       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <RentEstimate data={homeDetails} colors={THEME_COLORS} />
         <PropertyDetails data={homeDetails} colors={THEME_COLORS} />

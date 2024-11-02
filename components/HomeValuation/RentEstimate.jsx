@@ -73,12 +73,12 @@ function RentEstimate({ data, colors }) {
         {valueChange && (
           <div className="mt-4 flex items-center justify-center">
             <Icon 
-              icon={valueChange > 0 ? "mdi:trending-up" : "mdi:trending-down"} 
-              className={`w-5 h-5 mr-2 ${valueChange > 0 ? 'text-green-500' : 'text-red-500'}`}
+              icon={valueChange?.numericChange > 0 ? "mdi:trending-up" : "mdi:trending-down"} 
+              className={`w-5 h-5 mr-2 ${valueChange?.numericChange > 0 ? 'text-green-500' : 'text-red-500'}`}
             />
             <p className="text-sm">
-              <span className={valueChange > 0 ? 'text-green-500' : 'text-red-500'}>
-                {valueChange > 0 ? '+' : ''}{valueChange}%
+              <span className={valueChange?.numericChange > 0 ? 'text-green-500' : 'text-red-500'}>
+                {valueChange?.numericChange > 0 ? '+' : ''}{valueChange?.numericChange}%
               </span>
               {' '}from last year
             </p>
