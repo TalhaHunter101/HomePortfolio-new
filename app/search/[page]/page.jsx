@@ -41,6 +41,7 @@ const SearchPage = ({ params }) => {
     selectedBaths,
     minPrice,
     maxPrice,
+    homeType,
   } = useStore();
 
   const handleChange = async (e) => {
@@ -53,6 +54,7 @@ const SearchPage = ({ params }) => {
     }
   };
 
+  
   const fetchEPCData = async (uprn) => {
     try {
       const response = await fetch("/api/indevisual/get-epc-data", {
@@ -96,6 +98,7 @@ const SearchPage = ({ params }) => {
       maxPrice,
       bedrooms: selectedBeds,
       bathrooms: selectedBaths,
+      houseType: homeType,
     };
   
     try {
@@ -156,7 +159,7 @@ const SearchPage = ({ params }) => {
       setisnewDataLoading(false);
       setIsInitialLoading(false);
     }
-  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
+  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, homeType]);
   
   useEffect(() => {
     setListingData([]);
@@ -186,7 +189,7 @@ const SearchPage = ({ params }) => {
         </div>
 
         {/* Filters and Buttons */}
-        {/* On large screens */}
+        {/* On large screens */} 
         <div className="hidden lg:flex items-center gap-2 mt-2 md:mt-0">
           <Beds />
           <Baths />

@@ -24,7 +24,14 @@ import { Icon } from "@iconify/react";
 import useStore from "@/store/useStore";
 
 export default function Filter() {
-  const { setMinPrice, setMaxPrice, selectedBeds, setSelectedBeds, homeType, setHomeType } = useStore();
+  const {
+    setMinPrice,
+    setMaxPrice,
+    selectedBeds,
+    setSelectedBeds,
+    homeType,
+    setHomeType,
+  } = useStore();
   const [selectedKeys1, setSelectedKeys1] = useState(new Set(["Min Price"]));
   const [selectedKeys2, setSelectedKeys2] = useState(new Set(["Max Price"]));
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -110,7 +117,9 @@ export default function Filter() {
                           variant="bordered"
                           className="capitalize"
                         >
-                          {Array.from(selectedKeys1).join(", ").replaceAll("_", " ")}
+                          {Array.from(selectedKeys1)
+                            .join(", ")
+                            .replaceAll("_", " ")}
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu
@@ -139,7 +148,9 @@ export default function Filter() {
                           variant="bordered"
                           className="capitalize"
                         >
-                          {Array.from(selectedKeys2).join(", ").replaceAll("_", " ")}
+                          {Array.from(selectedKeys2)
+                            .join(", ")
+                            .replaceAll("_", " ")}
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu
@@ -173,7 +184,7 @@ export default function Filter() {
                         selectedKey={selectedBeds}
                         onSelectionChange={setSelectedBeds}
                       >
-                        <Tab key="all" title="any" />
+                        <Tab key="any" title="any" />
                         <Tab key="1" title="1+" />
                         <Tab key="2" title="2+" />
                         <Tab key="3" title="3+" />
@@ -200,7 +211,9 @@ export default function Filter() {
                     <Checkbox
                       key={type}
                       isSelected={homeTypeArray.includes(type)}
-                      onValueChange={(isChecked) => handleHomeTypeChange(type, isChecked)}
+                      onValueChange={(isChecked) =>
+                        handleHomeTypeChange(type, isChecked)
+                      }
                     >
                       {type}
                     </Checkbox>
@@ -214,7 +227,6 @@ export default function Filter() {
                     size="md"
                     step={1}
                     color="foreground"
-                    
                     showSteps={true}
                     maxValue={25}
                     minValue={0}
@@ -222,7 +234,9 @@ export default function Filter() {
                     onChange={(value) => setMonthsListed(value)}
                     className="max-w-md"
                   />
-                  <p className="text-sm mt-2">Selected: {monthsListed} months</p>
+                  <p className="text-sm mt-2">
+                    Selected: {monthsListed} months
+                  </p>
                 </div>
               </ModalBody>
               <ModalFooter>
