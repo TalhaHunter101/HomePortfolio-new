@@ -147,9 +147,9 @@ function AgePopulationData({ AgePopulationData }) {
         <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2 ml-1">
           <Icon icon="game-icons:ages" width={24} className="text-gray-700" />
         </div>
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
+        <p className="text-lg sm:text-xl font-semibold text-gray-700">
           Age Data
-        </h2>
+        </p>
       </div>
 
       {loading ? (

@@ -28,11 +28,11 @@ export const BadgeCard = ({ reportData }) => {
         <Icon icon="mdi:star-four-points" className="absolute top-0 left-1/4" width={12} height={12} color="#b2ece1" />
         <Icon icon="mdi:star-four-points" className="absolute bottom-0 right-1/4" width={16} height={16} color="#b2ece1" />
       </div>
-      <h1 className="mb-2 pb-2 text-xl font-bold" size={14} color="#4a4a4a">
+      <p className="mb-2 pb-2 text-xl font-bold" size={14} color="#4a4a4a">
         <Icon className='inline' icon={isDecrease ? "mdi:trending-down" : "mdi:trending-up"} width={16} height={16} color="#4a4a4a" /> 
         Crime <span style={{ color: isDecrease ? '#40c4b5' : 'red' }}>{isDecrease ? 'decreased' : 'increased'}</span> by 
         <span style={{ color: '#40c4b5' }}> {Math.abs(formattedPercentageChange)}%</span> during the last 3 months
-      </h1>
+      </p>
     </Card>
   );
 };

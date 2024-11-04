@@ -60,9 +60,9 @@ function HouseOccupation({ occupationData, city }) {
         <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
           <Icon icon="tdesign:member" width={24} className="text-gray-700" />
         </div>
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
+        <p className="text-lg sm:text-xl font-semibold text-gray-700">
           House Occupation
-        </h2>
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row items-center justify-center gap-4 mt-4">

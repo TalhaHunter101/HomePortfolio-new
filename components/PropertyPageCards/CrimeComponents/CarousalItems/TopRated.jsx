@@ -73,12 +73,12 @@ export const CrimeReportCard = ({ reportData }) => {
       {/* Right Section (Crimes List) */}
       <div className="w-full p-6 bg-white rounded-lg ">
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-          <h1 className="text-lg font-semibold text-gray-800 mb-1">
+          <p className="text-lg font-semibold text-gray-800 mb-1">
             Top Reported Crimes
-          </h1>
-          <h2 className="text-sm text-gray-500">
+          </p>
+          <p className="text-sm text-gray-500">
             Crime for latest month ({formattedLatestMonth})
-          </h2>
+          </p>
         </div>
 
         {/* Scrollable crimes list */}
@@ -89,14 +89,14 @@ export const CrimeReportCard = ({ reportData }) => {
               className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md shadow-sm"
             >
               <div className="flex items-center">
-                <h3 className="text-base font-medium text-gray-700">
+                <p className="text-base font-medium text-gray-700">
                   {crime.type}
-                </h3>
+                </p>
               </div>
               <div className="flex items-center">
-                <h4 className="text-base font-semibold text-gray-800">
+                <p className="text-base font-semibold text-gray-800">
                   {crime.count}
-                </h4>
+                </p>
                 {crime.trend === "up" ? (
                   <Icon icon="mdi:arrow-up-bold" color="red" className="ml-2" />
                 ) : crime.trend === "down" ? (

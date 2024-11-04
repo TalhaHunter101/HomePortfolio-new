@@ -37,7 +37,7 @@ export const CrimeLevelsChart = ({ reportData }) => {
 
   return (
     <div className="w-full h-350 bg-white rounded-lg">
-      <h3 className="mb-5 font-bold text-lg">Crimes levels overview</h3>
+      <p className="mb-5 font-bold text-lg">Crimes levels overview</p>
       <p className="mb-5 text-sm">Crime for last year (per month)</p>
       <ResponsiveContainer className={"text-xs"} width="100%" height={300}>
         <LineChart

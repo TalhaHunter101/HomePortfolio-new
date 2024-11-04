@@ -108,10 +108,10 @@ const dta = {
             />
           </div>
           <div className="place-self-center">
-            <h2 className="text-5xl text-gray-800 tracking-tight -mt-2">
+            <p className="text-5xl text-gray-800 tracking-tight -mt-2">
               <span className="text-indigo-600">{dta.mission.title.split(" ")[0]}</span>{" "}
               <strong>{dta.mission.title.split(" ")[1]}</strong>
-            </h2>
+            </p>
             <p className="text-lg max-w-xl mt-4 leading-relaxed text-slate-500">
               {dta.mission.description}
             </p>
@@ -137,9 +137,9 @@ const dta = {
         </div>
   
         <div className="mt-24">
-          <h2 className="text-4xl lg:text-5xl lg:tracking-tight text-center">
+          <p className="text-4xl lg:text-5xl lg:tracking-tight text-center">
             {dta.team.title} <span className="text-indigo-600 font-bold">members</span>
-          </h2>
+          </p>
           <p className="text-lg mt-4 text-slate-600 text-center">{dta.team.description}</p>
         </div>
   
@@ -155,8 +155,8 @@ const dta = {
                 />
               </div>
               <div className="mt-4 text-center">
-                <h2 className="text-lg text-gray-800">{member.name}</h2>
-                <h3 className="text-sm text-slate-500">{member.role}</h3>
+                <p className="text-lg text-gray-800">{member.name}</p>
+                <p className="text-sm text-slate-500">{member.role}</p>
               </div>
             </div>
           ))}

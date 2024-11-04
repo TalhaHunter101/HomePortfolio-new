@@ -141,9 +141,9 @@ export function EPCCard({ title, price, roi, uprn }) {
             {/* Chart Section */}
             <div className="flex-1 md:pr-4 mb-4 md:mb-0">
               <div className="mx-6">
-                <h3 className="font-semibold mb-2">
+                <p className="font-semibold mb-2">
                   Energy Performance Certificate (EPC)
-                </h3>
+                </p>
                 <span className=" text-gray-500 text-xs">
                   This property&apos;s current energy rating is{" "}
                   <strong>{epcData?.CURRENT_ENERGY_RATING}</strong>. It has the

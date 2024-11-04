@@ -14,7 +14,7 @@ const data = [
 
 export const DevelopmentChart = () => (
   <div className="w-full h-350 p-5 bg-white rounded-lg shadow-md">
-    <h3 className="mb-5 font-bold text-lg">Development Categories</h3>
+    <p className="mb-5 font-bold text-lg">Development Categories</p>
     <ResponsiveContainer className={'text-xs'} width="100%" height={250}>
       <BarChart data={data} layout="vertical" margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />

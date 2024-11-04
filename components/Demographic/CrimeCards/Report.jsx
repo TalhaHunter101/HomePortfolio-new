@@ -46,12 +46,12 @@ export const CrimeReportCard = ({ reportData }) => {
     <Card className="m-4 p-4 h-full ">
       <CardBody className="h-full">
         <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-          <h1 className="text-lg font-semibold text-gray-800 mb-1">
+          <h2 className="text-lg font-semibold text-gray-800 mb-1">
             Top Reported Crimes
-          </h1>
-          <h2 className="text-sm text-gray-500">
-            Crime for latest month ({formattedLatestMonth})
           </h2>
+          <p className="text-sm text-gray-500">
+            Crime for latest month ({formattedLatestMonth})
+          </p>
         </div>
 
         {/* Scrollable crimes list */}
@@ -62,9 +62,9 @@ export const CrimeReportCard = ({ reportData }) => {
               className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md shadow-sm"
             >
               <div className="flex items-center">
-                <h3 className="text-base font-medium text-gray-700">
+                <p className="text-base font-medium text-gray-700">
                   {crime.type}
-                </h3>
+                </p>
               </div>
               <div className="flex items-center">
                 <span className="text-base font-semibold text-gray-800">

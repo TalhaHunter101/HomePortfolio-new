@@ -143,12 +143,12 @@ export function AirQualityCard({ latitude, longitude }) {
                       {index === 0 ? (
                         <div className="flex flex-col md:flex-row justify-between rounded-lg shadow-md w-full max-w-6xl">
                           <div className="w-3/5 text-left p-8 ">
-                            <h3 className="text-lg font-medium mt-24 mb-2">
+                            <p className="text-lg font-medium mt-24 mb-2">
                               Average air quality last month
-                            </h3>
-                            <h1 className="text-5xl font-semibold mb-4">
+                            </p>
+                            <p className="text-5xl font-semibold mb-4">
                               Good
-                            </h1>
+                            </p>
                             <div className="relative w-full mb-2">
                               <Progress value={50} color="success" />
                               <div className="flex justify-between text-sm mt-2">
@@ -159,9 +159,9 @@ export function AirQualityCard({ latitude, longitude }) {
                             </div>
                           </div>
                           <div className="md:w-2/5 text-center bg-blue-50 p-5 rounded-lg">
-                            <h3 className="text-lg font-medium mt-10 mb-10">
+                            <p className="text-lg font-medium mt-10 mb-10">
                               What&#39;s in the air?
-                            </h3>
+                            </p>
                             <div className="flex justify-around mb-6">
                               <div className="flex flex-col items-center">
                                 <Icon icon="ion:skull" width={32} height={32} />
@@ -184,9 +184,9 @@ export function AirQualityCard({ latitude, longitude }) {
                       ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white p-8 rounded-lg w-full">
                           <div className="flex flex-col items-center p-6 rounded-lg shadow h-full">
-                            <h3 className="font-semibold text-xl mb-4 mt-16 text-center text-gray-700">
+                            <p className="font-semibold text-xl mb-4 mt-16 text-center text-gray-700">
                               {component.title}
-                            </h3>
+                            </p>
                             <div className="flex justify-center items-center mb-3 p-3 rounded-full bg-gray-100">
                               <Icon icon={component.icon} width={32} height={32} />
                             </div>
@@ -195,9 +195,9 @@ export function AirQualityCard({ latitude, longitude }) {
                             </p>
                           </div>
                           <div className="flex flex-col items-center p-6 rounded-lg shadow h-full">
-                            <h3 className="font-semibold text-xl mb-4 mt-10 text-center text-gray-700">
+                            <p className="font-semibold text-xl mb-4 mt-10 text-center text-gray-700">
                               {component.label}
-                            </h3>
+                            </p>
                             <p className="text-2xl font-bold mb-3 text-center text-gray-800">
                               {component.value}
                             </p>

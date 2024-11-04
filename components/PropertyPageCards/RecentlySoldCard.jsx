@@ -190,7 +190,7 @@ export function RecentlySoldCard({ city, postcode }) {
                             <div key={index} className="w-full p-2">
                               <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
                                 <div className="ml-4">
-                                  <h3 className="text-bold text-2xl">
+                                  <p className="text-bold text-2xl">
                                     £
                                     {(() => {
                                       const price =
@@ -210,7 +210,7 @@ export function RecentlySoldCard({ city, postcode }) {
                                         }
                                       );
                                     })()}
-                                  </h3>
+                                  </p>
                                   <div className="text-sm  flex text-bold gap-3">
                                     <span className="text-bold flex flex-col items-center justify-center">
                                       {item?._source?.attributes?.bedrooms || 0}

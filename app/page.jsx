@@ -584,10 +584,10 @@ export default function Home() {
             </Chip>
           </div>
           <div className="w-full justify-center">
-            <h3 className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+            <p className="text-2xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
             Turn property data into opportunities with a solution designed to fit your needs.
 
-            </h3>
+            </p>
             <p className="text-md mt-4 text-slate-600 text-center">
             Make better, faster decisions with the best property data. Research and analyse any property market with HomePortfolio. Easily identify & evaluate your next property investment opportunities and engage, convert, and retain your customers.
             </p>
@@ -598,9 +598,9 @@ export default function Home() {
                 <span className="bg-purple-100 border-purple-200 border text-purple-600 -ml-px rounded-full text-xs font-medium px-3 py-1">
                   Simplified Decision Making
                 </span>
-                <h3 className="text-2xl font-medium mt-4">
+                <p className="text-2xl font-medium mt-4">
                   Extensive Property Data Insights at Your Fingertips
-                </h3>
+                </p>
                 <p className="mt-4 text-slate-600">
                   Make informed decisions with our AI-powered platform. Get real-time insights, predictive analytics, and smart data visualization to maximize your ROI.
                 </p>
@@ -673,9 +673,9 @@ export default function Home() {
                 <span className="bg-purple-100 border-purple-200 border text-purple-600 -ml-px rounded-full text-xs font-medium px-3 py-1">
                   ROI and Investment Analysis
                 </span>
-                <h3 className="text-2xl font-medium mt-4">
+                <p className="text-2xl font-medium mt-4">
                   Supercharge Your Investment Decisions with AI-driven Insights
-                </h3>
+                </p>
                 <p className="mt-4 text-slate-600">
                   Make informed investment decisions with our AI-powered platform. Get real-time
                   insights, predictive analytics, and smart data visualization to maximize your ROI.
@@ -739,9 +739,9 @@ export default function Home() {
               <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
                 Ask about a home
               </span>
-              <h3 className="text-2xl font-medium mt-4">
+              <h2 className="text-2xl font-medium mt-4">
                 Ask any Questions related to any property with the help of AI
-              </h3>
+              </h2>
               <ul className="grid mt-6 text-left gap-y-2 sm:gap-y-4">
                 <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
                   <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
@@ -788,9 +788,9 @@ export default function Home() {
               <span className="bg-purple-100 border-purple-200 border text-purple-600 w-fit rounded-full text-sm font-medium px-3 py-1">
                 Look for a home
               </span>
-              <h3 className="text-2xl font-medium mt-4">
+              <h2 className="text-2xl font-medium mt-4">
                 Find the perfect home with our AI-powered search engine and data insights
-              </h3>
+              </h2>
               <ul className="grid mt-6 text-left gap-y-2 sm:gap-y-4">
                 <li className="flex items-center gap-2 sm:gap-3 text-neutral-800">
                   <svg width="1em" height="1em" viewBox="0 0 256 256" className="w-5 h-5">
@@ -863,7 +863,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">John Doe</h2>
+                    <p className="font-medium text-slate-800">John Doe</p>
                     <p className="text-sm text-slate-600">CEO at TechCorp</p>
                   </div>
                 </div>
@@ -887,7 +887,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
+                    <p className="font-medium text-slate-800">Jane Smith</p>
                     <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
                   </div>
                 </div>
@@ -911,7 +911,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
+                    <p className="font-medium text-slate-800">Mike Johnson</p>
                     <p className="text-sm text-slate-600">CTO at CloudNine</p>
                   </div>
                 </div>
@@ -935,7 +935,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
+                    <p className="font-medium text-slate-800">Emily Brown</p>
                     <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
                   </div>
                 </div>
@@ -959,7 +959,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">David Lee</h2>
+                    <p className="font-medium text-slate-800">David Lee</p>
                     <p className="text-sm text-slate-600">Sales Director at Linkify</p>
                   </div>
                 </div>
@@ -983,7 +983,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
+                    <p className="font-medium text-slate-800">Sarah Martinez</p>
                     <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
                   </div>
                 </div>
@@ -1010,7 +1010,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">John Doe</h2>
+                    <p className="font-medium text-slate-800">John Doe</p>
                     <p className="text-sm text-slate-600">CEO at TechCorp</p>
                   </div>
                 </div>
@@ -1034,7 +1034,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Jane Smith</h2>
+                    <p className="font-medium text-slate-800">Jane Smith</p>
                     <p className="text-sm text-slate-600">Marketing Manager at InnovateTech</p>
                   </div>
                 </div>
@@ -1058,7 +1058,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Mike Johnson</h2>
+                    <p className="font-medium text-slate-800">Mike Johnson</p>
                     <p className="text-sm text-slate-600">CTO at CloudNine</p>
                   </div>
                 </div>
@@ -1082,7 +1082,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Emily Brown</h2>
+                    <p className="font-medium text-slate-800">Emily Brown</p>
                     <p className="text-sm text-slate-600">HR Manager at ConnectCo</p>
                   </div>
                 </div>
@@ -1106,7 +1106,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">David Lee</h2>
+                    <p className="font-medium text-slate-800">David Lee</p>
                     <p className="text-sm text-slate-600">Sales Director at Linkify</p>
                   </div>
                 </div>
@@ -1130,7 +1130,7 @@ export default function Home() {
                     </picture>
                   </div>
                   <div>
-                    <h2 className="font-medium text-slate-800">Sarah Martinez</h2>
+                    <p className="font-medium text-slate-800">Sarah Martinez</p>
                     <p className="text-sm text-slate-600">Finance Controller at MoneyMakers</p>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ export default function FloatingCard({ data }) {
   return (
     <Card className="w-80  h-80  ">
       <CardBody>
-        <h3 className="font-semibold text-xs mb-2">Planning Applications</h3>
+        <p className="font-semibold text-xs mb-2">Planning Applications</p>
 
         {data &&
           data.map((item, index) => (

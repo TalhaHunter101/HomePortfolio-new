@@ -174,30 +174,30 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
           }}
         >
           <div className="p-1">
-            <h3 className="font-bold text-2xl">£{humanReadablePrice}</h3>
+            <p className="font-bold text-2xl">£{humanReadablePrice}</p>
             <div className="flex flex-row ml-[auto] mr-8 space-x-8 mt-2">
               <div className="">
-                <h3 className="font-semibold text-xl">
+                <p className="font-semibold text-xl">
                   {property?.minBedrooms}
-                </h3>
+                </p>
                 <p className="text-sm text-gray-600">beds</p>
               </div>
               <div className="">
-                <h3 className="font-semibold text-xl">{property?.bathrooms}</h3>
+                <p className="font-semibold text-xl">{property?.bathrooms}</p>
                 <p className="text-sm text-gray-600">baths</p>
               </div>
               <div className="">
-                <h3 className="font-semibold text-xl">
+                <p className="font-semibold text-xl">
                   {(property?.areaSize !== null &&
                     formatCurrency(property?.areaSize)) ||
                     "NA"}
-                </h3>
+                </p>
                 <p className="text-sm text-gray-600">sqft</p>
               </div>
             </div>
-            <p className="pt-2 text-default-500 text-sm">
+            <h2 className="pt-2 text-default-500 text-sm">
               {property?.fullAddress || property?.address}
-            </p>
+            </h2>
           </div>
         </Link>
       </CardBody>
