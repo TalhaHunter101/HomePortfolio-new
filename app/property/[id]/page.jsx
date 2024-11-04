@@ -19,12 +19,14 @@ export async function generateMetadata({ params }) {
     res?._source?.metaTitle ||
     res?._source?.analyticsTaxonomy?.displayAddress ||
     "Homeprotfolio property";
-  const title =
+  let title =
     fullAddress?.length > 60
       ? `${fullAddress?.substring(0, 60)}...`
       : fullAddress;
+  title = title.replace(/Zoopla/g, "Homeprotfolio"); 
 
-  const description = res?._source?.metaDescription || "";
+  let description = res?._source?.metaDescription || "";
+  description = description.replace(/Zoopla/g, "Homeprotfolio"); 
 
   return {
     title,
@@ -34,6 +36,7 @@ export async function generateMetadata({ params }) {
     description,
   };
 }
+
 
 async function getData(id) {
   const response = await fetch(

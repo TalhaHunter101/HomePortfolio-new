@@ -613,7 +613,7 @@ function PropertyDisplay({ listingData, params }) {
                 {/* Conditional Rendering of Content */}
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: listingData?.detailedDescription,
+                    __html: listingData?.detailedDescription?.replace(/Zoopla/g, "Homeprotfolio"),
                   }}
                   style={{
                     maxHeight: isExpanded ? "none" : "100px",

@@ -16,18 +16,21 @@ export default function AutocompleteSearch({ properties }) {
   const fetchCities = useCallback(async (term) => {
     const response = await fetch("/dummydata/city.json");
     const cities = await response.json();
-
-    // Filter cities that match the search term
-    const matchedCities = cities.filter((city) =>
-      city.City.toLowerCase().includes(term.toLowerCase())
+  
+    // Filter cities that match either the search term in City or County
+    const matchedCities = cities.filter(
+      (city) =>
+        city.City.toLowerCase().includes(term.toLowerCase()) ||
+        city.County.toLowerCase().includes(term.toLowerCase())
     );
-    
-
+  
     return matchedCities.map((city) => ({
       name: city.City,
-      type: "town", // or 'city' depending on your logic
+      type: "town", 
+      county: city.County,
     }));
-  }, []); 
+  }, []);
+  
   const searchPostcode = useCallback(
     async (term) => {
       try {

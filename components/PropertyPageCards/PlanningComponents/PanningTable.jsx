@@ -70,8 +70,8 @@ const PlanningApplicationsTable = ({ planningData }) => {
   };
 
   return (
-    <Table aria-label="Planning Applications table">
-      <TableHeader columns={columns}>
+    <Table aria-label="Planning Applications table " className="max-h-[60vh]" isHeaderSticky>
+      <TableHeader columns={columns} >
         {(column) => (
           <TableColumn key={column.uid}>{column.name}</TableColumn>
         )}

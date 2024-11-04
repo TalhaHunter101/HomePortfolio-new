@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 function SearchDropdown({ results, isDataLoading }) {
+  console.log("results is",results);
+  
   return (
     <>
       {isDataLoading && (

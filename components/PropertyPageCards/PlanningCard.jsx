@@ -11,12 +11,14 @@ import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
-  return data?.filter((item) =>
-    decisions.includes(item?._source?.other_fields?.decision)
-  ).length || 0;
+  return (
+    data?.filter((item) =>
+      decisions.includes(item?._source?.other_fields?.decision)
+    ).length || 0
+  );
 };
 
-export function PlanningCard({ postcode,ShortAddress }) {
+export function PlanningCard({ postcode, ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
   const statusData = [
     {
@@ -54,7 +56,7 @@ export function PlanningCard({ postcode,ShortAddress }) {
     },
   ];
 
-  // Fetch planning data based on postcode
+  // Fetch planning data based on postcode 
   const getPlanningData = async (postcode) => {
     try {
       const response = await fetch("/api/indevisual/get-planning-data", {
@@ -77,12 +79,12 @@ export function PlanningCard({ postcode,ShortAddress }) {
     }
   };
 
-  // Effect to fetch data when postcode changes
   useEffect(() => {
     if (postcode) getPlanningData(postcode);
   }, [postcode]);
 
-
+  console.log("planningData os",planningData);
+  
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
@@ -134,8 +136,8 @@ export function PlanningCard({ postcode,ShortAddress }) {
                           center={
                             planningData.length > 0
                               ? planningData?.map((data) => ({
-                                  lat: data?._source?.location_y,
-                                  lng: data?._source?.location_x,
+                                  lat: data?._source?.location_y || 51.999668,
+                                  lng: data?._source?.location_x || -0.267018,
                                 }))
                               : []
                           }
