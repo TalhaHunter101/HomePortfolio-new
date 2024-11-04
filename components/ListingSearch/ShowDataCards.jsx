@@ -175,9 +175,9 @@ function ShowDataCards({
           <div className="flex flex-col p-4">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-center hidden md:block">
-              <h3 className="text-md uppercase font-bold mb-2 md:mb-0">
+              <h1 className="text-md uppercase font-bold mb-2 md:mb-0">
                 {totalcount} Properties
-              </h3>
+              </h1>
 
               {
                 !isFavorite && (
@@ -236,9 +236,9 @@ function ShowDataCards({
               )}
               <div
                 className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-${
-                  showMap ? "1" : "3"
-                } xl:grid-cols-${
                   showMap ? "1" : "4"
+                } xl:grid-cols-${
+                  showMap ? "1" : "5"
                 } gap-4 overflow-y-auto max-h-full`}
               >
                 {filter &&

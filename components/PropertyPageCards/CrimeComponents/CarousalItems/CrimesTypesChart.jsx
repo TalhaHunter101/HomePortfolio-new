@@ -28,7 +28,7 @@ export const CrimeTypesChart = ({ reportData }) => {
 
   return (
     <div className="w-full h-350 bg-white rounded-lg ">
-      <h3 className="mb-5 font-bold text-lg">Crime Types</h3>
+      <p className="mb-5 font-bold text-lg">Crime Types</p>
       <ResponsiveContainer className={'text-[10px]'} width="100%" height={300}>
         <BarChart
           data={data}

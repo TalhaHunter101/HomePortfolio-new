@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import withClickOutside from "@/components/DropdownHOC";
 import { usePathname } from "next/navigation";
+import Filter from "@/components/SearchPage/filter";
 
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
@@ -190,6 +191,7 @@ const SearchPage = ({ params }) => {
           <Beds />
           <Baths />
           <Price />
+          <Filter />
           <Button
             color="primary"
             radius="sm"

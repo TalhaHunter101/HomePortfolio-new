@@ -18,6 +18,7 @@ import {
   Checkbox,
   Switch,
   Badge,
+  Slider,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import useStore from "@/store/useStore";
@@ -27,29 +28,21 @@ export default function Filter() {
   const [selectedKeys1, setSelectedKeys1] = useState(new Set(["Min Price"]));
   const [selectedKeys2, setSelectedKeys2] = useState(new Set(["Max Price"]));
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const allHomeTypes = ["Park Home", "Bungalow", "Farms Land", "Terraced", "Flats", "Semi Detached", "Detached"];
+
+  const allHomeTypes = ["Flats", "Terraced", "Semi Detached", "Detached"];
   const isAllSelected = homeType.length === allHomeTypes.length;
   const homeTypeArray = Array.isArray(homeType) ? homeType : [];
   const [isSelected, setIsSelected] = useState(true);
-
+  const [monthsListed, setMonthsListed] = useState(0);
 
   const handleSwitchChange = (checked) => {
     setIsSelected(checked);
     if (checked) {
-      setHomeType([
-        "Park Home",
-        "Bungalow",
-        "Farms Land",
-        "Terraced",
-        "Flats",
-        "Semi Detached",
-        "Detached",
-      ]);
+      setHomeType(allHomeTypes);
     } else {
       setHomeType([]);
     }
   };
-
 
   const handleHomeTypeChange = (type, isChecked) => {
     setHomeType((prevTypes) => {
@@ -61,8 +54,6 @@ export default function Filter() {
       }
     });
   };
-
-  
 
   const handleMinPriceChange = (keys) => {
     setSelectedKeys1(keys);
@@ -99,6 +90,7 @@ export default function Filter() {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isKeyboardDismissDisabled={true}
+        isDismissable={false}
       >
         <ModalContent>
           {(onClose) => (
@@ -109,7 +101,7 @@ export default function Filter() {
               <ModalBody>
                 {/* Price Selection */}
                 <div className="px-1 py-2">
-                  <h3 className="text-lg font-semibold mb-2">Price </h3>
+                  <p className="text-lg font-semibold mb-2">Price </p>
                   <div className="px-1 py-2 flex gap-2">
                     <Dropdown>
                       <DropdownTrigger>
@@ -171,7 +163,7 @@ export default function Filter() {
                 <Divider />
                 {/* Beds Selection */}
                 <div className="px-1 py-2">
-                  <h3 className="text-lg font-semibold mb-2">Beds </h3>
+                  <p className="text-lg font-semibold mb-2">Beds </p>
                   <div className="px-1 py-2">
                     <div className="text-tiny">
                       <Tabs
@@ -193,7 +185,7 @@ export default function Filter() {
                 <Divider />
                 {/* Home Types Selection */}
                 <div className="flex justify-between items-center mb-2">
-                  <h4 className="text-sm font-semibold">Home Types</h4>
+                  <p className="text-sm font-semibold">Home Types</p>
                   <Switch
                     isSelected={isAllSelected}
                     onValueChange={handleSwitchChange}
@@ -207,12 +199,30 @@ export default function Filter() {
                   {allHomeTypes.map((type) => (
                     <Checkbox
                       key={type}
-                      isSelected={homeTypeArray.includes("Park Home")}
-                      onValueChange={(isChecked) => handleHomeTypeChange("Park Home", isChecked)}
+                      isSelected={homeTypeArray.includes(type)}
+                      onValueChange={(isChecked) => handleHomeTypeChange(type, isChecked)}
                     >
                       {type}
                     </Checkbox>
                   ))}
+                </div>
+                <Divider />
+                {/* Months Listed Selection */}
+                <div className="px-1 py-2">
+                  <p className="text-lg font-semibold mb-2">Months Listed</p>
+                  <Slider
+                    size="md"
+                    step={1}
+                    color="foreground"
+                    
+                    showSteps={true}
+                    maxValue={25}
+                    minValue={0}
+                    value={monthsListed}
+                    onChange={(value) => setMonthsListed(value)}
+                    className="max-w-md"
+                  />
+                  <p className="text-sm mt-2">Selected: {monthsListed} months</p>
                 </div>
               </ModalBody>
               <ModalFooter>

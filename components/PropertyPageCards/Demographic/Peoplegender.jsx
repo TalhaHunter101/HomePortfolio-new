@@ -75,9 +75,9 @@ function Peoplegender({ PeopleGenderData, city }) {
             className="text-gray-700"
           />
         </div>
-          <h2 className="text-xl font-semibold text-gray-700">
+          <p className="text-xl font-semibold text-gray-700">
             Marital and civil partnership
-          </h2>
+          </p>
         </div>
 
         <FamilyCustomBarChart data={chartData} />

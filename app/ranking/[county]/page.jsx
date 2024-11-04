@@ -63,10 +63,10 @@ export default function CountyPage({ params }) {
         ratio:
       </p>
       <div className="lg:justify-start">
-        <h1 className="text-2xl sm:text-4xl font-bold text-gray-600 lg:items-start mb-6">
+        <h2 className="text-2xl sm:text-4xl font-bold text-gray-600 lg:items-start mb-6">
           Check Out The Top 10 Most Affordable Neighborhoods To Live In{" "}
           {countyData.countyName}:
-        </h1>
+        </h2>
         <p className="text-base sm:text-lg text-gray-500 mb-8 lg:items-start">
           With a median home price of $490,413 and a median rent of $1,791,{" "}
           {countyData.neighborhoods[0].name} is the most affordable neighborhood
@@ -84,9 +84,9 @@ export default function CountyPage({ params }) {
             <>
               {rankingData.map((neighborhood, index) => (
                 <div key={index} className="mb-12">
-                  <h2 className="text-2xl sm:text-3xl text-gray-700 font-semibold mb-4">
+                  <p className="text-2xl sm:text-3xl text-gray-700 font-semibold mb-4">
                     {index + 1}. {neighborhood?.District_name}
-                  </h2>
+                  </p>
                   <div className="mb-6">
                     {/* Left Column */}
                     <div className="w-full">
@@ -123,27 +123,27 @@ export default function CountyPage({ params }) {
                         </div>
                         <div>
                           <p>Population</p>
-                          <h2 className="text-3xl font-medium text-gray-600 ">
+                          <p className="text-3xl font-medium text-gray-600 ">
                             {neighborhood.population.toLocaleString()}
-                          </h2>
+                          </p>
                         </div>
                         <div>
                           <p>Average Home Price / Sqft</p>
-                          <h2 className="text-3xl font-medium text-gray-600">
+                          <p className="text-3xl font-medium text-gray-600">
                             ${neighborhood["Avg Listing per sqft"]}
-                          </h2>
+                          </p>
                         </div>
                         <div>
                           <p>Average Home Price</p>
-                          <h2 className="text-3xl font-medium text-gray-600">
+                          <p className="text-3xl font-medium text-gray-600">
                             ${neighborhood["Avg sold price"].toLocaleString()}
-                          </h2>
+                          </p>
                         </div>
                         <div>
                           <p>Median Rent</p>
-                          <h2 className="text-3xl font-medium text-gray-600">
+                          <p className="text-3xl font-medium text-gray-600">
                             {/* ${neighborhood.rent} */}
-                          </h2>
+                          </p>
                         </div>
                       </div>
 
@@ -158,27 +158,27 @@ export default function CountyPage({ params }) {
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
                         <div>
                           <p>Walk Score</p>
-                          <h1 className="text-3xl font-semibold text-gray-600">
+                          <p className="text-3xl font-semibold text-gray-600">
                             {/* {neighborhood.walkScore} */}
                             <Icon
                               className="inline p-1"
                               icon="healthicons:walking"
                             />
-                          </h1>
+                          </p>
                         </div>
                         <div>
                           <p>Bike Score</p>
-                          <h1 className="text-3xl font-semibold text-gray-600">
+                          <p className="text-3xl font-semibold text-gray-600">
                             {/* {neighborhood.bikeScore} */}
                             <Icon className="inline p-1" icon="mdi:bike" />
-                          </h1>
+                          </p>
                         </div>
                         <div>
                           <p>Transit Score</p>
-                          <h1 className="text-3xl font-semibold text-gray-600">
+                          <p className="text-3xl font-semibold text-gray-600">
                             {/* {neighborhood.transitScore} */}
                             <Icon className="inline p-1" icon="mdi:bus" />
-                          </h1>
+                          </p>
                         </div>
                       </div>
 

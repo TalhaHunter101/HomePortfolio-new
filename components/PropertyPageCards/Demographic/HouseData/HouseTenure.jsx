@@ -75,7 +75,7 @@ function HouseTenure({ tenureData, city }) {
           />
         </div>
 
-        <h2 className="text-xl font-semibold text-gray-700">House Tenure</h2>
+        <p className="text-xl font-semibold text-gray-700">House Tenure</p>
       </div>
 
       <div className="flex flex-col gap-4 mt-8">

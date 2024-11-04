@@ -87,10 +87,10 @@ function MarketInfoPage({ city, postcode }) {
       </CardHeader>
       <CardBody>
         <div className="flex flex-col md:flex-row gap-4 mb-4">
-          <h1 className="text-2xl font-bold">Market Information</h1>
-          <h2 className="text-xl font-semibold text-gray-400">
+          <p className="text-2xl font-bold">Market Information</p>
+          <p className="text-xl font-semibold text-gray-400">
             Property Count:{" "}
-          </h2>
+          </p>
           <Chip color="primary">{marketInfo?.totalCount}</Chip>
           <div className="flex flex-col md:flex-row gap-4 mb-4 md:ml-auto">
             <Button

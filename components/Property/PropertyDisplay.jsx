@@ -506,16 +506,16 @@ function PropertyDisplay({ listingData, params }) {
               <div className="flex items-center justify-between mb-4">
                 {/* Price Section */}
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <p className="text-xl font-semibold text-gray-800">
                     £{formattedPrice}
-                  </h3>
-                  <span className="text-sm text-gray-600 flex items-center">
+                  </p>
+                  <h1 className="text-sm text-gray-600 flex items-center">
                     <Icon
                       icon="mdi:map-marker-outline"
                       className="text-gray-500 mr-1"
                     />
                     {fullAddress || listingData?.address}
-                  </span>
+                  </h1>
                 </div>
                 {/* Heart and Share Icons */}
               </div>
@@ -523,17 +523,17 @@ function PropertyDisplay({ listingData, params }) {
               {/* Property Details Section */}
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <h4 className="text-lg font-semibold">{bedrooms}</h4>
+                  <p className="text-lg font-semibold">{bedrooms}</p>
                   <p className="text-xs text-gray-500">Beds</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold">{bathrooms}</h4>
+                  <p className="text-lg font-semibold">{bathrooms}</p>
                   <p className="text-xs text-gray-500">Baths</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold">
+                  <p className="text-lg font-semibold">
                     {formatedSqft || "NA"}
-                  </h4>
+                  </p>
                   <p className="text-xs text-gray-500">Sq Ft</p>
                 </div>
               </div>
@@ -560,9 +560,9 @@ function PropertyDisplay({ listingData, params }) {
             <div className="mb-4 md:pl-6 flex items-center flex-row hidden md:flex">
               {/* Content for md and lg screens */}
               <div className="flex-1 text-center md:text-left">
-                <h3 className="font-bold text-2xl lg:text-4xl">
+                <p className="font-bold text-2xl lg:text-4xl">
                   £{formattedPrice}
-                </h3>
+                </p>
                 <span className="text-sm font-bold lg:text-base flex items-center">
                   <Icon
                     icon="mdi:map-marker-outline"
@@ -577,21 +577,21 @@ function PropertyDisplay({ listingData, params }) {
               </div>
               <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {bedrooms}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">beds</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {bathrooms}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">baths</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {formatedSqft || "NA"}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">sqft</p>
                 </div>
               </div>
@@ -705,9 +705,9 @@ function PropertyDisplay({ listingData, params }) {
                           aria-label=""
                           onClick={() => toggleSection(element?.id)}
                         >
-                          <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
+                          <p className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
                             {element?.name}
-                          </h2>
+                          </p>
                         </button>
                         <AnimatePresence>
                           {openSection && element?.id == openSection && (

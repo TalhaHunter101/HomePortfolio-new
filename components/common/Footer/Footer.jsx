@@ -84,7 +84,7 @@ export default function Footer() {
   const renderList = React.useCallback(
     ({ title, items }) => (
       <div>
-        <h3 className="text-small font-semibold text-default-600">{title}</h3>
+        <p className="text-small font-semibold text-default-600">{title}</p>
         <ul className="mt-6 space-y-4">
           {items?.map((item) => (
             <li key={item.name}>
