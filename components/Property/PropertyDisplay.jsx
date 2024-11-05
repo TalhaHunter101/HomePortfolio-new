@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import MainCard from "./MainCard";
 import ThumbnailCard from "./ThumbnailCard";
@@ -44,6 +44,7 @@ import { storeUsersData } from "@/store/authStore";
 import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
 import FloodData from "../PropertyPageCards/FloodData";
+import ShareModal from "./ShareModal";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -460,7 +461,7 @@ function PropertyDisplay({ listingData, params }) {
     }
   };
 
-  
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <>
@@ -475,10 +476,11 @@ function PropertyDisplay({ listingData, params }) {
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
             />
-            <Button size="lg" className="bg-transparent">
+            <Button size="lg" className="bg-transparent" onPress={onOpen}>
               <Icon icon="bx:share" />
               Share
             </Button>
+            <ShareModal isOpen={isOpen} onClose={onOpenChange} />
           </div>
         </div>
 

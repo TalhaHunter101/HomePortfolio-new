@@ -42,7 +42,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const [activePie, setActivePie] = useState(null);
   const [activeDataSet, setActiveDataSet] = useState(null);
 
-  const COLORS = ["#9333ea", "#db2777", "#4f46e5", "#4b5563"];
+  const COLORS = ["#c4b5fd", "#a78bfa", "#8b5cf6", "#7c3aed"];
 
   useEffect(() => {
     if (main_data) {
@@ -261,6 +261,9 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             dataKey="value"
             onMouseEnter={onPieEnter("outer")}
             onMouseLeave={() => setActiveIndex(-1)}
+            style={{
+              filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+            }}
           >
             {data01.map((entry, index) => (
               <Cell
