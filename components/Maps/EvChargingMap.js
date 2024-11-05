@@ -23,7 +23,7 @@ const MapTilerLayerComponent = () => {
   }, [map]);
 
   return null;
-};
+}; 
 
 const MarkersWithCustomIcon = ({ center }) => {
   const map = useMap();
@@ -68,6 +68,7 @@ const EvChargingMap = ({ height, center = [] }) => {
           width: "100%",
           height: `${height ? height : "650px"} `,
         }} 
+        gestureHandling={true}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />

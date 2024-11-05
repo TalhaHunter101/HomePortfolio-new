@@ -29,7 +29,7 @@ import {
 } from "../PropertyPageCards/neighbourCard";
 import { HomeTypesCard } from "../PropertyPageCards/HomeTypesCard";
 import { DreamHouseCard } from "../PropertyPageCards/DreamHouseCard";
-import Component from "@/app/home-valuation/page";
+import Component from "@/app/home-valuations/page";
 import { PlanningCard } from "../PropertyPageCards/PlanningCard";
 import Calculation from "../PropertyPageCards/Calculator/Calculation";
 import { EPCCard } from "../PropertyPageCards/EPCcard";

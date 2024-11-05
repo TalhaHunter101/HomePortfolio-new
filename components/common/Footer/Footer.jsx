@@ -32,13 +32,21 @@ const footerNavigation = {
     }
   ],
 
-  Resources: [
-    { name: "Home Buying Guides", href: "#" },
-    { name: "Neighborhood Guides", href: "#" },
-    { name: "Property Market Analysis", href: "#" },
-    { name: "Property Valuation", href: "#" },
-    { name: "Property Data API", href: "#" },
-  ],
+  // Resources: [
+  //   { name: "Home Buying Guides", href: "#" },
+  //   { name: "Neighborhood Guides", href: "#" },
+  //   { name: "Property Market Analysis", href: "#" },
+  //   { name: "Property Valuation", href: "#" },
+  //   { name: "Property Data API", href: "#" },
+  // ],
+  
+  // Resources: [
+  //   { name: "Home Buying Guides", href: "#" },
+  //   { name: "Neighborhood Guides", href: "#" },
+  //   { name: "Property Market Analysis", href: "#" },
+  //   { name: "Property Valuation", href: "#" },
+  //   { name: "Property Data API", href: "#" },
+  // ],
 
   Company: [
     { name: "About Us", href: "/AboutUs" },
@@ -129,9 +137,9 @@ export default function Footer() {
   </div>
 
   {/* Resources Section */}
-  <div>
+  {/* <div>
     {renderList({ title: "Resources", items: footerNavigation.Resources })}
-  </div>
+  </div> */}
 
   {/* Company Section */}
   <div>
