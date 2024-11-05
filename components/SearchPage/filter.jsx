@@ -52,14 +52,21 @@ export default function Filter() {
   };
 
   const handleHomeTypeChange = (type, isChecked) => {
-    setHomeType((prevTypes) => {
-      const currentTypes = Array.isArray(prevTypes) ? prevTypes : [];
-      if (isChecked) {
-        return [...currentTypes, type];
-      } else {
-        return currentTypes.filter((item) => item !== type);
-      }
-    });
+    setHomeType([type]);
+
+    
+    
+    
+    // setHomeType((prevTypes) => {
+    //   const currentTypes = Array.isArray(prevTypes) ? prevTypes : [];
+    //   console.log("currentTypes is",currentTypes);
+      
+    //   if (isChecked) {
+    //     return [...currentTypes, type];
+    //   } else {
+    //     return currentTypes.filter((item) => item !== type);
+    //   }
+    // });
   };
 
   const handleMinPriceChange = (keys) => {

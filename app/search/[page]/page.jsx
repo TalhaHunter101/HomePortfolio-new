@@ -98,7 +98,7 @@ const SearchPage = ({ params }) => {
       maxPrice,
       bedrooms: selectedBeds,
       bathrooms: selectedBaths,
-      houseType: homeType,
+      houseType: homeType && homeType.length > 0 ? homeType : "any",
     };
   
     try {
