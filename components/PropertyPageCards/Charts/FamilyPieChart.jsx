@@ -27,6 +27,9 @@ export const FamilyCustomBarChart = ({ data }) => {
     <Tooltip />
     <Legend />
     <Pie
+    style={{
+      filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+    }}
       data={data}
       dataKey="value"
       nameKey="name"
