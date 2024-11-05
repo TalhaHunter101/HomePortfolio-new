@@ -70,6 +70,9 @@ function HouseOccupation({ occupationData, city }) {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
+               style={{
+                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+              }}
                 data={chartData}
                 dataKey="count"
                 nameKey="name"
