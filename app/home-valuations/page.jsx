@@ -4,9 +4,9 @@ import { Icon } from "@iconify/react";
 import { Input, Button, Card, Spinner } from "@nextui-org/react";
 import { ReportModal } from "@/components/QuestionFlow/QfModal";
 import Link from "next/link";
-import NavBar from "../../components/common/Nav/Navbar";
+// import NavBar from "../../components/common/Nav/Navbar";
 
-export default function Component() {
+export default function HomeValuation() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ export default function Component() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* NavBar at the top */}
-      <NavBar />
+      {/* <NavBar /> */}
       
       {/* Main content */}
       <div

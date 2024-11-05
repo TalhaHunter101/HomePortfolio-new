@@ -28,10 +28,10 @@ const [isgettingreport, setIsGettingReport] = useState(false);
         method: "POST",
         body: JSON.stringify({
          email: email,
-         url: "https://home-portfolio-weld.vercel.app/home-valuation/"+ selectedAddress.uprn
+         url: "https://home-portfolio-weld.vercel.app/new-valuation/"+ selectedAddress.uprn
         }),
       });
-      window.location.href = "/home-valuation/"+ selectedAddress.uprn
+      window.location.href = "/new-valuation/"+ selectedAddress.uprn
       
       // onSubmit({ selectedAddress, email });
 
