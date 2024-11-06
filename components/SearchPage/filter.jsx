@@ -54,13 +54,10 @@ export default function Filter() {
   const handleHomeTypeChange = (type, isChecked) => {
     setHomeType([type]);
 
-    
-    
-    
     // setHomeType((prevTypes) => {
     //   const currentTypes = Array.isArray(prevTypes) ? prevTypes : [];
     //   console.log("currentTypes is",currentTypes);
-      
+
     //   if (isChecked) {
     //     return [...currentTypes, type];
     //   } else {
@@ -143,6 +140,11 @@ export default function Filter() {
                         <DropdownItem key="150000">150K</DropdownItem>
                         <DropdownItem key="200000">200K</DropdownItem>
                         <DropdownItem key="250000">250K</DropdownItem>
+                        <DropdownItem key="500000">500K</DropdownItem>
+                        <DropdownItem key="750000">750K</DropdownItem>
+                        <DropdownItem key="1000000">1M</DropdownItem>
+                        <DropdownItem key="2000000">2M</DropdownItem>
+                        <DropdownItem key="5000000">5M</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                     <div className=" pt-3 ">
@@ -174,6 +176,11 @@ export default function Filter() {
                         <DropdownItem key="150000">150K</DropdownItem>
                         <DropdownItem key="200000">200K</DropdownItem>
                         <DropdownItem key="250000">250K</DropdownItem>
+                        <DropdownItem key="500000">500K</DropdownItem>
+                        <DropdownItem key="750000">750K</DropdownItem>
+                        <DropdownItem key="1000000">1M</DropdownItem>
+                        <DropdownItem key="2000000">2M</DropdownItem>
+                        <DropdownItem key="5000000">5M</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                   </div>

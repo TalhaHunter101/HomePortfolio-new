@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 
 function SearchDropdown({ results, isDataLoading }) {
-  console.log("results is",results);
   
   return (
     <>
@@ -121,7 +120,10 @@ function SearchDropdown({ results, isDataLoading }) {
                           pathname: `/search/${item?.name?.replace(
                             /\s+/g,
                             "-"
-                          )}?type=${item?.type}`,
+                          )}?type=${item?.type}` || `/search/${item?.replace(
+                            /\s+/g,
+                            "-"
+                          )}`,
                         }}
                       >
                         <div className="flex my-3 cursor-pointer">
@@ -134,7 +136,7 @@ function SearchDropdown({ results, isDataLoading }) {
                           />
                           <div>
                             <p className="text-sm text-primaryfonts">
-                              {item?.name}
+                              {item?.name || item}
                             </p>
                           </div>
                         </div>

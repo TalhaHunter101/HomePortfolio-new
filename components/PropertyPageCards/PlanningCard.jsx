@@ -13,7 +13,7 @@ import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
 const countStatus = (data, decisions) => {
   return (
     data?.filter((item) =>
-      decisions.includes(item?._source?.other_fields?.decision)
+      decisions.includes(item?._source?.app_state)
     ).length || 0
   );
 };

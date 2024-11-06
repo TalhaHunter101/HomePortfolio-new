@@ -17,27 +17,36 @@ export default function AutocompleteSearch({ properties }) {
     const response = await fetch("/dummydata/city.json");
     const cities = await response.json();
   
-    // Filter cities that match either the search term in City or County
+    const lowerCaseTerm = term.toLowerCase();
+  
+    // Filter based on both City and County fields
     const matchedCities = cities.filter(
       (city) =>
-        city.City.toLowerCase().includes(term.toLowerCase()) ||
-        city.County.toLowerCase().includes(term.toLowerCase())
+        city.City.toLowerCase().includes(lowerCaseTerm) ||
+        city.County.toLowerCase().includes(lowerCaseTerm)
     );
   
-    return matchedCities.map((city) => ({
+    const formattedResults = matchedCities.map((city) => ({
       name: city.City,
-      type: "town", 
+      type: "town",
       county: city.County,
     }));
+  
+    // Log to check if results include both City and County
+    console.log("Formatted Cities:", formattedResults);
+  
+    return formattedResults;
   }, []);
+  
+  
+  
   
   const searchPostcode = useCallback(
     async (term) => {
       try {
         setIsDataLoading(true);
         clearAllFilter();
-
-        // Fetch results from /listing-search
+  
         const listingResponse = await fetch(`/api/get-postcode`, {
           method: "POST",
           headers: {
@@ -46,28 +55,45 @@ export default function AutocompleteSearch({ properties }) {
           body: JSON.stringify({ query: term }),
         });
         const listingResult = await listingResponse.json();
-
+  
         let mergedResults = {
-          uk: [],
+          postcodes: [],
+          towns: [],
           county: [],
           address: [],
           regionName: [],
           housPricesAddress: [],
-          towns: [], 
         };
-
+  
         // Fetch matching cities from city.json
         const citiesFromJson = await fetchCities(term);
-
-        // Add results from the backend API if not empty
-        if (listingResult && !areAllArraysEmpty(listingResult)) {
-          mergedResults = { ...listingResult };
+  
+        // Populate `towns` and `county` based on search term
+        if (citiesFromJson.length > 0) {
+          mergedResults.towns = citiesFromJson;
+  
+          // Collect unique counties and format them as requested
+          mergedResults.county = [
+            ...new Set(citiesFromJson.map(city => city.county))
+          ].map(countyName => ({
+            name: countyName,
+            type: 'county'
+          }));
+  
+          // Log to confirm county population before merging
         }
-
-        // Merge the cities into the `towns` key in the results
-        mergedResults.towns = citiesFromJson;
-
-        // Set the merged results
+  
+        // Add results from the backend API if not empty, avoiding overwriting non-empty fields
+        if (listingResult && !areAllArraysEmpty(listingResult)) {
+          mergedResults = {
+            ...mergedResults,
+            ...listingResult,
+            // Only overwrite county if listingResult.county has values
+            county: listingResult.county.length > 0 ? listingResult.county : mergedResults.county,
+          };
+        }
+    
+        // Set the results in the state
         setResults(mergedResults);
       } catch (error) {
         console.error(error);
@@ -78,6 +104,9 @@ export default function AutocompleteSearch({ properties }) {
     },
     [clearAllFilter, fetchCities]
   );
+  
+  
+  
 
   // Create a stable throttled version of searchPostcode
   const throttledSearchPostcode = useCallback(
@@ -113,7 +142,7 @@ export default function AutocompleteSearch({ properties }) {
         duration: 0.5,
       },
     }),
-  };
+  }; 
 
   return (
     <div className="mt-4 p-4 rounded-lg w-full overflow-hidden">
