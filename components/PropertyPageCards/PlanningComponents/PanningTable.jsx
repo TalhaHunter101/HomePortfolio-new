@@ -63,10 +63,10 @@ const PlanningApplicationsTable = ({ planningData }) => {
       case "status":
         return (
           <Chip
-            color={statusColorMap[source?.other_fields?.decision] || "warning"}
+            color={statusColorMap[source?.app_state] || "warning"}
             variant="flat"
           >
-            {source?.other_fields?.decision || "Others"}
+            {source?.app_state || "Others"}
           </Chip>
         );
       case "address":
