@@ -110,13 +110,16 @@ export function MarketComparisonCard({ data }) {
                 {/* Carousel section on the right */}
                 <div className="flex-1 md:w-1/2  flex flex-col justify-center h-full">
                   <div className="relative w-full h-full flex items-center">
-                    <button
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      radius="full"
                       onClick={prevSlide}
                       disabled={currentIndex === 0}
-                      className="absolute left-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                      className="absolute left-0 z-10 p-2  bg-opacity-50 "
                     >
                       &#10094;
-                    </button>
+                    </Button>
                     <div
                       className="flex transition-transform duration-500 ease-in-out w-full"
                       style={{
@@ -150,7 +153,7 @@ export function MarketComparisonCard({ data }) {
                       </div>
 
                       <div className="flex-shrink-0 w-[100%] h-full p-2">
-                        <Card className="w-full h-full" shadow="sm">
+                        <Card  className="w-full h-full" shadow="sm">
                           <CardBody className="p-4 flex flex-col justify-between">
                             <ScatterChartComponent
                               data={data?.adTargeting?.countyAreaName}
@@ -162,13 +165,16 @@ export function MarketComparisonCard({ data }) {
                         </Card>
                       </div>
                     </div>
-                    <button
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      radius="full"
                       onClick={nextSlide}
                       disabled={currentIndex === 2}
-                      className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                      className="absolute right-0 z-10 p-2  bg-opacity-50 "
                     >
                       &#10095;
-                    </button>
+                    </Button>
                   </div>
                 </div>
                 {/* End of carousel integration */}
