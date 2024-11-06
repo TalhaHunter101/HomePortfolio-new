@@ -37,15 +37,15 @@ const statusColorMap = {
   "Rejected": "danger",
 };
 
-const PlanningApplicationsTable = ({ planningData }) => {
+const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
   // State to manage the selected time frame (6 or 12 months)
-  const [timeFrame, setTimeFrame] = useState(6);
+  // const [timeFrame, setTimeFrame] = useState(6);
 
   // Dropdown options
-  const timeFrameOptions = [
-    { key: 6, label: "Last 6 Months" },
-    { key: 12, label: "Last 12 Months" },
-  ];
+  // const timeFrameOptions = [
+  //   { key: 6, label: "Last 6 Months" },
+  //   { key: 12, label: "Last 12 Months" },
+  // ];
 
   const columns = [
     { name: "STATUS", uid: "status" },
@@ -101,14 +101,14 @@ const PlanningApplicationsTable = ({ planningData }) => {
   
 
   // Handler for dropdown selection
-  const handleTimeFrameChange = (key) => {
-    setTimeFrame(Number(key));
-  };
+  // const handleTimeFrameChange = (key) => {
+  //   setTimeFrame(Number(key));
+  // };
 
   return (
     <div>
       {/* Dropdown for selecting time frame */}
-      <div style={{ marginBottom: "1rem" }}>
+      {/* <div style={{ marginBottom: "1rem" }}>
         <Dropdown>
           <DropdownTrigger>
             <Button variant="flat">
@@ -127,7 +127,7 @@ const PlanningApplicationsTable = ({ planningData }) => {
             ))}
           </DropdownMenu>
         </Dropdown>
-      </div>
+      </div> */}
 
       {/* Table displaying the filtered data */}
       <Table

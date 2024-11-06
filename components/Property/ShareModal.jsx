@@ -27,7 +27,7 @@ export default function ShareModal({ isOpen, onClose, pageURL }) {
   };
 
   return (
-    <Modal isDismissable={false} backdrop="blur" isOpen={isOpen} onOpenChange={onClose}>
+    <Modal  backdrop="blur" isOpen={isOpen} onOpenChange={onClose}>
       <ModalContent>
         <>
           <ModalHeader>Share this property</ModalHeader>
