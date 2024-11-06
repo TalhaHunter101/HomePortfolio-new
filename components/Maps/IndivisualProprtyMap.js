@@ -99,7 +99,6 @@ const BoundaryLayer = ({ geom }) => {
   const map = useMap();
 
   useEffect(() => {
-    // Add detailed logging
     console.log("BoundaryLayer received geom:", JSON.stringify(geom, null, 2));
 
     if (!geom) {
@@ -107,17 +106,23 @@ const BoundaryLayer = ({ geom }) => {
       return;
     }
 
-    // Ensure we're handling the correct geom structure
+    // Extract polygon data from the geom structure
     let geometryData;
-    if (typeof geom === "string") {
+    if (typeof geom === 'string') {
       try {
-        geometryData = JSON.parse(geom);
+        const parsedGeom = JSON.parse(geom);
+        geometryData = parsedGeom.polygon;
       } catch (e) {
         console.error("Failed to parse geom string:", e);
         return;
       }
     } else {
-      geometryData = geom;
+      geometryData = geom.polygon;
+    }
+
+    if (!geometryData) {
+      console.error("No polygon data found in geom");
+      return;
     }
 
     // Create GeoJSON structure
@@ -125,7 +130,7 @@ const BoundaryLayer = ({ geom }) => {
       type: "Feature",
       geometry: {
         type: "Polygon",
-        coordinates: geometryData.coordinates || geometryData,
+        coordinates: geometryData.coordinates,
       },
       properties: {},
     };
@@ -150,10 +155,7 @@ const BoundaryLayer = ({ geom }) => {
       }
     } catch (error) {
       console.error("Failed to draw boundary:", error);
-      console.error(
-        "Invalid geom data:",
-        JSON.stringify(geometryData, null, 2)
-      );
+      console.error("Invalid geom data:", JSON.stringify(geometryData, null, 2));
     }
   }, [map, geom]);
 

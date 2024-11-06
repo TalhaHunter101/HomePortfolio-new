@@ -1,10 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
@@ -15,6 +11,8 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -35,7 +33,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center.length > 0) {
-      const bounds = L.latLngBounds(center.map(c => [c.lat, c.lng]));
+      const bounds = L.latLngBounds(center.map((c) => [c.lat, c.lng]));
       map.fitBounds(bounds, { maxZoom: 16 });
     }
   }, [map, center]);
@@ -53,7 +51,7 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const BusMap = ({ height, center = [] }) => {    
+const BusMap = ({ height, center = [] }) => {
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
   const zoom = 22;
 
@@ -67,7 +65,7 @@ const BusMap = ({ height, center = [] }) => {
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }} 
+        }}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />
