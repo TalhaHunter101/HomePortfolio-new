@@ -8,6 +8,7 @@ import FloatingCard from "./PlanningComponents/FloatingCard";
 import { PlanningApplicationMapStatic } from "../Maps";
 import { Icon } from "@iconify/react";
 import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
+import TimeFrameDropdown from "./PlanningComponents/Dropdown";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
@@ -20,6 +21,8 @@ const countStatus = (data, decisions) => {
 
 export function PlanningCard({ postcode, ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
+  const [timeFrame, setTimeFrame] = useState(6); // State for time frame selection
+  
   const statusData = [
     {
       label: "Approved",
@@ -56,7 +59,12 @@ export function PlanningCard({ postcode, ShortAddress }) {
     },
   ];
 
-  // Fetch planning data based on postcode 
+  const timeFrameOptions = [
+    { key: 6, label: "Last 6 Months" },
+    { key: 12, label: "Last 12 Months" },
+  ];
+
+  // Fetch planning data based on postcode and time frame
   const getPlanningData = async (postcode) => {
     try {
       const response = await fetch("/api/indevisual/get-planning-data", {
@@ -81,19 +89,30 @@ export function PlanningCard({ postcode, ShortAddress }) {
 
   useEffect(() => {
     if (postcode) getPlanningData(postcode);
-  }, [postcode]);
+  }, [postcode, timeFrame]);
 
-  
+  const handleTimeFrameChange = (key) => {
+    setTimeFrame(Number(key));
+  };
+
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
-        <div className="flex flex-col sm:flex-row items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
-            <Icon icon="mdi:planner" width={16} className="text-purple-700" />
+        <div className="flex flex-col sm:flex-row items-center justify-between w-full my-2">
+          <div className="flex items-center">
+            <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
+              <Icon icon="mdi:planner" width={16} className="text-purple-700" />
+            </div>
+            <h2 className="text-xl font-bold text-gray-700 text-center sm:text-left">
+              What are the Planning applications in {ShortAddress}?
+            </h2>
           </div>
-          <h2 className="text-xl font-bold text-gray-700 text-center sm:text-left">
-            What are the Planning applications in {ShortAddress}?
-          </h2>
+          {/* Dropdown for selecting time frame */}
+          <TimeFrameDropdown
+            options={timeFrameOptions}
+            selectedKey={timeFrame}
+            onSelectionChange={handleTimeFrameChange}
+          />
         </div>
       </CardHeader>
 
@@ -123,7 +142,7 @@ export function PlanningCard({ postcode, ShortAddress }) {
               ))}
             </div>
             <div className="p-2 overflow-x-auto">
-              <PlanningApplicationsTable planningData={planningData} />
+              <PlanningApplicationsTable planningData={planningData} timeFrame={timeFrame} />
             </div>
             <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">
