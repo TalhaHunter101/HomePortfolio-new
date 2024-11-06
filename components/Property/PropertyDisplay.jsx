@@ -480,7 +480,7 @@ function PropertyDisplay({ listingData, params }) {
               <Icon icon="bx:share" />
               Share
             </Button>
-            <ShareModal isOpen={isOpen} onClose={onOpenChange} />
+            <ShareModal isOpen={isOpen} onClose={onOpenChange} pageURL={pathname} />
           </div>
         </div>
 
