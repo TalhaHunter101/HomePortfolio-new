@@ -43,11 +43,7 @@ const MapTilerLayerComponent = () => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
       style: "basic-v2-light",
-      filter: [
-        "grayscale:100",
-        "contrast:100",
-        "brightness:100"
-      ]
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -69,7 +65,8 @@ const BoundaryLayer = ({ geom }) => {
 
     // Get the geometry data from either location or polygon property
     const geometry = geom.location || geom.polygon || geom;
-    
+    console.log("Geometry is", geometry);
+
     console.log("Drawing boundary for:", geometry?.type);
 
     // Clear existing GeoJSON layers
