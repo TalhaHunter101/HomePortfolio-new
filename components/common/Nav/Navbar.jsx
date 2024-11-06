@@ -37,7 +37,7 @@ export default function NavBar() {
   let pathname = usePathname();
 
   // check if the url contains the word "home-valuation"
-  let isHomeValuation = pathname ? pathname.includes("home-valuation") : false;
+  let isHomeValuation = pathname ? pathname.includes("report") : false;
 
   if (isHomeValuation) {
     return <div></div>;
