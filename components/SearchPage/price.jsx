@@ -71,6 +71,11 @@ export default function Price() {
               <DropdownItem key="150000">150K</DropdownItem>
               <DropdownItem key="200000">200K</DropdownItem>
               <DropdownItem key="250000">250K</DropdownItem>
+              <DropdownItem key="500000">500K</DropdownItem>
+              <DropdownItem key="750000">750K</DropdownItem>
+              <DropdownItem key="1000000">1M</DropdownItem>
+              <DropdownItem key="2000000">2M</DropdownItem>
+              <DropdownItem key="5000000">5M</DropdownItem>
             </DropdownMenu>
           </Dropdown>
                <div className=" pt-3 "><Icon icon="ic:round-minus" /></div>
@@ -98,6 +103,11 @@ export default function Price() {
               <DropdownItem key="150000">150K</DropdownItem>
               <DropdownItem key="200000">200K</DropdownItem>
               <DropdownItem key="250000">250K</DropdownItem>
+              <DropdownItem key="500000">500K</DropdownItem>
+              <DropdownItem key="750000">750K</DropdownItem>
+              <DropdownItem key="1000000">1M</DropdownItem>
+              <DropdownItem key="2000000">2M</DropdownItem>
+              <DropdownItem key="5000000">5M</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </div>
