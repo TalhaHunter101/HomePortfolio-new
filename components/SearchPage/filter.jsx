@@ -31,39 +31,39 @@ export default function Filter() {
     setSelectedBeds,
     homeType,
     setHomeType,
+    setMonthFilter,
+    monthFilter,
   } = useStore();
   const [selectedKeys1, setSelectedKeys1] = useState(new Set(["Min Price"]));
   const [selectedKeys2, setSelectedKeys2] = useState(new Set(["Max Price"]));
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  
 
-  const allHomeTypes = ["Flats", "Terraced", "Semi Detached", "Detached"];
-  const isAllSelected = homeType.length === allHomeTypes.length;
   const homeTypeArray = Array.isArray(homeType) ? homeType : [];
   const [isSelected, setIsSelected] = useState(true);
   const [monthsListed, setMonthsListed] = useState(0);
+  const allHomeTypes = ["Flats", "Terraced", "Semi Detached", "Detached"];
+  const [selectedHomeTypes, setSelectedHomeTypes] = useState(homeType);
+  const isAllSelected = selectedHomeTypes.length === allHomeTypes.length;
 
   const handleSwitchChange = (checked) => {
-    setIsSelected(checked);
     if (checked) {
-      setHomeType(allHomeTypes);
+      setSelectedHomeTypes(allHomeTypes);
     } else {
-      setHomeType([]);
+      setSelectedHomeTypes([]);
     }
+    setHomeType(selectedHomeTypes);
   };
 
   const handleHomeTypeChange = (type, isChecked) => {
-    setHomeType([type]);
-
-    // setHomeType((prevTypes) => {
-    //   const currentTypes = Array.isArray(prevTypes) ? prevTypes : [];
-    //   console.log("currentTypes is",currentTypes);
-
-    //   if (isChecked) {
-    //     return [...currentTypes, type];
-    //   } else {
-    //     return currentTypes.filter((item) => item !== type);
-    //   }
-    // });
+    let updatedTypes = [...selectedHomeTypes];
+    if (isChecked) {
+      updatedTypes.push(type);
+    } else {
+      updatedTypes = updatedTypes.filter((t) => t !== type);
+    }
+    setSelectedHomeTypes(updatedTypes);
+    setHomeType(updatedTypes);
   };
 
   const handleMinPriceChange = (keys) => {
@@ -78,18 +78,17 @@ export default function Filter() {
 
   return (
     <>
-      <Badge content="5" color="primary">
-        <Button
-          endContent={<Icon icon="mage:filter" />}
-          radius="sm"
-          size="lg"
-          className="w-full justify-between max-w-xs"
-          auto
-          onPress={onOpen}
-        >
-          Filter
-        </Button>
-      </Badge>
+      <Button
+        endContent={<Icon icon="mage:filter" />}
+        radius="sm"
+        size="lg"
+        className="w-full justify-between max-w-xs"
+        auto
+        onPress={onOpen}
+      >
+        Filter
+      </Button>
+
       <Modal
         classNames={{
           body: "py-6",
@@ -106,9 +105,7 @@ export default function Filter() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Filter</ModalHeader>
               <ModalBody>
                 {/* Price Selection */}
                 <div className="px-1 py-2">
@@ -237,20 +234,9 @@ export default function Filter() {
                 {/* Months Listed Selection */}
                 <div className="px-1 py-2">
                   <p className="text-lg font-semibold mb-2">Months Listed</p>
-                  <Slider
-                    size="md"
-                    step={1}
-                    color="foreground"
-                    showSteps={true}
-                    maxValue={25}
-                    minValue={0}
-                    value={monthsListed}
-                    onChange={(value) => setMonthsListed(value)}
-                    className="max-w-md"
-                  />
-                  <p className="text-sm mt-2">
-                    Selected: {monthsListed} months
-                  </p>
+                  <Switch isSelected={monthFilter} onValueChange={setMonthFilter}>
+                  Months Listed
+                  </Switch>
                 </div>
               </ModalBody>
               <ModalFooter>

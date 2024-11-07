@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { StatusCard } from "./PlanningComponents/Status";
 import Carousel from "./PlanningComponents/GraphCarousal";
@@ -21,12 +21,27 @@ const countStatus = (data, decisions) => {
 
 export function PlanningCard({ postcode, ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
-  const [timeFrame, setTimeFrame] = useState(6); // State for time frame selection
+  const [timeFrame, setTimeFrame] = useState(6);
+
+
+  const filteredPlanningData = useMemo(() => {
+    const now = new Date();
+    const monthsAgo = new Date();
+    monthsAgo.setMonth(now.getMonth() - timeFrame);
+
+    return planningData.filter((item) => {
+      const dateReceivedStr = item._source.other_fields?.date_received;
+      if (!dateReceivedStr) return false;
+
+      const dateReceived = new Date(dateReceivedStr);
+      return dateReceived >= monthsAgo && dateReceived <= now;
+    });
+  }, [planningData, timeFrame]);
   
   const statusData = [
     {
       label: "Approved",
-      count: countStatus(planningData, [
+      count: countStatus(filteredPlanningData, [
         "Application Permitted",
         "Grant",
         "Granted",
@@ -41,19 +56,19 @@ export function PlanningCard({ postcode, ShortAddress }) {
     },
     {
       label: "Pending",
-      count: countStatus(planningData, ["Undecided"]),
+      count: countStatus(filteredPlanningData, ["Undecided"]),
       iconColor: "text-blue-500",
       icon: "mdi:progress-clock",
     },
     {
       label: "Rejected",
-      count: countStatus(planningData, ["Refuse", "Refused", "Rejected"]),
+      count: countStatus(filteredPlanningData, ["Refuse", "Refused", "Rejected"]),
       iconColor: "text-red-500",
       icon: "mdi:close-circle",
     },
     {
       label: "Withdrawn",
-      count: countStatus(planningData, ["Withdrawn"]),
+      count: countStatus(filteredPlanningData, ["Withdrawn"]),
       iconColor: "text-gray-500",
       icon: "mdi:minus-circle",
     },
@@ -86,6 +101,9 @@ export function PlanningCard({ postcode, ShortAddress }) {
       return null;
     }
   };
+
+ 
+
 
   useEffect(() => {
     if (postcode) getPlanningData(postcode);
@@ -142,7 +160,7 @@ export function PlanningCard({ postcode, ShortAddress }) {
               ))}
             </div>
             <div className="p-2 overflow-x-auto">
-              <PlanningApplicationsTable planningData={planningData} timeFrame={timeFrame} />
+              <PlanningApplicationsTable planningData={filteredPlanningData} timeFrame={timeFrame} />
             </div>
             <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">
@@ -152,8 +170,8 @@ export function PlanningCard({ postcode, ShortAddress }) {
                       <div className="w-full h-full bg-white border-1 maplibregl-map mapboxgl-map">
                         <PlanningApplicationMapStatic
                           center={
-                            planningData.length > 0
-                              ? planningData?.map((data) => ({
+                            filteredPlanningData.length > 0
+                              ? filteredPlanningData?.map((data) => ({
                                   lat: data?._source?.location_y || 51.999668,
                                   lng: data?._source?.location_x || -0.267018,
                                 }))
@@ -161,7 +179,7 @@ export function PlanningCard({ postcode, ShortAddress }) {
                           }
                         />
                         <div className="absolute top-4 gap-2 right-4 z-[1000]">
-                          <FloatingCard data={planningData} />
+                          <FloatingCard data={filteredPlanningData} />
                         </div>
                       </div>
                     </div>
