@@ -55,6 +55,7 @@ const MapTilerLayerComponent = () => {
 };
 
 const BoundaryLayer = ({ geom }) => {
+  console.log("Geom in boundry layer:", geom);
   const map = useMap();
 
   useEffect(() => {
