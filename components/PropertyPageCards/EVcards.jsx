@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import CardItem from "./EVcardComponents/CarousalCards";
 import { EvChargingMapStatic } from "../Maps";
@@ -117,13 +117,16 @@ export function EVCard({ price, roi, city, postTownName }) {
                 {/* Carousel section on the right */}
                 <div className="flex-1 md:w-1/2 flex flex-col justify-center h-full">
                   <div className="relative w-full h-full flex items-center">
-                    <button
+                    <Button
+                    radius="full"
+                    size="sm"
+                    isIconOnly  
                       onClick={prevSlide}
                       disabled={currentIndex === 0}
-                      className="absolute left-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                      className="absolute left-0 z-10 p-2  bg-opacity-50 "
                     >
                       &#10094;
-                    </button>
+                    </Button>
                     <div
                       className="flex transition-transform duration-500 ease-in-out w-full"
                       style={{
@@ -150,13 +153,17 @@ export function EVCard({ price, roi, city, postTownName }) {
                         </div>
                       ))}
                     </div>
-                    <button
+                    <Button
+                      radius="full"
+                      size="sm"
+                      isIconOnly
+                      
                       onClick={nextSlide}
                       disabled={currentIndex === evChargingData?.length - 1}
-                      className="absolute right-0 z-10 p-2 bg-white bg-opacity-50 rounded-full"
+                      className="absolute  right-0 z-10 p-2  bg-opacity-50 "
                     >
                       &#10095;
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -167,3 +174,4 @@ export function EVCard({ price, roi, city, postTownName }) {
     </Card>
   );
 }
+          
