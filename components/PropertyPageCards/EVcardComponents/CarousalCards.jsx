@@ -14,7 +14,7 @@ const CardItem = ({
   status
 }) => {
   return (
-    <Card className="w-full h-[50vh]" shadow="sm">
+    <Card className="w-full h-[50vh]" shadow="none">
       <CardBody className="p-4 flex flex-col justify-between">
         {/* First Section */}
         <div className="flex items-start  border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
