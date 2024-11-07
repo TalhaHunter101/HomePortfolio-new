@@ -1,3 +1,4 @@
+import React from "react";
 import {
   marketCompStore,
   useDemographicStore,
@@ -5,10 +6,9 @@ import {
 } from "@/store/listingStore";
 import { formatCurrency } from "@/utils/Helper";
 import { Icon } from "@iconify/react";
-import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react";
-import React from "react";
+import { Card, CardBody, CardHeader, Spinner, Image } from "@nextui-org/react";
 
-function DataNeighbour({ postcode,ShortAddress }) {
+function DataNeighbour({ postcode, ShortAddress }) {
   const {
     populationData,
     educationData,
@@ -36,9 +36,8 @@ function DataNeighbour({ postcode,ShortAddress }) {
     }
     return null;
   };
- 
-  const calculateRentersPercentage = () => {
 
+  const calculateRentersPercentage = () => {
     const totalHouseholds = parseInt(
       tenureAllData?._source?.["Tenure of household: Total: All households"]
     );
@@ -50,10 +49,9 @@ function DataNeighbour({ postcode,ShortAddress }) {
     );
 
     if (totalHouseholds && (socialRented || privateRented)) {
-      return (
-        ((socialRented + privateRented) / totalHouseholds) *
-          100
-      ).toFixed(0);
+      return (((socialRented + privateRented) / totalHouseholds) * 100).toFixed(
+        0
+      );
     }
     return null;
   };
@@ -62,9 +60,11 @@ function DataNeighbour({ postcode,ShortAddress }) {
     const totalHouseholds = parseInt(
       tenureAllData?._source?.["Tenure of household: Total: All households"]
     );
-    const ownsOutright = parseInt(
-      tenureAllData?._source?.["Tenure of household: Owned"] 
-    ) + parseInt(tenureAllData?._source?.["Tenure of household: Shared ownership"]);
+    const ownsOutright =
+      parseInt(tenureAllData?._source?.["Tenure of household: Owned"]) +
+      parseInt(
+        tenureAllData?._source?.["Tenure of household: Shared ownership"]
+      );
 
     if (totalHouseholds && ownsOutright) {
       return ((ownsOutright / totalHouseholds) * 100).toFixed(0);
@@ -90,6 +90,18 @@ function DataNeighbour({ postcode,ShortAddress }) {
     return null;
   };
 
+  // Check if data is available
+  const isDataAvailable =
+    educationData &&
+    educationData._source &&
+    Object.keys(educationData._source).length > 0 &&
+    tenureAllData &&
+    tenureAllData._source &&
+    Object.keys(tenureAllData._source).length > 0 &&
+    economicActivityData &&
+    economicActivityData._source &&
+    Object.keys(economicActivityData._source).length > 0;
+
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
@@ -107,18 +119,20 @@ function DataNeighbour({ postcode,ShortAddress }) {
         </div>
       </CardHeader>
 
-      <div className="p-6 rounded-lg">
-        <div className="space-y-6">
-          {isDataLoading ? (
-            <div className="flex justify-center">
-              <Spinner />
-            </div>
-          ) : (
+      {isDataLoading ? (
+        <CardBody className="flex flex-col items-center justify-center">
+          <Spinner size="lg" />
+          <div className="text-gray-500 text-lg mt-4">Loading data...</div>
+        </CardBody>
+      ) : isDataAvailable ? (
+        <div className="p-6 rounded-lg">
+          <div className="space-y-6">
             <div>
               <p className="text-sm text-gray-500 mb-4">
                 The demographics of a place can be a fair indicator of how
-                neighborly a place is. {calculateRentersPercentage() ?? "N/A"}%
-                of the households in {postcode} are renter-occupied.
+                neighborly a place is.{" "}
+                {calculateRentersPercentage() ?? "N/A"}% of the households in{" "}
+                {postcode} are renter-occupied.
               </p>
               <div className="grid grid-cols-2 gap-6 text-gray-600">
                 {/* College Degree */}
@@ -178,9 +192,18 @@ function DataNeighbour({ postcode,ShortAddress }) {
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
+      )}
     </Card>
   );
 }
