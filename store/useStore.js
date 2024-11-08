@@ -18,6 +18,8 @@ const useStore = create((set) => ({
   setMaxPrice: (price) => set({ maxPrice: parseInt(price) }),
   homeType: ["Flats", "Terraced", "Semi Detached", "Detached"],
   setHomeType: (types) => set({ homeType: types }),
+  monthFilter:false,
+  setMonthFilter: (value) => set({ monthFilter: value }),
 
   clearAllFilter () {
     set({

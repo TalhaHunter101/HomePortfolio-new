@@ -58,7 +58,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 const TransportMap = ({ height, center = [] }) => {    
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
   const zoom = 13;
-
+ 
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
       html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,

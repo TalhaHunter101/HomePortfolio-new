@@ -13,8 +13,9 @@ import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
-import { convertToSquareFeet } from "@/utils/Helper";
+import { convertToSquareFeet, formatCurrency } from "@/utils/Helper";
 import pb from "@/lib/pocketbase";
+import useStore from "@/store/useStore";
 
 function ShowDataCards({
   cardData,
@@ -31,6 +32,7 @@ function ShowDataCards({
   const [showMap, setShowMap] = useState(!isFavorite);
   const [sortOrder, setSortOrder] = useState("asc");
   const [likedProperties, setLikedProperties] = useState([]);
+  const { monthFilter } = useStore();
 
   useEffect(() => {
     const fetchLikedProperties = async () => {
@@ -52,17 +54,41 @@ function ShowDataCards({
     fetchLikedProperties();
   }, []);
 
-  const sortData = () => {
+
+  const sortDataByDate = () => {
     const sortedData = [...filter].sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.minPrice - b.minPrice;
+      const dateA = new Date(a.date); // date from property._source.publishedOn
+      const dateB = new Date(b.date);
+      
+      if (monthFilter) {
+        // Sort from newest to oldest when monthFilter is true
+        return dateB - dateA;
       } else {
-        return b.minPrice - a.minPrice;
+        // Sort from oldest to newest when monthFilter is false
+        return dateA - dateB;
       }
     });
     setFilter(sortedData);
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
+
+  
+  
+  const sortData = (dataToSort) => {
+    const sortedData = [...dataToSort].sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+  
+      if (monthFilter) {
+        // When monthFilter is true, sort from newest to oldest
+        return dateB - dateA;
+      } else {
+        // When monthFilter is false, sort from oldest to newest
+        return dateA - dateB;
+      }
+    });
+    return sortedData;
+  };
+  
 
   useEffect(() => {
     const getPropsData = () => {
@@ -122,10 +148,13 @@ function ShowDataCards({
       const uniqueDevelopmentData = Object.values(groupedData);
       setToLocation(uniqueDevelopmentData);
       setFilter(uniqueDevelopmentData);
+
+      const sortedData = sortData(uniqueDevelopmentData);
+    setFilter(sortedData);
     };
 
     getPropsData();
-  }, [cardData]);
+  }, [cardData, monthFilter]);
 
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Sort by"]));
 
@@ -142,7 +171,7 @@ function ShowDataCards({
   return (
     <div className="w-screen flex flex-grow pt-16">
       {/* Map Section */}
-      { !isFavorite &&   showMap && (
+      {!isFavorite && showMap && (
         <div className="hidden lg:flex w-full lg:w-3/5 flex-col gap-4 p-4 h-full fixed">
           {toLocation && (
             <motion.div
@@ -176,12 +205,11 @@ function ShowDataCards({
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-center hidden md:block">
               <h1 className="text-md uppercase font-bold mb-2 md:mb-0">
-                {totalcount} Properties
+                {formatCurrency(totalcount)} Properties
               </h1>
 
-              {
-                !isFavorite && (
-                  <div className="flex space-x-2">
+              {!isFavorite && (
+                <div className="flex space-x-2">
                   <Button
                     radius="sm"
                     size="lg"
@@ -222,9 +250,7 @@ function ShowDataCards({
                     </DropdownMenu>
                   </Dropdown>
                 </div>
-                )
-              }
-             
+              )}
             </div>
 
             {/* Cards */}
