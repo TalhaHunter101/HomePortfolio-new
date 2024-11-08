@@ -13,7 +13,7 @@ import { SearchMap } from "../Maps/index";
 import SearchCard from "../SearchPage/SearchCrd";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
-import { convertToSquareFeet } from "@/utils/Helper";
+import { convertToSquareFeet, formatCurrency } from "@/utils/Helper";
 import pb from "@/lib/pocketbase";
 import useStore from "@/store/useStore";
 
@@ -205,7 +205,7 @@ function ShowDataCards({
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-center hidden md:block">
               <h1 className="text-md uppercase font-bold mb-2 md:mb-0">
-                {totalcount} Properties
+                {formatCurrency(totalcount)} Properties
               </h1>
 
               {!isFavorite && (
