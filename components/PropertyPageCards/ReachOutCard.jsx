@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Image, Link } from "@nextui-org/react";
 import { Icon } from '@iconify/react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -55,24 +55,35 @@ export function ReachOutCard() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <Card className="m-4" style={{ minHeight: '150px' }}>
-        <CardHeader>
-          <div className="flex items-center my-2">
-            <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-              <Icon
-                icon="solar:chat-round-call-outline"
-                width={16}
-                className="text-purple-700"
-              />
-            </div>
-            <h2 className="text-xl font-bold text-gray-700">Want to reach out?</h2>
-          </div>
-        </CardHeader>
+      <CardHeader>
+  <div className="flex items-center my-2 w-full">
+    {/* Left side content (Icon and Heading) */}
+    <div className="flex items-center">
+      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+        <Icon
+          icon="solar:chat-round-call-outline"
+          width={16}
+          className="text-purple-700"
+        />
+      </div>
+      <h2 className="text-xl font-bold text-gray-700">Want to reach out?</h2>
+    </div>
+
+    {/* Spacer to push the button to the right */}
+    <div className="flex-grow"></div>
+
+    {/* Right side button */}
+    <button className="font-medium px-4 py-2 bg-purple-100 text-default-600 rounded-md focus:outline-none">
+     <li>House For Sale</li> 
+    </button>
+  </div>
+</CardHeader>
+
+
         <CardBody>
           <div className="p-5 bg-white rounded-md">
             <div>
-              <button className="font-medium px-4 py-2 my-2 bg-purple-100 text-default-600 rounded-md focus:outline-none">
-                <li>House For Sale</li>
-              </button>
+              
               <p className="text-base font-bold mb-3">Reach out to us</p>
               <p className="text-base font-medium">
                 Ask a question about 1906 Brentwood ST, and HomePortfolio will get back to you within 24 hours.
@@ -142,6 +153,54 @@ export function ReachOutCard() {
           </div>
         </CardBody>
       </Card>
+      <Card className="m-4" style={{ padding: '16px' }}>
+      <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
+      {/* Logo and Property Info */}
+      <div className="flex items-center space-x-4">
+        <Image
+          src="/path/to/logo.png"
+          alt="Madison Oakley"
+          width={100}
+          height={100}
+        />
+        <div className='pl-6'>
+          <p className="text-sm text-gray-600">Property listed by:</p>
+          <p className="text-lg font-bold">Madison Oakley</p>
+          <Link href="#" className="text-blue-600 underline">
+            See this agents profile
+          </Link>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
+        <Button
+          
+          startContent={<Icon icon="mdi:heart-outline" width="24" />}
+          variant="light"
+          className="flex items-center text-blue-600"
+        >
+          Save
+        </Button>
+        <Button
+          
+          startContent={<Icon icon="mdi:share-variant-outline" width="24" />}
+          variant="light"
+          className="flex items-center text-blue-600"
+        >
+          Share
+        </Button>
+        <Button
+          
+          startContent={<Icon icon="mdi:bell-outline" width="24" />}
+          variant="light"
+          className="flex items-center text-blue-600"
+        >
+          Subscribe
+        </Button>
+      </div>
+    </div>
+    </Card>
     </>
   );
 }
