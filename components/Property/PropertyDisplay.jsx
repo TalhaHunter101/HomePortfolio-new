@@ -46,6 +46,7 @@ import toast, { Toaster } from "react-hot-toast";
 import FloodData from "../PropertyPageCards/FloodData";
 import ShareModal from "./ShareModal";
 import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
+import { ContactAgentCard } from "../PropertyPageCards/ContactAgentCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -181,6 +182,7 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-pink-400",
           id: "reachout",
           Component: ReachOutCard,
+          
         },
       ],
     },
@@ -474,8 +476,8 @@ function PropertyDisplay({ listingData, params }) {
     <>
       <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
-          <div className="flex  space-x-2">
+        <div className="p-4 flex items-center justify-start  w-full hidden md:flex  ">
+          <div className="flex  space-x-2 pl-6">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
               onClick={() => handleLikeToggle()}
@@ -483,9 +485,9 @@ function PropertyDisplay({ listingData, params }) {
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
             />
-            <Button size="lg" className="bg-transparent" onPress={onOpen}>
+            <Button size="lg" className="bg-transparent text-blue-500" onPress={onOpen}>
               <Icon icon="bx:share" />
-              Share
+              Share & Export
             </Button>
             <ShareModal isOpen={isOpen} onClose={onOpenChange} pageURL={pathname} />
           </div>
@@ -566,7 +568,8 @@ function PropertyDisplay({ listingData, params }) {
             </div>
 
             {/* Existing styles for larger screens */}
-            <div className="mb-4 md:pl-6 flex items-center flex-row hidden md:flex">
+            <Card className="p-4 mr-4 ml-6 rounded-md hidden md:block">
+            <div className="mb-4  flex items-center flex-row hidden md:flex">
               {/* Content for md and lg screens */}
               <div className="flex-1 text-center md:text-left">
                 <p className="font-bold text-2xl lg:text-4xl">
@@ -605,10 +608,11 @@ function PropertyDisplay({ listingData, params }) {
                 </div>
               </div>
             </div>
-
-            <p className="text-sm pl-6 font-bold hidden md:block">
+            <p className="text-sm  font-bold hidden md:block">
               {listingData?.title}
             </p>
+            </Card>
+            
             <div className="hidden md:block">
               <div className="pr-4 pl-6 pt-4">
                 <Button
