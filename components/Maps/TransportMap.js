@@ -1,10 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
@@ -16,6 +12,8 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -27,7 +25,6 @@ const MapTilerLayerComponent = () => {
 };
 
 const MarkersWithCustomIcon = ({ center }) => {
-  
   const map = useMap();
 
   const customIcon = L.icon({
@@ -37,7 +34,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center.length > 0) {
-      const bounds = L.latLngBounds(center.map(c => [c.lat, c.lng]));
+      const bounds = L.latLngBounds(center.map((c) => [c.lat, c.lng]));
       map.fitBounds(bounds, { maxZoom: 16 });
     }
   }, [map, center]);
@@ -55,14 +52,14 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const TransportMap = ({ height, center = [] }) => {    
+const TransportMap = ({ height, center = [] }) => {
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
   const zoom = 13;
  
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
       html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,
-      className: 'custom-cluster-icon',
+      className: "custom-cluster-icon",
     });
   };
 
@@ -76,7 +73,7 @@ const TransportMap = ({ height, center = [] }) => {
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }} 
+        }}
       >
         <MapTilerLayerComponent />
         <MarkerClusterGroup iconCreateFunction={iconCreateFunction}>

@@ -30,7 +30,7 @@ const amenities = [
     key: "bar",
     bg_color: "bg-desert-200",
   },
-   // {
+  // {
   //   name: "pubs",
   //   icon: "fluent:drink-beer-24-regular",
   //   icon_name: "bar",
@@ -130,22 +130,27 @@ async function getNearbyLocations(
     return jsonData.elements
       .filter((element) => element.tags && element.tags.amenity)
       .map((element) => {
-        let lat, lon;
-
-        // Handle node and other element types differently
         if (element.type === "node") {
           lat = element.lat;
           lon = element.lon;
-        } else if (element.center) {
+        } else {
           lat = element.center.lat;
-          lon = element.center.lon;
+          lon = element.center.lon || element.center.lng;
         }
 
+        const address = formatAddress(element.tags);
+        const distance = haversineDistance(
+          { lat, lon },
+          { lat: center.lat, lon: center.lng || center.lon }
+        );
+
         return {
-          name: element.tags.name || "Unknown",
-          category: element.tags.amenity || "Unknown",
-          lat, // Ensure lat/lon are captured correctly
+          name: element.tags.name || "na",
+          amenity: element.tags.amenity || "Unknown",
+          address: address,
+          lat,
           lon,
+          distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
         };
       });
   } catch (error) {
@@ -154,7 +159,7 @@ async function getNearbyLocations(
   }
 }
 
-export function NearbyCard({ data, city,ShortAddress }) {
+export function NearbyCard({ data, city, ShortAddress }) {
   const [locations, setLocations] = useState([]); // Dynamic locations state
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -182,7 +187,9 @@ export function NearbyCard({ data, city,ShortAddress }) {
   ]);
 
   const items = locations.length ? locations : getItemsData();
-  const nearestAmenity = items.find((item) => item?.category === selectedAmenity);
+  const nearestAmenity = items.find(
+    (item) => item?.category === selectedAmenity
+  );
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -289,9 +296,11 @@ export function NearbyCard({ data, city,ShortAddress }) {
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
                               <Icon
-                                icon={amenities.find(
-                                  (amenity) => amenity.key === item?.category
-                                )?.icon || "mdi:map-marker"}
+                                icon={
+                                  amenities.find(
+                                    (amenity) => amenity.key === item?.category
+                                  )?.icon || "mdi:map-marker"
+                                }
                                 className="inline-block text-4xl text-green-800 mr-5 xs:mr-8"
                               />
                             </div>

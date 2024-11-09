@@ -84,11 +84,11 @@ const amenities = [
   },
 ];
 
-const WhatsNearbyMap = ({ center,isInteractive }) => {
+const WhatsNearbyMap = ({ center, isInteractive }) => {
   const [locations, setLocations] = useState([]);
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
 
-const haversineDistance = (coords1, coords2) => {
+  const haversineDistance = (coords1, coords2) => {
     const toRad = (x) => (Number(x) * Math.PI) / 180;
 
     const lat1 = Number(coords1.lat);
@@ -102,14 +102,16 @@ const haversineDistance = (coords1, coords2) => {
     const dLon = toRad(lon2 - lon1);
 
     const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c; // Distance in km
-};
+  };
 
   async function getNearbyLocations(
     lat,
@@ -147,20 +149,23 @@ const haversineDistance = (coords1, coords2) => {
       }
 
       const jsonData = await response.json();
+      console.log("JsonData: ", jsonData);
       const locations = jsonData.elements
         .filter((element) => element.tags && element.tags.amenity)
         .map((element) => {
-          let lat, lon;
           if (element.type === "node") {
             lat = element.lat;
             lon = element.lon;
           } else {
             lat = element.center.lat;
-            lon = element.center.lon;
+            lon = element.center.lon || element.center.lng;
           }
 
           const address = formatAddress(element.tags);
-          const distance = haversineDistance({ lat, lon }, { lat: center.lat, lon: center.lon });
+          const distance = haversineDistance(
+            { lat, lon },
+            { lat: center.lat, lon: center.lng || center.lon }
+          );
 
           return {
             name: element.tags.name || "na",
@@ -168,7 +173,7 @@ const haversineDistance = (coords1, coords2) => {
             address: address,
             lat,
             lon,
-            // distance: `${distance.toFixed(2)} km`,
+            distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
           };
         });
 
@@ -230,7 +235,11 @@ const haversineDistance = (coords1, coords2) => {
           ) : null
         )}
       </div>
-      <div className={`absolute inset-0 z-0 ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }`}>
+      <div
+        className={`absolute inset-0 z-0 ${
+          isInteractive ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+      >
         <NearByPlacesStatic
           center={center}
           height="500px"

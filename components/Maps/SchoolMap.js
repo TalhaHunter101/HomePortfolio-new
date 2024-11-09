@@ -1,16 +1,12 @@
 "use client";
 import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import "leaflet-gesture-handling"
+import "leaflet-gesture-handling";
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -18,12 +14,79 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
       map.removeLayer(mtLayer);
     };
   }, [map]);
+
+  return null;
+};
+
+const BoundaryLayer = ({ geom }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    // Add detailed logging
+    console.log("BoundaryLayer received geom:", JSON.stringify(geom, null, 2));
+
+    if (!geom) {
+      console.log("No geometry provided");
+      return;
+    }
+
+    // Ensure we're handling the correct geom structure
+    let geometryData;
+    if (typeof geom === "string") {
+      try {
+        geometryData = JSON.parse(geom);
+      } catch (e) {
+        console.error("Failed to parse geom string:", e);
+        return;
+      }
+    } else {
+      geometryData = geom;
+    }
+
+    // Create GeoJSON structure
+    const geoJsonData = {
+      type: "Feature",
+      geometry: {
+        type: "Polygon",
+        coordinates: geometryData.coordinates || geometryData,
+      },
+      properties: {},
+    };
+
+    console.log("Created GeoJSON:", JSON.stringify(geoJsonData, null, 2));
+
+    try {
+      const boundaryLayer = L.geoJSON(geoJsonData, {
+        style: {
+          color: "#ff7800",
+          weight: 2,
+          opacity: 0.65,
+          fillOpacity: 0.2,
+        },
+      }).addTo(map);
+
+      if (boundaryLayer.getBounds().isValid()) {
+        map.fitBounds(boundaryLayer.getBounds(), {
+          padding: [50, 50],
+          maxZoom: 13,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to draw boundary:", error);
+      console.error(
+        "Invalid geom data:",
+        JSON.stringify(geometryData, null, 2)
+      );
+    }
+  }, [map, geom]);
 
   return null;
 };
@@ -38,7 +101,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center.length > 0) {
-      const bounds = L.latLngBounds(center.map(c => [c.lat, c.lng]));
+      const bounds = L.latLngBounds(center.map((c) => [c.lat, c.lng]));
       map.fitBounds(bounds, { maxZoom: 16 });
     }
   }, [map, center]);
@@ -56,14 +119,15 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const SchoolMap = ({ height, center = [] }) => {    
+const SchoolMap = ({ height, center = [], geom }) => {
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
   const zoom = 13;
+  console.log("School map geom:", geom);
 
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
       html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,
-      className: 'custom-cluster-icon',
+      className: "custom-cluster-icon",
     });
   };
 
@@ -77,10 +141,11 @@ const SchoolMap = ({ height, center = [] }) => {
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }} 
+        }}
         gestureHandling={true}
       >
         <MapTilerLayerComponent />
+        <BoundaryLayer geom={geom} />
         <MarkerClusterGroup iconCreateFunction={iconCreateFunction}>
           <MarkersWithCustomIcon center={center} />
         </MarkerClusterGroup>

@@ -149,13 +149,12 @@ function PropertyDisplay({ listingData, params }) {
   useEffect(() => {
     if (fullAddress) {
       let shortadd = fullAddress.split(",")[0];
-      
+
       shortadd = shortadd.replace(/[0-9]/g, "").trim();
-      
+
       setShortAddress(shortadd);
     }
   }, [fullAddress]);
-  
 
   const navElements = [
     {
@@ -665,7 +664,7 @@ function PropertyDisplay({ listingData, params }) {
                     key={subIndex}
                     id={subElement?.id}
                     onMouseEnter={() => handleMouseEnter(subElement?.id)}
-                  > 
+                  >
                     <subElement.Component
                       {...listingData}
                       title={subElement?.name}

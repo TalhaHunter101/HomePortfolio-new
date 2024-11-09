@@ -16,6 +16,8 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      tyle: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {

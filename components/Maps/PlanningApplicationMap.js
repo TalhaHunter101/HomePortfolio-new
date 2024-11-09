@@ -1,16 +1,12 @@
 "use client";
 import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "./MarkerCluster";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import "leaflet-gesture-handling"
+import "leaflet-gesture-handling";
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -18,6 +14,8 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -38,7 +36,7 @@ const MarkersWithCustomIcon = ({ center }) => {
 
   useEffect(() => {
     if (center.length > 0) {
-      const bounds = L.latLngBounds(center.map(c => [c.lat, c.lng]));
+      const bounds = L.latLngBounds(center.map((c) => [c.lat, c.lng]));
       map.fitBounds(bounds, { maxZoom: 16 });
     }
   }, [map, center]);
@@ -56,17 +54,14 @@ const MarkersWithCustomIcon = ({ center }) => {
   );
 };
 
-const PlanningApplicationMap = ({ height, center = [] }) => {    
-
-
-    
+const PlanningApplicationMap = ({ height, center = [] }) => {
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
   const zoom = 28;
 
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
       html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,
-      className: 'custom-cluster-icon',
+      className: "custom-cluster-icon",
     });
   };
 
@@ -80,7 +75,7 @@ const PlanningApplicationMap = ({ height, center = [] }) => {
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }} 
+        }}
         gestureHandling={true}
       >
         <MapTilerLayerComponent />

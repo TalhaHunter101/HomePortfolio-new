@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { SchoolMapStatic } from "@/components/Maps";
 import { smallString } from "@/utils/Helper";
 
-const SchoolsMap = ({ data, schoolData,isInteractive }) => {
+const SchoolsMap = ({ data, schoolData, isInteractive, geom }) => {
   const [selectedType, setSelectedType] = useState("All grades");
 
   const center = [
@@ -142,7 +142,7 @@ const SchoolsMap = ({ data, schoolData,isInteractive }) => {
 
       {/* Map container */}
       <div className={`absolute inset-0 z-0 ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }` }>
-        <SchoolMapStatic center={center} height="500px" />
+        <SchoolMapStatic center={center} height="500px" geom={geom} />
       </div>
     </div>
   );

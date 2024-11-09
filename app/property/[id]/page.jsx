@@ -49,7 +49,6 @@ async function getData(id) {
       body: JSON.stringify({ listingId: id }),
     }
   );
-
   const res = await response?.json();
   return { res };
 }

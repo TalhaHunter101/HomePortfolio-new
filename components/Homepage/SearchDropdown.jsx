@@ -31,23 +31,6 @@ function SearchDropdown({ results, isDataLoading }) {
                   </p>
                   <div>
                     {results?.towns.map((item, i) => (
-                      // <Link
-                      //   key={i}
-                      //   href={`/search/${item?.replace(/\s+/g, "-")}`}
-                      // >
-                      //   <div className="flex my-3 cursor-pointer">
-                      //     <Image
-                      //       src="/icons/location.svg"
-                      //       height={20}
-                      //       width={20}
-                      //       alt="dev"
-                      //       className="mx-2"
-                      //     />
-                      //     <div>
-                      //       <p className="text-sm text-primaryfonts">{item}</p>
-                      //     </div>
-                      //   </div>
-                      // </Link>
                       <div key={i} className="my-3">
                         <div className="flex">
                           <Link
@@ -78,27 +61,6 @@ function SearchDropdown({ results, isDataLoading }) {
                             </div>
                           </Link>
                         </div>
-                        {/* {
-  item?.towns.map((town, i) => (
-    <Link
-      key={i}
-      href={`/search/${town?.replace(/\s+/g, "-")}?type=town`}
-    >
-      <div className="flex cursor-pointer">
-        <Image 
-          src="/icons/location.svg"
-          height={20}
-          width={20}
-          alt="dev"
-          className="mx-2"
-        />
-        <div>
-          <p className="text-sm text-primaryfonts">{town}</p>
-        </div>
-      </div>
-    </Link>
-  ))
-} */}
                       </div>
                     ))}
                   </div>
@@ -151,14 +113,6 @@ function SearchDropdown({ results, isDataLoading }) {
                   </p>
                   <div>
                     {results?.postcodes.map((item, i) => (
-                      // <Link
-                      //   key={i}
-                      //   href={`/search/${item?.POSTCODE.replace(
-                      //     /\s+/g,
-                      //     "-"
-                      //   )}`}
-                      // >
-
                       <Link
                         key={i}
                         href={{
@@ -231,118 +185,3 @@ function SearchDropdown({ results, isDataLoading }) {
   );
 }
 export default SearchDropdown;
-
-//Old code
-{
-  /* <Card className="max-h-[50vh] overflow-y-auto py-2">
-{results?.uk?.length !== 0 && (
-  <div className="px-2 border-b border-gray-300 ">
-    <p className="my-1 text-sm font-semibold text-gray-800 uppercase ">
-      PostCode
-    </p>
-    <div>
-      {results?.uk?.map((item, i) => (
-        <Link
-          key={i}
-          href={`/location/postcode-${item?._source?.post_code.replace(
-            /\s+/g,
-            "-"
-          )}`}
-        >
-          <div
-            onClick={() => setSearchInput(false)}
-            className="flex my-3 cursor-pointer "
-          >
-            <Image
-              src="/icons/location.svg"
-              height={20}
-              width={20}
-              alt="dev"
-              className="mx-2 "
-            />
-            <div>
-              <p className="text-sm text-primaryfonts">
-                {item?._source?.post_code}
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-)}
-
-{results?.county?.length !== 0 && (
-  <div className="px-2 border-b border-gray-300 ">
-    <p className="my-1 text-sm font-semibold text-gray-800 uppercase ">
-      County
-    </p>
-    <div>
-      {[
-        ...new Set(
-          results?.county?.map((item) => item?._source?.countyAreaName)
-        ),
-      ].map((countyAreaName, i) => (
-        <Link
-          key={i}
-          href={`/location/county-${countyAreaName.replace(
-            /\s+/g,
-            "-"
-          )}`}
-          passHref
-        >
-          <div
-            onClick={() => setSearchInput(false)}
-            className="flex my-3 cursor-pointer"
-          >
-            <Image
-              src="/icons/country.svg"
-              height={20}
-              width={20}
-              alt="dev"
-              className="mx-2 "
-            />
-            <div>
-              <p className="text-sm text-primaryfonts">
-                {countyAreaName}
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-)}
-
-{results?.address?.length !== 0 && (
-  <div className="px-2 border-b border-gray-300 ">
-    <p className="my-1 text-sm font-semibold text-gray-800 uppercase ">
-      Address
-    </p>
-    <div>
-      {results?.address?.map((item, i) => (
-        <Link key={i} href={`/property/${item?._id}`}>
-          <div
-            onClick={() => setSearchInput(false)}
-            className="flex my-3 cursor-pointer "
-          >
-            <Image
-              src="/icons/location.svg"
-              height={20}
-              width={20}
-              alt="dev"
-              className="mx-2 "
-            />
-            <div>
-              <p className="text-sm text-primaryfonts">
-                {item?._source?.address}
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-)}
-</Card> */
-}

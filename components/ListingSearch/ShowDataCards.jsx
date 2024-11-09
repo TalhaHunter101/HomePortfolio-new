@@ -25,10 +25,12 @@ function ShowDataCards({
   pageSize,
   isLoading,
   isFavorite,
+  geom,
+  mapResults,
 }) {
   const [cardHover, setCardHover] = useState(null);
   const [filter, setFilter] = useState([]);
-  const [toLocation, setToLocation] = useState("");
+  const [mapLocations, setMapLocations] = useState([]);
   const [showMap, setShowMap] = useState(!isFavorite);
   const [sortOrder, setSortOrder] = useState("asc");
   const [likedProperties, setLikedProperties] = useState([]);
@@ -91,6 +93,46 @@ function ShowDataCards({
   
 
   useEffect(() => {
+    if (mapResults?.length > 0) {
+      console.log("Processing map results:", mapResults.length);
+      const processedMapData = mapResults.map(result => {
+        const source = result._source;
+        return {
+          id: source.listingId,
+          branch_name: source.branch?.name,
+          description: source.summaryDescription,
+          development_address: source.address,
+          minBedrooms: source.counts?.numBedrooms,
+          minPrice: parseInt(source.analyticsTaxonomy?.priceActual) || 0,
+          maxBedrooms: source.counts?.numBedrooms,
+          bathrooms: source.counts?.numBathrooms,
+          maxPrice: parseInt(source.analyticsTaxonomy?.priceActual) || 0,
+          images: source.propertyImage || [],
+          developer_logo: source.branch?.logoUrl,
+          developer_name: source.branch?.name,
+          postcode: source.ref_postcode,
+          areaSize: source.analyticsTaxonomy?.sizeSqFeet || convertToSquareFeet(source.totalFloorArea),
+          fullAddress: source.fullAddress,
+          address: source.analyticsTaxonomy?.displayAddress,
+          lng: parseFloat(source.location?.coordinates?.longitude),
+          lat: parseFloat(source.location?.coordinates?.latitude),
+          date: source.publishedOn,
+          displayAddress: source.analyticsTaxonomy?.displayAddress,
+        };
+      }).filter(location => 
+        // Filter out invalid coordinates
+        location.lat && 
+        location.lng && 
+        !isNaN(location.lat) && 
+        !isNaN(location.lng)
+      );
+
+      console.log("Processed map locations:", processedMapData.length);
+      setMapLocations(processedMapData);
+    }
+  }, [mapResults]);
+
+  useEffect(() => {
     const getPropsData = () => {
       const groupedData = [];
       cardData?.forEach((property) => {
@@ -146,7 +188,6 @@ function ShowDataCards({
         });
       });
       const uniqueDevelopmentData = Object.values(groupedData);
-      setToLocation(uniqueDevelopmentData);
       setFilter(uniqueDevelopmentData);
 
       const sortedData = sortData(uniqueDevelopmentData);
@@ -173,7 +214,7 @@ function ShowDataCards({
       {/* Map Section */}
       {!isFavorite && showMap && (
         <div className="hidden lg:flex w-full lg:w-3/5 flex-col gap-4 p-4 h-full fixed">
-          {toLocation && (
+          {mapLocations.length > 0 && (
             <motion.div
               className="w-full h-full"
               initial={{ opacity: 0, y: 20 }}
@@ -182,10 +223,11 @@ function ShowDataCards({
             >
               <Card className="h-full rounded-none">
                 <SearchMap
-                  center={toLocation}
+                  center={mapLocations}
                   hovercard={cardHover}
                   height={"100vh"}
-                  key={currentPage}
+                  key={`${currentPage}-${mapLocations.length}`}
+                  geom={geom}
                 />
               </Card>
             </motion.div>

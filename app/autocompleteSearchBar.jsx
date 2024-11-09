@@ -14,7 +14,7 @@ export default function AutocompleteSearch({ properties }) {
   const { clearAllFilter } = useStore();
 
   const fetchCities = useCallback(async (term) => {
-    const response = await fetch("/dummydata/city.json");
+    const response = await fetch("/dummydata/city_with_coordinates.json");
     const cities = await response.json();
   
     const lowerCaseTerm = term.toLowerCase();
@@ -110,7 +110,10 @@ export default function AutocompleteSearch({ properties }) {
 
   // Create a stable throttled version of searchPostcode
   const throttledSearchPostcode = useCallback(
-    throttle((term) => searchPostcode(term), 1000, { leading: true, trailing: true }), // Leading true to execute immediately
+    throttle((term) => searchPostcode(term), 1000, {
+      leading: true,
+      trailing: true,
+    }), // Leading true to execute immediately
     [searchPostcode]
   );
 
@@ -121,7 +124,6 @@ export default function AutocompleteSearch({ properties }) {
       throttledSearchPostcode(searchTerm); // Use the throttled version
     }
   }, [searchTerm, throttledSearchPostcode]);
-
 
   const tabVariants = {
     enter: (direction) => ({
@@ -174,7 +176,10 @@ export default function AutocompleteSearch({ properties }) {
 
             {results && (
               <div>
-                <SearchDropdown results={results} isDataLoading={isDataLoading} />
+                <SearchDropdown
+                  results={results}
+                  isDataLoading={isDataLoading}
+                />
               </div>
             )}
           </div>

@@ -16,8 +16,10 @@ import Filter from "@/components/SearchPage/filter";
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
 const SearchPage = ({ params }) => {
-  const encodedPage = params.page;  
-  const page = decodeURIComponent(encodedPage.split("%3Ftype")[0].replace(/-/g, " "));
+  const encodedPage = params.page;
+  const page = decodeURIComponent(
+    encodedPage.split("%3Ftype")[0].replace(/-/g, " ")
+  );
   let pathname = usePathname();
   const typeis = pathname.split("=")[1] || "";
 
@@ -28,6 +30,8 @@ const SearchPage = ({ params }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isGeomBoundary, setIsGeomBoundary] = useState(null);
+  const [isMapResult, setIsMapResult] = useState(null);
 
   const pageSize = 20;
 
@@ -100,7 +104,7 @@ const SearchPage = ({ params }) => {
       bathrooms: selectedBaths,
       houseType: homeType && homeType.length > 0 ? homeType : "any",
     };
-  
+
     try {
       const response = await fetch(`/api/search/get-listing-data`, {
         method: "POST",
@@ -115,10 +119,13 @@ const SearchPage = ({ params }) => {
           pageSize,
         }),
       });
-  
+
       const result = await response.json();
       const properties = result?.results || [];
 
+      console.log("geom", result?.geom);
+      setIsGeomBoundary(result?.geom);
+      setIsMapResult(result?.mapResults);
       const updatedProperties = await Promise.all(
         properties.map(async (property) => {
           try {
@@ -127,12 +134,12 @@ const SearchPage = ({ params }) => {
               totalFloorArea: null,
               fullAddress: null,
             };
-  
+
             // If `uprn` exists, fetch EPC data, otherwise keep default values
             if (uprn) {
               epcData = await fetchEPCData(uprn);
             }
-  
+
             // Return the updated property data
             return {
               ...property,
@@ -143,8 +150,11 @@ const SearchPage = ({ params }) => {
               },
             };
           } catch (error) {
-            console.error(`Error fetching EPC data for property with UPRN ${property?._source?.location?.uprn}:`, error);
-  
+            console.error(
+              `Error fetching EPC data for property with UPRN ${property?._source?.location?.uprn}:`,
+              error
+            );
+
             // If there's an error, return the property as it is, without modifying it
             return property;
           }
@@ -160,7 +170,7 @@ const SearchPage = ({ params }) => {
       setIsInitialLoading(false);
     }
   }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, homeType]);
-  
+
   useEffect(() => {
     setListingData([]);
     setCurrentPage(1);
@@ -168,7 +178,15 @@ const SearchPage = ({ params }) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, fetchProperties]); 
+  }, [
+    page,
+    currentPage,
+    minPrice,
+    maxPrice,
+    selectedBeds,
+    selectedBaths,
+    fetchProperties,
+  ]);
   return (
     <main className="flex mt-16 flex-col h-screen">
       {/* Navbar */}
@@ -183,7 +201,9 @@ const SearchPage = ({ params }) => {
             placeholder={page}
             size="lg"
             className="w-full max-w-md z-40"
-            endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
+            endContent={
+              <Icon icon="carbon:close-filled" className="text-2xl" />
+            }
             onChange={handleChange}
           />
         </div>
@@ -285,6 +305,8 @@ const SearchPage = ({ params }) => {
           setCurrentPage={setCurrentPage}
           pageSize={pageSize}
           isLoading={isnewDataLoading}
+          geom={isGeomBoundary}
+          mapResults={isMapResult}
         />
       )}
     </main>
