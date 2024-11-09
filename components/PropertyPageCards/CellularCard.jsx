@@ -14,14 +14,24 @@ export function CellularInfoCard() {
       { rank: 1, provider: "AT&T", cellsPerSqMi: 26 },
       { rank: 2, provider: "T-Mobile", cellsPerSqMi: 22 },
       { rank: 3, provider: "Verizon", cellsPerSqMi: 6 },
+      { rank: 4, provider: "Sprint", cellsPerSqMi: 4 },
+      { rank: 5, provider: "US Cellular", cellsPerSqMi: 3 },
     ],
   });
+
+  // State to track the selected card
+  const [selectedRank, setSelectedRank] = useState(null);
 
   // Determine the label based on the coverage rating
   const getCoverageLabel = (value) => {
     if (value < 35) return "Low";
     if (value < 70) return "Medium";
     return "High";
+  };
+
+  // Click handler for ranking cards
+  const handleRankingClick = (rank) => {
+    setSelectedRank(rank === selectedRank ? null : rank);
   };
 
   return (
@@ -92,20 +102,30 @@ export function CellularInfoCard() {
           </div>
 
           {/* Rankings Section */}
-          <div className="flex-1 space-y-2">
-            {data.ranking.map((item) => (
-              <div
-                key={item.rank}
-                className={`p-3 border rounded-lg ${item.rank === 2 ? "bg-gray-100" : ""}`}
-              >
-                <p className="font-bold">
-                  {item.rank}
-                  {item.rank === 1 ? "st" : item.rank === 2 ? "nd" : "rd"}
-                </p>
-                <p>{item.provider}</p>
-                <p className="text-sm">{item.cellsPerSqMi} cells per sq mi</p>
-              </div>
-            ))}
+          <div className="flex-1">
+            <div
+              className="space-y-2 overflow-y-auto"
+              style={{ maxHeight: "300px" }}
+            >
+              {data.ranking.map((item) => (
+                <div
+                  key={item.rank}
+                  className={`p-3 border rounded-lg cursor-pointer transition-all ${
+                    selectedRank === item.rank
+                      ? "bg-gray-300"
+                      : "bg-white hover:bg-gray-100"
+                  }`}
+                  onClick={() => handleRankingClick(item.rank)}
+                >
+                  <p className="font-bold">
+                    {item.rank}
+                    {item.rank === 1 ? "st" : item.rank === 2 ? "nd" : "rd"}
+                  </p>
+                  <p>{item.provider}</p>
+                  <p className="text-sm">{item.cellsPerSqMi} cells per sq mi</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </CardBody>
