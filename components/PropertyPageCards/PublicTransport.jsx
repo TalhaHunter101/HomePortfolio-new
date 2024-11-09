@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { BusMapStatic, TransportMapStatic } from "../Maps";
 import { useListingStore } from "@/store/listingStore";
 
-export function PublicTransportCard({ postcode, data, latitude, longitude }) {
+export function PublicTransportCard({ postcode, data, latitude, longitude,ShortAddress }) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
   const [busData, setBusData] = useState([]);
@@ -115,7 +115,7 @@ export function PublicTransportCard({ postcode, data, latitude, longitude }) {
                 />
               </span>
               <span className="text-xl font-bold text-gray-700">
-                What are my public transportation options?
+                What are my public transportation options in {ShortAddress}?
               </span>
             </div>
 

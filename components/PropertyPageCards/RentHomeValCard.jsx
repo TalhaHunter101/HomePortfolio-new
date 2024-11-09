@@ -5,7 +5,7 @@ import { useListingStore } from "@/store/listingStore";
 import { formatNumberWithCommas } from "@/utils/Helper";
 import { Icon } from "@iconify/react";
 
-export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newData }) {
+export function RentHomeValCard({ price, roi,setRentEstimate, uprn, data: newData,ShortAddress}) {
   const [data, setData] = useState([]);
   const { squerfoot } = useListingStore();
 
@@ -88,7 +88,7 @@ setRentEstimate(rentEstimate);
         className="text-purple-700" // Adjust the icon color if needed
       />
     </div>
-    <h2 className="text-xl font-bold text-gray-700">What are the estimates?</h2>
+    <h2 className="text-xl font-bold text-gray-700">What are the estimates {ShortAddress}?</h2>
   </div>
       </CardHeader>
       <CardBody>

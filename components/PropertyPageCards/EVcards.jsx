@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import CardItem from "./EVcardComponents/CarousalCards";
 import { EvChargingMapStatic } from "../Maps";
 
-export function EVCard({ price, roi, city, postTownName }) {
+export function EVCard({ price, roi, city, postTownName ,ShortAddress}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [evChargingData, setEvChargingData] = useState([]);
   const [evChargingCount, setEvChargingCount] = useState(0);

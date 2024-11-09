@@ -7,7 +7,7 @@ import ECPBarChart from "./ECPBarChart";
 import { Icon } from "@iconify/react";
 import { useListingStore } from "@/store/listingStore";
 
-export function EPCCard({ title, price, roi, uprn }) {
+export function EPCCard({ title, price, roi, uprn,ShortAddress }) {
   const [epcData, setEpcData] = useState(null);
   const [currentColour, setCurrentColour] = useState("");
   const { setSquarfoot } = useListingStore();
@@ -154,7 +154,7 @@ export function EPCCard({ title, price, roi, uprn }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Energy Performance in this area?
+          what are the energy Performance in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

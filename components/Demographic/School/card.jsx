@@ -53,7 +53,7 @@ export function SchoolsCard({ schoolData = [], address, ShortAddress }) {
             <Icon icon="mdi:school" width={16} className="text-purple-700" />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            How Are the Schools {ShortAddress}?
+            How Are the Schools near {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

@@ -3,7 +3,7 @@ import { FloodMapMapsStatic } from "../Maps";
 import { Card, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-const FloodData = ({ latitude, longitude }) => {
+const FloodData = ({ latitude, longitude,ShortAddress }) => {
   const [floodAreas, setFloodAreas] = useState([]);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const FloodData = ({ latitude, longitude }) => {
                 className="text-purple-700"
               />
             </div>
-            <h2 className="text-xl font-bold text-gray-700">Flood Risk Map</h2>
+            <h2 className="text-xl font-bold text-gray-700">Flood Risk Map of {ShortAddress}</h2>
           </div>
         </CardHeader>
 

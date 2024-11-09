@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardBody, Button, Progress, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
-export function AirQualityCard({ latitude, longitude }) {
+export function AirQualityCard({ latitude, longitude, ShortAddress }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [airQualityData, setAirQualityData] = useState(null);
 
@@ -118,7 +118,7 @@ export function AirQualityCard({ latitude, longitude }) {
           </div>
           <h2 className="text-xl font-bold text-gray-700">
           {" "}
-            How is the air quality in your area?
+            How is the air quality in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

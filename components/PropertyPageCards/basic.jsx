@@ -1,12 +1,16 @@
 "use client";
 import React from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { formatCurrency, timeAgo } from "@/utils/Helper";
+import Link from "next/link";
+import Image from "next/image";
 
 export function BasicInfoCard({  content, data, price, area }) {
   return (
-    <Card className="m-4" style={{ minHeight: "150px" }}>
+    <>
+  
+        <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
         <div className="flex items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
@@ -251,5 +255,8 @@ export function BasicInfoCard({  content, data, price, area }) {
         </div>
       </CardBody>
     </Card>
+    
+    </>
+
   );
 }

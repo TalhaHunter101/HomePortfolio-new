@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardHeader, Image, Link } from "@nextui-org/rea
 import { Icon } from '@iconify/react';
 import toast, { Toaster } from 'react-hot-toast';
 
-export function ReachOutCard() {
+export function ReachOutCard({data}) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -83,7 +83,11 @@ export function ReachOutCard() {
         <CardBody>
           <div className="p-5 bg-white rounded-md">
             <div>
-              
+              {/* {
+                JSON.stringify(data?.branch)
+              }
+               */}
+              gsvdchbj
               <p className="text-base font-bold mb-3">Reach out to us</p>
               <p className="text-base font-medium">
                 Ask a question about 1906 Brentwood ST, and HomePortfolio will get back to you within 24 hours.
@@ -153,54 +157,7 @@ export function ReachOutCard() {
           </div>
         </CardBody>
       </Card>
-      <Card className="m-4" style={{ padding: '16px' }}>
-      <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
-      {/* Logo and Property Info */}
-      <div className="flex items-center space-x-4">
-        <Image
-          src="/path/to/logo.png"
-          alt="Madison Oakley"
-          width={100}
-          height={100}
-        />
-        <div className='pl-6'>
-          <p className="text-sm text-gray-600">Property listed by:</p>
-          <p className="text-lg font-bold">Madison Oakley</p>
-          <Link href="#" className="text-blue-600 underline">
-            See this agents profile
-          </Link>
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
-        <Button
-          
-          startContent={<Icon icon="mdi:heart-outline" width="24" />}
-          variant="light"
-          className="flex items-center text-blue-600"
-        >
-          Save
-        </Button>
-        <Button
-          
-          startContent={<Icon icon="mdi:share-variant-outline" width="24" />}
-          variant="light"
-          className="flex items-center text-blue-600"
-        >
-          Share
-        </Button>
-        <Button
-          
-          startContent={<Icon icon="mdi:bell-outline" width="24" />}
-          variant="light"
-          className="flex items-center text-blue-600"
-        >
-          Subscribe
-        </Button>
-      </div>
-    </div>
-    </Card>
+   
     </>
   );
 }

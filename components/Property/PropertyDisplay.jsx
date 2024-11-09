@@ -47,6 +47,7 @@ import FloodData from "../PropertyPageCards/FloodData";
 import ShareModal from "./ShareModal";
 import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
 import { ContactAgentCard } from "../PropertyPageCards/ContactAgentCard";
+import Link from "next/link";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -614,14 +615,67 @@ function PropertyDisplay({ listingData, params }) {
             </Card>
             
             <div className="hidden md:block">
-              <div className="pr-4 pl-6 pt-4">
+              {/* <div className="pr-4 pl-6 pt-4">
                 <Button
                   size="lg"
                   className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
                 >
                   Contact agent
                 </Button>
-              </div>
+              </div> */}
+
+     <Card className="m-4" style={{ padding: '16px' }}>
+       <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
+       {/* Logo and Property Info */}
+       <div className="flex items-center space-x-4">
+         <img
+           src={listingData?.branch?.logoUrl}
+           alt="Madison Oakley"
+           width={100}
+           height={100}
+         />
+         <div className='pl-6'>
+           <p className="text-sm text-gray-600">Property listed by:</p>
+           <p className="text-lg font-bold">{
+         listingData?.branch?.name
+         }</p>
+           <Link href="#" className="text-blue-600 underline">
+             See this agents profile
+           </Link>
+         </div>
+       </div>
+ 
+       {/* Action Buttons */}
+       <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
+         <Button
+           
+           startContent={<Icon icon="mdi:heart-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Save
+         </Button>
+         <Button
+           
+           startContent={<Icon icon="mdi:share-variant-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Share
+         </Button>
+         <Button
+           
+           startContent={<Icon icon="mdi:bell-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Subscribe
+         </Button>
+       </div>
+     </div>
+     </Card>
+
+
               <div className="p-6">
                 {/* Conditional Rendering of Content */}
                 <div

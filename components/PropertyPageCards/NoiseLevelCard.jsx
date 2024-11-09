@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { Icon } from '@iconify/react';
 import { NoiseMapStatic } from '../Maps';
 
-export function NoiseLevelCard  ({city, latitude, longitude })  {
+export function NoiseLevelCard  ({city, latitude, longitude,ShortAddress })  {
   return (
     <Card className="m-4" style={{ minHeight: '150px', maxHeight:'400px' }}>
       <CardHeader>
@@ -12,7 +12,7 @@ export function NoiseLevelCard  ({city, latitude, longitude })  {
             <div className="w-8 h-8 aspect-square flex justify-center items-center mr-1 rounded-full bg-red-400">
              <Icon icon="mdi:volume-high" />
             </div>
-            <span>How are the noise levels in {city}?</span>
+            <span>How are the noise levels in {ShortAddress}?</span>
           </h2>
       </CardHeader>
       {/* <CardBody>
