@@ -126,8 +126,8 @@ export function RecentlySoldCard({ city, postcode }) {
   }, [postcode]);
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
-      <CardHeader>
+    <Card shadow="none" className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
+      {/* <CardHeader>
         <div className="flex items-center my-2  ">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
@@ -138,7 +138,7 @@ export function RecentlySoldCard({ city, postcode }) {
           </div>
           <h2 className="text-xl font-bold text-gray-700">Recently Sold?</h2>
         </div>
-      </CardHeader>
+      </CardHeader> */}
       <CardBody>
         {isDataLoading ? (
           <p>Loading...</p>

@@ -45,6 +45,7 @@ import pb from "@/lib/pocketbase";
 import toast, { Toaster } from "react-hot-toast";
 import FloodData from "../PropertyPageCards/FloodData";
 import ShareModal from "./ShareModal";
+import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -365,6 +366,13 @@ function PropertyDisplay({ listingData, params }) {
           id: "EPC",
           Component: EPCCard,
         },
+        {
+          name:"Cellular Information",
+          icon: "ion:cellular",
+          bgColor: "bg-red-500",
+          id: "Cellular",
+          Component: CellularInfoCard,
+        }
       ],
     },
   ];

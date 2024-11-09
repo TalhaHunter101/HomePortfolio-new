@@ -1,5 +1,5 @@
 import { marketInfoStore } from "@/store/listingStore";
-import { Card, CardHeader, Chip, Button, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, Chip, CardBody, Switch } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import ComparesionTable from "./ComparesionTable";
 import { RecentlySoldCard } from "../RecentlySoldCard";
@@ -76,8 +76,8 @@ function MarketInfoPage({ city, postcode }) {
           <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
             <Icon
               icon="icon-park-outline:market-analysis"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
+              width={16}
+              className="text-purple-700"
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
@@ -87,29 +87,23 @@ function MarketInfoPage({ city, postcode }) {
       </CardHeader>
       <CardBody>
         <div className="flex flex-col md:flex-row gap-4 mb-4">
-          <p className="text-2xl font-bold">Market Information</p>
-          <p className="text-xl font-semibold text-gray-400">
-            Property Count:{" "}
-          </p>
+          <p className="text-xl font-semibold text-gray-400">Property Count: </p>
           <Chip color="primary">{marketInfo?.totalCount}</Chip>
+
+          {/* Switch for view selection */}
           <div className="flex flex-col md:flex-row gap-4 mb-4 md:ml-auto">
-            <Button
-              auto
-              color={activeView === "table" ? "primary" : "default"}
-              onClick={() => setActiveView("table")}
+            <Switch
+              checked={activeView === "map"}
+              size="lg"
+              color="success"
+              onChange={(e) => setActiveView(e.target.checked ? "map" : "table")}
+              startContent={<Icon icon="fluent:table-copy-20-regular" width={24} />}
+              endContent={<Icon icon="mdi:map-outline" width={24} />}
             >
-              Table View
-            </Button>
-            <Button
-              auto
-              color={activeView === "map" ? "primary" : "default"}
-              onClick={() => setActiveView("map")}
-            >
-              Map View
-            </Button>
+              {activeView === "map" ? "Map View" : "Table View"}
+            </Switch>
           </div>
         </div>
-        {/* Buttons for switching views */}
 
         {/* Conditionally render the table or the map based on active view */}
         {activeView === "table" && mergedData.length === 0 && (

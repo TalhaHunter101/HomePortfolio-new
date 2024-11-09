@@ -12,7 +12,7 @@ export default function HomeValuation() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null); // State for selected address
-
+  const [isgettingreport, setIsGettingReport] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -41,7 +41,31 @@ export default function HomeValuation() {
       setResults([]);
     }
   };
+  const handleSubmit = async() => {
+    
+    // Check if selectedAddress is not null/undefined and email is valid
+    if (selectedAddress ) {
+      // Log selectedAddress and email
+     
+      setIsGettingReport(true);
 
+   await  fetch("/api/send-report", {
+        method: "POST",
+        body: JSON.stringify({
+        //  email: email,
+         url: "https://home-portfolio-weld.vercel.app/home-valuation/report"+ selectedAddress.uprn
+        }),
+      });
+      window.location.href = "/home-valuation/report/"+ selectedAddress.uprn
+      
+      // onSubmit({ selectedAddress, email });
+
+    } else {
+      console.log(selectedAddress);
+      // Additional feedback or error handling can be added here if needed
+      console.log("Please enter a valid email and select an address.");
+    }
+  };
   const handleAddressClick = (address, uprn) => {
     setQuery(address); // Update the input field with the selected address
     const selected = { address, uprn };
@@ -96,18 +120,18 @@ export default function HomeValuation() {
               radius="sm" 
               className="font-semibold text-xs md:text-base" 
               color="secondary" 
-              onPress={handleOpenModal}
+              onPress={handleSubmit}
             >
               Get My Report
             </Button>
           </Card>
         </div>
 
-        <ReportModal 
+        {/* <ReportModal 
           isOpen={isModalOpen} 
           onOpenChange={handleCloseModal} 
           selectedAddress={selectedAddress} 
-        />
+        /> */}
 
         <div className="mt-2 flex flex-col items-center space-y-4">
           {isLoading && <Spinner />}

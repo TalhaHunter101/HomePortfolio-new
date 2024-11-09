@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Button, CardHeader, Spinner } from "@nextui-org/react";
+import { Card, CardBody, Button, CardHeader, Spinner, Image } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Peoplegender from "./Demographic/Peoplegender";
 import HouseTypeData from "./Demographic/HouseData/HouseTypeData";
@@ -9,24 +9,21 @@ import HouseOccupation from "./Demographic/HouseData/HouseOccupation";
 import AgePopulationData from "./Demographic/AgePopulationData";
 import { Familyinformation } from "./Demographic/Familyinformation";
 import {
-  marketCompStore,
   useDemographicStore,
-  useListingStore,
 } from "@/store/listingStore";
 import { formatCurrency } from "@/utils/Helper";
 
-export function FamilyCard({ postcode, city,ShortAddress }) {
+export function FamilyCard({ postcode, city, ShortAddress }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [peopleGenderData, setPeopleGenderData] = useState([]);
-  const [housingData, setHousingData] = useState([]);
-  const [tenureData, setTenureData] = useState([]);
-  const [occupationData, setOccupationData] = useState([]);
-  const [totalPopulation, setTotalPopulation] = useState([]);
-  const [agePopulationData, setAgePopulationData] = useState([]);
-  const [educationData, setEducationData] = useState([]);
-  const [averageIncome, setAverageIncome] = useState(0);
-  const [compositionData, setCompositionData] = useState([]);
-  const [economicData, setEconomicData] = useState([]);
+  const [peopleGenderData, setPeopleGenderData] = useState(null);
+  const [housingData, setHousingData] = useState(null);
+  const [tenureData, setTenureData] = useState(null);
+  const [occupationData, setOccupationData] = useState(null);
+  const [totalPopulation, setTotalPopulation] = useState(null);
+  const [agePopulationData, setAgePopulationData] = useState(null);
+  const [educationData, setEducationData] = useState(null);
+  const [compositionData, setCompositionData] = useState(null);
+  const [economicData, setEconomicData] = useState(null);
   const [medianAge, setMedianAge] = useState(null);
 
   const {
@@ -81,22 +78,15 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
           fetchedEconomicData,
         ] = await Promise.all(fetchData);
 
-      console.log("fetchedEconomicData", fetchedEconomicData);
-      console.log("fetchedHousingData", fetchedHousingData);
-      console.log("fetchedOccupationData", fetchedOccupationData);
-      console.log("fetchedTenureData", fetchedTenureData);
-      console.log("fetchedTotalPopulationData", fetchedTotalPopulationData);
-      console.log("fetchedAgePopulationData", fetchedAgePopulationData);
-      console.log("fetchedEducationData", fetchedEducationData);
-      console.log("fetchedCompositionData", fetchedCompositionData);
-      console.log("fetchedEconomicData", fetchedEconomicData);
-      
-      
-      
-      
-      
-      
-        
+        console.log("fetchedEconomicData", fetchedEconomicData);
+        console.log("fetchedHousingData", fetchedHousingData);
+        console.log("fetchedOccupationData", fetchedOccupationData);
+        console.log("fetchedTenureData", fetchedTenureData);
+        console.log("fetchedTotalPopulationData", fetchedTotalPopulationData);
+        console.log("fetchedAgePopulationData", fetchedAgePopulationData);
+        console.log("fetchedEducationData", fetchedEducationData);
+        console.log("fetchedCompositionData", fetchedCompositionData);
+        console.log("fetchedEconomicData", fetchedEconomicData);
 
         setPeopleGenderData(fetchedPeopleGenderData);
         setOccupationData(fetchedOccupationData);
@@ -107,9 +97,7 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
         setEducationData(fetchedEducationData);
         setCompositionData(fetchedCompositionData);
         setEconomicData(fetchedEconomicData);
-        setIsDataLoading(false);
       } catch (error) {
-        setIsDataLoading(false);
         console.error("Error fetching data:", error);
       } finally {
         setIsDataLoading(false);
@@ -118,10 +106,6 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
 
     fetchAllData();
   }, [postcode, setSingleEducationData]);
-
-
-  
-  
 
   useEffect(() => {
     if (educationData) {
@@ -198,6 +182,12 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
     setCurrentIndex((prevIndex) => (prevIndex === 4 ? 0 : prevIndex + 1));
   };
 
+  // Check if data is available
+  const isDataAvailable =
+    totalPopulation &&
+    totalPopulation._source &&
+    Object.keys(totalPopulation._source).length > 0;
+
   return (
     <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
@@ -215,174 +205,167 @@ export function FamilyCard({ postcode, city,ShortAddress }) {
         </div>
       </CardHeader>
 
-      {/* Static demographic section */}
-      <div className="bg-white w-full px-4 sm:px-7">
-        <div className="flex flex-col lg:flex-row justify-between gap-4">
-          {/* Left section */}
-          <div className="w-full lg:w-1/2">
-            <Familyinformation
-              postcode={postcode}
-              city={city}
-              housingData={housingData}
-              totalPopulation={totalPopulation}
-              compositionData={compositionData}
-              agePopulationData={agePopulationData}
-              educationData={educationData}
-            />
-          </div>
+      {isDataLoading ? (
+        <CardBody className="flex flex-col items-center justify-center">
+          <Spinner size="lg" />
+          <div className="text-gray-500 text-lg mt-4">Loading data...</div>
+        </CardBody>
+      ) : isDataAvailable ? (
+        <>
+          {/* Static demographic section */}
+          <div className="bg-white w-full px-4 sm:px-7">
+            <div className="flex flex-col lg:flex-row justify-between gap-4">
+              {/* Left section */}
+              <div className="w-full lg:w-1/2">
+                <Familyinformation
+                  postcode={postcode}
+                  city={city}
+                  housingData={housingData}
+                  totalPopulation={totalPopulation}
+                  compositionData={compositionData}
+                  agePopulationData={agePopulationData}
+                  educationData={educationData}
+                />
+              </div>
 
-          {/* Right section */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
-              {/* Spinner for Total Population */}
-              <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">Total Population</span>
-                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {isDataLoading ? (
-                    <Spinner />
-                  ) : totalPopulation.length === 0 ? (
-                    "N/A"
-                  ) : (
-                    <>
+              {/* Right section */}
+              <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+                  {/* Total Population */}
+                  <div className="flex flex-col text-center">
+                    <span className="text-sm text-gray-400">
+                      Total Population
+                    </span>
+                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
                       {
                         totalPopulation?._source?.[
                           "Sex: All persons; measures: Value"
-                        ]
+                        ] || "N/A"
                       }
-                    </>
-                  )}
-                </span>
-              </div>
+                    </span>
+                  </div>
 
-              {/* Spinner for Median Age */}
-              <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">Median Age</span>
-                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                  {isDataLoading ? (
-                    <Spinner />
-                  ) : medianAge === null ? (
-                    "N/A"
-                  ) : (
-                    <>{medianAge ? medianAge : "N/A"}</>
-                  )}
-                </span>
-              </div>
-            </div>
+                  {/* Median Age */}
+                  <div className="flex flex-col text-center">
+                    <span className="text-sm text-gray-400">Median Age</span>
+                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                      {medianAge !== null ? medianAge : "N/A"}
+                    </span>
+                  </div>
+                </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
-              {/* Spinner for Average HH Income */}
-              <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">Average HH Income</span>
-                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
+                  {/* Average HH Income */}
+                  <div className="flex flex-col text-center">
+                    <span className="text-sm text-gray-400">
+                      Average HH Income
+                    </span>
+                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                      {peopleGenderData?.averageIncome
+                        ? `£${formatCurrency(
+                            peopleGenderData.averageIncome
+                          )}`
+                        : "N/A"}
+                    </span>
+                  </div>
 
-                {isDataLoading ? (
-                    <Spinner />
-                  ) : peopleGenderData?.averageIncome === undefined ? (
-                    "N/A"
-                  ) : (
-                    <>
-                     {`£${formatCurrency(peopleGenderData?.averageIncome)}`}
-                    </>
-                  )}
-
-                 
-                </span>
-              </div>
-
-              {/* Spinner for Single Family Household */}
-              <div className="flex flex-col text-center">
-                <span className="text-sm text-gray-400">
-                  Single Family Household
-                </span>
-                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-
-                {isDataLoading ? (
-                    <Spinner />
-                  ) : singleFamilyHouseholds === undefined ? (
-                    "N/A"
-                  ) : (
-                    <>
-                     {singleFamilyHouseholds ? singleFamilyHouseholds : "N/A"}
-                    </>
-                  )}
-                </span>
+                  {/* Single Family Household */}
+                  <div className="flex flex-col text-center">
+                    <span className="text-sm text-gray-400">
+                      Single Family Household
+                    </span>
+                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                      {singleFamilyHouseholds || "N/A"}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Carousel Section */}
-      <div className="relative w-full shadow-none overflow-hidden mt-8">
-        <div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
-            width: "100%",
-          }}
-        >
-          {/* Slide 1 */}
-          <div className="flex-shrink-0 w-full shadow-none">
-            <AgePopulationData
-              AgePopulationData={agePopulationData}
-              city={city}
-            />
+          {/* Carousel Section */}
+          <div className="relative w-full shadow-none overflow-hidden mt-8">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+                width: "100%",
+              }}
+            >
+              {/* Slide 1 */}
+              <div className="flex-shrink-0 w-full shadow-none">
+                <AgePopulationData
+                  AgePopulationData={agePopulationData}
+                  city={city}
+                />
+              </div>
+
+              {/* Slide 2 */}
+              <div className="flex-shrink-0 w-full shadow-none">
+                <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
+              </div>
+
+              {/* Slide 3 */}
+              <div className="flex-shrink-0 w-full">
+                <HouseTypeData housingData={housingData} city={city} />
+              </div>
+
+              {/* Slide 4 */}
+              <div className="flex-shrink-0 w-full">
+                <HouseTenure tenureData={tenureData} city={city} />
+              </div>
+
+              {/* Slide 5 */}
+              <div className="flex-shrink-0 w-full">
+                <HouseOccupation occupationData={occupationData} city={city} />
+              </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="absolute inset-y-1/2 flex w-full justify-between px-4">
+              <Button
+                isIconOnly
+                variant="ghost"
+                radius="full"
+                size="sm"
+                onClick={handlePrevious}
+              >
+                <Icon
+                  color="gray"
+                  icon="bx:bx-chevron-left"
+                  width={24}
+                  height={24}
+                />
+                <span className="sr-only">Previous</span>
+              </Button>
+              <Button
+                isIconOnly
+                variant="ghost"
+                radius="full"
+                size="sm"
+                onClick={handleNext}
+              >
+                <Icon
+                  color="gray"
+                  icon="bx:bx-chevron-right"
+                  width={24}
+                  height={24}
+                />
+                <span className="sr-only">Next</span>
+              </Button>
+            </div>
           </div>
-
-          <div className="flex-shrink-0 w-full shadow-none">
-            <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
-          </div>
-
-          {/* Slide 2 */}
-          <div className="flex-shrink-0 w-full">
-            <HouseTypeData housingData={housingData} city={city} />
-          </div>
-
-          {/* Slide 3 */}
-          <div className="flex-shrink-0 w-full">
-            <HouseTenure tenureData={tenureData} city={city} />
-          </div>
-
-          {/* Slide 4 */}
-          <div className="flex-shrink-0 w-full">
-            <HouseOccupation occupationData={occupationData} city={city} />
-          </div>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="absolute inset-y-1/2 flex w-full justify-between px-4">
-          <Button
-            isIconOnly
-            variant="ghost"
-            radius="full"
-            size="sm"
-            onClick={handlePrevious}
-          >
-            <Icon
-              color="gray"
-              icon="bx:bx-chevron-left"
-              width={24}
-              height={24}
-            />
-            <span className="sr-only">Previous</span>
-          </Button>
-          <Button
-            isIconOnly
-            variant="ghost"
-            radius="full"
-            size="sm"
-            onClick={handleNext}
-          >
-            <Icon
-              color="gray"
-              icon="bx:bx-chevron-right"
-              width={24}
-              height={24}
-            />
-            <span className="sr-only">Next</span>
-          </Button>
-        </div>
-      </div>
+        </>
+      ) : (
+        <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
+      )}
     </Card>
   );
 }
