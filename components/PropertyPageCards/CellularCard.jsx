@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardBody, CardHeader, Progress } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
+// Import actual data
+import { mobilData, broadbandData } from "../../public/dummydata/BroadBandData";
+
 export function CellularInfoCard() {
-  // Dummy dynamic data
+  // Use actual data
+  const mobileInfo = mobilData[0];
+  const broadbandInfo = broadbandData[0];
+
+  // Calculate coverage rating dynamically if needed
   const [data, setData] = useState({
-    topProvider: "AT&T Mobility",
-    top4GProvider: "AT&T",
-    top5GProvider: "AT&T",
-    coverageRating: 75, // Dynamic coverage value (0-100)
-    towerCount: 221, // Number of towers
-    ranking: [
-      { rank: 1, provider: "AT&T", cellsPerSqMi: 26 },
-      { rank: 2, provider: "T-Mobile", cellsPerSqMi: 22 },
-      { rank: 3, provider: "Verizon", cellsPerSqMi: 6 },
-    ],
+    topProvider: mobileInfo.providers[0]["provider name"],
+    top4GProvider: mobileInfo.providers[0]["provider name"],
+    top5GProvider: mobileInfo.providers[0]["provider name"],
+    coverageRating: 75, // Placeholder; you may calculate based on some data points
+    towerCount: mobileInfo.providers.length, // Count of providers as towers
+    ranking: mobileInfo.providers.map((provider, index) => ({
+      rank: index + 1,
+      provider: provider["provider name"],
+      cellsPerSqMi: Math.floor(Math.random() * 30) + 5, // Dummy cells per sq mi
+    })),
   });
 
-  // Determine the label based on the coverage rating
+  // Function to get coverage label based on rating
   const getCoverageLabel = (value) => {
     if (value < 35) return "Low";
     if (value < 70) return "Medium";
@@ -34,7 +41,7 @@ export function CellularInfoCard() {
             <Icon icon="ion:cellular" width={16} className="text-purple-700" />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Who provides the best cell coverage in Pond Springs?
+            Who provides the best cell coverage in {mobileInfo["postal code"]}?
           </h2>
         </div>
 
