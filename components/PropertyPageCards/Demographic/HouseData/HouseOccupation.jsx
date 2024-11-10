@@ -52,7 +52,7 @@ function HouseOccupation({ occupationData, city }) {
   }, [occupationData]);
 
   // Pastel colors for pie chart
-  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
 
   return (
     <>
@@ -70,27 +70,28 @@ function HouseOccupation({ occupationData, city }) {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-               style={{
-                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-              }}
                 data={chartData}
                 dataKey="count"
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={100} // Outer radius for donut size
-                innerRadius={80} // Inner radius for thin donut effect
-                fill="#82ca9d"
+                innerRadius={80}
+                outerRadius={100}
                 label
+                style={{
+                  filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+                }}
               >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
+                    stroke="#fff"
+                    strokeWidth={1}
                   />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>

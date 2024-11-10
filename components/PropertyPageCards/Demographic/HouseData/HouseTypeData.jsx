@@ -53,7 +53,7 @@ function HouseTypeData({ housingData, city }) {
     }
   }, [housingData]);
 
-  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
 
   const CustomLegend = () => {
     return (
@@ -112,10 +112,12 @@ function HouseTypeData({ housingData, city }) {
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
+                    stroke="#fff"
+                    strokeWidth={1}
                   />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>

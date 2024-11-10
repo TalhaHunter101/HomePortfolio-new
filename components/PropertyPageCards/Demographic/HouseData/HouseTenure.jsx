@@ -62,7 +62,7 @@ function HouseTenure({ tenureData, city }) {
     }
   }, [tenureData]);
 
-  const COLORS = ["#1A2B41", "#5AB2F6", "#FF7043"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6"];
 
   return (
     <>
@@ -106,7 +106,7 @@ function HouseTenure({ tenureData, city }) {
                 />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
