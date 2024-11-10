@@ -18,6 +18,20 @@ const calculateMedian = (prices) => {
   return sortedPrices[middleIndex];
 };
 
+
+
+const calculateAverage = (prices) => {
+  if (prices.length === 0) return 0;
+
+  // Convert all prices to numbers
+  const numericPrices = prices.map(price => Number(price));
+
+  // Calculate average
+  const sum = numericPrices.reduce((acc, price) => acc + price, 0);
+  return sum / numericPrices.length;
+};
+
+
 export function RecentlySoldCard({ city, postcode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [SoldListingData, setSoldListingData] = useState([]);
@@ -67,6 +81,7 @@ export function RecentlySoldCard({ city, postcode }) {
             )
             .filter((price) => !isNaN(price));
           setMedianPrice(calculateMedian(prices));
+          // setMedianPrice(calculateAverage(prices));
 
           setSoldLocations(locations);
           setIsDataLoading(false);
@@ -111,8 +126,8 @@ export function RecentlySoldCard({ city, postcode }) {
   }, [postcode]);
 
   return (
-    <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
-      <CardHeader>
+    <Card shadow="none" className="m-4" style={{ minHeight: "150px", maxWidth: "1070px" }}>
+      {/* <CardHeader>
         <div className="flex items-center my-2  ">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
@@ -123,7 +138,7 @@ export function RecentlySoldCard({ city, postcode }) {
           </div>
           <h2 className="text-xl font-bold text-gray-700">Recently Sold?</h2>
         </div>
-      </CardHeader>
+      </CardHeader> */}
       <CardBody>
         {isDataLoading ? (
           <p>Loading...</p>
@@ -175,7 +190,7 @@ export function RecentlySoldCard({ city, postcode }) {
                             <div key={index} className="w-full p-2">
                               <div className="flex items-center p-4 bg-white rounded-lg shadow-md">
                                 <div className="ml-4">
-                                  <h3 className="text-bold text-2xl">
+                                  <p className="text-bold text-2xl">
                                     £
                                     {(() => {
                                       const price =
@@ -195,7 +210,7 @@ export function RecentlySoldCard({ city, postcode }) {
                                         }
                                       );
                                     })()}
-                                  </h3>
+                                  </p>
                                   <div className="text-sm  flex text-bold gap-3">
                                     <span className="text-bold flex flex-col items-center justify-center">
                                       {item?._source?.attributes?.bedrooms || 0}

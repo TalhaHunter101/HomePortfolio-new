@@ -57,7 +57,6 @@ export const DreamHouseLineChart = ({ data }) => {
 
     const aggregatedData = aggregateData(data);
 
-    console.log("Final aggregated data:", aggregatedData);
 
     const formattedData = aggregatedData.map(item => ({
       name: item.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }),
@@ -67,7 +66,6 @@ export const DreamHouseLineChart = ({ data }) => {
       Flat: item.F,
     }));
 
-    console.log("Formatted chart data:", formattedData);
 
     setChartData(formattedData);
   }, [data]);

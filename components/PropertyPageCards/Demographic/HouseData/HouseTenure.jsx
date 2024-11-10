@@ -62,7 +62,7 @@ function HouseTenure({ tenureData, city }) {
     }
   }, [tenureData]);
 
-  const COLORS = ["#1A2B41", "#5AB2F6", "#FF7043"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6"];
 
   return (
     <>
@@ -75,7 +75,7 @@ function HouseTenure({ tenureData, city }) {
           />
         </div>
 
-        <h2 className="text-xl font-semibold text-gray-700">House Tenure</h2>
+        <p className="text-xl font-semibold text-gray-700">House Tenure</p>
       </div>
 
       <div className="flex flex-col gap-4 mt-8">
@@ -87,7 +87,8 @@ function HouseTenure({ tenureData, city }) {
               nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius={100} // Set outer radius to control the size of the pie
+              outerRadius={100} // Outer radius for donut size
+              innerRadius={80} // Inner radius for donut (adjust to make it thinner or thicker)
               fill="#8884d8"
               label
               startAngle={360}
@@ -105,7 +106,7 @@ function HouseTenure({ tenureData, city }) {
                 />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>

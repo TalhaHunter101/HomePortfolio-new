@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { StatusCard } from "./PlanningComponents/Status";
 import Carousel from "./PlanningComponents/GraphCarousal";
@@ -8,20 +8,40 @@ import FloatingCard from "./PlanningComponents/FloatingCard";
 import { PlanningApplicationMapStatic } from "../Maps";
 import { Icon } from "@iconify/react";
 import PlanningApplicationsTable from "./PlanningComponents/PanningTable";
+import TimeFrameDropdown from "./PlanningComponents/Dropdown";
 
 // Function to count statuses by matching multiple decision values
 const countStatus = (data, decisions) => {
-  return data.filter((item) =>
-    decisions.includes(item?._source?.other_fields?.decision)
-  ).length;
+  return (
+    data?.filter((item) =>
+      decisions.includes(item?._source?.app_state)
+    ).length || 0
+  );
 };
 
-export function PlanningCard({ postcode }) {
+export function PlanningCard({ postcode, ShortAddress }) {
   const [planningData, setPlanningData] = useState([]);
+  const [timeFrame, setTimeFrame] = useState(6);
+
+
+  const filteredPlanningData = useMemo(() => {
+    const now = new Date();
+    const monthsAgo = new Date();
+    monthsAgo.setMonth(now.getMonth() - timeFrame);
+
+    return planningData.filter((item) => {
+      const dateReceivedStr = item._source.other_fields?.date_received;
+      if (!dateReceivedStr) return false;
+
+      const dateReceived = new Date(dateReceivedStr);
+      return dateReceived >= monthsAgo && dateReceived <= now;
+    });
+  }, [planningData, timeFrame]);
+  
   const statusData = [
     {
       label: "Approved",
-      count: countStatus(planningData, [
+      count: countStatus(filteredPlanningData, [
         "Application Permitted",
         "Grant",
         "Granted",
@@ -36,25 +56,30 @@ export function PlanningCard({ postcode }) {
     },
     {
       label: "Pending",
-      count: countStatus(planningData, ["Undecided"]),
+      count: countStatus(filteredPlanningData, ["Undecided"]),
       iconColor: "text-blue-500",
       icon: "mdi:progress-clock",
     },
     {
       label: "Rejected",
-      count: countStatus(planningData, ["Refuse", "Refused", "Rejected"]),
+      count: countStatus(filteredPlanningData, ["Refuse", "Refused", "Rejected"]),
       iconColor: "text-red-500",
       icon: "mdi:close-circle",
     },
     {
       label: "Withdrawn",
-      count: countStatus(planningData, ["Withdrawn"]),
+      count: countStatus(filteredPlanningData, ["Withdrawn"]),
       iconColor: "text-gray-500",
       icon: "mdi:minus-circle",
     },
   ];
 
-  // Fetch planning data based on postcode
+  const timeFrameOptions = [
+    { key: 6, label: "Last 6 Months" },
+    { key: 12, label: "Last 12 Months" },
+  ];
+
+  // Fetch planning data based on postcode and time frame
   const getPlanningData = async (postcode) => {
     try {
       const response = await fetch("/api/indevisual/get-planning-data", {
@@ -70,36 +95,42 @@ export function PlanningCard({ postcode }) {
       }
 
       const data = await response.json();
-      setPlanningData(data);
+      setPlanningData(data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
       return null;
     }
   };
 
-  // Effect to fetch data when postcode changes
+ 
+
+
   useEffect(() => {
     if (postcode) getPlanningData(postcode);
-  }, [postcode]);
+  }, [postcode, timeFrame]);
 
-
-  console.log("planningData is",planningData);
-  
+  const handleTimeFrameChange = (key) => {
+    setTimeFrame(Number(key));
+  };
 
   return (
     <Card className="m-4" style={{ minHeight: "200px" }}>
       <CardHeader>
-        <div className="flex items-center my-2">
-          <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
-            <Icon
-              icon="mdi:planner"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="text-purple-700" // Adjust the icon color if needed
-            />
+        <div className="flex flex-col sm:flex-row items-center justify-between w-full my-2">
+          <div className="flex items-center">
+            <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
+              <Icon icon="mdi:planner" width={16} className="text-purple-700" />
+            </div>
+            <h2 className="text-xl font-bold text-gray-700 text-center sm:text-left">
+              What are the Planning applications in {ShortAddress}?
+            </h2>
           </div>
-          <h2 className="text-xl font-bold text-gray-700">
-            What are the Planning application in {postcode}?
-          </h2>
+          {/* Dropdown for selecting time frame */}
+          <TimeFrameDropdown
+            options={timeFrameOptions}
+            selectedKey={timeFrame}
+            onSelectionChange={handleTimeFrameChange}
+          />
         </div>
       </CardHeader>
 
@@ -114,24 +145,22 @@ export function PlanningCard({ postcode }) {
         </CardBody>
       ) : (
         <CardBody>
-          <div className="flex flex-col border border-subtle-border rounded-md">
+          <div className="flex flex-col rounded-md">
             {/* Status Cards */}
-            <div className="flex p-2 justify-between ">
+            <div className="flex flex-col sm:flex-row flex-wrap p-2 justify-between">
               {statusData.map((status, index) => (
                 <StatusCard
                   key={index}
-                  label={status.label}
-                  count={status.count}
-                  iconColor={status.iconColor}
-                  icon={status.icon}
+                  label={status?.label}
+                  count={status?.count}
+                  iconColor={status?.iconColor}
+                  icon={status?.icon}
+                  className="w-full sm:w-auto mb-2 sm:mb-0"
                 />
               ))}
-
             </div>
-            <div className="p-2">
-            <PlanningApplicationsTable planningData={planningData} />
-
-              {/* <Carousel data={planningData} /> */}
+            <div className="p-2 overflow-x-auto">
+              <PlanningApplicationsTable planningData={filteredPlanningData} timeFrame={timeFrame} />
             </div>
             <div className="z-10 w-full overflow-hidden rounded-br-lg rounded-bl-lg">
               <div className="hidden xl:flex h-96">
@@ -141,16 +170,16 @@ export function PlanningCard({ postcode }) {
                       <div className="w-full h-full bg-white border-1 maplibregl-map mapboxgl-map">
                         <PlanningApplicationMapStatic
                           center={
-                            planningData.length > 0
-                              ? planningData.map((data) => ({
-                                  lat: data?._source?.location_y,
-                                  lng: data?._source?.location_x,
+                            filteredPlanningData.length > 0
+                              ? filteredPlanningData?.map((data) => ({
+                                  lat: data?._source?.location_y || 51.999668,
+                                  lng: data?._source?.location_x || -0.267018,
                                 }))
                               : []
                           }
                         />
                         <div className="absolute top-4 gap-2 right-4 z-[1000]">
-                          <FloatingCard data={planningData} />
+                          <FloatingCard data={filteredPlanningData} />
                         </div>
                       </div>
                     </div>

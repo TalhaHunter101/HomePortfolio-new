@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   Chip,
@@ -7,6 +7,11 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
 } from "@nextui-org/react";
 
 const statusColorMap = {
@@ -20,22 +25,21 @@ const statusColorMap = {
   "Approve with Conditions": "success",
   "Application Granted": "success",
   "Conditions": "success",
-  
+
   // Warning status
   "Undecided": "warning",
   "Pending": "warning",
   "Withdrawn": "warning",
-  
+
   // Danger status
   "Refuse": "danger",
   "Refused": "danger",
-  "Rejected": "danger"
+  "Rejected": "danger",
 };
 
+const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
+  const [expandedDescriptions, setExpandedDescriptions] = useState(new Set());
 
-const PlanningApplicationsTable = ({ planningData }) => {
-
-    
   const columns = [
     { name: "STATUS", uid: "status" },
     { name: "ADDRESS", uid: "address" },
@@ -45,13 +49,17 @@ const PlanningApplicationsTable = ({ planningData }) => {
     { name: "DESCRIPTION", uid: "description" },
   ];
 
+  // Function to render each cell in the table
   const renderCell = (application, columnKey) => {
     const source = application._source;
     switch (columnKey) {
       case "status":
         return (
-          <Chip color={statusColorMap[source?.other_fields?.decision] || "warning"} variant="flat">
-            {source?.other_fields?.decision || "Others"}
+          <Chip
+            color={statusColorMap[source?.app_state] || "warning"}
+            variant="flat"
+          >
+            {source?.app_state || "Others"}
           </Chip>
         );
       case "address":
@@ -63,31 +71,76 @@ const PlanningApplicationsTable = ({ planningData }) => {
       case "dateReceived":
         return source.other_fields?.date_received || "N/A";
       case "description":
-        return source.description;
+        const isExpanded = expandedDescriptions.has(application._id);
+        const description = source.description;
+        if (description.length <= 100) return description;
+
+        return (
+          <div>
+            {isExpanded ? description : `${description.substring(0, 100)}`}
+            <button
+              className="text-blue-500 hover:text-blue-700 ml-2 text-sm"
+              onClick={() => {
+                const newExpanded = new Set(expandedDescriptions);
+                if (isExpanded) {
+                  newExpanded.delete(application._id);
+                } else {
+                  newExpanded.add(application._id);
+                }
+                setExpandedDescriptions(newExpanded);
+              }}
+            >
+              {isExpanded ? "Show less" : "Show full description"}
+            </button>
+          </div>
+        );
       default:
         return "N/A";
     }
   };
 
+  // Memoized filtered data to optimize performance
+  const filteredData = useMemo(() => {
+    const now = new Date();
+    const monthsAgo = new Date();
+    monthsAgo.setMonth(now.getMonth() - timeFrame);
+
+    return planningData.filter((item) => {
+      const dateReceivedStr = item._source.other_fields?.date_received;
+      if (!dateReceivedStr) return false;
+
+      const dateReceived = new Date(dateReceivedStr);
+      return dateReceived >= monthsAgo && dateReceived <= now;
+    });
+  }, [planningData, timeFrame]);
+  
+
   return (
-    <Table aria-label="Planning Applications table">
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn key={column.uid}>{column.name}</TableColumn>
-        )}
-      </TableHeader>
-      <TableBody>
-        {planningData.map((item) => (
-          <TableRow key={item._id}>
-            {columns.map((column) => (
-              <TableCell key={column.uid}>
-                {renderCell(item, column.uid)}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div>
+      {/* Table displaying the filtered data */}
+      <Table
+        aria-label="Planning Applications table"
+        className="max-h-[60vh]"
+        isHeaderSticky
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.uid}>{column.name}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody>
+          {filteredData.map((item) => (
+            <TableRow key={item._id}>
+              {columns.map((column) => (
+                <TableCell key={column.uid}>
+                  {renderCell(item, column.uid)}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

@@ -43,13 +43,18 @@ import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import ThumbnailCard from "../Property/ThumbnailCard";
 
 function PropertyDisplay({ listingData, params }) {
-  console.log('listingggggggggggg',listingData);
+  const [walkScore, setWalkScore] = useState(null);
+  const [listingWalkScore, setListingWalkScore] = useState(null);
+  const [busData, setBusData] = useState([]);
+  const [busLocations, setBusLocations] = useState([]);
+  const [sqfeetData, setSetsqfeetData] = useState("");
   // const price = listingData?.pricing?.internalValue;
-  // const formattedPrice = formatCurrency(price);
-  // const { squerfoot, fullAddress } = useListingStore();
-  const uprn = params?.uprn || "123456";
+
+  const { squerfoot, fullAddress } = useListingStore();
+  // const uprn = params?.uprn || "123456";
+  const uprn = params.uprn.split("%3D")[1];
   const fullAdress = listingData?.full_address || "N.A";
-  const formattedPrice =
+  const price =
     listingData?.history?.historicSales[0]?.price ||
     listingData?.saleEstimate?.currentPrice ||
     "N.A";
@@ -58,11 +63,11 @@ function PropertyDisplay({ listingData, params }) {
   const squareFeet = listingData?.analyticsTaxonomy?.sizeSqFeet || "N.A";
   const builtYear = listingData?.attributes?.builtYear || "N.A";
   const postcode = listingData?.ref_postcode || "N.A";
-  const newData = {
-    counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
-    analyticsTaxonomy: listingData?.analyticsTaxonomy,
-  };
-
+  // const newData = {
+  //   counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
+  //   analyticsTaxonomy: listingData?.analyticsTaxonomy,
+  // };
+  const town = fullAdress ? fullAdress.split(", ")[2] : null;
   const locationData = {
     address: fullAdress,
     location: {
@@ -71,8 +76,19 @@ function PropertyDisplay({ listingData, params }) {
         longitude: listingData?.address?.longitude || 0,
       },
     },
+    analyticsTaxonomy: {
+      outcode: listingData?.address?.outcode,
+    },
+    adTargeting: {
+      location: listingData?.address?.postcode,
+      countyAreaName: listingData?.address?.country,
+    },
+    pricing: {
+      internalValue: price,
+    },
   };
 
+  const formattedPrice = formatCurrency(price);
   const mainImages = [
     "https://lc.zoocdn.com/2d792e1a98ef15571de593c32265cae6c5b7810d.jpg",
     "https://lc.zoocdn.com/4090dc638a2ba33e6db6a980e4e5e210d9924f8b.jpg",
@@ -86,26 +102,14 @@ function PropertyDisplay({ listingData, params }) {
     "https://lc.zoocdn.com/33af57fb01f4c76627939ad4fa9603eb16e493d2.jpg",
     "https://lc.zoocdn.com/1a1a9416471a880bc713c96323ba08970dddf238.jpg",
   ];
+  const newData = {
+    counts: { numBedrooms: bedrooms, numBathrooms: bathrooms },
 
-  // useEffect(() => {
-  //   const getSchoolData = async () => {
-  //     try {
-  //       const response = await fetch(`/api/indevisual/get-schools-by-postcode`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ postcode }),
-  //       });
+    analyticsTaxonomy: listingData?.analyticsTaxonomy,
+  };
 
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setSchoolData(result);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching school data:", error);
-  //     }
-  //   };
+  // getSchoolData();
+  // getPricePaidData();
 
   //   const getPricePaidData = async () => {
   //     try {
@@ -138,16 +142,6 @@ function PropertyDisplay({ listingData, params }) {
   //   fetchData();
   // }, [listingData, postcode]);
 
-  
-  // const bedrooms =
-  //   listingData?.attributes?.bedrooms ||
-  //   listingData?.counts?.numBedrooms ||
-  //   null;
-  // const bathrooms =
-  //   listingData?.attributes?.bathrooms ||
-  //   listingData?.counts?.numBathrooms ||
-  //   null;
-
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
 
@@ -157,76 +151,134 @@ function PropertyDisplay({ listingData, params }) {
   const [pricePaidData, setPricePaidData] = useState([]);
   const [rentEstimate, setRentEstimate] = useState(0);
   const [rentData, setRentData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // const formatedSqft = formatCurrency(
   //   listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
   // );
 
-  // useEffect(() => {
-  //   const getSchoolData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `/api/indevisual/get-schools-by-postcode`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({ postcode: listingData?.ref_postcode }),
-  //         }
-  //       );
+  useEffect(() => {
+    const getSchoolData = async () => {
+      if (!listingData?.ref_postcode) return; // Ensure there's a valid postcode before making the API call
 
-  //       if (response.ok) {
-  //         const result = await response.json();
-  //         setSchoolData(result);
-  //       }
-  //     } catch (error) {
-  //       console.log("error is", error);
+      try {
+        const response = await fetch(
+          `/api/indevisual/get-schools-by-postcode`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ postcode: listingData.ref_postcode }),
+          }
+        );
+
+        if (response.ok) {
+          const result = await response.json();
+          setSchoolData(result);
+        }
+      } catch (error) {
+        console.error("Error fetching school data:", error);
+      }
+    };
+
+    getSchoolData();
+  }, [listingData?.ref_postcode]);
+
+  // const getPricePaidData = async () => {
+  //   try {
+  //     const result = await fetch("/api/indevisual/get-price-paid", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         city: listingData?.analyticsTaxonomy?.postTownName,
+  //       }),
+  //     });
+
+  //     if (result.ok) {
+  //       const resultData = await result.json();
+  //       setPricePaidData(resultData);
   //     }
-  //   };
+  //   } catch (error) {}
+  // };
 
-  //   const getPricePaidData = async () => {
-  //     try {
-  //       const result = await fetch("/api/indevisual/get-price-paid", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           city: listingData?.analyticsTaxonomy?.postTownName,
-  //         }),
-  //       });
+  const getRentData = async () => {
+    try {
+      setIsLoading(true); // Start loading state
+      const result = await fetch("/api/indevisual/get-rent-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          outcode: listingData?.ref_postcode?.split(" ")[0],
+        }),
+      });
 
-  //       if (result.ok) {
-  //         const resultData = await result.json();
-  //         setPricePaidData(resultData);
-  //       }
-  //     } catch (error) {}
-  //   };
+      if (result.ok) {
+        const resultData = await result.json();
+        setRentData(resultData);
+      }
+    } catch (error) {
+      console.error("Error fetching rent data:", error);
+    } finally {
+      setIsLoading(false); // End loading state
+    }
+  };
 
-  //   const getRentData = async () => {
-  //     try {
-  //       const result = await fetch("/api/indevisual/get-rent-data", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           outcode: listingData?.analyticsTaxonomy?.outcode,
-  //         }),
-  //       });
-
-  //       if (result.ok) {
-  //         const resultData = await result.json();
-  //         setRentData(resultData);
-  //       }
-  //     } catch (error) {}
-  //   };
-
-  //   getSchoolData();
-  //   getPricePaidData();
-  //   getRentData();
+  useEffect(() => {
+    if (listingData?.ref_postcode) {
+      getRentData();
+    }
+  }, [listingData?.ref_postcode]);
   // }, [listingData]);
+
+  useEffect(() => {
+    const fetchEPCData = async (uprn) => {
+      try {
+        const response = await fetch("/api/indevisual/get-epc-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uprn }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch EPC data");
+        }
+
+        const { epcData } = await response.json();
+
+        const address1 = epcData[0]?._source?.ADDRESS1 || "";
+        const address2 = epcData[0]?._source?.ADDRESS2 || "";
+        const address3 = epcData[0]?._source?.ADDRESS3 || "";
+        const postcode = epcData[0]?._source?.POSTCODE || "";
+        const town = epcData[0]?._source?.POSTTOWN || "";
+
+        const fullAddress = [address1, address2, address3, postcode, town]
+          .filter(Boolean)
+          .join(", ");
+
+        const squerfootInMeters = epcData[0]?._source?.TOTAL_FLOOR_AREA;
+        const squerfootInFeet = parseInt(squerfootInMeters) * 10.7639;
+        setSetsqfeetData(squerfootInFeet.toFixed(0) || "NA");
+
+        return {
+          totalFloorArea: epcData[0]?._source?.TOTAL_FLOOR_AREA || null,
+          fullAddress,
+        };
+      } catch (error) {
+        console.error(`Error fetching EPC data for UPRN ${uprn}:`, error);
+        return null;
+      }
+    };
+    if (uprn) {
+      fetchEPCData(uprn);
+    }
+  }, [uprn]);
 
   const navElements = [
     {
@@ -256,17 +308,76 @@ function PropertyDisplay({ listingData, params }) {
         },
       ],
     },
+
+    {
+      name: "Around the Neighborhood",
+      id: "around-neighborhood",
+      subElements: [
+        {
+          name: "How are the Schools?",
+          icon: "mdi:school",
+          bgColor: "bg-purple-200",
+          id: "schools",
+          Component: SchoolsCard,
+        },
+
+        {
+          name: "All about the Home",
+          icon: "mdi:account-group",
+          bgColor: "bg-purple-300",
+          id: "goodplace",
+          Component: DataShows,
+        },
+
+        {
+          name: "Around the Neighborhood",
+          icon: "mdi:person-details",
+          bgColor: "bg-purple-300",
+          id: "neighbors",
+          Component: DataNeighbour,
+        },
+
+        {
+          name: "Can I raise a family here?",
+          icon: "mdi:account-group",
+          bgColor: "bg-purple-300",
+          id: "family",
+          Component: FamilyCard,
+        },
+        {
+          name: "What's nearby?",
+          icon: "mdi:map",
+          bgColor: "bg-purple-400",
+          id: "nearby",
+          Component: NearbyCard,
+        },
+        {
+          name: "Public Transport",
+          icon: "mdi:bus",
+          bgColor: "bg-purple-500",
+          id: "publictransport",
+          Component: PublicTransportCard,
+        },
+        {
+          name: "EV Charging Stations",
+          icon: "mdi:ev-station",
+          bgColor: "bg-purple-500",
+          id: "EvChargingStations",
+          Component: EVCard,
+        },
+      ],
+    },
     {
       name: "Financials",
       id: "financials",
       subElements: [
-        // {
-        //   name: "Rent & Home Valuation",
-        //   icon: "mdi:currency-usd",
-        //   bgColor: "bg-green-200",
-        //   id: "renthomevaluation",
-        //   Component: RentHomeValCard,
-        // },
+        {
+          name: "Rent & Home Valuation",
+          icon: "hugeicons:chart-evaluation",
+          bgColor: "bg-green-200",
+          id: "renthomevaluation",
+          Component: RentHomeValCard,
+        },
         {
           name: "Price history",
           icon: "mdi:history",
@@ -283,7 +394,7 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Price tracker",
-          icon: "mdi:currency-usd",
+          icon: "solar:tag-price-bold",
           bgColor: "bg-green-400",
           id: "pricetracker",
           Component: PriceTrackerCard,
@@ -297,89 +408,31 @@ function PropertyDisplay({ listingData, params }) {
         },
         {
           name: "Market Info",
-          icon: "mdi:scale-balance",
+          icon: "icon-park-outline:market-analysis",
           bgColor: "bg-green-500",
           id: "marketinfo",
           Component: MarketInfoPage,
         },
         {
           name: "Know your Home Options",
-          icon: "mdi:scale-balance",
+          icon: "carbon:home",
           bgColor: "bg-green-500",
           id: "knowyourhometypes",
           Component: HomeTypesCard,
         },
         {
           name: "right time to buy?",
-          icon: "mdi:scale-balance",
+          icon: "fluent:data-trending-16-filled",
           bgColor: "bg-green-500",
           id: "dreamhouse",
           Component: DreamHouseCard,
         },
         {
           name: "Calculate potential returns",
-          icon: "mdi:scale-balance",
+          icon: "solar:calculator-minimalistic-bold",
           bgColor: "bg-green-500",
           id: "calculateyourdreamhouse",
           Component: Calculation,
-        },
-      ],
-    },
-    {
-      name: "Around the Neighborhood",
-      id: "around-neighborhood",
-      subElements: [
-        {
-          name: "How are the Schools?",
-          icon: "mdi:school",
-          bgColor: "bg-purple-200",
-          id: "schools",
-          Component: SchoolsCard,
-        },
-
-        // {
-        //   name: "All about the Home",
-        //   icon: "mdi:human-child",
-        //   bgColor: "bg-purple-300",
-        //   id: "goodplace",
-        //   Component: DataShows,
-        // },
-        
-        {
-          name: "Around the Neighborhood",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "neighbors",
-          Component: DataNeighbour,
-        },
-        
-        {
-          name: "Financials",
-          icon: "mdi:human-child",
-          bgColor: "bg-purple-300",
-          id: "family",
-          Component: FamilyCard,
-        },
-        {
-          name: "What's nearby?",
-          icon: "mdi:map",
-          bgColor: "bg-purple-400",
-          id: "nearby",
-          Component: NearbyCard,
-        },
-        // {
-        //   name: "Public Transport",
-        //   icon: "mdi:bus",
-        //   bgColor: "bg-purple-500",
-        //   id: "publictransport",
-        //   Component: PublicTransportCard,
-        // },
-        {
-          name: "EV Charging Stations",
-          icon: "mdi:ev-station",
-          bgColor: "bg-purple-500",
-          id: "EvChargingStations",
-          Component: EVCard,
         },
       ],
     },
@@ -389,7 +442,7 @@ function PropertyDisplay({ listingData, params }) {
       subElements: [
         {
           name: "Planning Applications",
-          icon: "mdi:shield-alert",
+          icon: "mdi:planner",
           bgColor: "bg-red-200",
           id: "Planning",
           Component: PlanningCard,
@@ -455,6 +508,8 @@ function PropertyDisplay({ listingData, params }) {
     setIsLiked(!isLiked);
   };
 
+  
+
   return (
     <>
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
@@ -488,8 +543,8 @@ function PropertyDisplay({ listingData, params }) {
         </div>
         <div className="flex justify-start px-6 gap=4 w-full">
           <Chip color="warning" className="mt-4 text-white font-semibold">
-OFF Market          
-  </Chip>
+            OFF Market
+          </Chip>
         </div>
 
         {/* lower div */}
@@ -529,7 +584,7 @@ OFF Market
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold">
-                    {listingData?.sqft || "NA"}
+                    {listingData?.sqft || sqfeetData || "N.A."}
                   </h4>
                   <p className="text-xs text-gray-500">Sq Ft</p>
                 </div>
@@ -587,7 +642,7 @@ OFF Market
                 </div>
                 <div>
                   <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {listingData?.sqft || "NA"}
+                    {listingData?.sqft || sqfeetData || squerfoot || "N.A"}
                   </h3>
                   <p className="text-xs lg:text-sm text-gray-600">sqft</p>
                 </div>
@@ -597,7 +652,6 @@ OFF Market
             {/* <p className="text-sm pl-6 font-bold hidden md:block">
               {listingData?.title}
             </p> */}
-           
 
             {navElements.map((element, index) => (
               <React.Fragment key={index}>
@@ -614,7 +668,7 @@ OFF Market
                       {...listingData}
                       title={subElement.name}
                       // schoolData={schoolData}
-                      city={listingData?.location?.townOrCity}
+                      city={town}
                       postTownName={
                         listingData?.analyticsTaxonomy?.postTownName
                       }
@@ -626,17 +680,18 @@ OFF Market
                       // postcode={listingData?.ref_postcode}
                       // setRentEstimate={setRentEstimate}
                       rentEstimate={rentEstimate}
-                      // latitude={listingData?.address?.latitude || 0 }
-                      // longitude={listingData?.address?.longitude || 0}
+                      latitude={listingData?.address?.latitude || 0}
+                      longitude={listingData?.address?.longitude || 0}
                       price={formattedPrice || "NA"}
                       area={listingData?.area || "NA"}
-                      address={fullAdress }
+                      address={fullAdress}
                       uprn={uprn}
-            // data={newData}
-            data={locationData}
-            postcode={postcode}
-            schoolData={schoolData}
-            // setRentEstimate={setRentEstimate}
+                      // data1={newData}
+                      data={locationData}
+                      postcode={postcode}
+                      schoolData={schoolData}
+                      setRentEstimate={setRentEstimate}
+                      rentData={rentData}
                     />
                   </div>
                 ))}

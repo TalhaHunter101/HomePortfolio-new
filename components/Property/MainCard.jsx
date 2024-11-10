@@ -10,13 +10,13 @@ const MainCard = ({ images }) => {
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images?.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images?.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -31,7 +31,7 @@ const MainCard = ({ images }) => {
           className="flex transition-transform duration-500 ease-in-out h-full"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {images && images.map((image, index) => (
+          {images?.map((image, index) => (
             <div key={index} className="flex-shrink-0 w-full h-full">
               <Image
                 src={image?.original ? image?.original : image}
@@ -80,7 +80,7 @@ const MainCard = ({ images }) => {
           radius="full"
           size="sm"
           auto
-          className="absolute left-2 bg-gray-100  top-1/2 transform -translate-y-1/2"
+          className="absolute left-2 bg-gray-100 top-1/2 transform -translate-y-1/2"
           onClick={handlePrevious}
         >
           <Icon color="gray" icon="bx:bx-chevron-left" width={24} height={24} />
@@ -92,7 +92,7 @@ const MainCard = ({ images }) => {
           radius="full"
           size="sm"
           auto
-          className="absolute right-2 bg-gray-100  top-1/2 transform -translate-y-1/2"
+          className="absolute right-2 bg-gray-100 top-1/2 transform -translate-y-1/2"
           onClick={handleNext}
         >
           <Icon color="gray" icon="bx:bx-chevron-right" width={24} height={24} />

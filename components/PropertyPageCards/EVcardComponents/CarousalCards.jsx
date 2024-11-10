@@ -14,14 +14,14 @@ const CardItem = ({
   status
 }) => {
   return (
-    <Card className="w-full h-[50vh]" shadow="sm">
+    <Card className="w-full h-[50vh]" shadow="none">
       <CardBody className="p-4 flex flex-col justify-between">
         {/* First Section */}
         <div className="flex items-start  border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
           <div className="">
-            <h2 className="font-semibold text-gray-800 text-base sm:text-lg">
+            <p className="font-semibold text-gray-800 text-base sm:text-lg">
               {title1}
-            </h2>
+            </p>
             <div className="text-sm text-gray-600">{address1}</div>
             <div className="text-sm text-gray-600">{description1}</div>
             <Image src="/icons/charging.svg" alt="SVG Icon" className="h-10" />
@@ -36,9 +36,9 @@ const CardItem = ({
         {/* Second Section */}
         <div className="flex items-start mt-2 border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
           <div>
-            <h2 className="font-semibold text-gray-800 text-base sm:text-lg">
+            <p className="font-semibold text-gray-800 text-base sm:text-lg">
               {title2}
-            </h2>
+            </p>
             <div className="text-sm text-gray-600">{address2}</div>
             <div className="text-sm text-gray-600">{description2}</div>
               <Image src="/icons/charging.svg" alt="SVG Icon" className="h-10" />

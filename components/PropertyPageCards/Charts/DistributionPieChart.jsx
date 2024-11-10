@@ -42,7 +42,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const [activePie, setActivePie] = useState(null);
   const [activeDataSet, setActiveDataSet] = useState(null);
 
-  const COLORS = ["#9333ea", "#db2777", "#4f46e5", "#4b5563"];
+  const COLORS = ["#c4b5fd", "#a78bfa", "#8b5cf6", "#7c3aed"];
 
   useEffect(() => {
     if (main_data) {
@@ -242,8 +242,8 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
 
   // Define responsive radius sizes based on screen width
   const isLargeScreen = typeof window !== 'undefined' && window.innerWidth >= 1024;
-  const innerRadius = isLargeScreen ? 40 : 30;
-  const outerRadius = isLargeScreen ? 150 : 80;
+  const innerRadius = isLargeScreen ? 120 : 70;  // Adjust inner radius for a thin ring
+  const outerRadius = isLargeScreen ? 150 : 100; // Adjust outer radius for a thin ring
 
   return (
     <div className="h-96">
@@ -261,6 +261,9 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             dataKey="value"
             onMouseEnter={onPieEnter("outer")}
             onMouseLeave={() => setActiveIndex(-1)}
+            style={{
+              filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+            }}
           >
             {data01.map((entry, index) => (
               <Cell

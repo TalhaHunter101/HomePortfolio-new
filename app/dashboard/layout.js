@@ -11,7 +11,6 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const user = pb.authStore.model;
-    console.log(user);
     setUser(user);
 
     if (!user) {

@@ -1,12 +1,16 @@
 "use client";
 import React from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { formatCurrency, timeAgo } from "@/utils/Helper";
+import Link from "next/link";
+import Image from "next/image";
 
-export function BasicInfoCard({ title, content, data, price, area }) {
+export function BasicInfoCard({  content, data, price, area }) {
   return (
-    <Card className="m-4" style={{ minHeight: "150px" }}>
+    <>
+  
+        <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
         <div className="flex items-center my-2">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
@@ -23,7 +27,7 @@ export function BasicInfoCard({ title, content, data, price, area }) {
       </CardHeader>
       <CardBody>
         <div class=" p-4 bg-default-white  rounded-md ">
-          <h3 class="text-xl font-semibold text-black ">Home Highlights</h3>
+          <p class="text-xl font-semibold text-black ">Home Highlights</p>
           <div class="flex flex-wrap gap-4 my-5">
             <div class="flex items-center justify-center p-2 bg-gray-200 rounded-md ">
               <svg
@@ -180,9 +184,9 @@ export function BasicInfoCard({ title, content, data, price, area }) {
               </p>
             </div>
           </div>
-          <h3 class="mt-10 text-xl font-semibold text-black ">
+          <p class="mt-10 text-xl font-semibold text-black ">
             Property Facts
-          </h3>
+          </p>
           <div class="flex flex-col sm:flex-row justify-between mt-5 text-sm text-gray-600 capitalize gap-x-10">
             <div class="flex flex-col gap-y-1 w-full sm:w-[40%]">
               <div class="grid grid-cols-2 ">
@@ -251,5 +255,8 @@ export function BasicInfoCard({ title, content, data, price, area }) {
         </div>
       </CardBody>
     </Card>
+    
+    </>
+
   );
 }

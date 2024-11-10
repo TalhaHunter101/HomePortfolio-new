@@ -34,7 +34,7 @@ const getChipColor = (rating) => {
 export function EnergyPerformanceTable({ data }) {
   return (
     <div>
-      <h4 className="font-semibold text-sm pl-1 text-gray-500 mb-2">Breakdown Of property&apos;s energy performance</h4>
+      <p className="font-semibold text-sm pl-1 text-gray-500 mb-2">Breakdown Of property&apos;s energy performance</p>
       <div className="overflow-y-auto " style={{ maxHeight: '300px' }}>
         <Table className="" isHeaderSticky removeWrapper aria-label="Energy performance breakdown table">
           <TableHeader bordered>

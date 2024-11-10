@@ -84,7 +84,7 @@ const amenities = [
   },
 ];
 
-const WhatsNearbyMap = ({ center }) => {
+const WhatsNearbyMap = ({ center,isInteractive }) => {
   const [locations, setLocations] = useState([]);
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
 
@@ -156,11 +156,11 @@ const haversineDistance = (coords1, coords2) => {
             lon = element.lon;
           } else {
             lat = element.center.lat;
-            lon = element.center.lon;
+            lon = element.center.lon || element.center.lng;
           }
 
           const address = formatAddress(element.tags);
-          const distance = haversineDistance({ lat, lon }, { lat: center.lat, lon: center.lon });
+          const distance = haversineDistance({ lat, lon }, { lat: center.lat, lon: center.lng || center.lon});
 
           return {
             name: element.tags.name || "na",
@@ -168,9 +168,10 @@ const haversineDistance = (coords1, coords2) => {
             address: address,
             lat,
             lon,
-            distance: `${distance.toFixed(2)} km`,
+            distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
           };
-        });
+        })
+        .filter((location) => location !== null);
 
       return locations;
     } catch (error) {
@@ -193,7 +194,6 @@ const haversineDistance = (coords1, coords2) => {
   useEffect(() => {
     getNearbyLocations(center.lat, center.lon)
       .then((locations) => {
-        console.log(locations);
         setLocations(locations);
       })
       .catch((error) => {
@@ -231,7 +231,7 @@ const haversineDistance = (coords1, coords2) => {
           ) : null
         )}
       </div>
-      <div className="absolute inset-0 z-0">
+      <div className={`absolute inset-0 z-0 ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }`}>
         <NearByPlacesStatic
           center={center}
           height="500px"

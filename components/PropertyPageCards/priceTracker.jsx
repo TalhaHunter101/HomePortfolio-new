@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { PricetrackerChart } from "./Charts/pricetrckerChart";
 import { useListingStore } from "@/store/listingStore";
 import { Icon } from "@iconify/react";
+import { formatCurrency } from "@/utils/Helper";
 
 export function PriceTrackerCard({ uprn, data: newData, postcode }) {
   const [data, setData] = useState([]);
@@ -52,8 +53,8 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
     
         // Extract and map the year and price data from results
         const mappedData = results?.hits?.map((item) => ({
-          year: new Date(item._source.deed_date).getFullYear(),
-          price: Number(item._source.price_paid),
+          year: new Date(item?._source?.deed_date).getFullYear(),
+          price: Number(item?._source?.price_paid),
         }));
     
         // Sort the data by year in descending order
@@ -65,8 +66,8 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
           const secondLastYearData = sortedData[1]; // Second latest year data
     
           // Calculate growth rate and rate per year
-          const growthRateCalc = ((lastYearData.price - secondLastYearData.price) / secondLastYearData.price) * 100;
-          const ratePerYearCalc = lastYearData.price - secondLastYearData.price; // No decimal points
+          const growthRateCalc = ((lastYearData?.price - secondLastYearData?.price) / secondLastYearData?.price) * 100;
+          const ratePerYearCalc = lastYearData?.price - secondLastYearData?.price; // No decimal points
     
           // Set the calculated values to state
           setGrowthRate(growthRateCalc.toFixed(2)); // Format to 2 decimal places
@@ -108,8 +109,15 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
         </div>
       </CardHeader>
       <CardBody>
-        {data.length <= 0 ? (
-          <p className="text-default-500">No data available</p>
+        {data?.length <= 0 ? (
+          <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
         ) : (
           <section
             id="price-tracker"
@@ -153,7 +161,7 @@ export function PriceTrackerCard({ uprn, data: newData, postcode }) {
                     </div>
                     <div className="text-[16px]">
                       <b className="font-medium text-[22px]">
-                        £{ratePerYear || "..."} per year
+                        £{formatCurrency(ratePerYear)  || "..."} per year
                       </b>
                     </div>
                   </div>

@@ -10,12 +10,19 @@ import useStore from "@/store/useStore";
 import { motion } from "framer-motion";
 import SearchDropdown from "@/components/Homepage/SearchDropdown";
 import withClickOutside from "@/components/DropdownHOC";
+import { usePathname } from "next/navigation";
+import Filter from "@/components/SearchPage/filter";
 
 const SearchDropdownWithClickOutside = withClickOutside(SearchDropdown);
 
 const SearchPage = ({ params }) => {
   const encodedPage = params.page;
-  const page = decodeURIComponent(encodedPage.replace(/-/g, " "));
+  const page = decodeURIComponent(
+    encodedPage.split("%3Ftype")[0].replace(/-/g, " ")
+  );
+  let pathname = usePathname();
+  const typeis = pathname.split("=")[1] || "";
+
   const [listingData, setListingData] = useState([]);
   const [isnewDataLoading, setisnewDataLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,6 +30,8 @@ const SearchPage = ({ params }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isGeomBoundary, setIsGeomBoundary] = useState(null);
+  const [isMapResult, setIsMapResult] = useState(null);
 
   const pageSize = 20;
 
@@ -36,6 +45,7 @@ const SearchPage = ({ params }) => {
     selectedBaths,
     minPrice,
     maxPrice,
+    homeType,
   } = useStore();
 
   const handleChange = async (e) => {
@@ -48,6 +58,7 @@ const SearchPage = ({ params }) => {
     }
   };
 
+  
   const fetchEPCData = async (uprn) => {
     try {
       const response = await fetch("/api/indevisual/get-epc-data", {
@@ -91,8 +102,9 @@ const SearchPage = ({ params }) => {
       maxPrice,
       bedrooms: selectedBeds,
       bathrooms: selectedBaths,
+      houseType: homeType && homeType.length > 0 ? homeType : "any",
     };
-  
+
     try {
       const response = await fetch(`/api/search/get-listing-data`, {
         method: "POST",
@@ -101,15 +113,19 @@ const SearchPage = ({ params }) => {
         },
         body: JSON.stringify({
           searchValue: page,
+          type: typeis,
           filters,
           currentPage,
           pageSize,
         }),
       });
-  
+
       const result = await response.json();
       const properties = result?.results || [];
 
+      console.log("geom", result?.geom);
+      setIsGeomBoundary(result?.geom);
+      setIsMapResult(result?.mapResults);
       const updatedProperties = await Promise.all(
         properties.map(async (property) => {
           try {
@@ -118,12 +134,12 @@ const SearchPage = ({ params }) => {
               totalFloorArea: null,
               fullAddress: null,
             };
-  
+
             // If `uprn` exists, fetch EPC data, otherwise keep default values
             if (uprn) {
               epcData = await fetchEPCData(uprn);
             }
-  
+
             // Return the updated property data
             return {
               ...property,
@@ -134,8 +150,11 @@ const SearchPage = ({ params }) => {
               },
             };
           } catch (error) {
-            console.error(`Error fetching EPC data for property with UPRN ${property?._source?.location?.uprn}:`, error);
-  
+            console.error(
+              `Error fetching EPC data for property with UPRN ${property?._source?.location?.uprn}:`,
+              error
+            );
+
             // If there's an error, return the property as it is, without modifying it
             return property;
           }
@@ -150,8 +169,8 @@ const SearchPage = ({ params }) => {
       setisnewDataLoading(false);
       setIsInitialLoading(false);
     }
-  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths]);
-  
+  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, homeType]);
+
   useEffect(() => {
     setListingData([]);
     setCurrentPage(1);
@@ -159,8 +178,15 @@ const SearchPage = ({ params }) => {
 
   useEffect(() => {
     fetchProperties();
-  }, [page, currentPage]);
-
+  }, [
+    page,
+    currentPage,
+    minPrice,
+    maxPrice,
+    selectedBeds,
+    selectedBaths,
+    fetchProperties,
+  ]);
   return (
     <main className="flex mt-16 flex-col h-screen">
       {/* Navbar */}
@@ -175,17 +201,20 @@ const SearchPage = ({ params }) => {
             placeholder={page}
             size="lg"
             className="w-full max-w-md z-40"
-            endContent={<Icon icon="carbon:close-filled" className="text-2xl" />}
+            endContent={
+              <Icon icon="carbon:close-filled" className="text-2xl" />
+            }
             onChange={handleChange}
           />
         </div>
 
         {/* Filters and Buttons */}
-        {/* On large screens */}
+        {/* On large screens */} 
         <div className="hidden lg:flex items-center gap-2 mt-2 md:mt-0">
           <Beds />
           <Baths />
           <Price />
+          <Filter />
           <Button
             color="primary"
             radius="sm"
@@ -276,6 +305,8 @@ const SearchPage = ({ params }) => {
           setCurrentPage={setCurrentPage}
           pageSize={pageSize}
           isLoading={isnewDataLoading}
+          geom={isGeomBoundary}
+          mapResults={isMapResult}
         />
       )}
     </main>

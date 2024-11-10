@@ -11,7 +11,6 @@ const getStatusCounts = (data, appType) => {
   };
 
   data.forEach((item) => {
-    console.log("item", item?._source?.other_fields.application_type);
     
     if (item?._source?.other_fields?.application_type === appType) {
       
@@ -77,7 +76,7 @@ export const EthnicGroupChart = ({ allData }) => {
 
   return (
     <div className="w-full h-350 p-5 bg-white rounded-lg shadow-md">
-      <h3 className="mb-5 font-bold text-lg">Application Type Status</h3>
+      <p className="mb-5 font-bold text-lg">Application Type Status</p>
       <ResponsiveContainer className={'text-xs'} width="100%" height={300}>
         <BarChart data={chartData} layout="vertical" margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid horizontal={false} strokeDasharray="3 3" />

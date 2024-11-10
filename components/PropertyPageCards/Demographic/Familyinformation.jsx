@@ -7,10 +7,31 @@ export function Familyinformation({
   totalPopulation,
   housingData,
   compositionData,
-  agePopulationData
+  agePopulationData,
+  educationData,
 }) {
   const { setPopulationData } = useDemographicStore();
   const [medianAge, setMedianAge] = useState(null);
+
+  const calculateCollegeDegreePercentage = () => {
+    if (educationData?._source) {
+      const totalPopulation = parseInt(
+        educationData._source[
+          "Highest level of qualification: Total: All usual residents aged 16 years and over"
+        ]
+      );
+      const level4AndAbove = parseInt(
+        educationData._source[
+          "Highest level of qualification: Level 4 qualifications and above"
+        ]
+      );
+
+      if (totalPopulation && level4AndAbove) {
+        return ((level4AndAbove / totalPopulation) * 100).toFixed(0);
+      }
+    }
+    return "N/A";
+  };
 
   const population =
     totalPopulation?._source?.["Sex: All persons; measures: Value"] || 0;
@@ -22,13 +43,19 @@ export function Familyinformation({
   const totalHouseholds =
     housingData?._source?.["Accommodation type: Total: All households"] || 0;
   const singleFamilyPercentage = (
-    ((housingData?._source?.["Accommodation type: Detached"] || 0) / totalHouseholds) * 100
+    ((housingData?._source?.["Accommodation type: Detached"] || 0) /
+      totalHouseholds) *
+    100
   ).toFixed(0);
   const onePersonHouseholdPercentage = (
-    ((housingData?._source?.["Accommodation type: Semi-detached"] || 0) / totalHouseholds) * 100
+    ((housingData?._source?.["Accommodation type: Semi-detached"] || 0) /
+      totalHouseholds) *
+    100
   ).toFixed(0);
   const coupleFamilyWithKidsPercentage = (
-    ((housingData?._source?.["Accommodation type: Terraced"] || 0) / totalHouseholds) * 100
+    ((housingData?._source?.["Accommodation type: Terraced"] || 0) /
+      totalHouseholds) *
+    100
   ).toFixed(0);
 
   const averageHouseholdSize = 2.22;
@@ -54,17 +81,22 @@ export function Familyinformation({
       { range: "70-74", count: parseInt(ageData["Age: Aged 70 to 74 years"]) },
       { range: "75-79", count: parseInt(ageData["Age: Aged 75 to 79 years"]) },
       { range: "80-84", count: parseInt(ageData["Age: Aged 80 to 84 years"]) },
-      { range: "85+", count: parseInt(ageData["Age: Aged 85 years and over"]) }
+      { range: "85+", count: parseInt(ageData["Age: Aged 85 years and over"]) },
     ];
 
-    const totalPopulation = ageRanges.reduce((acc, ageRange) => acc + ageRange.count, 0);
+    const totalPopulation = ageRanges.reduce(
+      (acc, ageRange) => acc + ageRange.count,
+      0
+    );
     const middlePopulation = totalPopulation / 2;
 
     let cumulativePopulation = 0;
     for (let i = 0; i < ageRanges.length; i++) {
       cumulativePopulation += ageRanges[i].count;
       if (cumulativePopulation >= middlePopulation) {
-        const [lowerBound, upperBound] = ageRanges[i].range.split("-").map(Number);
+        const [lowerBound, upperBound] = ageRanges[i].range
+          .split("-")
+          .map(Number);
         return upperBound ? (lowerBound + upperBound) / 2 : lowerBound;
       }
     }
@@ -89,8 +121,14 @@ export function Familyinformation({
         a median age of <span className="font-semibold">{medianAge}</span>.
       </p>
       <p className="text-gray-600 mb-2">
-        <span className="font-semibold">{compositionData?._source?.["Household composition: One person household; measures: Value"]}</span> of this neighborhood is
-        occupied by families with{" "}
+        <span className="font-semibold">
+          {
+            compositionData?._source?.[
+              "Household composition: One person household; measures: Value"
+            ]
+          }
+        </span>{" "}
+        of this neighborhood is occupied by families with{" "}
         <span className="font-semibold">{singleFamilyPercentage}%</span> single
         families,{" "}
         <span className="font-semibold">{onePersonHouseholdPercentage}%</span>{" "}
@@ -102,8 +140,10 @@ export function Familyinformation({
         <span className="font-semibold">{averageFamilySize}</span>.
       </p>
       <p className="text-gray-600">
-        <span className="font-semibold">56%</span> of residents in this
-        neighborhood have a college degree.
+        <span className="font-semibold">
+          {calculateCollegeDegreePercentage()}%
+        </span>{" "}
+        of residents in this neighborhood have a college degree.
       </p>
     </div>
   );

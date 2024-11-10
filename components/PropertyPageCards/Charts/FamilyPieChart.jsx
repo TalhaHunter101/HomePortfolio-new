@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  PieChart,
+  Pie,
   BarChart,
   Bar,
   XAxis,
@@ -21,25 +23,32 @@ export const FamilyCustomBarChart = ({ data }) => {
   return (
     <div className="w-full mb-10 flex justify-center items-center">
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart 
-          data={data} 
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="value" name="Count" fill="#8884d8">
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+  <PieChart>
+    <Tooltip />
+    <Legend />
+    <Pie
+    style={{
+      filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+    }}
+      data={data}
+      dataKey="value"
+      nameKey="name"
+      cx="50%"
+      cy="50%"
+      innerRadius={80} // Adjust this value to control the size of the donut hole
+      outerRadius={100} // Adjust this value to control the overall size
+      fill="#8884d8"
+    >
+      {data.map((entry, index) => (
+        <Cell
+          key={`cell-${index}`}
+          fill={COLORS[index % COLORS.length]}
+        />
+      ))}
+    </Pie>
+  </PieChart>
+</ResponsiveContainer>
+
     </div>
   );
 };

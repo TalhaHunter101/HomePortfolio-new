@@ -15,6 +15,8 @@ const MapTilerLayerComponent = () => {
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -23,7 +25,7 @@ const MapTilerLayerComponent = () => {
   }, [map]);
 
   return null;
-};
+}; 
 
 const MarkersWithCustomIcon = ({ center }) => {
   const map = useMap();
@@ -68,6 +70,7 @@ const EvChargingMap = ({ height, center = [] }) => {
           width: "100%",
           height: `${height ? height : "650px"} `,
         }} 
+        gestureHandling={true}
       >
         <MapTilerLayerComponent />
         <MarkersWithCustomIcon center={center} />

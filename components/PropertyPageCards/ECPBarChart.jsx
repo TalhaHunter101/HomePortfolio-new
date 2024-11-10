@@ -26,7 +26,6 @@ const ECPBarChart = ({ data, setCurrentColour }) => {
 
       const currentRating = data?.CURRENT_ENERGY_RATING;
       const ratingInfo = ratingColors[currentRating] || { class: "", color: "" };
-      console.log("ratingInfo", ratingInfo);
       
       setRatingInfo(ratingInfo)
       setCurrentColour(ratingInfo)

@@ -21,18 +21,17 @@ const [isgettingreport, setIsGettingReport] = useState(false);
     // Check if selectedAddress is not null/undefined and email is valid
     if (selectedAddress && email) {
       // Log selectedAddress and email
-      console.log("Selected Address:", selectedAddress);
-      console.log("Email:", email);
+     
       setIsGettingReport(true);
 
    await  fetch("/api/send-report", {
         method: "POST",
         body: JSON.stringify({
          email: email,
-         url: "https://home-portfolio-weld.vercel.app/home-valuation/"+ selectedAddress.uprn
+         url: "https://home-portfolio-weld.vercel.app/home-valuation/report"+ selectedAddress.uprn
         }),
       });
-      window.location.href = "/home-valuation/"+ selectedAddress.uprn
+      window.location.href = "/home-valuation/report/"+ selectedAddress.uprn
       
       // onSubmit({ selectedAddress, email });
 

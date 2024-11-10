@@ -16,8 +16,10 @@ export const useListingStore = create((set) => ({
 export const marketCompStore = create((set) => ({
   marketComp: null,
   medianPrice: null,
+  averagePrice: null,
   setMarketComp: (marketComp) => set({ marketComp }),
   setMedianPrice: (value) => set({ medianPrice: value }),
+  setAveragePrice: (value) => set({ averagePrice: value }),
 }));
 
 export const marketInfoStore = create((set) => ({
@@ -32,7 +34,9 @@ export const useDemographicStore = create((set) => ({
   educationData: null,
   tenureAllData:null,
   economicActivityData: null,
+  isDataLoading: true,
   
+  setIsDataLoading: (value) => set({ isDataLoading: value }),
   setSingleFamilyHouseholds: (value) => set({ singleFamilyHouseholds: value }),
   setPopulationData: (value) => set({ populationData: value }),
   setEducationData: (value) => set({ educationData: value }),

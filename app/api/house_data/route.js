@@ -11,7 +11,6 @@ export async function POST(request) {
 
         let { uprn } = await request.json();
 
-      console.log(uprn);
         if (!uprn) {
             return NextResponse.json({ error: 'UPRN is required.' }, { status: 400 });
         }

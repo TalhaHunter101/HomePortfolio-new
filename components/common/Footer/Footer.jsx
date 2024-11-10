@@ -15,48 +15,75 @@ const footerNavigation = {
   ],
 
   Platform: [
-    { name: "Search Listings", href: "#" },
-    { name: "Search Schools", href: "#" },
-    { name: "Sold Prices", href: "#" },
-    { name: "My HomePortfolio", href: "#" },
+    { name: "Search Listings", href: "/" },
+    // { name: "Search Schools", href: "#" },
+    // { name: "Sold Prices", href: "#" },
+    // { name: "My HomePortfolio", href: "#" },
+    {
+      name: "Home Valuation",
+      href: "/home-valuation",
+    },
+    {
+      name: "rankings",
+      href: "/ranking",
+    },{
+      name: "Neighbourhood Guide",
+      href: "/neighbourhood-guide"
+    }
   ],
 
-  Resources: [
-    { name: "Home Buying Guides", href: "#" },
-    { name: "Neighborhood Guides", href: "#" },
-    { name: "Property Market Analysis", href: "#" },
-    { name: "Property Valuation", href: "#" },
-    { name: "Property Data API", href: "#" },
-  ],
+  // Resources: [
+  //   { name: "Home Buying Guides", href: "#" },
+  //   { name: "Neighborhood Guides", href: "#" },
+  //   { name: "Property Market Analysis", href: "#" },
+  //   { name: "Property Valuation", href: "#" },
+  //   { name: "Property Data API", href: "#" },
+  // ],
+  
+  // Resources: [
+  //   { name: "Home Buying Guides", href: "#" },
+  //   { name: "Neighborhood Guides", href: "#" },
+  //   { name: "Property Market Analysis", href: "#" },
+  //   { name: "Property Valuation", href: "#" },
+  //   { name: "Property Data API", href: "#" },
+  // ],
 
   Company: [
-    { name: "About Us", href: "#" },
+    { name: "About Us", href: "/AboutUs" },
     { name: "Our Blog", href: "#" },
-    { name: "Contact Us", href: "#" },
+    { name: "Contact Us", href: "/ContactUs" },
+    { name: "Privacy Policy", href: "/PrivacyPolicy" },
+    { name: "Terms & Conditions", href: "/Terms&Conditions" },
     
   ],
 
   social: [
     {
       name: "Facebook",
-      href: "#",
+      href: "https://www.facebook.com/homeportfoliohq/",
       icon: (props) => <Icon {...props} icon="fontisto:facebook" />,
     },
     {
       name: "Instagram",
-      href: "#",
+      href: "https://www.instagram.com/homeportfolio_/",
       icon: (props) => <Icon {...props} icon="fontisto:instagram" />,
     },
     {
       name: "Twitter",
-      href: "#",
+      href: "https://www.twitter.com/home_portfolio",
       icon: (props) => <Icon {...props} icon="fontisto:twitter" />,
     },
     {
       name: "Youtube",
-      href: "#",
+      href: "https://www.youtube.com/@home_portfolio",
       icon: (props) => <Icon {...props} icon="mingcute:youtube-fill" width={20} height={24} />,
+    },
+    {
+      name: "Pinterest",
+      href: "https://www.pinterest.com/home_portfolio/",
+      icon: (props) => <Icon {...props} icon="mdi:pinterest" width={20} height={24} />,
     }
+
  
   ],
 };
@@ -65,7 +92,7 @@ export default function Footer() {
   const renderList = React.useCallback(
     ({ title, items }) => (
       <div>
-        <h3 className="text-small font-semibold text-default-600">{title}</h3>
+        <p className="text-small font-semibold text-default-600">{title}</p>
         <ul className="mt-6 space-y-4">
           {items?.map((item) => (
             <li key={item.name}>
@@ -86,8 +113,10 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 md:pr-8">
             <div className="flex items-center justify-start">
-              <AcmeIcon size={44} />
-              <span className="text-medium font-medium">HomePortfolio</span>
+              {/* <AcmeIcon size={44} /> */}
+              {/* <span className="text-medium font-medium">HomePortfolio</span> */}
+              <img src="/HpLogo.jpeg" alt="logo" className="h-12 w-32 object-contain" />
+
             </div>
             <p className="text-sm text-default-500">
               We provide comprehensive database and in-depth analysis for every UK new residential property, neighbourhood, town, city and school - in one platform - for free
@@ -108,9 +137,9 @@ export default function Footer() {
   </div>
 
   {/* Resources Section */}
-  <div>
+  {/* <div>
     {renderList({ title: "Resources", items: footerNavigation.Resources })}
-  </div>
+  </div> */}
 
   {/* Company Section */}
   <div>

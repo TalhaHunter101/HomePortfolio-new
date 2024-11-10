@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "@react-hook/media-query";
 import {
   BarChart,
   Bar,
@@ -7,9 +8,13 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 
 export const CrimeTypesChart = ({ reportData }) => {
+  // Use media query to detect if the screen width is small
+  const isSmallScreen = useMediaQuery("(max-width: 640px)"); // Tailwind's 'sm' breakpoint is 640px
+
   // Process the reportData to calculate the counts of each crime type
   const crimeCounts = reportData.reduce((acc, report) => {
     const crimeType = report._source["Crime type"];
@@ -28,25 +33,30 @@ export const CrimeTypesChart = ({ reportData }) => {
 
   return (
     <div className="w-full h-350 bg-white rounded-lg ">
-      <h3 className="mb-5 font-bold text-lg">Crime Types</h3>
-      <ResponsiveContainer className={'text-[10px]'} width="100%" height={300}>
+      <p className="mb-5 font-bold text-lg">Crime Types</p>
+      <ResponsiveContainer className="text-[10px]" width="100%" height={300}>
         <BarChart
           data={data}
-          layout="horizontal" // Changed to horizontal layout
-          margin={{ top: 20, right: 30, left: 20, bottom: 50 }} // Added space at the bottom
+          layout={isSmallScreen ? "vertical" : "horizontal"}
+          margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-            type="category" 
-            dataKey="name" 
-            interval={0} // Show all labels
-            angle={-45} // Tilt labels for better readability
-            textAnchor="end" // Align text at the end of the tick
-            height={60} // Increase the height to accommodate tilted labels
+          <XAxis
+            type={isSmallScreen ? "number" : "category"}
+            dataKey={isSmallScreen ? "value" : "name"}
+            interval={0}
+            angle={isSmallScreen ? 0 : -45}
+            textAnchor="end"
+            height={isSmallScreen ? undefined : 60}
           />
-          <YAxis type="number" />
-          <Tooltip />
-          <Bar dataKey="value" fill="#4DD0E1" />
+          <YAxis
+            type={isSmallScreen ? "category" : "number"}
+            dataKey={isSmallScreen ? "name" : undefined}
+          />
+          <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
+          <Bar dataKey="value" fill="#33b5b5" barSize={100}>
+            <LabelList dataKey="value" position={isSmallScreen ? "right" : "top"} fontSize={10} />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

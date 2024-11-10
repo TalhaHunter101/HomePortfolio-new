@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Chip, Image } from "@nextui-org/react";
 import Carousel from "./CrimeComponents/GraphCarousal";
 import { Icon } from "@iconify/react";
 
-export function CrimeCard({ postcode }) {
+export function CrimeCard({ postcode,ShortAddress }) {
   const [crimeData, setCrimeData] = useState([]);
 
   const getCrimeData = async (postcode) => {
@@ -30,7 +30,9 @@ export function CrimeCard({ postcode }) {
   };
 
   useEffect(() => {
-    if (postcode) getCrimeData(postcode);
+    if (postcode){
+      getCrimeData(postcode);
+    }
   }, [postcode]);
 
   return (
@@ -45,7 +47,7 @@ export function CrimeCard({ postcode }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Crime Rates in this area?
+          what are the Crime Rates in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>

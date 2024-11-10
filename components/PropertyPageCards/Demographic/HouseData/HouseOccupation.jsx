@@ -26,7 +26,8 @@ function HouseOccupation({ occupationData, city }) {
           "Administrative & Secretarial",
         "5. Skilled trades occupations": "Skilled Trades",
         "6. Caring, leisure and other service occupations": "Caring & Service",
-        "7. Sales and customer service occupations": "Sales & Customer Service",
+        "7. Sales and customer service occupations":
+          "Sales & Customer Service",
         "8. Process, plant and machine operatives":
           "Process & Machine Operatives",
         "9. Elementary occupations": "Elementary Occupations",
@@ -51,7 +52,7 @@ function HouseOccupation({ occupationData, city }) {
   }, [occupationData]);
 
   // Pastel colors for pie chart
-  const COLORS = ["#1A2B41", "#5AB2F6", "#A3D4FF", "#5AA9F6", "#FFBB28"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
 
   return (
     <>
@@ -59,9 +60,9 @@ function HouseOccupation({ occupationData, city }) {
         <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
           <Icon icon="tdesign:member" width={24} className="text-gray-700" />
         </div>
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
+        <p className="text-lg sm:text-xl font-semibold text-gray-700">
           House Occupation
-        </h2>
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row items-center justify-center gap-4 mt-4">
@@ -74,18 +75,23 @@ function HouseOccupation({ occupationData, city }) {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
+                innerRadius={80}
                 outerRadius={100}
-                fill="#82ca9d"
                 label
+                style={{
+                  filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+                }}
               >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
+                    stroke="#fff"
+                    strokeWidth={1}
                   />
                 ))}
               </Pie>
-              <Tooltip />
+              <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>

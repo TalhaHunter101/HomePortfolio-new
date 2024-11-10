@@ -5,7 +5,7 @@ export function PerformanceSection({ recData }) {
   return (
     <div className="overflow-y-auto " style={{ maxHeight: "300px" }}>
       {" "}
-      <h3 className="font-semibold mb-2">Performance</h3>
+      <p className="font-semibold mb-2">Performance</p>
       {recData && recData.length > 0 ? (
         recData.map((item, index) => (
           <div key={index} className="flex flex-col">

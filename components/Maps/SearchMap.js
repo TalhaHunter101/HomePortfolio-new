@@ -15,7 +15,6 @@ import { Chip, Image } from "@nextui-org/react";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import { formatCurrency, formatPrice } from "@/utils/Helper";
 
-
 const MapEventsHandler = ({ setVisibleCenters, centers }) => {
   const map = useMapEvent({
     zoomend: () => {
@@ -37,14 +36,14 @@ const MapEventsHandler = ({ setVisibleCenters, centers }) => {
   return null;
 };
 
-
-
 const MapTilerLayerComponent = () => {
   const map = useMap();
 
   useEffect(() => {
     const mtLayer = new MaptilerLayer({
       apiKey: "685vx5hNgMMOFvoFvLAX",
+      style: "basic-v2-light",
+      filter: ["grayscale:100", "contrast:100", "brightness:100"],
     }).addTo(map);
 
     return () => {
@@ -55,10 +54,118 @@ const MapTilerLayerComponent = () => {
   return null;
 };
 
-const Maps = ({ height, center, hovercard,setfilter }) => {
+const BoundaryLayer = ({ geom }) => {
+  console.log("Geom in boundry layer:", geom);
+  const map = useMap();
 
+  useEffect(() => {
+    if (!geom) {
+      console.log("No geometry provided");
+      return;
+    }
+
+    // Get the geometry data from either location or polygon property
+    const geometry = geom.location || geom.polygon || geom;
+    console.log("Geometry is", geometry);
+
+    console.log("Drawing boundary for:", geometry?.type);
+
+    // Clear existing GeoJSON layers
+    map.eachLayer((layer) => {
+      if (layer instanceof L.GeoJSON) {
+        map.removeLayer(layer);
+      }
+    });
+
+    if (!geometry?.coordinates) {
+      console.log("No valid coordinates to draw");
+      return;
+    }
+
+    try {
+      const geoType = geometry.type.toLowerCase();
+      console.log("Processing geometry type:", geoType);
+
+      // Clean coordinates function to handle both single coordinates and arrays of coordinates
+      const cleanCoordinates = (coords) => {
+        if (!Array.isArray(coords)) return coords;
+
+        if (typeof coords[0] === "number") {
+          return [coords[0], coords[1]]; // Take only lon, lat
+        }
+
+        return coords.map((coord) => cleanCoordinates(coord));
+      };
+
+      let cleanedCoordinates;
+      if (geoType === "multipolygon") {
+        cleanedCoordinates = geometry.coordinates.map((polygon) =>
+          polygon.map((ring) => cleanCoordinates(ring))
+        );
+      } else {
+        cleanedCoordinates = geometry.coordinates.map((ring) =>
+          cleanCoordinates(ring)
+        );
+      }
+
+      // Create GeoJSON structure
+      const geoJsonData = {
+        type: "Feature",
+        geometry: {
+          type: geoType === "multipolygon" ? "MultiPolygon" : "Polygon",
+          coordinates: cleanedCoordinates,
+        },
+        properties: {},
+      };
+
+      console.log("Created GeoJSON:", JSON.stringify(geoJsonData, null, 2));
+
+      // Validate coordinates
+      const validateCoordinates = (coords) => {
+        if (!Array.isArray(coords)) return false;
+        return coords.every((coord) => {
+          if (Array.isArray(coord)) {
+            if (typeof coord[0] === "number" && typeof coord[1] === "number") {
+              return true;
+            }
+            return validateCoordinates(coord);
+          }
+          return false;
+        });
+      };
+
+      if (!validateCoordinates(cleanedCoordinates)) {
+        console.error("Invalid coordinates after cleaning");
+        return;
+      }
+
+      const boundaryLayer = L.geoJSON(geoJsonData, {
+        style: {
+          color: "#ff7800",
+          weight: 2,
+          opacity: 0.65,
+          fillOpacity: 0.2,
+        },
+      }).addTo(map);
+
+      if (boundaryLayer.getBounds().isValid()) {
+        map.fitBounds(boundaryLayer.getBounds(), {
+          padding: [50, 50],
+          maxZoom: 13,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to draw boundary:", error);
+      console.error("Invalid geom data:", JSON.stringify(geom, null, 2));
+    }
+  }, [map, geom]);
+
+  return null;
+};
+
+const Maps = ({ height, center, hovercard, setfilter, geom }) => {
   console.log("Map center is", center);
-  
+
   const [likedItems, setLikedItems] = useState({});
   const [visibleCenters, setVisibleCenters] = useState(center);
   const initialCenter = center?.length > 0 ? center[0] : { lat: 0, lng: 0 };
@@ -72,12 +179,11 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
     iconUrl: "/icons/mapmarker.svg",
     iconSize: [32, 32],
   });
-  
 
   const iconCreateFunction = (cluster) => {
     return L.divIcon({
       html: `<div style="background: #ff6347; color: #fff; border-radius: 50%; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center;">${cluster.getChildCount()}</div>`,
-      className: 'custom-cluster-icon',
+      className: "custom-cluster-icon",
     });
   };
 
@@ -109,7 +215,7 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
             >
               <div className="w-full relative cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-105">
                 <img
-                  src={center?.images[0].original}
+                  src={center?.images[0]?.original}
                   className="h-52 w-full"
                   alt={center?.development_name}
                 />
@@ -154,12 +260,10 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
         zoom={zoom}
         maxZoom={28}
         minZoom={1}
-        
         style={{
           width: "100%",
           height: `${height ? height : "650px"} `,
-        }} 
-        
+        }}
       >
         {/* <TileLayer
           url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
@@ -167,6 +271,8 @@ const Maps = ({ height, center, hovercard,setfilter }) => {
         /> */}
 
         <MapTilerLayerComponent />
+        <BoundaryLayer geom={geom} />
+
         <MapEventsHandler
           setVisibleCenters={setVisibleCenters}
           centers={center}

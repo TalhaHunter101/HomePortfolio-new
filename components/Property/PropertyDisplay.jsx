@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import MainCard from "./MainCard";
 import ThumbnailCard from "./ThumbnailCard";
@@ -41,6 +41,15 @@ import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 import DataShows from "../PropertyPageCards/DataShows";
 import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import { storeUsersData } from "@/store/authStore";
+import pb from "@/lib/pocketbase";
+import toast, { Toaster } from "react-hot-toast";
+import FloodData from "../PropertyPageCards/FloodData";
+import ShareModal from "./ShareModal";
+import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
+import { ContactAgentCard } from "../PropertyPageCards/ContactAgentCard";
+import Link from "next/link";
+import { SimilarHomesCard } from "../PropertyPageCards/similarHomesCard";
+import { FAQCard } from "../PropertyPageCards/FAQCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -50,7 +59,7 @@ function PropertyDisplay({ listingData, params }) {
   const mainImages = listingData?.imageUris || listingData?.propertyImage || [];
   const thumbnailImages =
     listingData?.imageUris?.slice(0, 4) ||
-    listingData?.propertyImage.slice(0, 4);
+    listingData?.propertyImage?.slice(0, 4);
   const bedrooms =
     listingData?.attributes?.bedrooms ||
     listingData?.counts?.numBedrooms ||
@@ -61,7 +70,7 @@ function PropertyDisplay({ listingData, params }) {
     null;
 
   let pathname = usePathname();
-  let hashId = pathname.split("#")[1];
+  let hashId = pathname?.split("#")[1];
 
   const [openSection, setOpenSection] = useState(hashId);
   const [hoveredSubElement, setHoveredSubElement] = useState(null);
@@ -69,6 +78,7 @@ function PropertyDisplay({ listingData, params }) {
   const [pricePaidData, setPricePaidData] = useState([]);
   const [rentEstimate, setRentEstimate] = useState(0);
   const [rentData, setRentData] = useState([]);
+  const [ShortAddress, setShortAddress] = useState(listingData?.address);
 
   const formatedSqft = formatCurrency(
     listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
@@ -88,8 +98,8 @@ function PropertyDisplay({ listingData, params }) {
           }
         );
 
-        if (response.ok) {
-          const result = await response.json();
+        if (response?.ok) {
+          const result = await response?.json();
           setSchoolData(result);
         }
       } catch (error) {
@@ -109,8 +119,8 @@ function PropertyDisplay({ listingData, params }) {
           }),
         });
 
-        if (result.ok) {
-          const resultData = await result.json();
+        if (result?.ok) {
+          const resultData = await result?.json();
           setPricePaidData(resultData);
         }
       } catch (error) {}
@@ -128,8 +138,8 @@ function PropertyDisplay({ listingData, params }) {
           }),
         });
 
-        if (result.ok) {
-          const resultData = await result.json();
+        if (result?.ok) {
+          const resultData = await result?.json();
           setRentData(resultData);
         }
       } catch (error) {}
@@ -139,6 +149,16 @@ function PropertyDisplay({ listingData, params }) {
     getPricePaidData();
     getRentData();
   }, [listingData]);
+
+  useEffect(() => {
+    if (fullAddress) {
+      let shortadd = fullAddress.split(",")[0];
+
+      shortadd = shortadd.replace(/[0-9]/g, "").trim();
+
+      setShortAddress(shortadd);
+    }
+  }, [fullAddress]);
 
   const navElements = [
     {
@@ -165,10 +185,11 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-pink-400",
           id: "reachout",
           Component: ReachOutCard,
+          
         },
       ],
     },
-  
+
     {
       name: "Around the Neighborhood",
       id: "around-neighborhood",
@@ -188,7 +209,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "goodplace",
           Component: DataShows,
         },
-        
+
         {
           name: "Around the Neighborhood",
           icon: "mdi:person-details",
@@ -196,7 +217,7 @@ function PropertyDisplay({ listingData, params }) {
           id: "neighbors",
           Component: DataNeighbour,
         },
-        
+
         {
           name: "Can I raise a family here?",
           icon: "mdi:account-group",
@@ -315,6 +336,13 @@ function PropertyDisplay({ listingData, params }) {
           Component: CrimeCard,
         },
         {
+          name: "Flood Map",
+          icon: "mdi:account-group",
+          bgColor: "bg-red-500",
+          id: "FloodMap",
+          Component: FloodData,
+        },
+        {
           name: "Is the air quality good?",
           icon: "mdi:weather-windy",
           bgColor: "bg-red-300",
@@ -342,6 +370,27 @@ function PropertyDisplay({ listingData, params }) {
           id: "EPC",
           Component: EPCCard,
         },
+        {
+          name:"Cellular Information",
+          icon: "ion:cellular",
+          bgColor: "bg-red-500",
+          id: "Cellular",
+          Component: CellularInfoCard,
+        },
+        // {
+        //   name: "Similar Properties",
+        //   icon: "mdi:home-group",
+        //   bgColor: "bg-blue-200",
+        //   id: "similarproperties",
+        //   Component: SimilarHomesCard,
+        // },
+        {
+          name: "Frequently Asked Questions",
+          icon: "mdi:frequently-asked-questions",
+          bgColor: "bg-blue-300",
+          id: "faq",
+          Component: FAQCard,
+        },
       ],
     },
   ];
@@ -364,80 +413,141 @@ function PropertyDisplay({ listingData, params }) {
 
   const [isLiked, setIsLiked] = useState(false);
   const { usersData } = storeUsersData();
+  const checkIfLiked = async () => {
+    if (!usersData || !usersData?.id) return; // Ensure the user is logged in
 
+    try {
+      // Retrieve the user's favorites collection
+      const response = await pb?.collection("favorite")?.getList(1, 1, {
+        filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
+      });
+
+      // Check if the property is found in the user's favorites
+      if (response?.items?.length >= 0) {
+        setIsLiked(true); // Property is already liked
+      } else {
+        setIsLiked(false); // Property is not liked yet
+      }
+    } catch (error) {
+      console.log("Error checking liked property:", error);
+    }
+  };
+
+  // Call the check function on page load
+  useEffect(() => {
+    checkIfLiked();
+  }, [listingData, usersData]);
 
   const handleLikeToggle = async () => {
-      setIsLiked(!isLiked);
-  
-      // Ensure the user is logged in before making the request
-      if (!usersData || !usersData.id) {
-        alert("Please log in to add favorites.");
+    if (!usersData || !usersData?.id) {
+      alert("Please log in to add or remove favorites.");
+      return;
+    }
+
+    // Retrieve the PocketBase auth token from localStorage
+    if (typeof window !== "undefined") {
+      const authData = localStorage?.getItem("pocketbase_auth");
+      const parsedAuthData = authData ? JSON.parse(authData) : null;
+      const token = parsedAuthData?.token;
+
+      if (!token) {
+        alert("You need to log in to save favorites.");
         return;
       }
-  
-      // Check if running on the client side
-      if (typeof window !== 'undefined') {
-        // Retrieve the PocketBase auth token from localStorage
-        const authData = localStorage?.getItem("pocketbase_auth");
-        const parsedAuthData = authData ? JSON.parse(authData) : null;
-        const token = parsedAuthData?.token;
-  
-        if (!token) {
-          alert("You need to log in to save favorites.");
-          return;
-        }
-      }
-  
-      // Prepare the data to send to PocketBase
-      const favoriteData = {
-        userId: usersData.id, // Assuming `id` is the user's identifier
-        property_id: property.id, // Property ID to be favorited
-      };
-  
-      try {
-        const response = await fetch("http://127.0.0.1:8090/api/collections/favorite/records", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Include the token in the headers
-          },
-          body: JSON.stringify(favoriteData),
+    }
+
+    try {
+      if (isLiked) {
+        // If the property is already liked, remove it from favorites
+        const result = await pb?.collection("favorite")?.getList(1, 1, {
+          filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
         });
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
+
+        if (result?.items?.length > 0) {
+          // Remove the favorite entry
+          await pb?.collection("favorite")?.delete(result?.items[0]?.id);
+          toast?.success("Property removed from favorites");
+        } else {
+          toast?.error("Error: favorite entry not found.");
         }
-  
-        const result = await response.json();
-        alert("Property added to your favorites!");
-      } catch (error) {
-        console.error("Failed to add favorite:", error);
-        alert("Failed to add favorite. Please try again.");
+      } else {
+        // If the property is not liked, add it to favorites
+        await pb?.collection("favorite")?.create({
+          property_id: listingData?.listingId,
+          userId: usersData?.id,
+        });
+        toast?.success("Property added to favorites");
       }
+
+      // Toggle the `isLiked` state
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console?.error("Error toggling favorite:", error);
+      toast?.error("Error updating favorites");
+    }
+  };
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+
+   const DownloadPage = () => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = html.scrollWidth;
+    canvas.height = html.scrollHeight;
+
+    const ctx = canvas.getContext("2d");
+    const data = new XMLSerializer().serializeToString(document.documentElement);
+
+    const DOMURL = window.URL || window.webkitURL || window;
+    const img = new Image();
+    const svg = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
+    const url = DOMURL.createObjectURL(svg);
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      DOMURL.revokeObjectURL(url);
+
+      const a = document.createElement("a");
+      a.download = "property-page.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
     };
+
+    img.src = url;
+  }
+
 
 
   return (
     <>
+      <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
-          <div className="flex  space-x-2">
+        <div className="p-4 flex items-center justify-start  w-full hidden md:flex  ">
+          <div className="flex pl-6">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={handleLikeToggle}
+              onClick={() => handleLikeToggle()}
               className={`text-2xl mt-3 cursor-pointer ${
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
             />
-            <Button size="lg" className="bg-transparent">
+            <Button size="lg" className="bg-transparent text-blue-500" onPress={onOpen}>
               <Icon icon="bx:share" />
               Share
             </Button>
+            <Button size="lg" className="bg-transparent text-blue-500" onPress={DownloadPage}>
+              <Icon icon="bx:download" />
+              Download
+            </Button>
+            <ShareModal isOpen={isOpen} onClose={onOpenChange} pageURL={pathname} />
           </div>
         </div>
 
         {/* main div */}
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-10 w-full">
           <div className="lg:col-span-7">
             {mainImages && <MainCard images={mainImages} />}
           </div>
@@ -460,16 +570,16 @@ function PropertyDisplay({ listingData, params }) {
               <div className="flex items-center justify-between mb-4">
                 {/* Price Section */}
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <p className="text-xl font-semibold text-gray-800">
                     £{formattedPrice}
-                  </h3>
-                  <span className="text-sm text-gray-600 flex items-center">
+                  </p>
+                  <h1 className="text-sm text-gray-600 flex items-center">
                     <Icon
                       icon="mdi:map-marker-outline"
                       className="text-gray-500 mr-1"
                     />
                     {fullAddress || listingData?.address}
-                  </span>
+                  </h1>
                 </div>
                 {/* Heart and Share Icons */}
               </div>
@@ -477,17 +587,17 @@ function PropertyDisplay({ listingData, params }) {
               {/* Property Details Section */}
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <h4 className="text-lg font-semibold">{bedrooms}</h4>
+                  <p className="text-lg font-semibold">{bedrooms}</p>
                   <p className="text-xs text-gray-500">Beds</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold">{bathrooms}</h4>
+                  <p className="text-lg font-semibold">{bathrooms}</p>
                   <p className="text-xs text-gray-500">Baths</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold">
+                  <p className="text-lg font-semibold">
                     {formatedSqft || "NA"}
-                  </h4>
+                  </p>
                   <p className="text-xs text-gray-500">Sq Ft</p>
                 </div>
               </div>
@@ -511,12 +621,13 @@ function PropertyDisplay({ listingData, params }) {
             </div>
 
             {/* Existing styles for larger screens */}
-            <div className="mb-4 lg:pl-6 flex items-center flex-col lg:flex-row hidden md:flex">
-              {/* Original content for larger screens */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="font-bold text-2xl lg:text-4xl">
+            <Card className="p-4 mr-4 ml-6 rounded-md hidden md:block">
+            <div className="mb-4  flex items-center flex-row hidden md:flex">
+              {/* Content for md and lg screens */}
+              <div className="flex-1 text-center md:text-left">
+                <p className="font-bold text-2xl lg:text-4xl">
                   £{formattedPrice}
-                </h3>
+                </p>
                 <span className="text-sm font-bold lg:text-base flex items-center">
                   <Icon
                     icon="mdi:map-marker-outline"
@@ -529,45 +640,99 @@ function PropertyDisplay({ listingData, params }) {
                   {listingData?.area}
                 </span>
               </div>
-              <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
+              <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {bedrooms}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">beds</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {bathrooms}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">baths</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
+                  <p className="font-semibold text-2xl lg:text-4xl">
                     {formatedSqft || "NA"}
-                  </h3>
+                  </p>
                   <p className="text-xs lg:text-sm text-gray-600">sqft</p>
                 </div>
               </div>
             </div>
-
-            <p className="text-sm pl-6 font-bold hidden md:block">
+            <p className="text-sm  font-bold hidden md:block">
               {listingData?.title}
             </p>
+            </Card>
+            
             <div className="hidden md:block">
-              <div className="pr-4 pl-6 pt-4">
+              {/* <div className="pr-4 pl-6 pt-4">
                 <Button
                   size="lg"
                   className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
                 >
                   Contact agent
                 </Button>
-              </div>
+              </div> */}
+
+     <Card className="m-4" style={{ padding: '16px' }}>
+       <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
+       {/* Logo and Property Info */}
+       <div className="flex items-center space-x-4">
+         <img
+           src={listingData?.branch?.logoUrl}
+           alt="Madison Oakley"
+           width={100}
+           height={100}
+         />
+         <div className='pl-6'>
+           <p className="text-sm text-gray-600">Property listed by:</p>
+           <p className="text-lg font-bold">{
+         listingData?.branch?.name
+         }</p>
+           <Link href="#" className="text-blue-600 underline">
+             See this agents profile
+           </Link>
+         </div>
+       </div>
+ 
+       {/* Action Buttons */}
+       <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
+         <Button
+           
+           startContent={<Icon icon="mdi:heart-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Save
+         </Button>
+         <Button
+           
+           startContent={<Icon icon="mdi:share-variant-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Share
+         </Button>
+         <Button
+           
+           startContent={<Icon icon="mdi:bell-outline" width="24" />}
+           variant="light"
+           className="flex items-center text-blue-600"
+         >
+           Subscribe
+         </Button>
+       </div>
+     </div>
+     </Card>
+
+
               <div className="p-6">
                 {/* Conditional Rendering of Content */}
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: listingData?.detailedDescription,
+                    __html: listingData?.detailedDescription?.replace(/Zoopla/g, "Homeprotfolio"),
                   }}
                   style={{
                     maxHeight: isExpanded ? "none" : "100px",
@@ -580,7 +745,7 @@ function PropertyDisplay({ listingData, params }) {
                   variant="bordered"
                   className="text-xs font-medium text-blue-600"
                   size="sm"
-                  onClick={toggleReadMore}
+                  onClick={() => toggleReadMore()}
                   style={{ marginTop: "1rem" }}
                 >
                   {isExpanded ? "Show Less" : "Read More"}{" "}
@@ -599,20 +764,20 @@ function PropertyDisplay({ listingData, params }) {
               </div>
             </div>
 
-            {navElements.map((element, index) => (
+            {navElements?.map((element, index) => (
               <React.Fragment key={index}>
-                <Waypoint onEnter={() => setOpenSection(element.id)} />
+                <Waypoint onEnter={() => setOpenSection(element?.id)} />
 
-                {element.subElements.map((subElement, subIndex) => (
+                {element?.subElements?.map((subElement, subIndex) => (
                   <div
                     className="pl-1"
                     key={subIndex}
-                    id={subElement.id}
-                    onMouseEnter={() => handleMouseEnter(subElement.id)}
+                    id={subElement?.id}
+                    onMouseEnter={() => handleMouseEnter(subElement?.id)}
                   >
                     <subElement.Component
                       {...listingData}
-                      title={subElement.name}
+                      title={subElement?.name}
                       schoolData={schoolData}
                       city={listingData?.location?.townOrCity}
                       postTownName={
@@ -632,6 +797,7 @@ function PropertyDisplay({ listingData, params }) {
                       area={formatedSqft || "NA"}
                       address={fullAddress || listingData?.address}
                       rentData={rentData}
+                      ShortAddress={ShortAddress}
                     />
                   </div>
                 ))}
@@ -643,7 +809,7 @@ function PropertyDisplay({ listingData, params }) {
           <nav className="sticky top-6 p-4 bg-white w-45 h-fit hidden lg:block">
             <div className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg">
               <div className="py-2 text-foreground h-full w-full overflow-hidden flex-1">
-                {navElements.map((element, index) => (
+                {navElements?.map((element, index) => (
                   <motion.div
                     key={index}
                     className="w-full h-auto text-sm bg-transparent card flex flex-col relative border-gray-150 bg-gray-100 sm:rounded-lg mb-2"
@@ -656,14 +822,14 @@ function PropertyDisplay({ listingData, params }) {
                         <button
                           className="w-full text-left"
                           aria-label=""
-                          onClick={() => toggleSection(element.id)}
+                          onClick={() => toggleSection(element?.id)}
                         >
-                          <h2 className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
-                            {element.name}
-                          </h2>
+                          <p className="py-2 text-foreground border-subtle-border transition flex justify-between duration-300 leading-8 text-xl font-bold border-b">
+                            {element?.name}
+                          </p>
                         </button>
                         <AnimatePresence>
-                          {openSection && element.id == openSection && (
+                          {openSection && element?.id == openSection && (
                             <motion.div
                               key={openSection}
                               initial={{ height: 0, opacity: 0 }}
@@ -673,15 +839,15 @@ function PropertyDisplay({ listingData, params }) {
                               className="overflow-hidden"
                             >
                               <motion.ul className="mt-1">
-                                {element.subElements.map(
+                                {element?.subElements?.map(
                                   (subElement, subIndex) => (
                                     <motion.li
-                                      key={subElement.id}
+                                      key={subElement?.id}
                                       className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
-                                        subElement.bgColor
+                                        subElement?.bgColor
                                       } ${
-                                        hoveredSubElement === subElement.id
-                                          ? subElement.bgColor
+                                        hoveredSubElement === subElement?.id
+                                          ? subElement?.bgColor
                                           : ""
                                       }`}
                                       initial={{ opacity: 0, x: -10 }}
@@ -689,19 +855,19 @@ function PropertyDisplay({ listingData, params }) {
                                       transition={{ delay: subIndex * 0.01 }}
                                     >
                                       <a
-                                        href={"#" + subElement.id}
+                                        href={"#" + subElement?.id}
                                         onClick={() =>
-                                          handleMouseEnter(subElement.id)
+                                          handleMouseEnter(subElement?.id)
                                         }
                                         className="flex items-center space-x-4 w-full text-md font-semibold"
                                       >
                                         <div
-                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement.bgColor}`}
+                                          className={`rounded-full h-6 w-6 aspect-square flex items-center justify-center text-black ${subElement?.bgColor}`}
                                         >
-                                          <Icon icon={subElement.icon} />
+                                          <Icon icon={subElement?.icon} />
                                         </div>
                                         <span className="text-base">
-                                          {subElement.name}
+                                          {subElement?.name}
                                         </span>
                                       </a>
                                     </motion.li>
