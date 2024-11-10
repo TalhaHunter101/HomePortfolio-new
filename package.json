@@ -19,6 +19,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.1.7",
     "framer-motion": "^11.3.17",
+    "html2canvas": "^1.4.1",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",

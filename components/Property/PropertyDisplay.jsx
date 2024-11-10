@@ -489,12 +489,44 @@ function PropertyDisplay({ listingData, params }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+
+   const DownloadPage = () => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = html.scrollWidth;
+    canvas.height = html.scrollHeight;
+
+    const ctx = canvas.getContext("2d");
+    const data = new XMLSerializer().serializeToString(document.documentElement);
+
+    const DOMURL = window.URL || window.webkitURL || window;
+    const img = new Image();
+    const svg = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
+    const url = DOMURL.createObjectURL(svg);
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      DOMURL.revokeObjectURL(url);
+
+      const a = document.createElement("a");
+      a.download = "property-page.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    };
+
+    img.src = url;
+  }
+
+
+
   return (
     <>
       <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
         <div className="p-4 flex items-center justify-start  w-full hidden md:flex  ">
-          <div className="flex  space-x-2 pl-6">
+          <div className="flex pl-6">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
               onClick={() => handleLikeToggle()}
@@ -504,7 +536,11 @@ function PropertyDisplay({ listingData, params }) {
             />
             <Button size="lg" className="bg-transparent text-blue-500" onPress={onOpen}>
               <Icon icon="bx:share" />
-              Share & Export
+              Share
+            </Button>
+            <Button size="lg" className="bg-transparent text-blue-500" onPress={DownloadPage}>
+              <Icon icon="bx:download" />
+              Download
             </Button>
             <ShareModal isOpen={isOpen} onClose={onOpenChange} pageURL={pathname} />
           </div>
