@@ -9,7 +9,7 @@ export function ReachOutCard({data}) {
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: `I am interested in ${data?.address}.`
   });
   const [loading, setLoading] = useState(false);
 
@@ -87,10 +87,9 @@ export function ReachOutCard({data}) {
                 JSON.stringify(data?.branch)
               }
                */}
-              gsvdchbj
               <p className="text-base font-bold mb-3">Reach out to us</p>
               <p className="text-base font-medium">
-                Ask a question about 1906 Brentwood ST, and HomePortfolio will get back to you within 24 hours.
+                Ask a question about {data?.address}, and HomePortfolio will get back to you within 24 hours.
               </p>
             </div>
             <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 my-4">
@@ -126,7 +125,7 @@ export function ReachOutCard({data}) {
                 <textarea
                   rows="4"
                   name="message"
-                  placeholder="Your Message"
+                  placeholder={` I am interested in ${data?.address}. Please contact me.`}
                   required
                   value={formData.message}
                   onChange={handleChange}

@@ -79,7 +79,7 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
         className="text-green-900" // Adjust the icon color if needed
       />
     </div>
-    <h2 className="text-xl font-bold text-gray-700">What would be my returns here?</h2>
+    <h2 className="text-xl font-bold text-gray-700">What are the investment potential returns for this property?</h2>
   </div>
       </CardHeader>
       <CardBody>

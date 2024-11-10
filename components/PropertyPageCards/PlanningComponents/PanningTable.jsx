@@ -78,7 +78,9 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
       case "dateReceived":
         return source.other_fields?.date_received || "N/A";
       case "description":
-        return source.description;
+        return source.description.length > 100
+          ? `${source.description.substring(0, 100)}...`
+          : source.description;
       default:
         return "N/A";
     }
