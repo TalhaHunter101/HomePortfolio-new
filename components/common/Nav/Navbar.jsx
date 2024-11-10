@@ -130,12 +130,12 @@ export default function NavBar() {
         ) : (
           <>
             <NavbarItem>
-              <Button  href="/login" color="primary"  variant="bordered">
+              <Button as={Link}  href="/login" color="primary"  variant="bordered">
                 Login
               </Button>
             </NavbarItem>
             <NavbarItem>
-              <Button  href="/register" color="primary" variant="flat" className=" font-bold">
+              <Button as={Link}  href="/register" color="primary" variant="flat" className=" font-bold">
                 Sign Up
               </Button>
             </NavbarItem>
