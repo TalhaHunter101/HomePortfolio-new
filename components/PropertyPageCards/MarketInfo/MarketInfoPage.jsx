@@ -81,7 +81,7 @@ function MarketInfoPage({ city, postcode }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            How is the Market here?
+            How is the Market in {city} ({postcode})?
           </h2>
         </div>
       </CardHeader>

@@ -48,6 +48,8 @@ import ShareModal from "./ShareModal";
 import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
 import { ContactAgentCard } from "../PropertyPageCards/ContactAgentCard";
 import Link from "next/link";
+import { SimilarHomesCard } from "../PropertyPageCards/similarHomesCard";
+import { FAQCard } from "../PropertyPageCards/FAQCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -374,7 +376,21 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-red-500",
           id: "Cellular",
           Component: CellularInfoCard,
-        }
+        },
+        // {
+        //   name: "Similar Properties",
+        //   icon: "mdi:home-group",
+        //   bgColor: "bg-blue-200",
+        //   id: "similarproperties",
+        //   Component: SimilarHomesCard,
+        // },
+        {
+          name: "Frequently Asked Questions",
+          icon: "mdi:frequently-asked-questions",
+          bgColor: "bg-blue-300",
+          id: "faq",
+          Component: FAQCard,
+        },
       ],
     },
   ];

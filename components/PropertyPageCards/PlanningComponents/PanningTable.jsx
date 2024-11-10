@@ -38,14 +38,7 @@ const statusColorMap = {
 };
 
 const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
-  // State to manage the selected time frame (6 or 12 months)
-  // const [timeFrame, setTimeFrame] = useState(6);
-
-  // Dropdown options
-  // const timeFrameOptions = [
-  //   { key: 6, label: "Last 6 Months" },
-  //   { key: 12, label: "Last 12 Months" },
-  // ];
+  const [expandedDescriptions, setExpandedDescriptions] = useState(new Set());
 
   const columns = [
     { name: "STATUS", uid: "status" },
@@ -78,9 +71,29 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
       case "dateReceived":
         return source.other_fields?.date_received || "N/A";
       case "description":
-        return source.description.length > 100
-          ? `${source.description.substring(0, 100)}...`
-          : source.description;
+        const isExpanded = expandedDescriptions.has(application._id);
+        const description = source.description;
+        if (description.length <= 100) return description;
+
+        return (
+          <div>
+            {isExpanded ? description : `${description.substring(0, 100)}`}
+            <button
+              className="text-blue-500 hover:text-blue-700 ml-2 text-sm"
+              onClick={() => {
+                const newExpanded = new Set(expandedDescriptions);
+                if (isExpanded) {
+                  newExpanded.delete(application._id);
+                } else {
+                  newExpanded.add(application._id);
+                }
+                setExpandedDescriptions(newExpanded);
+              }}
+            >
+              {isExpanded ? "Show less" : "Show full description"}
+            </button>
+          </div>
+        );
       default:
         return "N/A";
     }
@@ -102,35 +115,8 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
   }, [planningData, timeFrame]);
   
 
-  // Handler for dropdown selection
-  // const handleTimeFrameChange = (key) => {
-  //   setTimeFrame(Number(key));
-  // };
-
   return (
     <div>
-      {/* Dropdown for selecting time frame */}
-      {/* <div style={{ marginBottom: "1rem" }}>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button variant="flat">
-              Show: {timeFrame} Months ▼
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            selectionMode="single"
-            selectedKeys={new Set([timeFrame.toString()])}
-            onSelectionChange={(keys) => handleTimeFrameChange([...keys][0])}
-          >
-            {timeFrameOptions.map((option) => (
-              <DropdownItem key={option.key.toString()}>
-                {option.label}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-      </div> */}
-
       {/* Table displaying the filtered data */}
       <Table
         aria-label="Planning Applications table"

@@ -88,7 +88,7 @@ setRentEstimate(rentEstimate);
         className="text-purple-700" // Adjust the icon color if needed
       />
     </div>
-    <h2 className="text-xl font-bold text-gray-700">What are the estimates {ShortAddress}?</h2>
+    <h2 className="text-xl font-bold text-gray-700">How much is this home currently worth?</h2>
   </div>
       </CardHeader>
       <CardBody>
