@@ -1,6 +1,12 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardBody, CardHeader, useDisclosure } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import MainCard from "./MainCard";
 import ThumbnailCard from "./ThumbnailCard";
@@ -186,7 +192,6 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-pink-400",
           id: "reachout",
           Component: ReachOutCard,
-          
         },
       ],
     },
@@ -372,14 +377,14 @@ function PropertyDisplay({ listingData, params }) {
           Component: EPCCard,
         },
         {
-          name:"Cellular Information",
+          name: "Cellular Information",
           icon: "ion:cellular",
           bgColor: "bg-red-500",
           id: "Cellular",
           Component: CellularInfoCard,
         },
         {
-          name:"Broadband Information",
+          name: "Broadband Information",
           icon: "ion:cellular",
           bgColor: "bg-red-500",
           id: "Cellular",
@@ -497,8 +502,7 @@ function PropertyDisplay({ listingData, params }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-
-   const DownloadPage = () => {
+  const DownloadPage = () => {
     const html = document.documentElement;
     const body = document.body;
 
@@ -507,7 +511,9 @@ function PropertyDisplay({ listingData, params }) {
     canvas.height = html.scrollHeight;
 
     const ctx = canvas.getContext("2d");
-    const data = new XMLSerializer().serializeToString(document.documentElement);
+    const data = new XMLSerializer().serializeToString(
+      document.documentElement
+    );
 
     const DOMURL = window.URL || window.webkitURL || window;
     const img = new Image();
@@ -525,9 +531,7 @@ function PropertyDisplay({ listingData, params }) {
     };
 
     img.src = url;
-  }
-
-
+  };
 
   return (
     <>
@@ -542,15 +546,27 @@ function PropertyDisplay({ listingData, params }) {
                 isLiked ? "text-red-500" : "text-gray-500"
               }`}
             />
-            <Button size="lg" className="bg-transparent text-blue-500" onPress={onOpen}>
+            <Button
+              size="lg"
+              className="bg-transparent text-blue-500"
+              onPress={onOpen}
+            >
               <Icon icon="bx:share" />
               Share
             </Button>
-            <Button size="lg" className="bg-transparent text-blue-500" onPress={DownloadPage}>
+            <Button
+              size="lg"
+              className="bg-transparent text-blue-500"
+              onPress={DownloadPage}
+            >
               <Icon icon="bx:download" />
               Download
             </Button>
-            <ShareModal isOpen={isOpen} onClose={onOpenChange} pageURL={pathname} />
+            <ShareModal
+              isOpen={isOpen}
+              onClose={onOpenChange}
+              pageURL={pathname}
+            />
           </div>
         </div>
 
@@ -630,50 +646,50 @@ function PropertyDisplay({ listingData, params }) {
 
             {/* Existing styles for larger screens */}
             <Card className="p-4 mr-4 ml-6 rounded-md hidden md:block">
-            <div className="mb-4  flex items-center flex-row hidden md:flex">
-              {/* Content for md and lg screens */}
-              <div className="flex-1 text-center md:text-left">
-                <p className="font-bold text-2xl lg:text-4xl">
-                  £{formattedPrice}
-                </p>
-                <span className="text-sm font-bold lg:text-base flex items-center">
-                  <Icon
-                    icon="mdi:map-marker-outline"
-                    className="text-gray-500 mr-1"
-                  />
-                  {fullAddress || listingData?.address}
-                </span>
-                <span className="font-bold text-gray-400 text-sm lg:text-base">
-                  {" "}
-                  {listingData?.area}
-                </span>
+              <div className="mb-4  flex items-center flex-row hidden md:flex">
+                {/* Content for md and lg screens */}
+                <div className="flex-1 text-center md:text-left">
+                  <p className="font-bold text-2xl lg:text-4xl">
+                    £{formattedPrice}
+                  </p>
+                  <span className="text-sm font-bold lg:text-base flex items-center">
+                    <Icon
+                      icon="mdi:map-marker-outline"
+                      className="text-gray-500 mr-1"
+                    />
+                    {fullAddress || listingData?.address}
+                  </span>
+                  <span className="font-bold text-gray-400 text-sm lg:text-base">
+                    {" "}
+                    {listingData?.area}
+                  </span>
+                </div>
+                <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {bedrooms}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">beds</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {bathrooms}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">baths</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {formatedSqft || "NA"}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">sqft</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
-                <div>
-                  <p className="font-semibold text-2xl lg:text-4xl">
-                    {bedrooms}
-                  </p>
-                  <p className="text-xs lg:text-sm text-gray-600">beds</p>
-                </div>
-                <div>
-                  <p className="font-semibold text-2xl lg:text-4xl">
-                    {bathrooms}
-                  </p>
-                  <p className="text-xs lg:text-sm text-gray-600">baths</p>
-                </div>
-                <div>
-                  <p className="font-semibold text-2xl lg:text-4xl">
-                    {formatedSqft || "NA"}
-                  </p>
-                  <p className="text-xs lg:text-sm text-gray-600">sqft</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-sm  font-bold hidden md:block">
-              {listingData?.title}
-            </p>
+              <p className="text-sm  font-bold hidden md:block">
+                {listingData?.title}
+              </p>
             </Card>
-            
+
             <div className="hidden md:block">
               {/* <div className="pr-4 pl-6 pt-4">
                 <Button
@@ -684,63 +700,16 @@ function PropertyDisplay({ listingData, params }) {
                 </Button>
               </div> */}
 
-     <Card className="m-4" style={{ padding: '16px' }}>
-       <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
-       {/* Logo and Property Info */}
-       <div className="flex items-center space-x-4">
-         <img
-           src={listingData?.branch?.logoUrl}
-           alt="Madison Oakley"
-           width={100}
-           height={100}
-         />
-         <div className='pl-6'>
-           <p className="text-sm text-gray-600">Property listed by:</p>
-           <p className="text-lg font-bold">{
-         listingData?.branch?.name
-         }</p>
-           <Link href="#" className="text-blue-600 underline">
-             See this agents profile
-           </Link>
-         </div>
-       </div>
- 
-       {/* Action Buttons */}
-       <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
-         <Button
-           
-           startContent={<Icon icon="mdi:heart-outline" width="24" />}
-           variant="light"
-           className="flex items-center text-blue-600"
-         >
-           Save
-         </Button>
-         <Button
-           
-           startContent={<Icon icon="mdi:share-variant-outline" width="24" />}
-           variant="light"
-           className="flex items-center text-blue-600"
-         >
-           Share
-         </Button>
-         <Button
-           
-           startContent={<Icon icon="mdi:bell-outline" width="24" />}
-           variant="light"
-           className="flex items-center text-blue-600"
-         >
-           Subscribe
-         </Button>
-       </div>
-     </div>
-     </Card>
-
+              
 
               <div className="p-6">
                 {/* Conditional Rendering of Content */}
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: listingData?.detailedDescription?.replace(/Zoopla/g, "Homeprotfolio"),
+                    __html: listingData?.detailedDescription?.replace(
+                      /Zoopla/g,
+                      "Homeprotfolio"
+                    ),
                   }}
                   style={{
                     maxHeight: isExpanded ? "none" : "100px",

@@ -1,15 +1,22 @@
-'use client';
-import React, { useState } from 'react';
-import { Button, Card, CardBody, CardHeader, Image, Link } from "@nextui-org/react";
-import { Icon } from '@iconify/react';
-import toast, { Toaster } from 'react-hot-toast';
+"use client";
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Image,
+  Link,
+} from "@nextui-org/react";
+import { Icon } from "@iconify/react";
+import toast, { Toaster } from "react-hot-toast";
 
-export function ReachOutCard({data}) {
+export function ReachOutCard({ data }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: `I am interested in ${data?.address}.`
+    name: "",
+    email: "",
+    phone: "",
+    message: `I am interested in ${data?.address}.`,
   });
   const [loading, setLoading] = useState(false);
 
@@ -22,63 +29,67 @@ export function ReachOutCard({data}) {
     setLoading(true);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/samos@homeportfolio.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://formsubmit.co/ajax/samos@homeportfolio.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await response.json();
       setLoading(false);
 
       if (response.ok) {
-        toast.success('Message sent successfully!');
+        toast.success("Message sent successfully!");
         setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
         });
       } else {
-        toast.error('Something went wrong. Please try again.');
+        toast.error("Something went wrong. Please try again.");
       }
     } catch (error) {
       setLoading(false);
-      toast.error('An error occurred. Please try again.');
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <Card className="m-4" style={{ minHeight: '150px' }}>
-      <CardHeader>
-  <div className="flex items-center my-2 w-full">
-    {/* Left side content (Icon and Heading) */}
-    <div className="flex items-center">
-      <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
-        <Icon
-          icon="solar:chat-round-call-outline"
-          width={16}
-          className="text-purple-700"
-        />
-      </div>
-      <h2 className="text-xl font-bold text-gray-700">Want to reach out?</h2>
-    </div>
+      <Card className="m-4" style={{ minHeight: "150px" }}>
+        <CardHeader>
+          <div className="flex items-center my-2 w-full">
+            {/* Left side content (Icon and Heading) */}
+            <div className="flex items-center">
+              <div className="flex items-center justify-center w-8 h-8 bg-purple-200 rounded-full mr-2">
+                <Icon
+                  icon="solar:chat-round-call-outline"
+                  width={16}
+                  className="text-purple-700"
+                />
+              </div>
+              <h2 className="text-xl font-bold text-gray-700">
+                Want to reach out?
+              </h2>
+            </div>
 
-    {/* Spacer to push the button to the right */}
-    <div className="flex-grow"></div>
+            {/* Spacer to push the button to the right */}
+            <div className="flex-grow"></div>
 
-    {/* Right side button */}
-    <button className="font-medium px-4 py-2 bg-purple-100 text-default-600 rounded-md focus:outline-none">
-     <li>House For Sale</li> 
-    </button>
-  </div>
-</CardHeader>
-
+            {/* Right side button */}
+            <button className="font-medium px-4 py-2 bg-purple-100 text-default-600 rounded-md focus:outline-none">
+              <li>House For Sale</li>
+            </button>
+          </div>
+        </CardHeader>
 
         <CardBody>
           <div className="p-5 bg-white rounded-md">
@@ -89,10 +100,14 @@ export function ReachOutCard({data}) {
                */}
               <p className="text-base font-bold mb-3">Reach out to us</p>
               <p className="text-base font-medium">
-                Ask a question about {data?.address}, and HomePortfolio will get back to you within 24 hours.
+                Ask a question about {data?.address}, and HomePortfolio will get
+                back to you within 24 hours.
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 my-4">
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-6 gap-4 my-4"
+            >
               <div className="col-span-6 md:col-span-3">
                 <input
                   type="text"
@@ -136,27 +151,81 @@ export function ReachOutCard({data}) {
                   disabled={loading}
                   className="w-full mt-4 transition-all duration-300 ease-in-out border-2 border-primary hover:bg-white hover:text-primary bg-primary px-3 py-1.5 text-white rounded-md"
                 >
-                  {loading ? 'Sending...' : 'Send Message'}
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
               </div>
             </form>
             <div>
               <p className="text-xs text-secondary">
-                By pressing Send Message, you agree that HomePortfolio and real estate professionals may contact you via email or phone/text about your inquiry. This may involve the use of automated means. You do not need to consent as a condition of buying any property, goods, or services. Message/data rates may apply. You also agree to our{' '}
+                By pressing Send Message, you agree that HomePortfolio and real
+                estate professionals may contact you via email or phone/text
+                about your inquiry. This may involve the use of automated means.
+                You do not need to consent as a condition of buying any
+                property, goods, or services. Message/data rates may apply. You
+                also agree to our{" "}
                 <a href="#" className="text-blue-600 visited:text-purple-600">
                   Terms of Use
-                </a>{' '}
-                and{' '}
+                </a>{" "}
+                and{" "}
                 <a href="#" className="text-blue-600 visited:text-purple-600">
                   Privacy Policy
                 </a>
-                . We may share your recent and future site activity with your agent to help them better understand what you are looking for in a home.
+                . We may share your recent and future site activity with your
+                agent to help them better understand what you are looking for in
+                a home.
               </p>
             </div>
           </div>
         </CardBody>
       </Card>
-   
+
+      <Card className="m-4" style={{ padding: "16px" }}>
+        <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
+          {/* Logo and Property Info */}
+          <div className="flex items-center space-x-4">
+            <img
+              src={data?.branch?.logoUrl}
+              alt="Madison Oakley"
+              width={100}
+              height={100}
+            />
+            <div className="pl-6">
+              <p className="text-sm text-gray-600">Property listed by:</p>
+              <p className="text-lg font-bold">{data?.branch?.name}</p>
+              <Link href="#" className="text-blue-600 underline">
+                See this agents profile
+              </Link>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
+            <Button
+              startContent={<Icon icon="mdi:heart-outline" width="24" />}
+              variant="light"
+              className="flex items-center text-blue-600"
+            >
+              Save
+            </Button>
+            <Button
+              startContent={
+                <Icon icon="mdi:share-variant-outline" width="24" />
+              }
+              variant="light"
+              className="flex items-center text-blue-600"
+            >
+              Share
+            </Button>
+            <Button
+              startContent={<Icon icon="mdi:bell-outline" width="24" />}
+              variant="light"
+              className="flex items-center text-blue-600"
+            >
+              Subscribe
+            </Button>
+          </div>
+        </div>
+      </Card>
     </>
   );
 }
