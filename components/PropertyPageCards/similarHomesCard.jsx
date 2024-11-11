@@ -37,7 +37,11 @@ export const SimilarHomesCard = ({ data, title }) => {
     }
   }, [data]);
 
+
+  console.log("similarProperties", similarProperties);
+  
   return (
+
     <Card className="m-4">
       <CardHeader className="text-2xl font-bold">{title}</CardHeader>
       <CardBody>

@@ -118,3 +118,12 @@ export const NoiseMapStatic = dynamic(() => import("./noise/NoiseMap"), {
     </div>
   ),
 });
+
+export const CrimeMapStatic = dynamic(() => import("./CrimeMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex justify-center items-center">
+      <Spinner label="Map is loading" size="sm" />
+    </div>
+  ),
+});

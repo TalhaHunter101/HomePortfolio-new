@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, Chip, Image } from "@nextui-org/react";
 import Carousel from "./CrimeComponents/GraphCarousal";
 import { Icon } from "@iconify/react";
+import { CrimeMapStatic } from "../Maps";
 
 export function CrimeCard({ postcode,ShortAddress }) {
   const [crimeData, setCrimeData] = useState([]);
@@ -35,6 +36,10 @@ export function CrimeCard({ postcode,ShortAddress }) {
     }
   }, [postcode]);
 
+ 
+
+  
+
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
@@ -42,7 +47,7 @@ export function CrimeCard({ postcode,ShortAddress }) {
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
               icon="game-icons:crime-scene-tape"
-              width={16} // Adjust the icon size to fit well within the circle
+              width={16}
               className="text-purple-700" // Adjust the icon color if needed
             />
           </div>
@@ -113,11 +118,16 @@ export const CrimeReportCard = ({ reportData }) => {
   const [year, month] = latestMonth.split("-");
   const formattedLatestMonth = `${monthNames[parseInt(month) - 1]} ${year}`;
 
+  const crimeLocations = reportData.map((report) => ({
+    lat: parseFloat(report._source.Latitude),
+    lng: parseFloat(report._source.Longitude),
+  }));
+
   return (
     <div className="flex flex-col lg:flex-row w-full justify-between">
       {/* Left Section */}
-      <div className="lg:w-1/2 w-full p-6 bg-white rounded-lg flex flex-col justify-center mb-6 lg:mb-0">
-        <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block mb-2">
+      <div className="lg:w-1/2 w-full p-6 bg-white rounded-lg flex flex-col mb-6 lg:mb-0">
+        <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block ">
           <span className="text-sm font-medium pb-5 text-gray-700">
             Average crime
           </span>
@@ -125,14 +135,14 @@ export const CrimeReportCard = ({ reportData }) => {
         <div className="text-4xl pt-4 font-bold text-gray-800 mb-2">
           {totalCrimes} reported crimes
         </div>
-        <p className="text-sm mb-8 text-gray-500 mb-4">
+        <p className="text-sm mb-8 text-gray-500">
           in this area in the last 12 months.
         </p>
-        {/* <p className="text-sm mt-5 text-gray-600">
-          If an area has an average crime rating, it means that for every 1,000
-          inhabitants, between 140 and 225 residents have been affected by a
-          crime.
-        </p> */}
+
+        <div style={{ height: "400px", width: "100%" }}>
+          <CrimeMapStatic center={crimeLocations} height="400px" />
+        </div>
+       
       </div>
 
       {/* Right Section */}

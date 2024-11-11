@@ -50,6 +50,7 @@ import { ContactAgentCard } from "../PropertyPageCards/ContactAgentCard";
 import Link from "next/link";
 import { SimilarHomesCard } from "../PropertyPageCards/similarHomesCard";
 import { FAQCard } from "../PropertyPageCards/FAQCard";
+import BroadBandCard from "../PropertyPageCards/BroadBandCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -376,6 +377,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-red-500",
           id: "Cellular",
           Component: CellularInfoCard,
+        },
+        {
+          name:"Broadband Information",
+          icon: "ion:cellular",
+          bgColor: "bg-red-500",
+          id: "Cellular",
+          Component: BroadBandCard,
         },
         // {
         //   name: "Similar Properties",
