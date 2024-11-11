@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
 import { NearByPlacesStatic } from "@/components/Maps";
+import useNearByStore from "@/store/newarbyStore";
 
 const amenities = [
   {
@@ -84,11 +85,15 @@ const amenities = [
   },
 ];
 
-const WhatsNearbyMap = ({ center,isInteractive }) => {
+const WhatsNearbyMap = ({ center, isInteractive }) => {
   const [locations, setLocations] = useState([]);
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
+  const {selecteNearbyLocation} = useNearByStore();
 
-const haversineDistance = (coords1, coords2) => {
+
+  console.log("selecteNearbyLocation", selecteNearbyLocation);
+  
+  const haversineDistance = (coords1, coords2) => {
     const toRad = (x) => (Number(x) * Math.PI) / 180;
 
     const lat1 = Number(coords1.lat);
@@ -102,14 +107,16 @@ const haversineDistance = (coords1, coords2) => {
     const dLon = toRad(lon2 - lon1);
 
     const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c; // Distance in km
-};
+  };
 
   async function getNearbyLocations(
     lat,
@@ -160,7 +167,10 @@ const haversineDistance = (coords1, coords2) => {
           }
 
           const address = formatAddress(element.tags);
-          const distance = haversineDistance({ lat, lon }, { lat: center.lat, lon: center.lng || center.lon});
+          const distance = haversineDistance(
+            { lat, lon },
+            { lat: center.lat, lon: center.lng || center.lon }
+          );
 
           return {
             name: element.tags.name || "na",
@@ -231,7 +241,11 @@ const haversineDistance = (coords1, coords2) => {
           ) : null
         )}
       </div>
-      <div className={`absolute inset-0 z-0 ${ isInteractive ? 'pointer-events-auto' : 'pointer-events-none' }`}>
+      <div
+        className={`absolute inset-0 z-0 ${
+          isInteractive ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+      >
         <NearByPlacesStatic
           center={center}
           height="500px"
@@ -245,12 +259,20 @@ const haversineDistance = (coords1, coords2) => {
 };
 
 const PlaceCard = ({ place }) => {
+  const { setSelectedNearbyLocation } = useNearByStore();
   const amenity = amenities.find((a) => a.key === place.amenity);
+  
 
   return (
-    <button className="pt-2 pr-2 h-full w-full text-left">
+    <button
+      className="pt-2 pr-2 h-full w-full text-left"
+      onClick={() => {
+        console.log("place clicked", place);
+        setSelectedNearbyLocation(place); // Update store with selected place
+      }}
+    >
       <div className="rounded-lg py-lg card flex flex-col h-full relative border-gray-150 bg-gray-100 sm:rounded-lg border">
-        <div className=" px-5 xs:px-4 flex items-center py-4 xs:py-0 text-foreground rounded-none relative h-full w-full overflow-hidden flex-1">
+        <div className="px-5 xs:px-4 flex items-center py-4 xs:py-0 text-foreground rounded-none relative h-full w-full overflow-hidden flex-1">
           <div className="flex items-center">
             <div className="flex-shrink-0 mr-2">
               <Icon icon={amenity?.icon} fontSize={48} color={amenity?.color} />
@@ -268,5 +290,6 @@ const PlaceCard = ({ place }) => {
     </button>
   );
 };
+
 
 export default WhatsNearbyMap;
