@@ -10,10 +10,10 @@ export default function AboutUs() {
           </span>
         </div>
         <h1 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-          We're Building Future
+          We&apos;re Building Future
         </h1>
         <p className="text-lg mt-4 text-slate-500 mx-auto max-w-xl">
-          We're a multi-cultural team from around the world! We come from diverse backgrounds, bringing different personalities, experiences, and skills to the job. This is what makes our team so special.
+          We&apos;re a multi-cultural team from around the world! We come from diverse backgrounds, bringing different personalities, experiences, and skills to the job. This is what makes our team so special.
         </p>
       </div>
       <div className="mt-6 text-center">
@@ -51,7 +51,7 @@ export default function AboutUs() {
             <span className="text-indigo-600">Our</span> <strong>Mission</strong>
           </p>
           <p className="text-lg max-w-xl mt-4 leading-relaxed text-slate-500">
-            We're a multi-cultural team from around the world! We come from diverse backgrounds, bringing different personalities, experiences, and skills to the job. This is what makes our team so special.
+            We&apos;re a multi-cultural team from around the world! We come from diverse backgrounds, bringing different personalities, experiences, and skills to the job. This is what makes our team so special.
           </p>
           <ul className="grid mt-6 text-left gap-y-4">
             <li className="flex items-center gap-3 text-slate-800">
