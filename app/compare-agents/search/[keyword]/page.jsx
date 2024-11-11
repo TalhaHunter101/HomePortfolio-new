@@ -1,7 +1,6 @@
 'use client';
 import { Breadcrumbs, Card, Button, BreadcrumbItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Switch, Image } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
-
 import React, { useState } from 'react';
 
 export default function EstateAgentPage() {
@@ -10,22 +9,22 @@ export default function EstateAgentPage() {
     {
       title: 'Average Asking Price',
       value: '£433,325',
-      color: 'text-blue-600'
+      color: 'text-blue-700'
     },
     {
       title: 'Average Sale Time',
       value: '11 weeks',
-      color: 'text-green-600'
+      color: 'text-blue-700'
     },
     {
       title: 'Asking Price Change',
       value: '-1.7%',
-      color: 'text-red-600'
+      color: 'text-blue-700'
     },
     {
       title: 'Average Estate Agent Fee',
       value: '1.2%',
-      color: 'text-purple-600'
+      color: 'text-blue-700'
     }
   ];
 
@@ -66,71 +65,69 @@ export default function EstateAgentPage() {
   const [showMap, setShowMap] = useState(true);
 
   return (
-    <section className="max-w-[100vw] bg-purple-50 bg-gradient-to-r from-purple-50 to-blue-200 text-gray-800 py-16 px-4 mt-10">
+    <section className="max-w-[100vw] bg-gradient-to-r from-blue-50 to-blue-100 text-blue-900 py-16 px-4 mt-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumbs */}
         <Breadcrumbs size="lg" className="mb-8">
-          <BreadcrumbItem href="/">Home</BreadcrumbItem>
-          <BreadcrumbItem href="/estate-agents">Estate Agents</BreadcrumbItem>
-          <BreadcrumbItem href="/estate-agents/bristol">Estate Agents in Bristol</BreadcrumbItem>
+          <BreadcrumbItem href="/" className="text-blue-700">Home</BreadcrumbItem>
+          <BreadcrumbItem href="/estate-agents" className="text-blue-700">Estate Agents</BreadcrumbItem>
+          <BreadcrumbItem href="/estate-agents/bristol" className="text-blue-900 font-semibold">Estate Agents in Bristol</BreadcrumbItem>
         </Breadcrumbs>
 
         {/* Title Section */}
-        <h1 className="text-5xl font-extrabold mt-4 mb-4 text-gray-900">429 Estate Agents in Bristol</h1>
-        <p className="text-lg mb-6 text-gray-600">
+        <h1 className="text-5xl font-bold mt-4 mb-6 text-blue-900">429 Estate Agents in Bristol</h1>
+        <p className="text-lg mb-6 text-blue-800 leading-relaxed">
           Compare the performance of top local estate agents.
         </p>
-        <p className="mb-8 text-gray-700">
+        <p className="mb-10 text-blue-800 leading-relaxed">
           In the last 6 months, 10,387 properties were listed for sale by 429 agents in Bristol. The average asking price is
           £433,325, and properties take about 11 weeks to go under offer. Estate agents in Bristol typically charge around 1.2%, amounting
           to an average fee of £5,059.
         </p>
-        <p className="mb-10 text-gray-700">
-          Agents in this area can help you sell properties in popular neighborhoods like Knowle, Thornbury, Nailsea, St George,
-          Clifton, and more. Whether youre in Downend, Kingswood, or Bristol city centre, our agents have you covered.
-        </p>
 
         {/* Market Summary Section */}
-        <div className="rounded-lg mb-10 ">
-          <h2 className="text-3xl font-semibold mb-6 text-gray-900">Bristol Property Market Summary</h2>
+        <div className="rounded-lg mb-12">
+          <h2 className="text-3xl font-semibold mb-6 text-blue-900">Bristol Property Market Summary</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {cardData.map((card, index) => (
-              <Card key={index} className="flex flex-col p-6  rounded-lg hover:shadow-xl transition-shadow">
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{card.title}</h3>
+              <Card key={index} className="flex flex-col p-6 rounded-lg shadow-md bg-white transition-all duration-300 hover:shadow-lg">
+                <h3 className="text-xl font-bold mb-2 text-blue-900">{card.title}</h3>
                 <p className={`text-3xl font-semibold ${card.color}`}>{card.value}</p>
               </Card>
             ))}
           </div>
         
-        <div className="bg-blue-50 p-8 rounded-lg shadow-md flex flex-col sm:flex-row items-center justify-between my-8">
-          <div className="flex-1 mb-6 sm:mb-0">
-            <h3 className="text-2xl font-bold mb-2 text-gray-900">Find Out How Much Your Property Is Worth</h3>
-            <p className="text-lg text-gray-700">Get an instant online valuation in just a few seconds!</p>
+          {/* Valuation CTA Section */}
+          <div className="bg-gradient-to-r from-blue-200 to-blue-300 p-8 rounded-lg shadow-md flex flex-col sm:flex-row items-center justify-between mt-10">
+            <div className="flex-1 mb-6 sm:mb-0">
+              <h3 className="text-2xl font-bold mb-2 text-blue-900">Find Out How Much Your Property Is Worth</h3>
+              <p className="text-lg text-blue-800">Get an instant online valuation in just a few seconds!</p>
+            </div>
+            <Button
+              color="primary"
+              className="text-lg px-6 py-3 shadow-md hover:shadow-lg transition-all duration-300 bg-blue-600 hover:bg-blue-700 text-white"
+              size="lg"
+              onClick={() => alert('Redirecting to valuation tool...')}
+            >
+              Get Started
+            </Button>
           </div>
-          <Button
-            color="primary"
-            className="text-lg px-6 py-3"
-            size="lg"
-            onClick={() => alert('Redirecting to valuation tool...')}
-          >
-            Get Started
-          </Button>
         </div>
-        </div>
+
         {/* Map Placeholder Section */}
         {showMap && (
-          <div className="bg-gray-200 rounded-lg mb-6 h-[300px] flex items-center justify-center text-gray-500 text-xl font-semibold">
+          <div className="bg-blue-50 rounded-lg mb-6 h-[300px] flex items-center justify-center text-blue-700 text-xl font-semibold shadow-inner">
             Map placeholder
           </div>
         )}
-        <div className="mb-4 justify-end">
+        <div className="flex justify-end mb-10">
           <Switch
             size="lg"
-            color="success"
+            color="primary"
             defaultSelected={showMap}
-            startContent={<Icon icon="ri:eye-off-fill"  />}
-            endContent={ <Icon icon="mage:eye-fill"/>}
+            startContent={<Icon icon="ri:eye-off-fill" />}
+            endContent={<Icon icon="ri:eye-fill" />}
             onChange={() => setShowMap(!showMap)}
           >
             {showMap ? 'Hide Map' : 'Show Map'}
@@ -138,11 +135,11 @@ export default function EstateAgentPage() {
         </div>
 
         {/* Sorting and Results Section */}
-        <div className="flex justify-end items-center mb-6">
-          <p className="text-gray-700 text-lg pr-2">10 results</p>
+        <div className="flex justify-end items-center mb-10">
+          <p className="text-blue-800 text-lg pr-2">10 results</p>
           <Dropdown>
             <DropdownTrigger>
-              <Button radius='sm' variant="solid">
+              <Button radius='sm' variant="solid" className="shadow hover:shadow-md transition-shadow bg-blue-600 text-white hover:bg-blue-700">
                 Sort
               </Button>
             </DropdownTrigger>
@@ -158,48 +155,46 @@ export default function EstateAgentPage() {
         </div>
 
         {/* Estate Agent Listings */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
           {estateAgents.map((agent, index) => (
-            <Card key={index} className="p-4 bg-gradient-to-b from-white to-purple-50 rounded-lg  flex flex-col">
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center">
-                {/* Agent Logo */}
-                <Image
-                  src={agent.image}
-                  alt={`${agent.name} logo`}
-                  className="w-10 h-10 mr-3 rounded-md"
-                />
-                
+            <Card key={index} className="p-6 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg shadow-md flex flex-col transition-transform duration-300 hover:scale-105">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center">
+                  {/* Agent Logo */}
+                  <Image
+                    src={agent.image}
+                    alt={`${agent.name} logo`}
+                    className="w-14 h-14 mr-4 rounded-lg shadow"
+                  />
+                </div>
+                {/* Featured Tag */}
+                {agent.featured && (
+                  <span className="text-sm font-medium bg-blue-100 text-blue-700 px-3 py-1 rounded-lg shadow">
+                    ★ Featured
+                  </span>
+                )}
               </div>
-              {/* Featured Tag */}
-              {agent.featured && (
-                <span className="text-sm font-medium bg-blue-100 text-blue-600 px-2 py-1 rounded">
-                  ★ Featured
-                </span>
-              )}
-            </div>
-            <h2 className="text-xl font-semibold text-gray-800">{agent.name}</h2>
-            <p className="text-gray-600 mb-4">{agent.address}</p>
-            <p className="text-sm font-semibold text-gray-700 mb-2">Homes on Zoopla</p>
-            <div className="text-gray-700 text-sm mb-4">
-              {agent.avgListingTime && (
-                <p>Avg. listing time: <strong>{agent.avgListingTime}</strong></p>
-              )}
-              {agent.avgAskingPrice && (
-                <p>Avg. asking price: <strong>{agent.avgAskingPrice}</strong></p>
-              )}
-              {agent.propertiesForSale && (
-                <p>Currently for sale: <strong>{agent.propertiesForSale}</strong></p>
-              )}
-            </div>
-            <Button
-              variant='ghost'
-              className="mt-auto text-blue-600 "
-              onClick={() => alert('Redirecting to valuation tool...')}
-            >
-              Get a free valuation
-            </Button>
-          </Card>
+              <h2 className="text-xl font-semibold text-blue-900 mb-2">{agent.name}</h2>
+              <p className="text-blue-800 mb-4">{agent.address}</p>
+              <div className="text-blue-800 text-sm mb-4">
+                {agent.avgListingTime && (
+                  <p>Avg. listing time: <strong>{agent.avgListingTime}</strong></p>
+                )}
+                {agent.avgAskingPrice && (
+                  <p>Avg. asking price: <strong>{agent.avgAskingPrice}</strong></p>
+                )}
+                {agent.propertiesForSale && (
+                  <p>Currently for sale: <strong>{agent.propertiesForSale}</strong></p>
+                )}
+              </div>
+              <Button
+                variant='ghost'
+                className="mt-auto text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                onClick={() => alert('Redirecting to valuation tool...')}
+              >
+                Get a free valuation
+              </Button>
+            </Card>
           ))}
         </div>
       </div>
