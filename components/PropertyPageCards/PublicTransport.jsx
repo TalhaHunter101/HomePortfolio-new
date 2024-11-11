@@ -5,7 +5,13 @@ import { Icon } from "@iconify/react";
 import { BusMapStatic, TransportMapStatic } from "../Maps";
 import { useListingStore } from "@/store/listingStore";
 
-export function PublicTransportCard({ postcode, data, latitude, longitude,ShortAddress }) {
+export function PublicTransportCard({
+  postcode,
+  data,
+  latitude,
+  longitude,
+  ShortAddress,
+}) {
   const [selectedType, setSelectedType] = useState("rail");
   const [walkScore, setWalkScore] = useState(0);
   const [busData, setBusData] = useState([]);
@@ -99,6 +105,7 @@ export function PublicTransportCard({ postcode, data, latitude, longitude,ShortA
     getWalkScore();
   }, [data?.ref_postcode, latitude, longitude, selectedType]);
 
+  console.log("filteredTransports is", filteredTransports);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -212,13 +219,26 @@ export function PublicTransportCard({ postcode, data, latitude, longitude,ShortA
                                   ? `Bus ID: ${transport?.id}`
                                   : transport?.title}
                               </span>
-                              <span className="font-semibold ml-4">
-                                {selectedType === "bus"
-                                  ? `Destination: ${transport?.destination}`
-                                  : `${transport?.poiType?.replace(
-                                      /_/g,
-                                      " "
-                                    )} • ${transport?.distanceInMiles} mi away`}
+
+                              <span className="font-semibold ml-4 flex items-center">
+                                {selectedType === "bus" ? (
+                                  `Destination: ${transport?.destination}`
+                                ) : selectedType === "rail" ? (
+                                  <>
+                                    <Icon
+                                      icon="mdi:train"
+                                      width="1em"
+                                      height="1em"
+                                      className="mr-1"
+                                    />
+                                    • {transport?.distanceInMiles} mi away
+                                  </>
+                                ) : (
+                                  `${transport?.poiType?.replace(
+                                    /_/g,
+                                    " "
+                                  )} • ${transport?.distanceInMiles} mi away`
+                                )}
                               </span>
                             </div>
                             <div className="mt-2">

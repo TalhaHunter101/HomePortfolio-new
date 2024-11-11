@@ -17,24 +17,24 @@ import {
 const statusColorMap = {
   // Success status
   "Application Permitted": "success",
-  "Grant": "success",
-  "Granted": "success",
-  "Approved": "success",
-  "Approve": "success",
-  "Approval": "success",
+  Grant: "success",
+  Granted: "success",
+  Approved: "success",
+  Approve: "success",
+  Approval: "success",
   "Approve with Conditions": "success",
   "Application Granted": "success",
-  "Conditions": "success",
+  Conditions: "success",
 
   // Warning status
-  "Undecided": "warning",
-  "Pending": "warning",
-  "Withdrawn": "warning",
+  Undecided: "warning",
+  Pending: "warning",
+  Withdrawn: "warning",
 
   // Danger status
-  "Refuse": "danger",
-  "Refused": "danger",
-  "Rejected": "danger",
+  Refuse: "danger",
+  Refused: "danger",
+  Rejected: "danger",
 };
 
 const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
@@ -78,20 +78,14 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
         return (
           <div>
             {isExpanded ? description : `${description.substring(0, 100)}`}
-            <button
+
+            <a
+              href={source?.other_fields?.source_url}
+              target="_blank"
               className="text-blue-500 hover:text-blue-700 ml-2 text-sm"
-              onClick={() => {
-                const newExpanded = new Set(expandedDescriptions);
-                if (isExpanded) {
-                  newExpanded.delete(application._id);
-                } else {
-                  newExpanded.add(application._id);
-                }
-                setExpandedDescriptions(newExpanded);
-              }}
             >
               {isExpanded ? "Show less" : "Show full description"}
-            </button>
+            </a>
           </div>
         );
       default:
@@ -113,7 +107,6 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
       return dateReceived >= monthsAgo && dateReceived <= now;
     });
   }, [planningData, timeFrame]);
-  
 
   return (
     <div>
