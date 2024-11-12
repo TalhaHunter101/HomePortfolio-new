@@ -53,7 +53,7 @@ function HouseTypeData({ housingData, city }) {
     }
   }, [housingData]);
 
-  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#f87171"];
 
   const CustomLegend = () => {
     return (
@@ -95,16 +95,16 @@ function HouseTypeData({ housingData, city }) {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-               style={{
-                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-              }}
+              //  style={{
+              //   filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+              // }}
                 data={chartData}
                 dataKey="count"
                 nameKey="name"
                 cx="50%"
                 cy="50%"
                 outerRadius={100} // Outer radius for donut size
-                innerRadius={80}  // Inner radius for donut hole (adjust for thinner donut)
+                innerRadius={60}  // Inner radius for donut hole (adjust for thinner donut)
                 fill="#82ca9d"
                 label
               >

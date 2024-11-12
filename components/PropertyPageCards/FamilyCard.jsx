@@ -77,7 +77,6 @@ export function FamilyCard({ postcode, city, ShortAddress }) {
           fetchedCompositionData,
           fetchedEconomicData,
         ] = await Promise.all(fetchData);
-
         console.log("fetchedEconomicData", fetchedEconomicData);
         console.log("fetchedHousingData", fetchedHousingData);
         console.log("fetchedOccupationData", fetchedOccupationData);
@@ -188,6 +187,32 @@ export function FamilyCard({ postcode, city, ShortAddress }) {
     totalPopulation._source &&
     Object.keys(totalPopulation._source).length > 0;
 
+  if (isDataLoading) {
+    return (
+      <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
+        <CardBody className="flex flex-col items-center justify-center">
+          <Spinner size="lg" />
+          <div className="text-gray-500 text-lg mt-4">Loading data...</div>
+        </CardBody>
+      </Card>
+    );
+  }
+
+  if (!isDataAvailable) {
+    return (
+      <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
+        <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
+      </Card>
+    );
+  }
+
   return (
     <Card className="m-2 sm:m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
@@ -205,167 +230,165 @@ export function FamilyCard({ postcode, city, ShortAddress }) {
         </div>
       </CardHeader>
 
-      {isDataLoading ? (
-        <CardBody className="flex flex-col items-center justify-center">
-          <Spinner size="lg" />
-          <div className="text-gray-500 text-lg mt-4">Loading data...</div>
-        </CardBody>
-      ) : isDataAvailable ? (
-        <>
-          {/* Static demographic section */}
-          <div className="bg-white w-full px-4 sm:px-7">
-            <div className="flex flex-col lg:flex-row justify-between gap-4">
-              {/* Left section */}
-              <div className="w-full lg:w-1/2">
-                <Familyinformation
-                  postcode={postcode}
-                  city={city}
-                  housingData={housingData}
-                  totalPopulation={totalPopulation}
-                  compositionData={compositionData}
-                  agePopulationData={agePopulationData}
-                  educationData={educationData}
-                />
+      {/* Static demographic section */}
+      <div className="bg-white w-full px-4 sm:px-7">
+        <div className="flex flex-col lg:flex-row justify-between gap-4">
+          {/* Left section */}
+          <div className="w-full lg:w-1/2">
+            <Familyinformation
+              postcode={postcode}
+              city={city}
+              housingData={housingData}
+              totalPopulation={totalPopulation}
+              compositionData={compositionData}
+              agePopulationData={agePopulationData}
+              educationData={educationData}
+            />
+          </div>
+
+          {/* Right section */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+              {/* Total Population */}
+              <div className="flex flex-col text-center">
+                <span className="text-sm text-gray-400">
+                  Total Population
+                </span>
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                  {
+                    totalPopulation?._source?.[
+                      "Sex: All persons; measures: Value"
+                    ] || "N/A"
+                  }
+                </span>
               </div>
 
-              {/* Right section */}
-              <div className="w-full lg:w-1/2 flex flex-col gap-4 text-gray-700 text-base sm:text-xl px-2">
-                <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
-                  {/* Total Population */}
-                  <div className="flex flex-col text-center">
-                    <span className="text-sm text-gray-400">
-                      Total Population
-                    </span>
-                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                      {
-                        totalPopulation?._source?.[
-                          "Sex: All persons; measures: Value"
-                        ] || "N/A"
-                      }
-                    </span>
-                  </div>
+              {/* Median Age */}
+              <div className="flex flex-col text-center">
+                <span className="text-sm text-gray-400">Median Age</span>
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                  {medianAge !== null ? medianAge : "N/A"}
+                </span>
+              </div>
+            </div>
 
-                  {/* Median Age */}
-                  <div className="flex flex-col text-center">
-                    <span className="text-sm text-gray-400">Median Age</span>
-                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                      {medianAge !== null ? medianAge : "N/A"}
-                    </span>
-                  </div>
-                </div>
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
+              {/* Average HH Income */}
+              <div className="flex flex-col text-center">
+                <span className="text-sm text-gray-400">
+                  Average HH Income
+                </span>
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                  {peopleGenderData?.averageIncome
+                    ? `£${formatCurrency(peopleGenderData.averageIncome)}`
+                    : "N/A"}
+                </span>
+              </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-14">
-                  {/* Average HH Income */}
-                  <div className="flex flex-col text-center">
-                    <span className="text-sm text-gray-400">
-                      Average HH Income
-                    </span>
-                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                      {peopleGenderData?.averageIncome
-                        ? `£${formatCurrency(
-                            peopleGenderData.averageIncome
-                          )}`
-                        : "N/A"}
-                    </span>
-                  </div>
-
-                  {/* Single Family Household */}
-                  <div className="flex flex-col text-center">
-                    <span className="text-sm text-gray-400">
-                      Single Family Household
-                    </span>
-                    <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
-                      {singleFamilyHouseholds || "N/A"}
-                    </span>
-                  </div>
-                </div>
+              {/* Single Family Household */}
+              <div className="flex flex-col text-center">
+                <span className="text-sm text-gray-400">
+                  Single Family Household
+                </span>
+                <span className="font-semibold text-2xl sm:text-3xl text-purple-300">
+                  {singleFamilyHouseholds || "N/A"}
+                </span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Carousel Section */}
-          <div className="relative w-full shadow-none overflow-hidden mt-8">
-            <div
-              className="flex transition-transform duration-700 ease-in-out"
-              style={{
-                transform: `translateX(-${currentIndex * 100}%)`,
-                width: "100%",
-              }}
-            >
-              {/* Slide 1 */}
-              <div className="flex-shrink-0 w-full shadow-none">
-                <AgePopulationData
-                  AgePopulationData={agePopulationData}
-                  city={city}
-                />
-              </div>
+      {/* Static Column Section for Small Screens */}
+      <div className="flex flex-col gap-4 mt-8 sm:block md:hidden lg:hidden">
+        {/* Slide 1: Age Population Data */}
+        <AgePopulationData AgePopulationData={agePopulationData} city={city} />
 
-              {/* Slide 2 */}
-              <div className="flex-shrink-0 w-full shadow-none">
-                <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
-              </div>
+        {/* Slide 2: People Gender */}
+        <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
 
-              {/* Slide 3 */}
-              <div className="flex-shrink-0 w-full">
-                <HouseTypeData housingData={housingData} city={city} />
-              </div>
+        {/* Slide 3: House Type */}
+        <HouseTypeData housingData={housingData} city={city} />
 
-              {/* Slide 4 */}
-              <div className="flex-shrink-0 w-full">
-                <HouseTenure tenureData={tenureData} city={city} />
-              </div>
+        {/* Slide 4: House Tenure */}
+        <HouseTenure tenureData={tenureData} city={city} />
 
-              {/* Slide 5 */}
-              <div className="flex-shrink-0 w-full">
-                <HouseOccupation occupationData={occupationData} city={city} />
-              </div>
-            </div>
+        {/* Slide 5: House Occupation */}
+        <HouseOccupation occupationData={occupationData} city={city} />
+      </div>
 
-            {/* Navigation Buttons */}
-            <div className="absolute inset-y-1/2 flex w-full justify-between px-4">
-              <Button
-                isIconOnly
-                variant="ghost"
-                radius="full"
-                size="sm"
-                onClick={handlePrevious}
-              >
-                <Icon
-                  color="gray"
-                  icon="bx:bx-chevron-left"
-                  width={24}
-                  height={24}
-                />
-                <span className="sr-only">Previous</span>
-              </Button>
-              <Button
-                isIconOnly
-                variant="ghost"
-                radius="full"
-                size="sm"
-                onClick={handleNext}
-              >
-                <Icon
-                  color="gray"
-                  icon="bx:bx-chevron-right"
-                  width={24}
-                  height={24}
-                />
-                <span className="sr-only">Next</span>
-              </Button>
-            </div>
+      {/* Carousel Section for Medium and Large Screens */}
+      <div className="relative w-full shadow-none overflow-hidden mt-8 hidden md:block lg:block">
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`,
+            width: "100%",
+          }}
+        >
+          {/* Slide 1 */}
+          <div className="flex-shrink-0 w-full shadow-none">
+            <AgePopulationData
+              AgePopulationData={agePopulationData}
+              city={city}
+            />
           </div>
-        </>
-      ) : (
-        <CardBody className="flex flex-col items-center justify-center">
-          <Image
-            src="/undraw_no_data_re_kwbl (1).svg"
-            alt="No data found"
-            className="w-40 h-40 mb-4"
-          />
-          <div className="text-gray-500 text-lg">No data available</div>
-        </CardBody>
-      )}
+
+          {/* Slide 2 */}
+          <div className="flex-shrink-0 w-full shadow-none">
+            <Peoplegender PeopleGenderData={peopleGenderData} city={city} />
+          </div>
+
+          {/* Slide 3 */}
+          <div className="flex-shrink-0 w-full">
+            <HouseTypeData housingData={housingData} city={city} />
+          </div>
+
+          {/* Slide 4 */}
+          <div className="flex-shrink-0 w-full">
+            <HouseTenure tenureData={tenureData} city={city} />
+          </div>
+
+          {/* Slide 5 */}
+          <div className="flex-shrink-0 w-full">
+            <HouseOccupation occupationData={occupationData} city={city} />
+          </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="absolute inset-y-1/2 flex w-full justify-between px-4">
+          <Button
+            isIconOnly
+            variant="ghost"
+            radius="full"
+            size="sm"
+            onClick={handlePrevious}
+          >
+            <Icon
+              color="gray"
+              icon="bx:bx-chevron-left"
+              width={24}
+              height={24}
+            />
+            <span className="sr-only">Previous</span>
+          </Button>
+          <Button
+            isIconOnly
+            variant="ghost"
+            radius="full"
+            size="sm"
+            onClick={handleNext}
+          >
+            <Icon
+              color="gray"
+              icon="bx:bx-chevron-right"
+              width={24}
+              height={24}
+            />
+            <span className="sr-only">Next</span>
+          </Button>
+        </div>
+      </div>
     </Card>
   );
 }

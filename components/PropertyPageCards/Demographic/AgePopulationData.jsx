@@ -72,18 +72,19 @@ function AgePopulationData({ AgePopulationData }) {
         </div>
       ) : (
         <div className="w-full font-semibold flex justify-center">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={400}>
             <BarChart
               data={formattedData}
               layout={isSmallScreen ? "vertical" : "horizontal"}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              barCategoryGap={isSmallScreen ? "20%" : "10%"} // Add space between bars when in small screen mode
             >
-              <CartesianGrid strokeDasharray="3 3" />
+             
               {isSmallScreen ? (
                 <>
                   <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} />
                   <XAxis type="number" tick={{ fontSize: 12 }} />
-                  <Bar dataKey="value" fill="#33b5b5" barSize={30}>
+                  <Bar dataKey="value" fill="#33b5b5" barSize={20}>
                     <LabelList dataKey="value" position="right" fontSize={12} />
                   </Bar>
                 </>
@@ -91,7 +92,7 @@ function AgePopulationData({ AgePopulationData }) {
                 <>
                   <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} />
-                  <Bar dataKey="value" fill="#33b5b5" barSize={100}>
+                  <Bar dataKey="value" fill="#33b5b5" barSize={60}>
                     <LabelList dataKey="value" position="top" fontSize={12} />
                   </Bar>
                 </>
