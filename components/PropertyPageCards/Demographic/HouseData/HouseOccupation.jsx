@@ -1,16 +1,24 @@
 import { Icon } from "@iconify/react";
+import { Spinner } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "@react-hook/media-query";
 import {
-  PieChart,
-  Pie,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
-  Cell,
+  LabelList,
 } from "recharts";
 
 function HouseOccupation({ occupationData, city }) {
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Check if the screen size is small
+  const isSmallScreen = useMediaQuery("only screen and (max-width: 640px)");
 
   useEffect(() => {
     if (occupationData && occupationData._source) {
@@ -42,22 +50,28 @@ function HouseOccupation({ occupationData, city }) {
             const label = key.replace("Occupation (current):", "").trim();
             const mappedLabel = occupationMapping[label] || label;
 
-            data.push({ name: mappedLabel, count });
+            data.push({ name: mappedLabel, value: count });
           }
         }
       }
 
       setChartData(data);
+      setLoading(false);
     }
   }, [occupationData]);
 
-  // Pastel colors for pie chart
-  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
+  if (loading) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="flex items-center p-2 sm:ml-4">
-        <div className="flex items-center justify-center p-1 w-8 h-8 bg-blue-200 rounded-full mr-2">
+    <div className="flex flex-col items-start p-4">
+      <div className="flex items-center p-2">
+        <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mr-2 ml-1">
           <Icon icon="tdesign:member" width={24} className="text-gray-700" />
         </div>
         <p className="text-lg sm:text-xl font-semibold text-gray-700">
@@ -65,54 +79,43 @@ function HouseOccupation({ occupationData, city }) {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-4 mt-4">
-        <div className="w-full lg:w-1/2">
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                dataKey="count"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                label
-                // style={{
-                //   filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-                // }}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                    stroke="#fff"
-                    strokeWidth={1}
-                  />
-                ))}
-              </Pie>
+      {loading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        <div className="w-full font-semibold flex justify-center">
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={chartData}
+              layout={isSmallScreen ? "vertical" : "horizontal"}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              barCategoryGap={isSmallScreen ? "20%" : "10%"} // Add space between bars when in small screen mode
+            >
+              
+              {isSmallScreen ? (
+                <>
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} />
+                  <XAxis type="number" tick={{ fontSize: 12 }} />
+                  <Bar dataKey="value" fill="#33b5b5" barSize={20}>
+                    <LabelList dataKey="value" position="right" fontSize={12} />
+                  </Bar>
+                </>
+              ) : (
+                <>
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Bar dataKey="value" fill="#33b5b5" barSize={60}>
+                    <LabelList dataKey="value" position="top" fontSize={12} />
+                  </Bar>
+                </>
+              )}
               <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
-            </PieChart>
+            </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="w-full lg:w-1/2">
-          <ul className="flex flex-wrap justify-center lg:justify-start">
-            {chartData.map((entry, index) => (
-              <li
-                key={`legend-item-${index}`}
-                className="flex items-center m-2"
-              >
-                <span
-                  className="inline-block w-3 h-3 mr-2"
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                ></span>
-                <span className="text-sm text-gray-700">{entry.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 
