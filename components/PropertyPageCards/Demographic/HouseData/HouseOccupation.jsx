@@ -75,12 +75,12 @@ function HouseOccupation({ occupationData, city }) {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                innerRadius={80}
+                innerRadius={60}
                 outerRadius={100}
                 label
-                style={{
-                  filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-                }}
+                // style={{
+                //   filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+                // }}
               >
                 {chartData.map((entry, index) => (
                   <Cell

@@ -88,14 +88,14 @@ function HouseTenure({ tenureData, city }) {
               cx="50%"
               cy="50%"
               outerRadius={100} // Outer radius for donut size
-              innerRadius={80} // Inner radius for donut (adjust to make it thinner or thicker)
+              innerRadius={60} // Inner radius for donut (adjust to make it thinner or thicker)
               fill="#8884d8"
               label
               startAngle={360}
               endAngle={0}
-              style={{
-                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-              }}
+              // style={{
+              //   filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
+              // }}
             >
               {chartData.map((entry, index) => (
                 <Cell
