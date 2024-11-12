@@ -96,7 +96,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
     const lat2 = Number(coords2.lat);
     const lon2 = Number(coords2.lon);
 
-    const R = 6371; // Radius of the Earth in km
+    const R = 3959; // Radius of the Earth in miles (instead of 6371 km)
 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
@@ -110,7 +110,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distance in km
+    return R * c; // Distance in miles
   };
 
   async function getNearbyLocations(
@@ -173,7 +173,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
             address: address,
             lat,
             lon,
-            distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
+            distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
           };
         });
 
