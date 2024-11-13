@@ -685,24 +685,11 @@ function PropertyDisplay({ listingData, params }) {
                   </div>
                 </div>
               </div>
-              <p className="text-sm  font-bold hidden md:block">
+              <p className="text-sm ml-2 font-bold hidden md:block">
                 {listingData?.title}
               </p>
-            </Card>
 
-            <div className="hidden md:block">
-              {/* <div className="pr-4 pl-6 pt-4">
-                <Button
-                  size="lg"
-                  className="w-full bg-neutral shadow-sm border rounded-md font-bold text-gray-600"
-                >
-                  Contact agent
-                </Button>
-              </div> */}
-
-              
-
-              <div className="p-6">
+              <div className="pt-6 ml-2">
                 {/* Conditional Rendering of Content */}
                 <div
                   dangerouslySetInnerHTML={{
@@ -739,7 +726,10 @@ function PropertyDisplay({ listingData, params }) {
                   }
                 </Button>
               </div>
-            </div>
+
+            </Card>
+
+          
 
             {navElements?.map((element, index) => (
               <React.Fragment key={index}>

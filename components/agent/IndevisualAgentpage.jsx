@@ -86,7 +86,7 @@ function IndevisualAgentpage({ data, name, id }) {
                   Opening hours
                 </h3>
                 <ul className="text-blue-800 text-sm space-y-2">
-                  {data.agentData?.openingTimes.map((entry, index) => (
+                  {data.agentData?.openingTimes && data.agentData?.openingTimes.map((entry, index) => (
                     <li
                       key={index}
                       className="flex justify-between items-center"

@@ -93,6 +93,22 @@ export function ReachOutCard({ data }) {
 
         <CardBody>
           <div className="p-5 bg-white rounded-md">
+
+          <div className="flex items-center space-x-4 mb-7">
+            <img
+              src={data?.branch?.logoUrl}
+              alt="Madison Oakley"
+              width={100}
+              height={100}
+            />
+            <div className="pl-6">
+              <p className="text-sm text-gray-600">Property listed by:</p>
+              <p className="text-lg font-bold">{data?.branch?.name}</p>
+              <Link href="#" className="text-blue-600 underline">
+                See this agents profile
+              </Link>
+            </div>
+          </div>
             <div>
               {/* {
                 JSON.stringify(data?.branch)
@@ -179,9 +195,8 @@ export function ReachOutCard({ data }) {
         </CardBody>
       </Card>
 
-      <Card className="m-4" style={{ padding: "16px" }}>
+      {/* <Card className="m-4" style={{ padding: "16px" }}>
         <div className="p-2 flex flex-col lg:flex-row items-center justify-between">
-          {/* Logo and Property Info */}
           <div className="flex items-center space-x-4">
             <img
               src={data?.branch?.logoUrl}
@@ -198,7 +213,6 @@ export function ReachOutCard({ data }) {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center space-x-4 mt-4 lg:mt-0 ">
             <Button
               startContent={<Icon icon="mdi:heart-outline" width="24" />}
@@ -225,7 +239,7 @@ export function ReachOutCard({ data }) {
             </Button>
           </div>
         </div>
-      </Card>
+      </Card> */}
     </>
   );
 }
