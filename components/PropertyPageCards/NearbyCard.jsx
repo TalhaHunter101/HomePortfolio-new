@@ -93,6 +93,44 @@ const getItemsData = () => [
   },
 ];
 
+
+function formatAddress(tags) {
+  const addressParts = [];
+
+  if (tags["addr:housenumber"]) addressParts.push(tags["addr:housenumber"]);
+  if (tags["addr:street"]) addressParts.push(tags["addr:street"]);
+  if (tags["addr:city"]) addressParts.push(tags["addr:city"]);
+  if (tags["addr:postcode"]) addressParts.push(tags["addr:postcode"]);
+  if (tags["addr:country"]) addressParts.push(tags["addr:country"]);
+
+  return addressParts.join(", ");
+}
+
+const haversineDistance = (coords1, coords2) => {
+    const toRad = (x) => (Number(x) * Math.PI) / 180;
+
+    const lat1 = Number(coords1.lat);
+    const lon1 = Number(coords1.lon);
+    const lat2 = Number(coords2.lat);
+    const lon2 = Number(coords2.lon);
+
+    const R = 6371; // Radius of the Earth in km
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distance in km
+  };
+
 // Fetching nearby locations (mockup function using Overpass API)
 async function getNearbyLocations(
   lat,
@@ -129,27 +167,30 @@ async function getNearbyLocations(
 
     return jsonData.elements
       .filter((element) => element.tags && element.tags.amenity)
-      .map((element) => {
+      .map((element) => {        
+        let locationLat, locationLon;
         if (element.type === "node") {
-          lat = element.lat;
-          lon = element.lon;
+          locationLat = element.lat;
+          locationLon = element.lon;
         } else {
-          lat = element.center.lat;
-          lon = element.center.lon || element.center.lng;
+          locationLat = element.center.lat;
+          locationLon = element.center.lon || element.center.lng;
         }
-
+        
         const address = formatAddress(element.tags);
+        console.log("address", address);
+
         const distance = haversineDistance(
-          { lat, lon },
-          { lat: center.lat, lon: center.lng || center.lon }
+          { lat: locationLat, lon: locationLon },
+          { lat, lon }
         );
 
         return {
           name: element.tags.name || "na",
           amenity: element.tags.amenity || "Unknown",
           address: address,
-          lat,
-          lon,
+          lat: locationLat,
+          lon: locationLon,
           distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
         };
       });
@@ -159,10 +200,11 @@ async function getNearbyLocations(
   }
 }
 
+
 export function NearbyCard({ data, city, ShortAddress }) {
-  const [locations, setLocations] = useState([]); // Dynamic locations state
+  const [locations, setLocations] = useState([]); 
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0].key);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
   const [mycenter, setMycenter] = useState({
     lat: data?.location?.coordinates?.latitude,
     lng: data?.location?.coordinates?.longitude,
@@ -186,11 +228,16 @@ export function NearbyCard({ data, city, ShortAddress }) {
     data?.location?.coordinates?.longitude,
   ]);
 
+  console.log("locations is",locations);
+  
+
   const items = locations.length ? locations : getItemsData();
   const nearestAmenity = items.find(
-    (item) => item?.category === selectedAmenity
+    (item) => item?.amenity === selectedAmenity
   );
+  
 
+  
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
