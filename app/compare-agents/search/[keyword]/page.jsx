@@ -73,12 +73,12 @@ export default function EstateAgentPage({ params }) {
       color: "text-blue-700",
     },
     {
-      title: "Asking Price Change",
+      title: "Asking Price Change (dummy data)",
       value: "-1.7%",
       color: "text-blue-700",
     },
     {
-      title: "Average Estate Agent Fee",
+      title: "Average Estate Agent Fee (dummy data)",
       value: "£1,000",
       color: "text-blue-700",
     },
@@ -153,13 +153,13 @@ export default function EstateAgentPage({ params }) {
               href="/estate-agents/bristol"
               className="text-blue-900 font-semibold"
             >
-              Estate Agents in Bristol
+              Estate Agents in St Albans
             </BreadcrumbItem>
           </Breadcrumbs>
 
           {/* Title Section */}
           <h1 className="text-5xl font-bold mt-4 mb-6 text-blue-900">
-            £{formatCurrency(avgAskingPrice)} Estate Agents in Bristol
+            £{formatCurrency(avgAskingPrice)} Estate Agents in St Albans
           </h1>
           <p className="text-lg mb-6 text-blue-800 leading-relaxed">
             Compare the performance of top local estate agents.
@@ -176,7 +176,7 @@ export default function EstateAgentPage({ params }) {
           {/* Market Summary Section */}
           <div className="rounded-lg mb-12">
             <h2 className="text-3xl font-semibold mb-6 text-blue-900">
-              Bristol Property Market Summary
+            St Albans Property Market Summary
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {cardData.map((card, index) => (

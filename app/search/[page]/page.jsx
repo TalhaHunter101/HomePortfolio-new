@@ -58,7 +58,6 @@ const SearchPage = ({ params }) => {
     }
   };
 
-  
   const fetchEPCData = async (uprn) => {
     try {
       const response = await fetch("/api/indevisual/get-epc-data", {
@@ -102,7 +101,10 @@ const SearchPage = ({ params }) => {
       maxPrice,
       bedrooms: selectedBeds,
       bathrooms: selectedBaths,
-      houseType: homeType && homeType.length > 0 ? homeType : "any",
+      houseType:
+        homeType && homeType.length > 0
+          ? homeType
+          : ["Flats", "Terraced", "Semi Detached", "Detached"],
     };
 
     try {
@@ -123,7 +125,6 @@ const SearchPage = ({ params }) => {
       const result = await response.json();
       const properties = result?.results || [];
 
-      console.log("geom", result?.geom);
       setIsGeomBoundary(result?.geom);
       setIsMapResult(result?.mapResults);
       const updatedProperties = await Promise.all(
@@ -169,7 +170,15 @@ const SearchPage = ({ params }) => {
       setisnewDataLoading(false);
       setIsInitialLoading(false);
     }
-  }, [page, currentPage, minPrice, maxPrice, selectedBeds, selectedBaths, homeType]);
+  }, [
+    page,
+    currentPage,
+    minPrice,
+    maxPrice,
+    selectedBeds,
+    selectedBaths,
+    homeType,
+  ]);
 
   useEffect(() => {
     setListingData([]);
@@ -187,7 +196,7 @@ const SearchPage = ({ params }) => {
     selectedBaths,
     fetchProperties,
   ]);
-  return (
+  return ( 
     <main className="flex mt-16 flex-col h-screen">
       {/* Navbar */}
       <div className="w-screen fixed flex flex-wrap bg-content1 z-40 justify-between items-center p-2">
@@ -209,7 +218,7 @@ const SearchPage = ({ params }) => {
         </div>
 
         {/* Filters and Buttons */}
-        {/* On large screens */} 
+        {/* On large screens */}
         <div className="hidden lg:flex items-center gap-2 mt-2 md:mt-0">
           <Beds />
           <Baths />

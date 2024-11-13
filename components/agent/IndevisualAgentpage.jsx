@@ -2,25 +2,11 @@
 import { Tabs, Tab, Card, Button } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { Icon } from "@iconify/react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  LineChart,
-  Line,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import { IndevisualAgentMapStatic } from "../Maps";
 import AgentPie from "./Chart/AgentPie";
 import AgentBarchart from "./Chart/AgentBarchart";
 import AgentLinechart from "./Chart/AgentLinechart";
+import { formatNumberWithCommas } from "@/utils/Helper";
 
 function IndevisualAgentpage({ data, name, id }) {
   const agent = {
@@ -47,7 +33,8 @@ function IndevisualAgentpage({ data, name, id }) {
     lng: parseFloat(data?.agentData?.location?.lng),
   };
 
-  const colors = ["#93c5fd", "#60a5fa", "#2563eb", "#1d4ed8", "#1e40af"];
+  console.log("data is", data);
+  
   return (
     <section className="bg-gradient-to-b from-blue-50 to-blue-100 mt-10">
       <div className="container mx-auto px-8 py-12 rounded-lg">
@@ -67,6 +54,8 @@ function IndevisualAgentpage({ data, name, id }) {
                 {data?.agentData?.phone}
               </a>
             </div>
+            <i>
+
             <div className="flex items-center gap-2 text-blue-600">
               <Icon icon="line-md:email" width="20" height="20" />
               <a
@@ -76,6 +65,7 @@ function IndevisualAgentpage({ data, name, id }) {
                 Email agent
               </a>
             </div>
+            </i>
           </div>
         </div>
 
@@ -96,7 +86,7 @@ function IndevisualAgentpage({ data, name, id }) {
                   Opening hours
                 </h3>
                 <ul className="text-blue-800 text-sm space-y-2">
-                  {data.agentData?.openingTimes.map((entry, index) => (
+                  {data.agentData?.openingTimes && data.agentData?.openingTimes.map((entry, index) => (
                     <li
                       key={index}
                       className="flex justify-between items-center"
@@ -133,6 +123,41 @@ function IndevisualAgentpage({ data, name, id }) {
             </div>
           </Tab>
         </Tabs>
+
+        <div className="p-6 flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                Performance stats
+              </h2>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-col items-center bg-gray-50 rounded-lg space-y-4 p-12">
+                  <span className="text-sm text-gray-600">
+                    % of asking price
+                  </span>
+                  <span className="text-xl font-semibold text-gray-800">
+                    £{formatNumberWithCommas(data?.agentData?.listingsStatistics?.residential?.forSale?.avgAskingPrice)}
+                  </span>
+                </div>
+                <div className="flex flex-col items-center justify-center bg-gray-50 p-4 rounded-lg">
+                  <span className="text-sm text-gray-600">
+                    Average sale time
+                  </span>
+                  <span className="text-xl font-semibold text-gray-800">
+                    {data?.agentData?.listingsStatistics?.residential?.forSale?.avgWeeksOnMarket} days
+                  </span>
+                </div>
+                <i>
+
+                <div className="flex flex-col items-center justify-center bg-gray-50 p-4 rounded-lg">
+                  <span className="text-sm text-gray-600">Fee</span>
+                  <span className="text-xl font-semibold text-gray-800">
+                    £1,200
+                  </span>
+                </div>
+                </i>
+              </div>
+            </div>
+        </div>
 
         {/* Grid for Charts */}
 
