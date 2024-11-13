@@ -9,7 +9,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import "leaflet-gesture-handling"
+import "leaflet-gesture-handling";
+import useNearByStore from "@/store/newarbyStore";
 
 const MapTilerLayerComponent = () => {
   const map = useMap();
@@ -31,14 +32,16 @@ const MapTilerLayerComponent = () => {
 
 const MarkersWithCustomIcon = ({ center, locations, selectedAmenity, amenities }) => {
   const map = useMap();
+  const { selecteNearbyLocation } = useNearByStore();
 
   useEffect(() => {
-    if (center?.lat && center?.lng) {
-      map.setView([center.lat, center.lng], 16);
-    }
-  }, [center.lat, center.lng, map]);
+    const centerPoint = selecteNearbyLocation 
+      ? [selecteNearbyLocation.lat, selecteNearbyLocation.lon]
+      : [center.lat, center.lng];
+      
+    map.setView(centerPoint, 16);
+  }, [center.lat, center.lng, selecteNearbyLocation, map]);
 
-  // Find the selected amenity to use its icon
   const selectedAmenityDetails = amenities.find(a => a.key === selectedAmenity);
 
   return (
@@ -46,7 +49,7 @@ const MarkersWithCustomIcon = ({ center, locations, selectedAmenity, amenities }
       <Marker
         position={[center.lat, center.lng]}
         icon={L.icon({
-          iconUrl: "/icons/mapmarker.svg", // Default marker for the center
+          iconUrl: "/icons/mapmarker.svg",
           iconSize: [32, 32],
         })}
       />
@@ -64,8 +67,13 @@ const MarkersWithCustomIcon = ({ center, locations, selectedAmenity, amenities }
   );
 };
 
-
-const NearByPlacesMap = ({ height = "650px", center, locations, amenities, selectedAmenity }) => {
+const NearByPlacesMap = ({ 
+  height = "650px", 
+  center, 
+  locations, 
+  amenities, 
+  selectedAmenity
+}) => {
   const zoom = 13;
 
   return (
@@ -82,11 +90,15 @@ const NearByPlacesMap = ({ height = "650px", center, locations, amenities, selec
         gestureHandling={true}
       >
         <MapTilerLayerComponent />
-        <MarkersWithCustomIcon center={center} locations={locations} amenities={amenities} selectedAmenity={selectedAmenity} />
+        <MarkersWithCustomIcon 
+          center={center} 
+          locations={locations} 
+          amenities={amenities} 
+          selectedAmenity={selectedAmenity}
+        />
       </MapContainer>
     </div>
   );
 };
-
 
 export default NearByPlacesMap;

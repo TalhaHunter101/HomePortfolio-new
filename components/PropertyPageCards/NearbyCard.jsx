@@ -93,6 +93,32 @@ const getItemsData = () => [
   },
 ];
 
+// Update the haversineDistance function
+const haversineDistance = (coords1, coords2) => {
+  const toRad = (x) => (Number(x) * Math.PI) / 180;
+
+  const lat1 = Number(coords1.lat);
+  const lon1 = Number(coords1.lon);
+  const lat2 = Number(coords2.lat);
+  const lon2 = Number(coords2.lon);
+
+  const R = 3959; // Radius of the Earth in miles (instead of 6371 km)
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c; // Distance in miles
+};
+
 // Fetching nearby locations (mockup function using Overpass API)
 async function getNearbyLocations(
   lat,
@@ -150,7 +176,7 @@ async function getNearbyLocations(
           address: address,
           lat,
           lon,
-          distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
+          distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
         };
       });
   } catch (error) {

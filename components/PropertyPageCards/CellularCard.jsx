@@ -56,11 +56,15 @@ export function CellularInfoCard() {
         {/* Additional Info in Header */}
         <div className="flex flex-row justify-between gap-8">
           <div className="flex flex-col items-end">
-            <p className="text-sm font-semibold text-gray-600">Best Cellular Provider</p>
+            <p className="text-sm font-semibold text-gray-600">
+              Best Cellular Provider
+            </p>
             <p className="text-lg font-bold">{data.topProvider}</p>
           </div>
           <div className="flex flex-col items-end">
-            <p className="text-sm font-semibold text-gray-600">Number of Towers</p>
+            <p className="text-sm font-semibold text-gray-600">
+              Number of Towers
+            </p>
             <p className="text-lg font-bold">{data.towerCount}</p>
           </div>
         </div>
@@ -87,7 +91,9 @@ export function CellularInfoCard() {
               <p>{data.top5GProvider}</p>
             </div>
             <div className="flex flex-col w-full lg:w-auto">
-              <p className="font-semibold mb-2">Coverage Rating For Neighborhood</p>
+              <p className="font-semibold mb-2">
+                Coverage Rating For Neighborhood
+              </p>
               <Progress value={data.coverageRating} color="primary" />
               <p className="text-center text-sm font-semibold">
                 {getCoverageLabel(data.coverageRating)}
