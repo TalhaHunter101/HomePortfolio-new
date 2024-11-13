@@ -62,7 +62,7 @@ function HouseTenure({ tenureData, city }) {
     }
   }, [tenureData]);
 
-  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6"];
+  const COLORS = ["#ed8b69", "#6295cc", "#33b5b5"];
 
   return (
     <>
