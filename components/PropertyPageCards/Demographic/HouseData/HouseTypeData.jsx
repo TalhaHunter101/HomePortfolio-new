@@ -1,17 +1,20 @@
 import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "@react-hook/media-query";
 import {
-  PieChart,
-  Pie,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
-  Cell,
-  CartesianGrid,
+  LabelList,
 } from "recharts";
 
 function HouseTypeData({ housingData, city }) {
   const [chartData, setChartData] = useState([]);
+  const isSmallScreen = useMediaQuery("only screen and (max-width: 640px)");
 
   useEffect(() => {
     if (housingData && housingData._source) {
@@ -43,7 +46,7 @@ function HouseTypeData({ housingData, city }) {
             }
 
             if (mappedLabel) {
-              data.push({ name: mappedLabel, count });
+              data.push({ name: mappedLabel, value: count });
             }
           }
         }
@@ -53,7 +56,7 @@ function HouseTypeData({ housingData, city }) {
     }
   }, [housingData]);
 
-  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#e6ffff"];
+  const COLORS = ["#33b5b5", "#66cccc", "#99e6e6", "#b3f0f0", "#f87171"];
 
   const CustomLegend = () => {
     return (
@@ -89,38 +92,40 @@ function HouseTypeData({ housingData, city }) {
         <p className="text-xl font-semibold text-gray-700">House Type</p>
       </div>
 
-      <div className="flex w-full h-96 mt-8 justify-center">
-        {/* Pie Chart (Donut Chart) Section */}
-        <div className="chart-container w-3/4">
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-               style={{
-                filter: "drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3))",
-              }}
-                data={chartData}
-                dataKey="count"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={100} // Outer radius for donut size
-                innerRadius={80}  // Inner radius for donut hole (adjust for thinner donut)
-                fill="#82ca9d"
-                label
-              >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                    stroke="#fff"
-                    strokeWidth={1}
-                  />
-                ))}
-              </Pie>
+      <div className="flex w-full mt-8 justify-center">
+        {/* Bar Chart Section */}
+        <div className="chart-container w-full">
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={chartData}
+              layout={isSmallScreen ? "vertical" : "horizontal"}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              barCategoryGap={isSmallScreen ? "20%" : "10%"} // Add space between bars when in small screen mode
+            >
+              {/* <CartesianGrid strokeDasharray="3 3" /> */}
+              {isSmallScreen ? (
+                <>
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} />
+                  <XAxis type="number" tick={{ fontSize: 12 }} />
+                  <Bar dataKey="value" fill="#33b5b5" barSize={20}>
+                    <LabelList dataKey="value" position="right" fontSize={12} />
+                  </Bar>
+                </>
+              ) : (
+                <>
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Bar dataKey="value" fill="#33b5b5" barSize={60}>
+                    <LabelList dataKey="value" position="top" fontSize={12} />
+                  </Bar>
+                </>
+              )}
               <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.1)" }} />
-              <Legend />
-            </PieChart>
+            </BarChart>
           </ResponsiveContainer>
+          <div className="mt-4">
+            {/* <CustomLegend /> */}
+          </div>
         </div>
       </div>
     </div>

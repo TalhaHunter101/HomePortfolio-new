@@ -84,13 +84,13 @@ function Peoplegender({ PeopleGenderData, city }) {
         </div>
 
         <div className="w-full font-semibold flex justify-center">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={400}>
             <BarChart
               data={chartData}
               layout={isSmallScreen ? "vertical" : "horizontal"}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
+          
               {isSmallScreen ? (
                 <>
                   <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} />
