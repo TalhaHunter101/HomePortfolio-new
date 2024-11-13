@@ -127,3 +127,22 @@ export const CrimeMapStatic = dynamic(() => import("./CrimeMap"), {
     </div>
   ),
 });
+
+export const AgentSearchMapStatic = dynamic(() => import("./CrimeMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex justify-center items-center">
+      <Spinner label="Map is loading" size="sm" />
+    </div>
+  ),
+});
+
+
+export const IndevisualAgentMapStatic = dynamic(() => import("./Agent/IndevisualAgentMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex justify-center items-center">
+      <Spinner label="Map is loading" size="sm" />
+    </div>
+  ),
+});
