@@ -42,7 +42,7 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
   const [activePie, setActivePie] = useState(null);
   const [activeDataSet, setActiveDataSet] = useState(null);
 
-  const COLORS = ["#c4b5fd", "#a78bfa", "#8b5cf6", "#7c3aed"];
+  const COLORS = ["#ed8b69", "#6295cc", "#33b5b5" ,"#7c3aed"]
 
   useEffect(() => {
     if (main_data) {
@@ -255,8 +255,8 @@ export const DistributionPieChart = ({ main_data, setbarchart }) => {
             data={data01}
             cx="50%"
             cy="50%"
-            innerRadius={innerRadius}
-            outerRadius={outerRadius}
+            outerRadius={100} // Outer radius for donut size
+            innerRadius={60}
             fill="#8884d8"
             dataKey="value"
             onMouseEnter={onPieEnter("outer")}

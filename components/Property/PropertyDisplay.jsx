@@ -57,6 +57,7 @@ import Link from "next/link";
 import { SimilarHomesCard } from "../PropertyPageCards/similarHomesCard";
 import { FAQCard } from "../PropertyPageCards/FAQCard";
 import BroadBandCard from "../PropertyPageCards/BroadBandCard";
+import { AnalysisCard } from "../PropertyPageCards/AnalysisCard";
 
 function PropertyDisplay({ listingData, params }) {
   const price = listingData?.pricing?.internalValue;
@@ -321,6 +322,13 @@ function PropertyDisplay({ listingData, params }) {
           id: "calculateyourdreamhouse",
           Component: Calculation,
         },
+        {
+          name: "Analysis",
+          icon: "streamline:code-analysis-solid",
+          bgColor: "bg-red-500",
+          id: "analysis",
+          Component: AnalysisCard,
+        },
       ],
     },
     {
@@ -537,26 +545,34 @@ function PropertyDisplay({ listingData, params }) {
     <>
       <Toaster position="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-start  w-full hidden md:flex  ">
-          <div className="flex pl-6">
+        <div className="p-4 flex items-center justify-between  w-full hidden md:flex  ">
+          <div className="pl-6">
+            <Button size="lg" className=" bg-transparent border-2 border-blue-500 text-blue-500" ><Icon icon="mdi:arrow-left" /> Back</Button>
+            </div>
+          <div className="flex pr-6 gap-2">
+            <Button onClick={() => handleLikeToggle()} size="lg"  className="bg-transparent text-blue-500">
             <Icon
               icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={() => handleLikeToggle()}
-              className={`text-2xl mt-3 cursor-pointer ${
-                isLiked ? "text-red-500" : "text-gray-500"
+              
+              className={`text-2xl  cursor-pointer ${
+                isLiked ? "text-red-500" : "text-blue-500"
               }`}
-            />
+            />Watchlist
+            </Button>
             <Button
+            variant="bordered"
+            color="primary"
               size="lg"
-              className="bg-transparent text-blue-500"
+              className=" text-blue-500"
               onPress={onOpen}
             >
               <Icon icon="bx:share" />
               Share
             </Button>
             <Button
+            variant="light"
               size="lg"
-              className="bg-transparent text-blue-500"
+              className=" bg-blue-100 text-blue-500"
               onPress={DownloadPage}
             >
               <Icon icon="bx:download" />
