@@ -117,78 +117,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
     return R * c; // Distance in miles
   };
 
-  async function getNearbyLocations(
-    lat,
-    lon,
-    amenity = selectedAmenity,
-    radius = 3000,
-    limit = 10
-  ) {
-    const overpassUrl = "https://overpass-api.de/api/interpreter";
-    const overpassQuery = `
-            [out:json];
-            (
-              node["amenity"="${amenity}"](around:${radius},${lat},${lon});
-              way["amenity"="${amenity}"](around:${radius},${lat},${lon});
-              relation["amenity"="${amenity}"](around:${radius},${lat},${lon});
-            );
-            out center ${limit};
-            >;
-            out center qt;
-        `;
-
-    const postData = `data=${encodeURIComponent(overpassQuery)}`;
-
-    try {
-      const response = await fetch(overpassUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: postData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const jsonData = await response.json();
-      const locations = jsonData.elements
-        .filter((element) => element.tags && element.tags.amenity)
-        .map((element) => {
-          let lat, lon;
-          if (element.type === "node") {
-            lat = element.lat;
-            lon = element.lon;
-          } else {
-            lat = element.center.lat;
-            lon = element.center.lon || element.center.lng;
-          }
-
-          const address = formatAddress(element.tags);
-          const distance = haversineDistance(
-            { lat, lon },
-            { lat: center.lat, lon: center.lng || center.lon }
-          );
-
-          return {
-            name: element.tags.name || "na",
-            amenity: element.tags.amenity || "Unknown",
-            address: address,
-            lat,
-            lon,
-            distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
-          };
-        })
-        .filter((location) => location !== null);
-
-      return locations;
-    } catch (error) {
-      throw new Error("Error fetching nearby locations: " + error.message);
-    }
-  }
-
-  function formatAddress(tags) {
+  const formatAddress = (tags) => {
     const addressParts = [];
 
     if (tags["addr:housenumber"]) addressParts.push(tags["addr:housenumber"]);
@@ -200,8 +129,83 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
     return addressParts.join(", ");
   }
 
+// Fetching nearby locations (mockup function using Overpass API)
+async function getNearbyLocations(
+  latitude,
+  longitude,
+  amenity = selectedAmenity,
+  radius = 3000,
+  limit = 100
+) {
+
+  const overpassUrl = "https://overpass-api.de/api/interpreter";
+  const overpassQuery = `
+  [out:json][timeout:25];
+  (
+    node["amenity"="${amenity}"](around:${radius},${latitude},${longitude});
+    node["shop"="${amenity}"](around:${radius},${latitude},${longitude});
+    node["leisure"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["shop"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["amenity"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["leisure"="${amenity}"](around:${radius},${latitude},${longitude});
+  );
+  out center ${limit};
+  >;
+  `
+
+  const postData = `data=${encodeURIComponent(overpassQuery)}`;
+
+  try {
+    const response = await fetch(overpassUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: postData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const jsonData = await response.json();
+    const locations = jsonData.elements
+      .filter((element) => element.tags && (element.tags.amenity || element.tags.shop))
+      .map((element) => {
+        let lat, lon;
+        if (element.type === "node") {
+          lat = element.lat;
+          lon = element.lon;
+        } else {
+          lat = element.center.lat;
+          lon = element.center.lon || element.center.lng;
+        }
+
+        const address = formatAddress(element.tags);
+        const distance = haversineDistance(
+          { lat, lon },
+          { lat: latitude, lon: longitude }
+        );
+
+        return {
+          name: element.tags.name || "na",
+          amenity: element.tags.amenity || element.tags.shop || "Unknown",
+          address: address,
+          lat,
+          lon,
+          distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
+        };
+      })
+      .filter((location) => location !== null);
+     
+    return locations;
+  } catch (error) {
+    throw new Error("Error fetching nearby locations: " + error.message);
+  }
+}
+
   useEffect(() => {
-    getNearbyLocations(center.lat, center.lon)
+    getNearbyLocations(center.lat, center.lng)
       .then((locations) => {
         setLocations(locations);
       })

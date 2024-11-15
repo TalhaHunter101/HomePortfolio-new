@@ -119,26 +119,42 @@ const haversineDistance = (coords1, coords2) => {
   return R * c; // Distance in miles
 };
 
+
+const formatAddress = (tags) => {
+  const addressParts = [];
+
+  if (tags["addr:housenumber"]) addressParts.push(tags["addr:housenumber"]);
+  if (tags["addr:street"]) addressParts.push(tags["addr:street"]);
+  if (tags["addr:city"]) addressParts.push(tags["addr:city"]);
+  if (tags["addr:postcode"]) addressParts.push(tags["addr:postcode"]);
+  if (tags["addr:country"]) addressParts.push(tags["addr:country"]);
+
+  return addressParts.join(", ");
+}
+
+
 // Fetching nearby locations (mockup function using Overpass API)
 async function getNearbyLocations(
-  lat,
-  lon,
-  amenity = "restaurant",
-  radius = 5000,
-  limit = 10
+  latitude,
+  longitude,
+  amenity = selectedAmenity,
+  radius = 3000,
+  limit = 100
 ) {
   const overpassUrl = "https://overpass-api.de/api/interpreter";
   const overpassQuery = `
-      [out:json];
-      (
-        node["amenity"="${amenity}"](around:${radius},${lat},${lon});
-        way["amenity"="${amenity}"](around:${radius},${lat},${lon});
-        relation["amenity"="${amenity}"](around:${radius},${lat},${lon});
-      );
-      out center ${limit};
-      >;
-      out center qt;
-  `;
+  [out:json][timeout:25];
+  (
+    node["amenity"="${amenity}"](around:${radius},${latitude},${longitude});
+    node["shop"="${amenity}"](around:${radius},${latitude},${longitude});
+    node["leisure"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["shop"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["amenity"="${amenity}"](around:${radius},${latitude},${longitude});
+    way["leisure"="${amenity}"](around:${radius},${latitude},${longitude});
+  );
+  out center ${limit};
+  >;
+  `
 
   const postData = `data=${encodeURIComponent(overpassQuery)}`;
 
@@ -151,11 +167,15 @@ async function getNearbyLocations(
       body: postData,
     });
 
-    const jsonData = await response.json();
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-    return jsonData.elements
-      .filter((element) => element.tags && element.tags.amenity)
+    const jsonData = await response.json();
+    const locations = jsonData.elements
+      .filter((element) => element.tags && (element.tags.amenity || element.tags.shop))
       .map((element) => {
+        let lat, lon;
         if (element.type === "node") {
           lat = element.lat;
           lon = element.lon;
@@ -167,21 +187,23 @@ async function getNearbyLocations(
         const address = formatAddress(element.tags);
         const distance = haversineDistance(
           { lat, lon },
-          { lat: center.lat, lon: center.lng || center.lon }
+          { lat: latitude, lon: longitude }
         );
 
         return {
           name: element.tags.name || "na",
-          amenity: element.tags.amenity || "Unknown",
+          amenity: element.tags.amenity || element.tags.shop || "Unknown",
           address: address,
           lat,
           lon,
           distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
         };
-      });
+      })
+      .filter((location) => location !== null);
+    
+    return locations;
   } catch (error) {
-    console.error("Error fetching locations: ", error);
-    return [];
+    throw new Error("Error fetching nearby locations: " + error.message);
   }
 }
 
@@ -334,7 +356,8 @@ export function NearbyCard({ data, city, ShortAddress }) {
                               <li className="text-gray-800 text-sm">
                                 {item?.name}
                               </li>
-                              <li>{item?.category}</li>
+                              <li>{item?.address}</li>
+                              <li>{item?.distance}</li>
                             </ul>
                           </div>
                         </div>
