@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader, Chip, useDisclosure } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import MainCard from "../Property/MainCard";
 // import ThumbnailCard from "./ThumbnailCard";
@@ -41,8 +41,19 @@ import MarketInfoPage from "../PropertyPageCards/MarketInfo/MarketInfoPage";
 import DataShows from "../PropertyPageCards/DataShows";
 import DataNeighbour from "../PropertyPageCards/DataNeighbour";
 import ThumbnailCard from "../Property/ThumbnailCard";
+import { FAQCard } from "../PropertyPageCards/FAQCard";
+import BroadBandCard from "../PropertyPageCards/BroadBandCard";
+import { CellularInfoCard } from "../PropertyPageCards/CellularCard";
+import { AnalysisCard } from "../PropertyPageCards/AnalysisCard";
+import FloodData from "../PropertyPageCards/FloodData";
+import LocationMap from "../PropertyPageCards/LocationComponents/Location";
+import ShareModal from "../Property/ShareModal";
+import { storeUsersData } from "@/store/authStore";
+import toast, { Toaster } from "react-hot-toast";
+import pb from "@/lib/pocketbase";
 
 function PropertyDisplay({ listingData, params }) {
+  console.log("listingDataaaaaa", listingData)
   const [walkScore, setWalkScore] = useState(null);
   const [listingWalkScore, setListingWalkScore] = useState(null);
   const [busData, setBusData] = useState([]);
@@ -108,39 +119,7 @@ function PropertyDisplay({ listingData, params }) {
     analyticsTaxonomy: listingData?.analyticsTaxonomy,
   };
 
-  // getSchoolData();
-  // getPricePaidData();
 
-  //   const getPricePaidData = async () => {
-  //     try {
-  //       const response = await fetch("/api/indevisual/get-price-paid", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           city: listingData?.analyticsTaxonomy || "N.A",
-  //         }),
-  //       });
-
-  //       if (response.ok) {
-  //         const resultData = await response.json();
-  //         setPricePaidData(resultData);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching price paid data:", error);
-  //     }
-  //   };
-
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     await getSchoolData();
-  //     await getPricePaidData();
-  //     setLoading(false);
-  //   };
-
-  //   fetchData();
-  // }, [listingData, postcode]);
 
   let pathname = usePathname();
   let hashId = pathname.split("#")[1];
@@ -152,11 +131,19 @@ function PropertyDisplay({ listingData, params }) {
   const [rentEstimate, setRentEstimate] = useState(0);
   const [rentData, setRentData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [ShortAddress, setShortAddress] = useState(listingData?.full_address
+  );
 
-  // const formatedSqft = formatCurrency(
-  //   listingData?.analyticsTaxonomy?.sizeSqFeet || squerfoot
-  // );
 
+  useEffect(() => {
+    if (fullAdress) {
+      let shortadd = fullAdress.split(",")[0];
+
+      shortadd = shortadd.replace(/[0-9]/g, "").trim();
+
+      setShortAddress(shortadd);
+    }
+  }, [fullAdress]);
   useEffect(() => {
     const getSchoolData = async () => {
       if (!listingData?.ref_postcode) return; // Ensure there's a valid postcode before making the API call
@@ -185,24 +172,7 @@ function PropertyDisplay({ listingData, params }) {
     getSchoolData();
   }, [listingData?.ref_postcode]);
 
-  // const getPricePaidData = async () => {
-  //   try {
-  //     const result = await fetch("/api/indevisual/get-price-paid", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         city: listingData?.analyticsTaxonomy?.postTownName,
-  //       }),
-  //     });
 
-  //     if (result.ok) {
-  //       const resultData = await result.json();
-  //       setPricePaidData(resultData);
-  //     }
-  //   } catch (error) {}
-  // };
 
   const getRentData = async () => {
     try {
@@ -434,6 +404,13 @@ function PropertyDisplay({ listingData, params }) {
           id: "calculateyourdreamhouse",
           Component: Calculation,
         },
+        {
+          name: "Analysis",
+          icon: "streamline:code-analysis-solid",
+          bgColor: "bg-red-500",
+          id: "analysis",
+          Component: AnalysisCard,
+        },
       ],
     },
     {
@@ -453,6 +430,13 @@ function PropertyDisplay({ listingData, params }) {
           bgColor: "bg-red-200",
           id: "crimerate",
           Component: CrimeCard,
+        },
+        {
+          name: "Flood Map",
+          icon: "mdi:account-group",
+          bgColor: "bg-red-500",
+          id: "FloodMap",
+          Component: FloodData,
         },
         {
           name: "Is the air quality good?",
@@ -482,6 +466,34 @@ function PropertyDisplay({ listingData, params }) {
           id: "EPC",
           Component: EPCCard,
         },
+        {
+          name: "Cellular Information",
+          icon: "ion:cellular",
+          bgColor: "bg-red-500",
+          id: "Cellular",
+          Component: CellularInfoCard,
+        },
+        {
+          name: "Broadband Information",
+          icon: "ion:cellular",
+          bgColor: "bg-red-500",
+          id: "Cellular",
+          Component: BroadBandCard,
+        },
+        // {
+        //   name: "Similar Properties",
+        //   icon: "mdi:home-group",
+        //   bgColor: "bg-blue-200",
+        //   id: "similarproperties",
+        //   Component: SimilarHomesCard,
+        // },
+        {
+          name: "Frequently Asked Questions",
+          icon: "mdi:frequently-asked-questions",
+          bgColor: "bg-blue-300",
+          id: "faq",
+          Component: FAQCard,
+        },
       ],
     },
   ];
@@ -498,50 +510,204 @@ function PropertyDisplay({ listingData, params }) {
   };
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggleReadMore = () => {
-    setIsExpanded(!isExpanded);
+  // const toggleReadMore = () => {
+  //   setIsExpanded(!isExpanded);
+  // };
+
+  // const [isLiked, setIsLiked] = useState(false);
+
+  // const handleIconClick = () => {
+  //   setIsLiked(!isLiked);
+  // };
+  const [isMapInteractive, setIsMapInteractive] = useState(false);
+  const [geomData, setGeomData] = useState(null);
+  useEffect(() => {
+    const getGeomBoundary = async () => {
+      try {
+        const boundary = await fetch("/api/indevisual/get-sector-by-postcode", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postcode }),
+        });
+
+        if (!boundary.ok) return;
+        const geom = await boundary.json();
+        console.log("Geom details: ", geom);
+        setGeomData(geom);
+      } catch (error) {
+        console.error("Error fetching geometry:", error);
+      }
+    };
+    getGeomBoundary();
+  }, [postcode]);
+
+  const center = {
+    lat: listingData?.address?.latitude,
+    lng: listingData?.address?.longitude,
   };
 
+  const mapProps = {
+    center,
+    isMapInteractive,
+    // geom: geomData,
+
+  };
   const [isLiked, setIsLiked] = useState(false);
+  const { usersData } = storeUsersData();
+  const checkIfLiked = async () => {
+    if (!usersData || !usersData?.id) return; // Ensure the user is logged in
 
-  const handleIconClick = () => {
-    setIsLiked(!isLiked);
+    try {
+      // Retrieve the user's favorites collection
+      const response = await pb?.collection("favorite")?.getList(1, 1, {
+        filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
+      });
+
+      // Check if the property is found in the user's favorites
+      if (response?.items?.length >= 0) {
+        setIsLiked(true); // Property is already liked
+      } else {
+        setIsLiked(false); // Property is not liked yet
+      }
+    } catch (error) {
+      console.log("Error checking liked property:", error);
+    }
+  };
+  useEffect(() => {
+    checkIfLiked();
+  }, [listingData, usersData]);
+
+  const handleLikeToggle = async () => {
+    if (!usersData || !usersData?.id) {
+      alert("Please log in to add or remove favorites.");
+      return;
+    }
+
+    // Retrieve the PocketBase auth token from localStorage
+    if (typeof window !== "undefined") {
+      const authData = localStorage?.getItem("pocketbase_auth");
+      const parsedAuthData = authData ? JSON.parse(authData) : null;
+      const token = parsedAuthData?.token;
+
+      if (!token) {
+        alert("You need to log in to save favorites.");
+        return;
+      }
+    }
+
+    try {
+      if (isLiked) {
+        // If the property is already liked, remove it from favorites
+        const result = await pb?.collection("favorite")?.getList(1, 1, {
+          filter: `property_id='${listingData?.listingId}' && userId='${usersData?.id}'`,
+        });
+
+        if (result?.items?.length > 0) {
+          // Remove the favorite entry
+          await pb?.collection("favorite")?.delete(result?.items[0]?.id);
+          toast?.success("Property removed from favorites");
+        } else {
+          toast?.error("Error: favorite entry not found.");
+        }
+      } else {
+        // If the property is not liked, add it to favorites
+        await pb?.collection("favorite")?.create({
+          property_id: listingData?.listingId,
+          userId: usersData?.id,
+        });
+        toast?.success("Property added to favorites");
+      }
+
+      // Toggle the `isLiked` state
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console?.error("Error toggling favorite:", error);
+      toast?.error("Error updating favorites");
+    }
+  };
+  const DownloadPage = () => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = html.scrollWidth;
+    canvas.height = html.scrollHeight;
+
+    const ctx = canvas.getContext("2d");
+    const data = new XMLSerializer().serializeToString(
+      document.documentElement
+    );
+
+    const DOMURL = window.URL || window.webkitURL || window;
+    const img = new Image();
+    const svg = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
+    const url = DOMURL.createObjectURL(svg);
+
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      DOMURL.revokeObjectURL(url);
+
+      const a = document.createElement("a");
+      a.download = "property-page.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    };
+
+    img.src = url;
   };
 
-  
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
 
   return (
     <>
+      <Toaster placement="bottom-center" />
       <div className="max-w-[87rem] mt-16 mx-auto flex flex-col items-center justify-center">
-        <div className="p-4 flex items-center justify-end  w-full hidden md:flex  ">
-          <div className="flex  space-x-2">
-            <Icon
-              icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
-              onClick={handleIconClick}
-              className={`text-2xl mt-3 cursor-pointer ${
-                isLiked ? "text-red-500" : "text-gray-500"
-              }`}
-            />
-            <Button size="lg" className="bg-transparent">
+        <div className="p-4 flex items-center justify-between  w-full hidden md:flex  ">
+          <div className="pl-6">
+            <Button size="lg" className=" bg-transparent border-2 border-blue-500 text-blue-500" ><Icon icon="mdi:arrow-left" /> Back</Button>
+          </div>
+          <div className="flex pr-6 gap-2">
+            <Button onClick={() => handleLikeToggle()} size="lg" className="bg-transparent text-blue-500">
+              <Icon
+                icon={isLiked ? "fxemoji:redheart" : "mdi:heart-outline"}
+
+                className={`text-2xl  cursor-pointer ${isLiked ? "text-red-500" : "text-blue-500"
+                  }`}
+              />Watchlist
+            </Button>
+            <Button
+              variant="bordered"
+              color="primary"
+              size="lg"
+              className=" text-blue-500"
+              onPress={onOpen}
+            >
               <Icon icon="bx:share" />
               Share
             </Button>
+            <Button
+              variant="light"
+              size="lg"
+              className=" bg-blue-100 text-blue-500"
+              onPress={DownloadPage}
+            >
+              <Icon icon="bx:download" />
+              Download
+            </Button>
+            <ShareModal
+              isOpen={isOpen}
+              onClose={onOpenChange}
+              pageURL={pathname}
+            />
           </div>
         </div>
 
         {/* main div */}
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 px-6 w-full">
-          <div className="lg:col-span-7">
-            {mainImages && <MainCard images={mainImages} />}
-          </div>
-          <div className="hidden lg:grid lg:col-span-3 grid-cols-1 md:grid-cols-2 gap-4">
-            {thumbnailImages &&
-              thumbnailImages?.map((imageUrl, index) => (
-                <ThumbnailCard key={index} imageUrl={imageUrl} />
-              ))}
-          </div>
+        <div className="pb-2   px-8 w-full">
+          <LocationMap isInteractive={isMapInteractive} {...mapProps} postcode={postcode} />
         </div>
-        <div className="flex justify-start px-6 gap=4 w-full">
+        <div className="flex justify-start px-8 gap-4  pt-2 w-full">
           <Chip color="warning" className="mt-4 text-white font-semibold">
             OFF Market
           </Chip>
@@ -609,45 +775,53 @@ function PropertyDisplay({ listingData, params }) {
             </div>
 
             {/* Existing styles for larger screens */}
-            <div className="mb-4 lg:pl-6 flex items-center flex-col lg:flex-row hidden md:flex">
-              {/* Original content for larger screens */}
-              <div className="flex-1 text-center lg:text-left">
-                <h3 className="font-bold text-2xl lg:text-4xl">
-                  £{formattedPrice}
-                </h3>
-                <span className="text-sm font-bold lg:text-base flex items-center">
-                  <Icon
-                    icon="mdi:map-marker-outline"
-                    className="text-gray-500 mr-1"
-                  />
-                  {fullAdress || listingData?.address}
-                </span>
-                <span className="font-bold text-gray-400 text-sm lg:text-base">
-                  {" "}
-                  {listingData?.area}
-                </span>
+            <Card className="p-4 mr-4 ml-6 rounded-md hidden md:block">
+              <div className="mb-4  flex items-center flex-row hidden md:flex">
+                {/* Content for md and lg screens */}
+                <div className="flex-1 text-center md:text-left">
+                  <p className="font-bold text-2xl lg:text-4xl">
+                    £{formattedPrice}
+                  </p>
+                  <span className="text-sm font-bold lg:text-base flex items-center">
+                    <Icon
+                      icon="mdi:map-marker-outline"
+                      className="text-gray-500 mr-1"
+                    />
+                    {fullAdress || listingData?.address}
+                  </span>
+                  <span className="font-bold text-gray-400 text-sm lg:text-base">
+                    {" "}
+                    {listingData?.area}
+                  </span>
+                </div>
+                <div className="flex flex-row space-x-4 md:space-x-8 mt-4 md:mt-0">
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {bedrooms}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">beds</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {bathrooms}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">baths</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-2xl lg:text-4xl">
+                      {listingData?.sqft || sqfeetData || squerfoot || "N.A"}
+                    </p>
+                    <p className="text-xs lg:text-sm text-gray-600">sqft</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-row space-x-4 lg:space-x-8 mt-4 lg:mt-0">
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bedrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">beds</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {bathrooms}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">baths</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-2xl lg:text-4xl">
-                    {listingData?.sqft || sqfeetData || squerfoot || "N.A"}
-                  </h3>
-                  <p className="text-xs lg:text-sm text-gray-600">sqft</p>
-                </div>
-              </div>
-            </div>
+              <p className="text-sm ml-2 font-bold hidden md:block">
+                {/* {listingData?.title} */}
+              </p>
+
+
+
+            </Card>
 
             {/* <p className="text-sm pl-6 font-bold hidden md:block">
               {listingData?.title}
@@ -670,7 +844,7 @@ function PropertyDisplay({ listingData, params }) {
                       // schoolData={schoolData}
                       city={town}
                       postTownName={
-                        listingData?.analyticsTaxonomy?.postTownName
+                        listingData?.ref_postcode
                       }
                       cards={mcards}
                       // data={listingData}
@@ -692,6 +866,8 @@ function PropertyDisplay({ listingData, params }) {
                       schoolData={schoolData}
                       setRentEstimate={setRentEstimate}
                       rentData={rentData}
+                      ShortAddress={ShortAddress}
+
                     />
                   </div>
                 ))}
@@ -737,13 +913,11 @@ function PropertyDisplay({ listingData, params }) {
                                   (subElement, subIndex) => (
                                     <motion.li
                                       key={subElement.id}
-                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${
-                                        subElement.bgColor
-                                      } ${
-                                        hoveredSubElement === subElement.id
+                                      className={`rounded-lg flex items-center mb-1 text-foreground py-2 px-2 hover:${subElement.bgColor
+                                        } ${hoveredSubElement === subElement.id
                                           ? subElement.bgColor
                                           : ""
-                                      }`}
+                                        }`}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: subIndex * 0.01 }}
