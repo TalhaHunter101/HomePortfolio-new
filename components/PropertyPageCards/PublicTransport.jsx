@@ -177,7 +177,7 @@ export function PublicTransportCard({
                     } border hover:bg-green-200`}
                     onClick={() => setSelectedType("rail")}
                   >
-                    <Icon icon="mdi:train" width="1em" height="1em" />
+                    <Icon icon="mdi:train"  width="1em" height="1em" />
                     <div>Rail ({transportCounts?.rail || 0})</div>
                   </button>
                   <button
@@ -229,7 +229,7 @@ export function PublicTransportCard({
                                       icon="mdi:train"
                                       width="1em"
                                       height="1em"
-                                      className="mr-1"
+                                      className="mr-1 text-red-500"
                                     />
                                     • {transport?.distanceInMiles} mi away
                                   </>

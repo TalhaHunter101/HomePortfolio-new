@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader, Chip, Image } from "@nextui-org/react";
 import Carousel from "./CrimeComponents/GraphCarousal";
 import { Icon } from "@iconify/react";
 import { CrimeMapStatic } from "../Maps";
+import { BadgeCard } from "./CrimeComponents/CarousalItems/BadgeCard";
 
 export function CrimeCard({ postcode, ShortAddress }) {
   const [crimeData, setCrimeData] = useState([]);
@@ -35,6 +36,7 @@ export function CrimeCard({ postcode, ShortAddress }) {
       getCrimeData(postcode);
     }
   }, [postcode]);
+  
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -67,6 +69,7 @@ export function CrimeCard({ postcode, ShortAddress }) {
         </CardBody>
       ) : (
         <CardBody>
+         <BadgeCard reportData={crimeData} />
           <CrimeReportCard reportData={crimeData} />
         </CardBody>
       )}

@@ -19,7 +19,7 @@ const SecondSection = () => {
     <div className="flex flex-col w-full mt-8">
       {/* Line Chart Section - Top */}
       <div className="flex w-full mb-8">
-        <div className="flex-shrink-0 mr-8 w-2/3">
+        <div className="flex-shrink-0 mr-8 w-full">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -27,14 +27,14 @@ const SecondSection = () => {
               <YAxis />
               <Tooltip />
               <Line type="monotone" dataKey="income" stroke="#34A853" strokeWidth={2} />
-              <Line type="monotone" dataKey="cashFlow" stroke="#000000" strokeWidth={2} />
-              <Line type="monotone" dataKey="expenses" stroke="#EA4335" strokeWidth={2} />
+              <Line type="monotone" dataKey="cashFlow" stroke="#42A5F5" strokeWidth={2} />
+              <Line type="monotone" dataKey="expenses" stroke="#AB47BC" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         {/* Data Summary Section - Right */}
-        <div className="flex-grow">
+        {/* <div className="flex-grow">
           <div className="font-semibold text-gray-700 text-2xl mb-2">Monthly Cash Flow</div>
           <div className="text-3xl font-semibold text-gray-700 mb-4">$1,569/mo</div>
 
@@ -52,7 +52,7 @@ const SecondSection = () => {
               <div className="text-xl text-gray-700 font-bold">75.34%</div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Divider */}
@@ -70,7 +70,7 @@ const SecondSection = () => {
           <div className="text-2xl text-gray-700 font-bold">$429.46</div>
         </div>
       </div>
-      <Divider className="my-4" />
+    
     </div>
   );
 };

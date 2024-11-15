@@ -84,7 +84,7 @@ const FirstSection = () => {
           </div>
 
           {/* Variable Expenses Column */}
-          <div>
+          {/* <div>
             <div className="font-semibold mb-2">Variable Expenses</div>
             {variableExpenses.map((expense, index) => (
               <div key={index} className="flex justify-between mb-2">
@@ -92,7 +92,7 @@ const FirstSection = () => {
                 <div className="text-right">${expense.value}</div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

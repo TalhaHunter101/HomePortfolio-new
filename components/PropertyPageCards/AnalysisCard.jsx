@@ -60,9 +60,9 @@ export function AnalysisCard({ price, roi }) {
         <FirstSection />
         <Divider className='my-6' />
         <SecondSection />
-        <ThirdSection/>
-        <Divider className='my-6' />
-        <FourthSection/>
+        {/* <ThirdSection/> */}
+        {/* <Divider className='my-6' />
+        <FourthSection/> */}
         <Divider className='my-6' />
         <FifthSection/>
 
