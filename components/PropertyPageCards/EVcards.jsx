@@ -44,7 +44,7 @@ export function EVCard({ price, roi, city, postTownName, ShortAddress }) {
       }
     };
     getEvChargingData();
-  }, [postTownName]);
+  }, [postTownName, city]);
 
   return (
     <Card className="m-4" style={{ minHeight: "150px", maxWidth: "1066px" }}>
@@ -58,7 +58,7 @@ export function EVCard({ price, roi, city, postTownName, ShortAddress }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            Where Can I Charge My Electric Vehicle near {postTownName}?
+            Where Can I Charge My Electric Vehicle near {postTownName || city}?
           </h2>
         </div>
       </CardHeader>
@@ -115,8 +115,12 @@ export function EVCard({ price, roi, city, postTownName, ShortAddress }) {
                       <div className="w-full hidden md:block h-full bg-white border-1">
                         <EvChargingMapStatic
                           center={evChargingData?.map((data) => ({
-                            lat: parseFloat(data?._source?.latitude),
-                            lng: parseFloat(data?._source?.longitude),
+                            lat: parseFloat(
+                              data?._source?.coordinates?.latitude
+                            ),
+                            lng: parseFloat(
+                              data?._source?.coordinates?.longitude
+                            ),
                           }))}
                         />
                       </div>
@@ -142,25 +146,47 @@ export function EVCard({ price, roi, city, postTownName, ShortAddress }) {
                           transform: `translateX(-${currentIndex * 100}%)`,
                         }}
                       >
-                        {evChargingData?.map((item, index) => (
-                          <div
-                            key={index}
-                            className="flex-shrink-0 w-[100%] h-full p-2"
-                          >
-                            <CardItem
-                              title1={item?._source?.name}
-                              address1={item?._source?.street}
-                              description1={item?._source?.deviceModel}
-                              svgIcon1={item?._source?.svgIcon}
-                              title2={item?._source?.deviceOwnerName}
-                              address2={item?._source?.deviceOwnerWebsite}
-                              description2={item?._source?.deviceNetworks}
-                              svgIcon2={item?._source?.svgIcon}
-                              type={item?._source?.connector1Type}
-                              status={item?._source?.connector1Status}
-                            />
-                          </div>
-                        ))}
+                        {evChargingData?.map((item, index) => {
+                          const source = item?._source;
+                          const device = source?.devices?.[0];
+                          const evse = device?.evses?.[0];
+                          const connector = evse?.connectors?.[0];
+                          const isFree = device?.payment_details?.is_free;
+
+                          return (
+                            <div
+                              key={index}
+                              className="flex-shrink-0 w-[100%] h-full p-2"
+                            >
+                              <CardItem
+                                title1={source?.name || "Charging Location"}
+                                address1={`${source?.address || ""}, ${
+                                  source?.city || ""
+                                }`}
+                                description1={
+                                  device?.payment_details
+                                    ?.subscription_details ||
+                                  "No payment details"
+                                }
+                                svgIcon1={source?.operator?.logo}
+                                title2={source?.operator?.name || "Operator"}
+                                address2={
+                                  source?.owner?.name || "Owner Unknown"
+                                }
+                                description2={
+                                  device?.parking?.access_restrictions ||
+                                  "Access restrictions not available"
+                                }
+                                svgIcon2={source?.operator?.banner}
+                                type={connector?.standard || "Unknown Type"}
+                                status={
+                                  connector?.power_type || "Unknown Power Type"
+                                }
+                                isFree={isFree} // Pass free/paid status
+                              />
+                            </div>
+                          );
+                        })}
                       </div>
                       <Button
                         radius="full"

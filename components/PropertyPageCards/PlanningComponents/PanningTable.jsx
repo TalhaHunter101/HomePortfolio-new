@@ -80,7 +80,7 @@ const PlanningApplicationsTable = ({ planningData, timeFrame }) => {
             {isExpanded ? description : `${description.substring(0, 100)}`}
 
             <a
-              href={source?.other_fields?.source_url}
+              href={source?.url}
               target="_blank"
               className="text-blue-500 hover:text-blue-700 ml-2 text-sm"
             >
