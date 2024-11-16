@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import HorizontalSteps from "@/components/BrrCalculator/Stepper";
 import Steper3Calculator from "@/components/BrrCalculator/Steper3Calculator";
 import Steper4Calculator from '@/components/BrrCalculator/Steper4Calculator';
+import Steper1Calculator from '@/components/BrrCalculator/Steper1Calculator';
+import Stepper2Calculator from '@/components/BrrCalculator/Stepper2Calculator';
 
 function Calculators() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -10,10 +12,10 @@ function Calculators() {
   // Components for each step
   const StepComponents = {
     0: () => (
-      <p>Property Info</p>
+      <Steper1Calculator/>
     ),
     1: () => (
-      <p>Purchase Info</p>
+      <Stepper2Calculator/>
     ),
     2: () => (
       <Steper3Calculator />
