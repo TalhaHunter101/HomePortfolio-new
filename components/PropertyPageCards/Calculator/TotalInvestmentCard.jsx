@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from "react";
 import { Input, CardBody, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
@@ -20,8 +21,8 @@ export default function TotalInvestmentCard() {
     setRefurbishmentCost,
     furnishingsCost,
     setFurnishingsCost,
-    otherExpenses,
-    setOtherExpenses,
+    initialExpenses,
+    setInitialExpenses,
     totalInvestment,
     setTotalInvestment,
   } = useCalculationsStore();
@@ -35,24 +36,24 @@ export default function TotalInvestmentCard() {
       Number(closingCost || 0) + 
       Number(refurbishmentCost || 0) + 
       Number(furnishingsCost || 0) + 
-      Number(otherExpenses || 0);
+      Number(initialExpenses || 0);
     setStampDuty?.(calculatedStampDuty);
     setTotalInvestment?.(totalInvestmentValue);
-  }, [purchasePrice, closingCost, refurbishmentCost, furnishingsCost, otherExpenses, setStampDuty, setTotalInvestment]);
+  }, [purchasePrice, closingCost, refurbishmentCost, furnishingsCost, initialExpenses, setStampDuty, setTotalInvestment]);
 
-  // Calculate closing cost based on percentage
-  useEffect(() => {
-    const calculatedClosingCosts = (purchasePrice || 0) * (closingCostPercentage / 100);
-    setClosingCost?.(calculatedClosingCosts);
-  }, [purchasePrice, closingCostPercentage, setClosingCost]);
+  // // Calculate closing cost based on percentage
+  // useEffect(() => {
+  //   const calculatedClosingCosts = (purchasePrice || 0) * (closingCostPercentage / 100);
+  //   setClosingCost?.(calculatedClosingCosts);
+  // }, [purchasePrice, closingCostPercentage, setClosingCost]);
 
-  // Update closing cost percentage when closing cost changes
-  useEffect(() => {
-    if (purchasePrice > 0) {
-      const percentage = ((closingCost / purchasePrice) * 100).toFixed(2);
-      setClosingCostPercentage?.(percentage);
-    }
-  }, [closingCost, purchasePrice, setClosingCostPercentage]);
+  // // Update closing cost percentage when closing cost changes
+  // useEffect(() => {
+  //   if (purchasePrice > 0) {
+  //     const percentage = ((closingCost / purchasePrice) * 100).toFixed(2);
+  //     setClosingCostPercentage?.(percentage);
+  //   }
+  // }, [closingCost, purchasePrice, setClosingCostPercentage]);
 
   return (
     <div className="mt-2">
@@ -63,7 +64,7 @@ export default function TotalInvestmentCard() {
         <span className="text-md lg:text-xl font-bold text-purple-900">Total Investment</span>
         <div className="flex items-center">
           <span className="text-md lg:text-xl font-bold text-purple-900 mr-2">
-            £{totalInvestment?.toLocaleString('en-GB')}
+            £{parseInt(totalInvestment)?.toLocaleString('en-GB')}
           </span>
           <Icon
             icon="mdi:chevron-down"
@@ -86,13 +87,13 @@ export default function TotalInvestmentCard() {
             </label>
             <Input
               type="text"
-              value={purchasePrice?.toLocaleString('en-GB') || ''}
+              value={parseInt(purchasePrice)?.toLocaleString('en-GB') || ''}
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ""));
+                const value = parseInt(e.target.value.replace(/,/g, ""));
                 setPurchasePrice?.(isNaN(value) ? 0 : value);
               }}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
             />
           </div>
@@ -105,27 +106,9 @@ export default function TotalInvestmentCard() {
               type="text"
               value={stampDuty?.toLocaleString('en-GB') || ''}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               readOnly
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">
-              Closing Costs Percentage
-            </label>
-            <Slider
-              value={closingCostPercentage || 0}
-              onChange={(value) => setClosingCostPercentage?.(value)}
-              minValue={0}
-              maxValue={10}
-              step={0.1}
-              endContent={
-                <div className="pointer-events-none text-gray-400">
-                  {closingCostPercentage || 0}%
-                </div>
-              }
             />
           </div>
 
@@ -142,8 +125,8 @@ export default function TotalInvestmentCard() {
                 const value = parseFloat(e.target.value.replace(/,/g, ""));
                 setClosingCost?.(isNaN(value) ? 0 : value);
               }}
-              endContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+              startContent={
+                <div className="pointer-events-none">£</div>
               }
             />
           </div>
@@ -160,7 +143,7 @@ export default function TotalInvestmentCard() {
                 setRefurbishmentCost?.(isNaN(value) ? 0 : value);
               }}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
             />
           </div>
@@ -177,7 +160,7 @@ export default function TotalInvestmentCard() {
                 setFurnishingsCost?.(isNaN(value) ? 0 : value);
               }}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
             />
           </div>
@@ -188,13 +171,13 @@ export default function TotalInvestmentCard() {
             </label>
             <Input
               type="text"
-              value={otherExpenses?.toLocaleString('en-GB') || ''}
+              value={initialExpenses?.toLocaleString('en-GB') || ''}
               onChange={(e) => {
                 const value = parseFloat(e.target.value.replace(/,/g, ""));
-                setOtherExpenses?.(isNaN(value) ? 0 : value);
+                setInitialExpenses?.(isNaN(value) ? 0 : value);
               }}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
             />
           </div>
