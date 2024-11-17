@@ -37,12 +37,12 @@ const useStore = create((set) => ({
     try {
       set({ isDataLoading: true });
 
-      const response = await fetch(`/api/search/listing-search`, {
+      const response = await fetch(`/api/get-postcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ searchValue: searchTerm }),
+        body: JSON.stringify({ query: searchTerm }),
       });
 
       const postcodeResult = await response.json();

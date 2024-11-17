@@ -43,7 +43,7 @@ export default function FloatingCard({ data }) {
                 </Chip>
 
                 <span className="font-semibold">
-                  <a href={item?._source?.other_fields?.source_url}>
+                  <a href={item?._source?.url} target="_blank">
                     <Icon  icon="iconamoon:link-external-thin" />
                   </a>
                 </span>

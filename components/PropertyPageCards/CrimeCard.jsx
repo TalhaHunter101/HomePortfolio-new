@@ -4,8 +4,9 @@ import { Card, CardBody, CardHeader, Chip, Image } from "@nextui-org/react";
 import Carousel from "./CrimeComponents/GraphCarousal";
 import { Icon } from "@iconify/react";
 import { CrimeMapStatic } from "../Maps";
+import { BadgeCard } from "./CrimeComponents/CarousalItems/BadgeCard";
 
-export function CrimeCard({ postcode,ShortAddress }) {
+export function CrimeCard({ postcode, ShortAddress }) {
   const [crimeData, setCrimeData] = useState([]);
 
   const getCrimeData = async (postcode) => {
@@ -31,29 +32,29 @@ export function CrimeCard({ postcode,ShortAddress }) {
   };
 
   useEffect(() => {
-    if (postcode){
+    if (postcode) {
       getCrimeData(postcode);
     }
   }, [postcode]);
-
- 
-
   
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
       <CardHeader>
-        <div className="flex items-center my-2">
+        <div className="flex items-center justify-between my-2 relative">
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-purple-200 rounded-full mr-2">
             <Icon
               icon="game-icons:crime-scene-tape"
               width={16}
-              className="text-purple-700" // Adjust the icon color if needed
+              className="text-purple-700"
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-          what are the Crime Rates in {ShortAddress}?
+            What are the Crime Rates in {ShortAddress}?
           </h2>
+          <h3 className="text-xl font-bold text-gray-700 absolute right-[-17vw]">
+            {crimeData.length} reported crimes
+          </h3>
         </div>
       </CardHeader>
 
@@ -68,6 +69,7 @@ export function CrimeCard({ postcode,ShortAddress }) {
         </CardBody>
       ) : (
         <CardBody>
+         <BadgeCard reportData={crimeData} />
           <CrimeReportCard reportData={crimeData} />
         </CardBody>
       )}
@@ -127,7 +129,7 @@ export const CrimeReportCard = ({ reportData }) => {
     <div className="flex flex-col lg:flex-row w-full justify-between">
       {/* Left Section */}
       <div className="lg:w-1/2 w-full p-6 bg-white rounded-lg flex flex-col mb-6 lg:mb-0">
-        <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block ">
+        {/* <Chip className="bg-yellow-200 rounded-full mb-5 px-3 py-1 inline-block ">
           <span className="text-sm font-medium pb-5 text-gray-700">
             Average crime
           </span>
@@ -137,12 +139,11 @@ export const CrimeReportCard = ({ reportData }) => {
         </div>
         <p className="text-sm mb-8 text-gray-500">
           in this area in the last 12 months.
-        </p>
+        </p> */}
 
         <div style={{ height: "400px", width: "100%" }}>
           <CrimeMapStatic center={crimeLocations} height="400px" />
         </div>
-       
       </div>
 
       {/* Right Section */}

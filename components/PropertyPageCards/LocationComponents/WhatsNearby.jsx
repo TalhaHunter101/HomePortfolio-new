@@ -88,11 +88,10 @@ const amenities = [
 const WhatsNearbyMap = ({ center, isInteractive }) => {
   const [locations, setLocations] = useState([]);
   const [selectedAmenity, setSelectedAmenity] = useState(amenities[0]);
-  const {selecteNearbyLocation} = useNearByStore();
-
+  const { selecteNearbyLocation } = useNearByStore();
 
   console.log("selecteNearbyLocation", selecteNearbyLocation);
-  
+
   const haversineDistance = (coords1, coords2) => {
     const toRad = (x) => (Number(x) * Math.PI) / 180;
 
@@ -101,7 +100,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
     const lat2 = Number(coords2.lat);
     const lon2 = Number(coords2.lon);
 
-    const R = 6371; // Radius of the Earth in km
+    const R = 3959; // Radius of the Earth in miles (instead of 6371 km)
 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
@@ -115,7 +114,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distance in km
+    return R * c; // Distance in miles
   };
 
   async function getNearbyLocations(
@@ -178,7 +177,7 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
             address: address,
             lat,
             lon,
-            distance: !isNaN(distance) ? `${distance.toFixed(2)} km` : "N/A",
+            distance: !isNaN(distance) ? `${distance.toFixed(2)} mi` : "N/A",
           };
         })
         .filter((location) => location !== null);
@@ -261,7 +260,6 @@ const WhatsNearbyMap = ({ center, isInteractive }) => {
 const PlaceCard = ({ place }) => {
   const { setSelectedNearbyLocation } = useNearByStore();
   const amenity = amenities.find((a) => a.key === place.amenity);
-  
 
   return (
     <button
@@ -290,6 +288,5 @@ const PlaceCard = ({ place }) => {
     </button>
   );
 };
-
 
 export default WhatsNearbyMap;

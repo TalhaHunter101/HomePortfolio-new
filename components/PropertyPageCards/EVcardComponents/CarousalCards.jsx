@@ -11,41 +11,38 @@ const CardItem = ({
   description2,
   svgIcon2,
   type,
-  status
+  status,
+  isFree,
 }) => {
   return (
     <Card className="w-full h-[50vh]" shadow="none">
       <CardBody className="p-4 flex flex-col justify-between">
-        {/* First Section */}
-        <div className="flex items-start  border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
-          <div className="">
-            <p className="font-semibold text-gray-800 text-base sm:text-lg">
-              {title1}
-            </p>
+        {/* Charging Location Section */}
+        <div className="flex items-start border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
+          <div>
+            <p className="font-semibold text-gray-800 text-base sm:text-lg">{title1}</p>
             <div className="text-sm text-gray-600">{address1}</div>
             <div className="text-sm text-gray-600">{description1}</div>
-            <Image src="/icons/charging.svg" alt="SVG Icon" className="h-10" />
-            <div className="text-sm text-gray-600 my-2">{type}</div>
-            <Chip color="primary">{status}</Chip>
-            <div className="flex mb-2 flex-col items-center">
-              {/*  Icon for chargers */}
+            {svgIcon1 && <Image src={svgIcon1} alt="Operator Logo" className="h-10 my-2" />}
+            <div className="text-sm text-gray-600 my-2">Connector Type: {type}</div>
+            <Chip color="primary">Power Type: {status}</Chip>
+            <div className="text-sm text-gray-600 my-2">
+              {isFree ? (
+                <Chip color="success">Free Charging</Chip>
+              ) : (
+                <Chip color="warning">Paid Charging</Chip>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Second Section */}
-        <div className="flex items-start mt-2 border h-1/2 p-2 rounded-lg shadow bg-green-100 border-green-100 justify-between">
+        {/* Operator and Owner Section */}
+        <div className="flex items-start  border pt-10 h-1/2 p-2 py-4 rounded-lg shadow bg-green-100 border-green-100 justify-between">
           <div>
-            <p className="font-semibold text-gray-800 text-base sm:text-lg">
-              {title2}
-            </p>
+            <p className="font-semibold text-gray-800 text-base sm:text-lg">{title2}</p>
             <div className="text-sm text-gray-600">{address2}</div>
             <div className="text-sm text-gray-600">{description2}</div>
-              <Image src="/icons/charging.svg" alt="SVG Icon" className="h-10" />
-            <div className="text-sm text-gray-600 my-2">{type}</div>
-            <Chip color="primary">{status}</Chip>
-            <div className="flex flex-col items-center">
-            </div>
+            {svgIcon2 && <Image src={svgIcon2} alt="Operator Banner" className="h-10 my-2" />}
           </div>
         </div>
       </CardBody>

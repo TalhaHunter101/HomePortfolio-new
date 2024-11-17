@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { CrimeReportCard } from "./CarousalItems/TopRated";
-import { BadgeCard } from "./CarousalItems/BadgeCard";
+// import { BadgeCard } from "./CarousalItems/BadgeCard";
 import CrimeTypesChart from "./CarousalItems/CrimesTypesChart";
 import CrimeLevelsChart from "./CarousalItems/CrimeLevelsChart";
 
@@ -12,7 +12,7 @@ const Carousel = ({ data }) => {
 
   const components = [
     <CrimeReportCard key={0} reportData={data} />,
-    <BadgeCard key={1}  reportData={data}  />,
+    // <BadgeCard key={1}  reportData={data}  />,
     <CrimeTypesChart key={1} reportData={data} />,
     <CrimeLevelsChart key={2} reportData={data} />,
   ];

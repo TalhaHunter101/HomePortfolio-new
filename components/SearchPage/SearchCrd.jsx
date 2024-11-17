@@ -104,8 +104,33 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {property?.images?.map((image, index) => (
-                <div key={index} className="flex-shrink-0 w-full">
+              {property?.images?.length > 0 ? (
+                property.images.map((image, index) => (
+                  <div key={index} className="flex-shrink-0 w-full">
+                    <Link
+                      href={{
+                        pathname: `/property/${String(
+                          property?.displayAddress || ""
+                        )
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")
+                          .replace(/,/g, "")}?id=${property?.id}`,
+                      }}
+                    >
+                      <Image
+                        radius="none"
+                        src={image?.original}
+                        alt={`Property ${index + 1}`}
+                        width={600}
+                        height={200}
+                        classNames={{ wrapper: "min-w-full" }}
+                      />
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                // Render dummy image if no images are available
+                <div className="flex-shrink-0 w-full">
                   <Link
                     href={{
                       pathname: `/property/${String(
@@ -118,15 +143,15 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
                   >
                     <Image
                       radius="none"
-                      src={image?.original}
-                      alt={`Property ${index + 1}`}
+                      src="/undraw_no_data_re_kwbl (1).svg" // Replace with the actual path to your dummy image
+                      alt="No Property Image Available"
                       width={600}
                       height={200}
                       classNames={{ wrapper: "min-w-full" }}
                     />
                   </Link>
                 </div>
-              ))}
+              )}
             </div>
           </div>
           <div className="absolute inset-y-1/2 flex w-full justify-between px-2">
@@ -164,7 +189,6 @@ const SearchCard = ({ property, setCardHover, isLiked: initialLiked }) => {
         </div>
       </CardHeader>
       <CardBody className="overflow-hidden py-2">
-        {/* <Link href={`/property/${property.id}?address=${property?.displayAddress}`}> */}
         <Link
           href={{
             pathname: `/property/${String(property?.displayAddress || "")

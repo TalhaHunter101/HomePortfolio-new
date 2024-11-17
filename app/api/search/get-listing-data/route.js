@@ -1,6 +1,6 @@
 import { getSearchListingData } from "@/lib/ESfunctions/newsearch";
 import { NextResponse } from "next/server";
-
+ 
 export async function POST(request) {
   try {
     const { searchValue, type, filters, currentPage, pageSize, coordinates } = await request.json();

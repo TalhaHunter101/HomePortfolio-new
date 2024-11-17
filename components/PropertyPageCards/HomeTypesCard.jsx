@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { DistributionPieChart } from "./Charts/DistributionPieChart";
 import { ScatterChartComponent } from "./Charts/MarketScatterChart";
 import { DistributionBarChart } from "./Charts/DistributionBarChart";
 import { formatPrice } from "@/utils/Helper";
-import { useState } from "react";
 import { Icon } from "@iconify/react";
 
 export function HomeTypesCard({ city }) {
@@ -77,84 +76,95 @@ export function HomeTypesCard({ city }) {
           <div className="flex items-center justify-center w-8 h-8 aspect-square bg-green-400 rounded-full mr-2">
             <Icon
               icon="carbon:home"
-              width={16} // Adjust the icon size to fit well within the circle
-              className="" // Adjust the icon color if needed
+              width={16}
+              className=""
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-            What type of Homes available for sale by home type, beds & price range?
+            What type of Homes are available for sale by home type, beds & price range?
           </h2>
         </div>
       </CardHeader>
-      <CardBody>
-        <div className="h-full rounded-md p-4">
-          <div className="flex flex-col justify-between gap-y-4 h-full layout-single md:fullbleed">
-            {/* Home Types Distribution Section */}
-            <div className="flex flex-row flex-wrap gap-8">
-              <div className="flex flex-col gap-y-2 flex-1 basis-96">
-                <div className="text-xl font-semibold">Home Types Distribution</div>
+      {data.length === 0 ? (
+        <CardBody className="flex flex-col items-center justify-center">
+          <Image
+            src="/undraw_no_data_re_kwbl (1).svg"
+            alt="No data found"
+            className="w-40 h-40 mb-4"
+          />
+          <div className="text-gray-500 text-lg">No data available</div>
+        </CardBody>
+      ) : (
+        <CardBody>
+          <div className="h-full rounded-md p-4">
+            <div className="flex flex-col justify-between gap-y-4 h-full layout-single md:fullbleed">
+              {/* Home Types Distribution Section */}
+              <div className="flex flex-row flex-wrap gap-8">
+                <div className="flex flex-col gap-y-2 flex-1 basis-96">
+                  <div className="text-xl font-semibold">Home Types Distribution</div>
 
-                <DistributionPieChart
-                  main_data={data}
-                  setbarchart={setbarchart}
-                />
-              </div>
-
-              {/* Home Price Distribution Section */}
-              <div className="flex flex-col gap-y-2 flex-1 basis-80">
-                <div className="text-xl font-semibold">Home Price Distribution</div>
-
-                <div className="flex flex-col gap-3 md:flex-row justify-between">
-                  <div className="flex flex-col items-start">
-                    <div className="lg:mb-1">Min</div>
-                    <div className="text-lime-500">
-                      <span className="text-4xl text-2xl lg:text-3xl">
-                        £{minMaxData?.min}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="justify-self-end">
-                    <div className="flex flex-col items-start">
-                      <div className="lg:mb-1">Median</div>
-                      <div className="text-amber-500">
-                        <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData?.median}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="justify-self-end">
-                    <div className="flex flex-col items-start">
-                      <div className="text-zdsecondary-600 dark:text-zdsecondary-300 lg:mb-1">
-                        Max
-                      </div>
-                      <div className="text-red-500">
-                        <span className="text-4xl text-2xl lg:text-3xl">
-                          £{minMaxData?.max}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  <DistributionPieChart
+                    main_data={data}
+                    setbarchart={setbarchart}
+                  />
                 </div>
-                <span className="self-center pt-4 text-sm lg:text-base text-zd-600">
-                  Houses
-                </span>
-                <div
-                  className="relative flex-1 font-mono pt-9/16"
-                  style={{ width: "100%" }}
-                >
-                  <div className="absolute hidden md:block inset-0 flex items-center justify-center">
-                    <DistributionBarChart
-                      main_data={data}
-                      barchart={barchart}
-                    />
+
+                {/* Home Price Distribution Section */}
+                <div className="flex flex-col gap-y-2 flex-1 basis-80">
+                  <div className="text-xl font-semibold">Home Price Distribution</div>
+
+                  <div className="flex flex-col gap-3 md:flex-row justify-between">
+                    <div className="flex flex-col items-start">
+                      <div className="lg:mb-1">Min</div>
+                      <div className="text-lime-500">
+                        <span className="text-4xl text-2xl lg:text-3xl">
+                          £{minMaxData?.min}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="justify-self-end">
+                      <div className="flex flex-col items-start">
+                        <div className="lg:mb-1">Median</div>
+                        <div className="text-amber-500">
+                          <span className="text-4xl text-2xl lg:text-3xl">
+                            £{minMaxData?.median}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="justify-self-end">
+                      <div className="flex flex-col items-start">
+                        <div className="text-zdsecondary-600 dark:text-zdsecondary-300 lg:mb-1">
+                          Max
+                        </div>
+                        <div className="text-red-500">
+                          <span className="text-4xl text-2xl lg:text-3xl">
+                            £{minMaxData?.max}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="self-center pt-4 text-sm lg:text-base text-zd-600">
+                    Houses
+                  </span>
+                  <div
+                    className="relative flex-1 font-mono pt-9/16"
+                    style={{ width: "100%" }}
+                  >
+                    <div className="absolute hidden md:block inset-0 flex items-center justify-center">
+                      <DistributionBarChart
+                        main_data={data}
+                        barchart={barchart}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </CardBody>
+        </CardBody>
+      )}
     </Card>
   );
 }
