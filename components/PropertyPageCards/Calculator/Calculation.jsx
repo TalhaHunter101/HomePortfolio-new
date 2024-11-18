@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from "react";
 import InvestorReturnCal from "./InvestorReturnCal";
 import TotalInvestmentCard from "./TotalInvestmentCard";
@@ -65,6 +66,7 @@ function Calculation({ title, propertyPrice, rentEstimate }) {
   useEffect(() => {
     setPurchasePrice(propertyPrice);
     setMonthlyRevenue(rentEstimate);
+    setAnnualRevenue(rentEstimate * 12);
     setProjectedMonthlyRevenue(rentEstimate);
   }, [propertyPrice, rentEstimate]);
 

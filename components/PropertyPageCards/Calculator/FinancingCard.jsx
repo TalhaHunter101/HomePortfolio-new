@@ -1,12 +1,15 @@
+'use client';
+
 import { Input, CardBody, Button, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useCalculationsStore } from "../../../store/calculationsStore";
 
 export default function FinancingCard() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const isUpdating = useRef(false);
   const {
+    purchasePrice,
     financingMethod,
     ltv,
     deposit,
@@ -28,6 +31,35 @@ export default function FinancingCard() {
     totalInvestment,
   } = useCalculationsStore();
 
+  const [bankRate, setBankRate] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/indevisual/get-listing-by-id`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+        ); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json(); // Parse JSON response
+        console.log(parseFloat(result[0].replace("%", "")), "response")
+        setBankRate(parseFloat(result[0].replace("%", "")));
+      } catch (error) {
+        console.error(error.message); // Handle any errors
+      } finally {
+        console.log(false); // Set loading to false once fetching is complete
+      }
+    };
+
+    fetchData(); // Call the async function to fetch data
+  }, []);
+
   // Combined useEffect for LTV, deposit, and loan amount calculations
   useEffect(() => {
     if (isUpdating.current) return;
@@ -35,13 +67,13 @@ export default function FinancingCard() {
 
     if (totalInvestment > 0) {
       if (ltv > 0) {
-        const newDeposit = totalInvestment * (ltv / 100);
-        const newLoanAmount = totalInvestment - newDeposit;
+        const newLoanAmount = purchasePrice * (ltv / 100);
+        const newDeposit = purchasePrice - newLoanAmount;
         setDeposit?.(newDeposit);
         setLoanAmount?.(newLoanAmount);
       } else if (deposit > 0) {
-        const newLtv = (deposit / totalInvestment) * 100;
-        const newLoanAmount = totalInvestment - deposit;
+        const newLtv = 1 - (deposit / purchasePrice) * 100;
+        const newLoanAmount = purchasePrice - deposit;
         setLtv?.(newLtv);
         setLoanAmount?.(newLoanAmount);
       }
@@ -53,14 +85,17 @@ export default function FinancingCard() {
   // Calculate monthly mortgage payment
   useEffect(() => {
     if (loanAmount > 0 && interestRate > 0 && mortgageTerm > 0) {
-      const monthlyRate = interestRate / 100 / 12;
-      const numberOfPayments = mortgageTerm * 12;
+      const monthlyinterestrate = Number(interestRate) / 100 / 12;
+      const numberOfPayments = Number(mortgageTerm) * 12;
       let payment = 0;
 
       if (interestType === "capital_Interest") {
-        payment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -numberOfPayments));
+
+        const temp = window.Math.pow((1 + Number(monthlyinterestrate)), Number(numberOfPayments))
+        console.log("temptemptemp",temp)
+        payment = (loanAmount * monthlyinterestrate * temp) / (temp - 1);
       } else if (interestType === "Interest_only") {
-        payment = loanAmount * monthlyRate;
+        payment = loanAmount * monthlyinterestrate;
       }
 
       if (payment !== monthlyPayment) setMonthlyPayment?.(payment);
@@ -82,13 +117,16 @@ export default function FinancingCard() {
 
     if (financingMethod === "mortgage") {
       setLtv?.(75);
-      setInterestRate?.(11);
+      setInterestRate?.(4.75);
       // setMortgageFees?.(0);
-      setMortgageTerm?.(5);
+      setMortgageTerm?.(30);
       setInterestType?.("capital_Interest");
     }
   }, [financingMethod, setLtv, setDeposit, setLoanAmount, setInterestRate, setMortgageTerm, setInterestType, setMonthlyPayment]);
-
+  const handleBankRate = (e) =>{
+    setBankRate(e.target.value);
+    setInterestRate?.(Number(e.target.value))
+  }
   return (
     <div className="mt-2">
       <button
@@ -101,22 +139,20 @@ export default function FinancingCard() {
             <span className="text-md lg:text-xl font-bold text-purple-900 mr-2">-</span>
           ) : (
             <span className="text-md lg:text-xl font-bold text-purple-900 mr-2">
-              £{monthlyPayment?.toLocaleString('en-GB')}/mo
+              £{parseInt(monthlyPayment)?.toLocaleString('en-GB')}/mo
             </span>
           )}
           <Icon
             icon="mdi:chevron-down"
-            className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${
-              isOpen ? 'transform rotate-180' : ''
-            }`}
+            className={`w-6 h-6 text-purple-900 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''
+              }`}
           />
         </div>
       </button>
 
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="p-4 space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -145,15 +181,16 @@ export default function FinancingCard() {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   LTV
                 </label>
-                <Slider
-                  value={ltv || 0}
-                  onChange={(e) => setLtv?.(e)}
+                <Input
+                  type="number"
+                  defaultValue={75}
+                  onChange={(e) => setLtv?.(Number(e.target.value))}
                   min={0}
                   max={100}
-                  step={1}
-                  endContent={
-                    <div className="pointer-events-none text-gray-400">
-                      {ltv || 0}%
+                  step={0.1}
+                  startContent={
+                    <div className="pointer-events-none">
+                      %
                     </div>
                   }
                 />
@@ -165,13 +202,13 @@ export default function FinancingCard() {
                 </label>
                 <Input
                   type="text"
-                  value={deposit?.toLocaleString('en-GB')}
+                  value={parseInt(deposit)?.toLocaleString('en-GB')}
                   onChange={(e) => {
-                    const value = parseFloat(e.target.value.replace(/,/g, ''));
+                    const value = parseInt(e.target.value.replace(/,/g, ''));
                     if (!isNaN(value) && value !== deposit) setDeposit?.(value);
                   }}
                   startContent={
-                    <div className="pointer-events-none text-gray-400">£</div>
+                    <div className="pointer-events-none">£</div>
                   }
                 />
               </div>
@@ -182,14 +219,14 @@ export default function FinancingCard() {
                 </label>
                 <Input
                   type="text"
-                  value={loanAmount?.toLocaleString('en-GB')}
+                  value={parseInt(loanAmount)?.toLocaleString('en-GB')}
                   onChange={(e) => {
-                    const value = parseFloat(e.target.value.replace(/,/g, ''));
+                    const value = parseInt(e.target.value.replace(/,/g, ''));
                     if (!isNaN(value) && value !== loanAmount)
                       setLoanAmount?.(value);
                   }}
                   startContent={
-                    <div className="pointer-events-none text-gray-400">£</div>
+                    <div className="pointer-events-none">£</div>
                   }
                 />
               </div>
@@ -198,40 +235,21 @@ export default function FinancingCard() {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Mortgage / Interest Rate
                 </label>
-                <Slider
-                  value={interestRate || 0}
-                  onChange={(e) => setInterestRate?.(e)}
+                <Input
+                  type="number"
+                  value={bankRate}
+                  //  defaultValue={bankRate?.toLocaleString('en-GB')}
+                  onChange={(e) => handleBankRate(e)}
                   min={0}
                   max={30}
                   step={0.1}
-                  endContent={
-                    <div className="pointer-events-none text-gray-400">
-                      {interestRate || 0}%
+                  startContent={
+                    <div className="pointer-events-none">
+                      %
                     </div>
                   }
                 />
               </div>
-
-              {interestType === 'capital_Interest' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">
-                    Mortgage Term (Years)
-                  </label>
-                  <Slider
-                    value={mortgageTerm || 0}
-                    onChange={(e) => setMortgageTerm?.(e)}
-                    min={0}
-                    max={50}
-                    step={1}
-                    endContent={
-                      <div className="pointer-events-none text-gray-400">
-                        {mortgageTerm || 0} years
-                      </div>
-                    }
-                  />
-                </div>
-              )}
-
               <div>
                 <div className="mb-2 text-gray-600 font-medium">Interest Type</div>
                 <div className="flex gap-4">
@@ -255,6 +273,25 @@ export default function FinancingCard() {
                   </Button>
                 </div>
               </div>
+
+              {interestType === 'capital_Interest' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-500 mb-1">
+                    Mortgage Term (Years)
+                  </label>
+                  <Input
+                    type="number"
+                    min={0}
+                    max={50}
+                    step={1}
+                    defaultValue={30}
+                    onChange={(e) => setMortgageTerm?.(Number(e.target.value))}
+                    
+                  />
+                </div>
+              )}
+
+
             </>
           )}
         </div>

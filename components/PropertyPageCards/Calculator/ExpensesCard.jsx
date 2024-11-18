@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from "react";
 import { Input, CardBody, Slider } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
@@ -26,6 +27,7 @@ export default function ExpensesCard() {
     setMaintenance,
     setOtherExpenses,
     monthlyRevenue,
+    ProjectedMonthlyRevenue,
     totalExpenses,
     setTotalExpenses,
   } = useCalculationsStore();
@@ -62,7 +64,7 @@ export default function ExpensesCard() {
 
         <div className="flex items-center">
           <span className="text-md lg:text-xl font-bold text-purple-900 mr-2">
-            £{totalExpenses?.toLocaleString('en-GB')}/mo
+            £{parseInt(totalExpenses)?.toLocaleString('en-GB')}/mo
           </span>
           <Icon
             icon="mdi:chevron-down"
@@ -85,12 +87,12 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={propertyManagementFee?.toLocaleString('en-GB')}
+              value={parseInt(propertyManagementFee)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== propertyManagementFee)
                   setPropertyManagementFee?.(value);
               }}
@@ -101,15 +103,16 @@ export default function ExpensesCard() {
             <label className="block text-sm font-medium text-gray-500 mb-1">
               Property Management Fee (%)
             </label>
-            <Slider
-              value={propertyManagementFeePercentage || 0}
-              onChange={(e) => setPropertyManagementFeePercentage?.(e)}
+            <Input
+              type="number"
+              onChange={(e) => setPropertyManagementFeePercentage?.(Number(e.target.value))}
+              defaultValue={12}
               min={0}
               max={100}
-              step={1}
-              endContent={
-                <div className="pointer-events-none text-gray-400">
-                  {propertyManagementFeePercentage || 0}%
+              step={0.1}
+              startContent={
+                <div className="pointer-events-none">
+                %
                 </div>
               }
             />
@@ -121,12 +124,12 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={serviceCharge?.toLocaleString('en-GB')}
+              value={parseInt(serviceCharge)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== serviceCharge)
                   setServiceCharge?.(value);
               }}
@@ -139,12 +142,12 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={groundRent?.toLocaleString('en-GB')}
+              value={parseInt(groundRent)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== groundRent) setGroundRent?.(value);
               }}
             />
@@ -156,12 +159,12 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={insurance?.toLocaleString('en-GB')}
+              value={parseInt(insurance)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== insurance) setInsurance?.(value);
               }}
             />
@@ -173,36 +176,18 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={utilities?.toLocaleString('en-GB')}
+              value={parseInt(utilities)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               className="flex-grow"
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== utilities) setUtilities?.(value);
               }}
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-500 mb-1">
-              Utilities (%)
-            </label>
-            <Slider
-              value={utilitiesPercentage || 0}
-              onChange={(e) => setUtilitiesPercentage?.(e)}
-              min={0}
-              max={100}
-              step={1}
-              className="flex-grow"
-              endContent={
-                <div className="pointer-events-none text-gray-400">
-                  {utilitiesPercentage || 0}%
-                </div>
-              }
-            />
-          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-500 mb-1">
@@ -210,12 +195,12 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={maintenance?.toLocaleString('en-GB')}
+              value={parseInt(maintenance)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== maintenance) setMaintenance?.(value);
               }}
             />
@@ -227,20 +212,20 @@ export default function ExpensesCard() {
             </label>
             <Input
               type="text"
-              value={otherExpenses?.toLocaleString('en-GB')}
+              value={parseInt(otherExpenses)?.toLocaleString('en-GB')}
               startContent={
-                <div className="pointer-events-none text-gray-400">£</div>
+                <div className="pointer-events-none">£</div>
               }
               className="flex-grow"
               onChange={(e) => {
-                const value = parseFloat(e.target.value.replace(/,/g, ''));
+                const value = parseInt(e.target.value.replace(/,/g, ''));
                 if (!isNaN(value) && value !== otherExpenses)
                   setOtherExpenses?.(value);
               }}
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-500 mb-1">
               Other Expenses (%)
             </label>
@@ -252,10 +237,10 @@ export default function ExpensesCard() {
               step={1}
               className="flex-grow"
               endContent={
-                <div className="pointer-events-none text-gray-400">%</div>
+                <div className="pointer-events-none">%</div>
               }
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
