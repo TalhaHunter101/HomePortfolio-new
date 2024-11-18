@@ -650,7 +650,7 @@ export default function RentalReportForm() {
                 </div>
 
                 <div className="mt-6">
-                  <button className="bg-blue-500 text-white rounded-md py-2 px-4">
+                  <button  className="bg-blue-500 text-white rounded-md py-2 px-4">
                     Finish analysis
                   </button>
                 </div>
