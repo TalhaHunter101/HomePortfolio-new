@@ -30,6 +30,60 @@ const MapTilerLayerComponent = () => {
   return null;
 };
 
+const BoundaryLayer = ({ geom }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!geom) {
+      console.log("No geometry provided");
+      return;
+    }
+
+    let geometryData;
+    if (typeof geom === 'string') {
+      try {
+        geometryData = JSON.parse(geom);
+      } catch (e) {
+        console.error("Failed to parse geom string:", e);
+        return;
+      }
+    } else {
+      geometryData = geom;
+    }
+
+    try {
+      const geoJsonData = {
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: geometryData.coordinates || geometryData,
+        },
+        properties: {},
+      };
+
+      const boundaryLayer = L.geoJSON(geoJsonData, {
+        style: {
+          color: "#ff7800",
+          weight: 2,
+          opacity: 0.65,
+          fillOpacity: 0.2,
+        },
+      }).addTo(map);
+
+      if (boundaryLayer.getBounds().isValid()) {
+        map.fitBounds(boundaryLayer.getBounds(), {
+          padding: [50, 50],
+          maxZoom: 13,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to draw boundary:", error);
+    }
+  }, [map, geom]);
+
+  return null;
+};
+
 const MarkersWithCustomIcon = ({ center, locations, selectedAmenity, amenities }) => {
   const map = useMap();
   const { selecteNearbyLocation } = useNearByStore();
@@ -72,7 +126,8 @@ const NearByPlacesMap = ({
   center, 
   locations, 
   amenities, 
-  selectedAmenity
+  selectedAmenity,
+  geom
 }) => {
   const zoom = 13;
 
@@ -90,6 +145,7 @@ const NearByPlacesMap = ({
         gestureHandling={true}
       >
         <MapTilerLayerComponent />
+        <BoundaryLayer geom={geom} />
         <MarkersWithCustomIcon 
           center={center} 
           locations={locations} 

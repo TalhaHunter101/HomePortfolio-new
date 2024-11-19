@@ -5,7 +5,7 @@ import Carousel from "./CrimeComponents/GraphCarousal";
 import { Icon } from "@iconify/react";
 import { CrimeMapStatic } from "../Maps";
 
-export function CrimeCard({ postcode,ShortAddress }) {
+export function CrimeCard({ postcode, ShortAddress, geom }) {
   const [crimeData, setCrimeData] = useState([]);
 
   const getCrimeData = async (postcode) => {
@@ -31,14 +31,10 @@ export function CrimeCard({ postcode,ShortAddress }) {
   };
 
   useEffect(() => {
-    if (postcode){
+    if (postcode) {
       getCrimeData(postcode);
     }
   }, [postcode]);
-
- 
-
-  
 
   return (
     <Card className="m-4" style={{ minHeight: "150px" }}>
@@ -52,7 +48,7 @@ export function CrimeCard({ postcode,ShortAddress }) {
             />
           </div>
           <h2 className="text-xl font-bold text-gray-700">
-          what are the Crime Rates in {ShortAddress}?
+            what are the Crime Rates in {ShortAddress}?
           </h2>
         </div>
       </CardHeader>
@@ -68,14 +64,14 @@ export function CrimeCard({ postcode,ShortAddress }) {
         </CardBody>
       ) : (
         <CardBody>
-          <CrimeReportCard reportData={crimeData} />
+          <CrimeReportCard reportData={crimeData} geom={geom} />
         </CardBody>
       )}
     </Card>
   );
 }
 
-export const CrimeReportCard = ({ reportData }) => {
+export const CrimeReportCard = ({ reportData, geom }) => {
   const totalCrimes = reportData.length;
 
   // Calculate the crime data dynamically
@@ -140,9 +136,8 @@ export const CrimeReportCard = ({ reportData }) => {
         </p>
 
         <div style={{ height: "400px", width: "100%" }}>
-          <CrimeMapStatic center={crimeLocations} height="400px" />
+          <CrimeMapStatic center={crimeLocations} height="400px" geom={geom} />
         </div>
-       
       </div>
 
       {/* Right Section */}

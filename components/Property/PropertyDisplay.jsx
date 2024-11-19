@@ -775,6 +775,7 @@ function PropertyDisplay({ listingData, params }) {
                       address={fullAddress || listingData?.address}
                       rentData={rentData}
                       ShortAddress={ShortAddress}
+                      geom={geom}
                     />
                   </div>
                 ))}
